@@ -1,7 +1,0 @@
-{
-  "name": "Emoticoach",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
