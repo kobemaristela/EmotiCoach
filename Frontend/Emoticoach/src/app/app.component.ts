@@ -13,21 +13,23 @@ export class AppComponent {
       icon: 'calendar'
     },
     {
-      title: 'Speakers',
-      url: '/app/tabs/speakers',
+      title: 'Metrics',
+      url: '/',
       icon: 'people'
     },
     {
       title: 'Map',
-      url: '/app/tabs/map',
+      url: '/',
       icon: 'map'
     },
     {
       title: 'About',
-      url: '/app/tabs/about',
+      url: '/',
       icon: 'information-circle'
     }
   ];
+  loggedIn = false;
 
   constructor() {}
+  logout(){}
 }

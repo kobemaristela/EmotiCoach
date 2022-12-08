@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'log-workout',
     loadChildren: () => import('./pages/log-workout/log-workout.module').then( m => m.LogWorkoutPageModule)
   },
+  {
+    path: 'account',
+    loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
+  },
 
 ];
 
