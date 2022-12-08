@@ -1,0 +1,46 @@
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content">
+      <ion-content class="ion-padding">
+        <ion-list lines="none">
+          <ion-list-header>
+            Conference
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
+            <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
+              <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
+              <ion-label>
+                {{p.title}}
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+        <ion-list>
+          <ion-item>
+            <ion-button [routerLink]="'home'">Home</ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-button [routerLink]="'log-workout'">Logworkout</ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+
+    </ion-menu>
+    <div class="ion-page" id="main-content">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-title>Emoticoach</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        Tap the button in the toolbar to open the menu.
+
+        <ion-router-outlet contentId="main-content"></ion-router-outlet>
+      </ion-content>
+    </div>
+  </ion-split-pane>
+</ion-app>
