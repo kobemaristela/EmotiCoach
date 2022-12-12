@@ -9,13 +9,13 @@ export class AppComponent {
   //list of pages
   appPages = [
     {
-      title: 'Today',
+      title: 'Dashboard',
       url: '/home',
       icon: 'calendar'
     },
     {
       title: 'Metrics',
-      url: '/',
+      url: '/metric-selection',
       icon: 'people'
     },
     {

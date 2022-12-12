@@ -27,7 +27,12 @@ const routes: Routes = [
     path: 'account',
     loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
   },
+  {
+    path: 'metric-selection',
+    loadChildren: () => import('./pages/metric-selection/metric-selection.module').then( m => m.MetricSelectionPageModule)
+  },
 
+  
 ];
 
 @NgModule({
