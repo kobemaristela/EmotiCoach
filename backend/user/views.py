@@ -24,9 +24,6 @@ class Login(ObtainAuthToken):
         })
 
 class Register(APIView):
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
-
     def post(self, request):
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
@@ -39,6 +36,8 @@ class Register(APIView):
         return JsonResponse({"response":"success"})
         
 class Logout(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         request.user.auth_token.delete()
         return JsonResponse({"response":"success"})
