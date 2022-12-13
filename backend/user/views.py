@@ -8,9 +8,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from django.views.decorators.csrf import csrf_exempt
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 class Login(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -44,14 +43,13 @@ class Logout(APIView):
         request.user.auth_token.delete()
         return JsonResponse({"response":"success"})
 
-@csrf_exempt
 def show_database(request):
     if request.method == "GET":
         user_model = get_user_model()
         users= user_model.objects.all()
 
         tokens = Token.objects.all()
-        return JsonResponse({
+        return HttpResponse({
             'users': list(users),
             'tokens': list(tokens),
         })
