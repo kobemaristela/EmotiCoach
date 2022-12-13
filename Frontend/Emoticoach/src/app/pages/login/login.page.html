@@ -1,9 +1,50 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-title>login</ion-title>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
+  <ion-item>
+    <ion-label>Email</ion-label>
+    <ion-input placeholder="Enter email"></ion-input>
+  </ion-item>
 
+  <ion-item>
+    <ion-label>Password</ion-label>
+    <ion-input type="password" placeholder="Enter password"></ion-input>
+  </ion-item>
+
+  <ion-button>Log-In</ion-button>
+  <ion-button [disabled]="true">Register</ion-button>
+</ion-content> -->
+
+<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title>Log In</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <form>
+      <ion-item lines="full">
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" required></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" required></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="primary" expand="block" (click)="home()">Sign In</ion-button>
+          <a [routerLink]="['/sign-up']" class="small-text">Register</a>
+        </ion-col>
+      </ion-row>
+    </form>
+  </ion-content>
 </ion-content>

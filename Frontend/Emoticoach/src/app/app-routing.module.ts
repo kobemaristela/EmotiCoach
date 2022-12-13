@@ -31,6 +31,12 @@ const routes: Routes = [
     path: 'metric-selection',
     loadChildren: () => import('./pages/metric-selection/metric-selection.module').then( m => m.MetricSelectionPageModule)
   },
+  {
+    path: 'graph-hr',
+    loadChildren: () => import('./pages/graph-hr/graph-hr.module').then( m => m.GraphHrPageModule)
+  },
+
+
 
   
 ];
