@@ -1,0 +1,73 @@
+##############
+## Building ##
+##############
+
+# Pull base image - alpine alternative
+FROM python:alpine as builder
+
+# Set environment variables
+ENV PIP_DISABLE_PIP_VERSION_CHECK 1
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set work directory
+WORKDIR /usr/src/app
+
+# install psycopg2 dependencies
+RUN apk update \
+    && apk add postgresql-dev gcc python3-dev musl-dev
+
+# Linting
+RUN pip install --upgrade pip
+RUN pip install flake8==6.0.0
+COPY . .
+RUN flake8 --ignore=E501,F401 .
+
+# Install dependencies
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+
+###############
+## DEPLOYING ##
+###############
+
+# Base Image
+#FROM python:3.11-slim-bullseye
+FROM python:alpine
+
+# Create directory for emoticoach user
+RUN mkdir -p /home/emoticoach
+
+# Create emoticoach user
+RUN addgroup -S emoticoach && adduser -S emoticoach -G emoticoach
+
+# Create the appropriate directories
+ENV HOME=/home/emoticoach
+ENV EMOTICOACH_HOME=/home/emoticoach/web
+RUN mkdir $EMOTICOACH_HOME
+WORKDIR $EMOTICOACH_HOME
+
+# Install dependencies
+#RUN apt-get update && apt-get install libpq netcat -y
+RUN apk update && apk add libpq
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+# Copy dbchecker
+COPY ./dbchecker.sh .
+RUN sed -i 's/\r$//g'  $EMOTICOACH_HOME/dbchecker.sh
+RUN chmod +x  $EMOTICOACH_HOME/dbchecker.sh
+
+# Copy project
+COPY . $EMOTICOACH_HOME
+
+# Chown all the files to the emoticoach user
+RUN chown -R emoticoach:emoticoach $EMOTICOACH_HOME
+
+# Change to the app user
+USER emoticoach
+
+# Run dbchecker
+ENTRYPOINT ["/home/emoticoach/web/dbchecker.sh"]
