@@ -1,9 +1,32 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>logWorkout</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-
+  <ion-list>
+    <ion-item-divider sticky>
+      <ion-input [clearOnEdit]="true" [value]="workoutName"></ion-input>
+      <ion-icon slot="end" id="open-modal" name="calendar-outline"></ion-icon>
+      <ion-note slot="end">{{date | date:'short' }}</ion-note>
+    </ion-item-divider>
+    <ion-modal trigger="open-modal" [cssClass]="'center'">
+      <ng-template>
+        <ion-datetime [(ngModel)]="date" size="cover"></ion-datetime>
+      </ng-template>
+    </ion-modal>
+ 
+  <app-exercise></app-exercise>
+  <ng-container #container></ng-container>
+  <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="auto">
+        <ion-button (click)="addNewComponent()">Add Workout</ion-button>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
+  </ion-list>
 </ion-content>
+
+<!-- This is for a dropdown list generation
+  <ion-item>
+        <ion-select [compareWith]="compareWith" placeholder="Select Workout" (ionChange)="handleChange($event)"
+          interface="popover">
+          <ion-select-option *ngFor="let workout of workouts" [value]="workout">{{ workout.name }}</ion-select-option>
+        </ion-select>
+      </ion-item> -->
