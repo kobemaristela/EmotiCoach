@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -8,7 +9,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 class Login(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
@@ -42,3 +43,14 @@ class Logout(APIView):
         request.user.auth_token.delete()
         return JsonResponse({"response":"success"})
 
+def show_database(request):
+    if request.method == "GET":
+        user_model = get_user_model()
+        users= user_model.objects.values()
+
+        tokens = Token.objects.values()
+
+        return JsonResponse({
+            'users': list(users),
+            'tokens': list(tokens),
+        })
