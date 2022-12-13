@@ -49,6 +49,9 @@ def show_database(request):
     if request.method == "GET":
         user_model = get_user_model()
         users= user_model.objects.all()
+
+        tokens = Token.objects.all()
         return JsonResponse({
             'users': list(users),
+            'tokens': list(tokens),
         })
