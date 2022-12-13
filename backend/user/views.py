@@ -46,10 +46,11 @@ class Logout(APIView):
 def show_database(request):
     if request.method == "GET":
         user_model = get_user_model()
-        users= user_model.objects.all()
+        users= user_model.objects.values()
 
-        tokens = Token.objects.all()
-        return HttpResponse({
+        tokens = Token.objects.values()
+
+        return JsonResponse({
             'users': list(users),
             'tokens': list(tokens),
         })
