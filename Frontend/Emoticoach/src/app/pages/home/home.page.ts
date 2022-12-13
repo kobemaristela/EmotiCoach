@@ -18,5 +18,8 @@ export class HomePage implements OnInit {
   graphHR(){
     this.navCtrl.navigateForward('/graph-hr')
   }
+  logWorkout(){
+    this.navCtrl.navigateForward('/workouts-dashboard')
+  }
 
 }
