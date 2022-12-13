@@ -1,9 +1,78 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>home</ion-title>
+    <ion-buttons slot="start">
+      <ion-button expand="block">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+      <ion-button expand="block">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title color="success">Today</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">    
+      <ion-card color="dark">
+        <ion-card-header color ="secondary" style="font-size: 24px">Squat PR</ion-card-header>
+        <ion-card-content>
+          <ion-list inset="true">
+            <ion-icon name="trophy-outline" color="dark" style="float:left"></ion-icon>
+            <ion-item color="dark">
+              <ion-label>185lbs</ion-label>
+            </ion-item>
+            <ion-item color="dark">
+              <ion-label>15 reps</ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+      </ion-col>
 
+
+      <ion-col size="12">
+        <ion-card button="true" color="dark">
+            <ion-icon name="barbell-outline" color="light" style="float:left"></ion-icon>
+        <ion-card-content>
+          <ion-text color="light">
+            <h2 style="font-size:18px">Log a new workout</h2>
+            <h3 style="font-size:16px" style="color: medium">Begin a new workout</h3>
+          </ion-text>
+        </ion-card-content>
+          </ion-card>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-card button="true" color="dark">
+            <ion-icon name="walk-outline" color="light" style="float:left"></ion-icon>
+        <ion-card-content>
+          <ion-text color="light">
+            <h2 style="font-size:18px">Rate of perceived effort</h2>
+            <h3 style="font-size:16px" style="color: medium">View your progress</h3>
+          </ion-text>
+        </ion-card-content>
+          </ion-card>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-card button="true" color="dark">
+            <ion-icon name="heart-outline" color="light" style="float:left"></ion-icon>
+        <ion-card-content>
+          <ion-text color="light">
+            <h2 style="font-size:18px">Heart Rate</h2>
+            <h3 style="font-size:16px" style="color: medium">View your data</h3>
+          </ion-text>
+        </ion-card-content>
+          </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
 </ion-content>
