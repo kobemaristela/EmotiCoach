@@ -31,6 +31,11 @@ const routes: Routes = [
     path: 'metric-selection',
     loadChildren: () => import('./pages/metric-selection/metric-selection.module').then( m => m.MetricSelectionPageModule)
   },
+  {
+    path: 'workouts-dashboard',
+    loadChildren: () => import('./pages/workouts-dashboard/workouts-dashboard.module').then( m => m.WorkoutsDashboardPageModule)
+  },
+  
 
   
 ];

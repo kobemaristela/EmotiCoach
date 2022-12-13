@@ -10,7 +10,7 @@ export class LogWorkoutPage implements OnInit {
   @ViewChild('container', { read: ViewContainerRef })
   container!: ViewContainerRef
 
-  myDate : Date = new Date()
+  myDate : Date = new Date();
   date : string = this.myDate.toISOString();
   workoutName : string =  "workout " + this.myDate.getMonth() + "/" + this.myDate.getDate();
 

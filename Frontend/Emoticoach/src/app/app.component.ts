@@ -19,8 +19,8 @@ export class AppComponent {
       icon: 'people'
     },
     {
-      title: 'Log Workout',
-      url: '/log-workout',
+      title: 'Logs',
+      url: '/workouts-dashboard',
       icon: 'reader'
     },
     {
