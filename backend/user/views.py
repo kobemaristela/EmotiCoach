@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -46,6 +47,8 @@ class Logout(APIView):
 @csrf_exempt
 def show_database(request):
     if request.method == "GET":
+        user_model = get_user_model()
+        users= user_model.objects.all()
         return JsonResponse({
-            'data': list(Token.objects.all()),
+            'users': list(users),
         })
