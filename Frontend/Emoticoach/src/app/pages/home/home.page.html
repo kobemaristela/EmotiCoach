@@ -38,7 +38,7 @@
 
 
       <ion-col size="12">
-        <ion-card button="true" color="dark">
+        <ion-card button="true" color="dark" (click)="logWorkout()">
             <ion-icon name="barbell-outline" color="light" style="float:left"></ion-icon>
         <ion-card-content>
           <ion-text color="light">
@@ -67,6 +67,30 @@
         <ion-card-content>
           <ion-text color="light">
             <h2 style="font-size:18px">Heart Rate</h2>
+            <h3 style="font-size:16px" style="color: medium">View your data</h3>
+          </ion-text>
+        </ion-card-content>
+          </ion-card>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-card button="true" color="dark">
+            <ion-icon name="walk-outline" color="light" style="float:left"></ion-icon>
+        <ion-card-content>
+          <ion-text color="light">
+            <h2 style="font-size:18px">Sleep and Water</h2>
+            <h3 style="font-size:16px" style="color: medium">View your data</h3>
+          </ion-text>
+        </ion-card-content>
+          </ion-card>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-card button="true" color="dark">
+            <ion-icon name="walk-outline" color="light" style="float:left"></ion-icon>
+        <ion-card-content>
+          <ion-text color="light">
+            <h2 style="font-size:18px">Tables</h2>
             <h3 style="font-size:16px" style="color: medium">View your data</h3>
           </ion-text>
         </ion-card-content>
