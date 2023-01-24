@@ -1,4 +1,4 @@
-interface workOut {
+interface workout {
     name: string;
     date: Date | null;
     exercises: exercise[];
@@ -16,4 +16,4 @@ interface set {
     time: number | null;
 }
 
-export {workOut, exercise, set}
+export {workout, exercise, set}
