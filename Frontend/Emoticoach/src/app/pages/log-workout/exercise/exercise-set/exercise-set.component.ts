@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ExerciseSetComponent implements OnInit {
   setCount: number = 1;
-  set : string = 'Set ' + this.setCount;
+ 
   constructor() { }
 
   ngOnInit() {}
