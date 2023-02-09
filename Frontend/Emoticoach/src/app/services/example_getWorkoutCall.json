@@ -1,0 +1,28 @@
+{
+    "id": "1234",
+    "name": "test day",
+    "datetime" : "10/10/10 10:10:10",
+    "muscleGroups" : ["chest", "tris"],
+    "activity": [
+        {
+            "id":"1111",
+            "name" : "activityOne",
+            "numberOfSets": 12,
+            "muscleGroups" : ["chest", "tris"],
+            "sets" : [
+                {
+                    "weight" : "",
+                    "reps" : "",
+                    "rpe" : "",
+                },
+                {
+                    "weight" : "",
+                    "reps" : "",
+                    "rpe" : "",
+                }
+            ]
+
+        }
+    ],
+    
+}
