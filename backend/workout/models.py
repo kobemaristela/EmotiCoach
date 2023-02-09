@@ -6,7 +6,7 @@ from django.utils import timezone
 class Session(models.Model):
     name = models.CharField(max_length=50)
     duration = models.FloatField()
-    datetime = models.DateTimeField(default=timezone.now())
+    datetime = models.DateTimeField(default=timezone.now)
 
 class Activity(models.Model):
     name = models.CharField(max_length=50)
