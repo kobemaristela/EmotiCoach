@@ -1,10 +1,10 @@
-interface workout {
+interface session {
     name: string;
     date: Date | null;
-    exercises: exercise[];
+    exercises: activity[];
   }
 
-interface exercise {
+interface activity {
     name: string
     sets: set[];
 }
@@ -13,7 +13,6 @@ interface set {
     reps: number;
     weight: number;
     rpe: number;
-    time: number | null;
 }
 
-export {workout, exercise, set}
+export {session, activity, set}
