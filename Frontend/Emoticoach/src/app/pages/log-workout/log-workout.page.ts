@@ -9,34 +9,23 @@ import { SessionService } from 'src/app/services/session.service';
 })
 export class LogWorkoutPage implements OnInit {
   @ViewChild('container', { read: ViewContainerRef })
-  container!: ViewContainerRef
-
+  container!: ViewContainerRef;
   myDate : Date = new Date();
   date : string = this.myDate.toISOString();
   workoutName : string =  "workout " + this.myDate.getMonth() + "/" + this.myDate.getDate();
 
-  currentWorkout = {
-    id: 0,
-    name: 'Lift',
-    type: '',
-  };
-
-  constructor(private service: SessionService) {
+  activities: any[] = [];
+  constructor(private servSession: SessionService) {
 
    }
 
   ngOnInit() {
-   
+    this.activities = this.servSession.getSessions("1");
+    this.activities = this.activities[0].activity;
+    console.log("in the low-workoutpage");
+    console.log(this.activities);
   }
 
-  compareWith(o1 : any, o2 : any) {
-    return o1 && o2 ? o1.id === o2.id : o1 === o2;
-  }
-
-  handleChange(ev : any) {
-    this.currentWorkout = ev.target.value;
-    console.log(this.currentWorkout);
-  }
 
   addNewComponent(){
     this.container.createComponent(ExerciseComponent);

@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ExerciseSetComponent } from './exercise-set/exercise-set.component';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-exercise',
@@ -11,9 +12,10 @@ export class ExerciseComponent implements OnInit {
   @ViewChild('container', { read: ViewContainerRef })
   container!: ViewContainerRef
 
+
   sets : any[] = [];
   setCount : number = 1;
-  constructor() { }
+  constructor(private service: SessionService) { }
 
   ngOnInit() {}
   addNewComponent(){

@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import {session, activity, set} from './Isession.js'
-// import sessionsJson from './example_getWorkoutCall.json'
+import sessionsJson from './example_getWorkoutCall.json'
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionService {
-  sessions: session[] = [];
+  sessions: any[] = [];
   constructor() { 
-    // console.log(sessionsJSON);
-    
+    console.log(sessionsJson);
+    this.sessions.push(sessionsJson)
   }
 
   loadSessions(userSessions: session[]){
     this.sessions = userSessions;
   }
 
-  getSessions(userID: string): session[]{
+  getSessions(userID: string): any[]{
     return this.sessions;
   }
 }
