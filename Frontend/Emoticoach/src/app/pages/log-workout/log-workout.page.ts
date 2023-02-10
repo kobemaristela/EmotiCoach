@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ExerciseComponent } from './exercise/exercise.component';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-log-workout',
@@ -20,10 +21,12 @@ export class LogWorkoutPage implements OnInit {
     type: '',
   };
 
+  constructor(private service: SessionService) {
 
-  constructor() { }
+   }
 
   ngOnInit() {
+   
   }
 
   compareWith(o1 : any, o2 : any) {

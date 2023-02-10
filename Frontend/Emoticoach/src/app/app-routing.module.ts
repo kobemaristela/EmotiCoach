@@ -4,8 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'sign-up',
@@ -38,7 +37,7 @@ const routes: Routes = [
   {
     path: 'workouts-dashboard',
     loadChildren: () => import('./pages/workouts-dashboard/workouts-dashboard.module').then( m => m.WorkoutsDashboardPageModule)
-  },
+  }
   
 
 
