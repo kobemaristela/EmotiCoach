@@ -6,17 +6,28 @@ import sessionsJson from './example_getWorkoutCall.json'
   providedIn: 'root'
 })
 export class SessionService {
-  sessions: any[] = [];
+  sessions: session[] = [];
   constructor() { 
     console.log(sessionsJson);
-    this.sessions.push(sessionsJson)
+    this.sessions = sessionsJson
   }
 
   loadSessions(userSessions: session[]){
     this.sessions = userSessions;
   }
 
-  getSessions(userID: string): any[]{
+  getSessions(userID: string): session[]{
     return this.sessions;
+  }
+
+
+  getSession(sessionID: string): session{
+  
+    this.sessions.forEach(session => {
+      if (session.id == sessionID)
+        return session
+      return
+    });
+    return {id: "", name: "", datetime:"",muscleGroups:[],activities:[]};
   }
 }

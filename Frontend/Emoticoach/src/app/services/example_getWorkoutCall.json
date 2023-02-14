@@ -1,27 +1,66 @@
-{
+[
+    {
         "id": "1234",
-        "name": "test day",
-        "datetime" : "10/10/10 10:10:10",
-        "muscleGroups" : ["chest", "triceps"],
-        "activity": [
+        "name": "test day 1",
+        "datetime": "10/10/10 10:10:10",
+        "muscleGroups": [
+            "chest",
+            "triceps"
+        ],
+        "activities": [
             {
-                "id":"1111",
-                "name" : "activityOne",
-                "numberOfSets": "12",
-                "muscleGroups" : ["chest", "tris"],
-                "sets" : [
+                "id": "1111",
+                "name": "activityOne",
+                "numberOfSets": 12,
+                "muscleGroups": [
+                    "chest",
+                    "tris"
+                ],
+                "sets": [
                     {
-                        "weight" : "185",
-                        "reps" : "5",
-                        "rpe" : "8"
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
                     },
                     {
-                        "weight" : "185",
-                        "reps" : "5",
-                        "rpe" : "8"
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
                     }
                 ]
-
             }
         ]
-}
+    },
+    {
+        "id": "1235",
+        "name": "test day 2",
+        "datetime": "10/10/10 10:10:10",
+        "muscleGroups": [
+            "chest",
+            "triceps"
+        ],
+        "activities": [
+            {
+                "id": "1111",
+                "name": "activityOne",
+                "numberOfSets": 12,
+                "muscleGroups": [
+                    "chest",
+                    "tris"
+                ],
+                "sets": [
+                    {
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    },
+                    {
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    }
+                ]
+            }
+        ]
+    }
+]
