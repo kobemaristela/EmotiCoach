@@ -19,8 +19,7 @@ export class SessionService {
   getSessions(userID: string): session[]{
     return this.sessions;
   }
-
-
+  
   getSession(sessionID: string): session{
   
     this.sessions.forEach(session => {

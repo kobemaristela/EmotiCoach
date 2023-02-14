@@ -15,9 +15,7 @@ export class LogWorkoutPage implements OnInit {
   workoutName : string =  "workout " + this.myDate.getMonth() + "/" + this.myDate.getDate();
 
   activities: any[] = [];
-  constructor(private servSession: SessionService) {
-
-   }
+  constructor(private servSession: SessionService) {}
 
   ngOnInit() {
     this.activities = this.servSession.getSessions("1");
@@ -25,7 +23,6 @@ export class LogWorkoutPage implements OnInit {
     console.log("in the low-workoutpage");
     console.log(this.activities);
   }
-
 
   addNewComponent(){
     this.container.createComponent(ExerciseComponent);
