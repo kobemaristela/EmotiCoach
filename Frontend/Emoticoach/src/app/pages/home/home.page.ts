@@ -41,6 +41,14 @@ export class HomePage implements OnInit {
     'View your data'
   ];
 
+  routing: string[] = [
+    '/log-workout',
+    '/graph-hr',
+    '/log-workout',
+    '/log-workout',
+    '/log-workout',
+  ];
+
   constructor(public navCtrl: NavController) {
   }
 
