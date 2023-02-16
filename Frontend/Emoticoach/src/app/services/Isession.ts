@@ -1,17 +1,22 @@
 interface session {
+    id: string;
     name: string;
-    date: Date | null;
-    exercises: activity[];
+    datetime: string;
+    muscleGroups: string[];
+    activities: activity[];
   }
 
 interface activity {
-    name: string
+    id: string;
+    name: string;
+    numberOfSets: number;
+    muscleGroups: string[];
     sets: set[];
 }
 
 interface set {
-    reps: number;
     weight: number;
+    reps: number;
     rpe: number;
 }
 

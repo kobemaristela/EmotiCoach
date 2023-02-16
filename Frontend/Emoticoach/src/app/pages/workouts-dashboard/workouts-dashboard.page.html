@@ -10,10 +10,12 @@
       <ion-item>
         December 12 - December 19
       </ion-item>
-
+<!-- testing if sign works -->
       
     </ion-item-divider>
-
+    <ion-item *ngFor="let session of sessions; index as i;">
+      {{session.name}}
+    </ion-item>
     <ion-row>
       <ion-col></ion-col>
       <ion-col size="auto">
