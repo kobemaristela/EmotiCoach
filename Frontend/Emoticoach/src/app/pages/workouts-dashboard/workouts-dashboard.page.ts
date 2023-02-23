@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { session } from 'src/app/services/Isession';
-import { SessionService } from 'src/app/services/session.service';
+import { session } from 'src/app/services/sessions/session/Isession';
+import { SessionService } from 'src/app/services/sessions/session/session.service';
 
 @Component({
   selector: 'app-workouts-dashboard',
@@ -13,7 +13,15 @@ export class WorkoutsDashboardPage implements OnInit {
   constructor(private servSession: SessionService) { }
 
   ngOnInit() {
-    this.sessions = this.servSession.getSessions("1234")
+    this.sessions = this.servSession.getSessions()
+  }
+
+  goToSession(index: number) {
+    this.servSession.setSession(index);
+  }
+
+  createNewSession() {
+    this.servSession.createNewSession();
   }
 
 }

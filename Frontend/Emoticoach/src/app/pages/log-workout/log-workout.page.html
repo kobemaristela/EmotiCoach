@@ -1,3 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Workout</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
 <ion-content>
   <ion-list>
     <ion-item-divider sticky>
@@ -11,19 +23,25 @@
       </ng-template>
     </ion-modal>
  
-  <app-exercise></app-exercise>
+  <app-exercise 
+    *ngFor="let activity of activities; let i = index" 
+    [activityName]="activity.name" 
+    [sets]="activity.sets"
+    [activityIndex]="i">
+  </app-exercise>
+  
   <ng-container #container></ng-container>
 
   <ion-row>
     <ion-col>
     </ion-col>
       <ion-col size="auto">
-        <ion-button (click)="addNewComponent()">Add Workout</ion-button>
+        <ion-button (click)="addNewComponent()">Add Excercise</ion-button>
       </ion-col>
       <ion-col>
       </ion-col>
   </ion-row>
-  <ion-card *ngFor="let activity of activities">{{activity.name}} </ion-card>
+  
   </ion-list>
 </ion-content>
 

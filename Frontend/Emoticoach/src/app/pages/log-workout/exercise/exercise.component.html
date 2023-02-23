@@ -1,17 +1,22 @@
 <ion-card>
   <ion-card-header>
     <ion-card-title>
-      <ion-input [clearOnEdit]="true"  placeholder="Exercise name"></ion-input>
+      <ion-input [clearOnEdit]="true"  placeholder="Excercise" [value]="activityName"></ion-input>
     </ion-card-title>
   </ion-card-header>
   
   <ion-card-content>
-    <app-exercise-set></app-exercise-set>
-    <ng-container #container></ng-container>
+    <app-exercise-set 
+      *ngFor="let set of sets; index as i;"
+      [activityIndex] = "activityIndex"
+      [set] = "set"
+      [setCount]="i+1"
+      > 
+    </app-exercise-set>
     <ion-row>
       <ion-col></ion-col>
       <ion-col size="auto">
-        <ion-button (click)="addNewComponent()" fill="clear">Add Set</ion-button>
+        <ion-button (click)="addSet()" fill="clear">Add Set</ion-button>
       </ion-col>
       <ion-col></ion-col>
     </ion-row>

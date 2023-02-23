@@ -3,6 +3,39 @@
         "id": "1234",
         "name": "test day 1",
         "datetime": "10/10/10 10:10:10",
+        "duration": 120,
+        "muscleGroups": [
+            "chest",
+            "triceps"
+        ],
+        "activities": [
+            {
+                "id": "1111",
+                "name": "activityOne",
+                "muscleGroups": [
+                    "chest",
+                    "tris"
+                ],
+                "sets": [
+                    {
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    },
+                    {
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "1235",
+        "name": "test day 2",
+        "datetime": "10/10/10 10:10:10",
+        "duration": 120,
         "muscleGroups": [
             "chest",
             "triceps"
@@ -28,21 +61,10 @@
                         "rpe": 8
                     }
                 ]
-            }
-        ]
-    },
-    {
-        "id": "1235",
-        "name": "test day 2",
-        "datetime": "10/10/10 10:10:10",
-        "muscleGroups": [
-            "chest",
-            "triceps"
-        ],
-        "activities": [
+            },
             {
-                "id": "1111",
-                "name": "activityOne",
+                "id": "2222",
+                "name": "activity2",
                 "numberOfSets": 12,
                 "muscleGroups": [
                     "chest",
