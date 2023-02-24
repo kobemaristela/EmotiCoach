@@ -1,13 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { AfterContentChecked, Component, OnInit } from '@angular/core';
+import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
+// install Swiper modules
+SwiperCore.use([Pagination]);
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
-  headers: any;
+export class HomePage implements OnInit, AfterContentChecked {
+
+  workoutData: any[] = [];
+  bannerConfig: SwiperOptions;
+  featureConfig: SwiperOptions;
+  features: any[] = [];
 
   homepageCards: string[] = [
     'Log Workout', 
@@ -49,19 +55,24 @@ export class HomePage implements OnInit {
     '/log-workout',
   ];
 
-  constructor(public navCtrl: NavController) {
-  }
+  constructor() { }
 
   ngOnInit() {
+    this.workoutData = [
+      { id: 1, workout_name: 'Bench', record: '185' },
+      { id: 2, workout_name: 'Deadlift', record: '225' },
+      { id: 3, workout_name: 'Squat', record: '275' }
+    ];
   }
 
-  graphHR(){
-    this.navCtrl.navigateForward('/graph-hr')
+  ngAfterContentChecked() {
+    this.bannerConfig = {
+      slidesPerView: 1,
+      pagination: { clickable: true }
+    };
+    this.featureConfig = {
+      slidesPerView: 3.5,
+    };
   }
-  logWorkout(){
-    this.navCtrl.navigateForward('/workouts-dashboard')
-  }
-  createCard(){
-    
-  }
+
 }
