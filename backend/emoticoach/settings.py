@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     "user",
     "workout",
     "website",
+    "demo",
 ]
 
 REST_FRAMEWORK = {

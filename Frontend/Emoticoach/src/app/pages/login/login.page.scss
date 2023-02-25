@@ -1,3 +1,86 @@
-a{
-    color: rgb(20, 200, 206);
+ion-content{
+    --background: #000000;
+
+    #header{
+        height: 33%;
+        background: #833535;
+        border-radius: 0 0 20px 20px;
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+        padding: 20px;
+
+        #app-bar{
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            ion-icon{
+                font-size: 24px;
+                margin-left: -5px;
+            }
+
+        h1{
+            font-size: 19px;
+            margin-bottom: 5px;
+        }
+        p{
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        }
+    }
+    .wrapper{
+        position: absolute;
+        top: 26%;
+        left: 4%;
+        right: 4%;
+
+        .form-wrapper{
+            box-shadow: none;
+            border-radius: 20px;
+            padding: 15px 10px;
+            background: #323232;
+
+            ion-item{
+                --background: #D0CDCD;
+                --padding-start: 10px;
+                --highlight-height: 0;
+                --border-width: 0;
+                --padding-top: 0;
+                --min-height: 40px;
+                margin-bottom: 15px;
+                border-radius: 5px;
+
+                ion-icon{
+                    font-size: 18px;
+                    color: #000000;
+                }
+                ion-input{
+                    color: #5B5959;
+                    margin-left: 10px;
+                    font-size: 14px;
+                }
+            }
+
+            ion-button{
+                margin-top: 25px;              
+            }
+        }
+
+        .line-text{
+            padding: 0 30px;
+            position: relative;
+            height: 20px;
+            margin-top: 30px;
+
+            .text{
+                position: absolute;
+                top: -7px;
+                left: 25%;
+                transform: translateX(-15%);
+            }
+        }
+    }
 }
