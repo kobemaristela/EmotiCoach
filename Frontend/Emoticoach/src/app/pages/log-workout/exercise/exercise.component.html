@@ -1,13 +1,18 @@
 <ion-card>
   <ion-card-header>
     <ion-card-title>
-      <ion-input [clearOnEdit]="true"  placeholder="Excercise" [value]="activityName"></ion-input>
+      <ion-input 
+        [clearOnEdit]="true"  
+        placeholder="Excercise" 
+        [(ngModel)]="activity.name"
+        (ionChange)="updateName()">
+      </ion-input>
     </ion-card-title>
   </ion-card-header>
   
   <ion-card-content>
     <app-exercise-set 
-      *ngFor="let set of sets; index as i;"
+      *ngFor="let set of activity.sets; index as i;"
       [activityIndex] = "activityIndex"
       [set] = "set"
       [setCount]="i+1"

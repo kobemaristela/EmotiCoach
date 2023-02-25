@@ -14,7 +14,7 @@ export class SessionService {
   currentSession: session;
   newSession: boolean = false;
   date:Date;
-
+  
   constructor() { 
     this.sessions = sessionsJson
     this.date = new Date();
@@ -26,9 +26,20 @@ export class SessionService {
     return (this.date.getMonth() + 1) + "/" + this.date.getDate()
   }
 
+  saveSession(){
+    if (this.newSession){
+      console.log("saving")
+      this.sessions.unshift(this.currentSession);
+      this.newSession = false;
+    }
+  }
+  updateCurrentSession(updatedSession: session){
+    this.currentSession = updatedSession;
+  }
+
   createNewSession(){
     this.newSession = true;
-   
+    this.currentSession = new Session("0", "workout " + this.getDayMonth());
     console.log(this.currentSession);
     //Api call to create basic info 
   }
@@ -63,7 +74,14 @@ export class SessionService {
 
   updateSet(activityIndex: number, setIndex: number, newSet: set){
     this.currentSession.activities[activityIndex].sets[setIndex] = newSet;
-    console.log(this.currentSession.activities)
+    console.log(
+      "setIndex\n",setIndex+"\n",
+      "activty index \n" + activityIndex,
+      this.currentSession.activities[activityIndex]
+    )
   }
+  
+
+
 
 }

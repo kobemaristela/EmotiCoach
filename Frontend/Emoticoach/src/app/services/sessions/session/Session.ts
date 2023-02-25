@@ -18,6 +18,15 @@ export class Session implements session{
         this.activities = ((activities) ? activities : [new Activity("0")]);
     }
 
+    createCopy(oldSession: session){
+        this.id = oldSession.id;
+        this.name = oldSession.name;
+        this.duration = oldSession.duration;
+        this.datetime = oldSession.datetime;
+        this.muscleGroups = oldSession.muscleGroups;
+        // this.activities = new Activity oldSession.activities;
+    }
+
     updateId(id:string){
         this.id = id;
     }

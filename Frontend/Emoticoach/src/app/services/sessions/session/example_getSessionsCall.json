@@ -2,7 +2,7 @@
     {
         "id": "1234",
         "name": "test day 1",
-        "datetime": "10/10/10 10:10:10",
+        "datetime": "2023-02-25T13:47:00-08:00",
         "duration": 120,
         "muscleGroups": [
             "chest",
@@ -34,7 +34,7 @@
     {
         "id": "1235",
         "name": "test day 2",
-        "datetime": "10/10/10 10:10:10",
+        "datetime": "2023-02-25T13:47:00-08:00",
         "duration": 120,
         "muscleGroups": [
             "chest",
