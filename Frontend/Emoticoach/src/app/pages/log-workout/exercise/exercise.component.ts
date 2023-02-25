@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ExerciseSetComponent } from './exercise-set/exercise-set.component';
-import { SessionService } from 'src/app/services/session.service';
-
+import { SessionService } from 'src/app/services/sessions/session/session.service';
+import { set } from 'src/app/services/sessions/sets/Iset';
+import { Set } from 'src/app/services/sessions/sets/Set';
+import { Activity } from 'src/app/services/sessions/activity/Activity';
+import { activity } from 'src/app/services/sessions/activity/Iactivity';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
@@ -12,14 +15,18 @@ export class ExerciseComponent implements OnInit {
   @ViewChild('container', { read: ViewContainerRef })
   container!: ViewContainerRef
 
+  @Input() activity: activity = new Activity("");
+  @Input() activityIndex: number = 0;
+  // @Input() activityName: string = "";
+  // @Input() sets: set[] = [];
 
-  sets : any[] = [];
-  setCount : number = 1;
   constructor(private service: SessionService) { }
 
   ngOnInit() {}
-  addNewComponent(){
-    this.container.createComponent(ExerciseSetComponent);
-    this.setCount++;
+  addSet(){
+    this.activity.sets.push(new Set());
+  }
+  updateName(){
+    // this.service.updateActivity(activity);
   }
 }
