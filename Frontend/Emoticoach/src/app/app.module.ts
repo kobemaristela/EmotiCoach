@@ -9,9 +9,17 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgChartsModule } from 'ng2-charts';
 
+
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, NgChartsModule, HttpClientModule ],
+
+  imports: [
+      BrowserModule, 
+      IonicModule.forRoot(), 
+      AppRoutingModule, 
+      NgChartsModule ,
+      HttpClientModule
+    ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

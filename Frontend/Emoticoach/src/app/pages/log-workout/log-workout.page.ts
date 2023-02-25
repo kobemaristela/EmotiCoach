@@ -1,6 +1,10 @@
 import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ExerciseComponent } from './exercise/exercise.component';
-import { SessionService } from 'src/app/services/session.service';
+import { SessionService } from 'src/app/services/sessions/session/session.service';
+import { session } from 'src/app/services/sessions/session/Isession';
+import { activity } from 'src/app/services/sessions/activity/Iactivity';
+import { Activity } from 'src/app/services/sessions/activity/Activity';
+import { Session } from 'src/app/services/sessions/session/Session';
 
 @Component({
   selector: 'app-log-workout',
@@ -10,22 +14,30 @@ import { SessionService } from 'src/app/services/session.service';
 export class LogWorkoutPage implements OnInit {
   @ViewChild('container', { read: ViewContainerRef })
   container!: ViewContainerRef;
-  myDate : Date = new Date();
-  date : string = this.myDate.toISOString();
-  workoutName : string =  "workout " + this.myDate.getMonth() + "/" + this.myDate.getDate();
+  currentSession: session;
+  activities: activity[] = [];
 
-  activities: any[] = [];
-  constructor(private servSession: SessionService) {}
+  
+  constructor(private servSession: SessionService) {
+    this.currentSession = {id: "", name: "", duration:0, datetime:"",muscleGroups:[],activities:[]};
+  }
 
   ngOnInit() {
-    this.activities = this.servSession.getSessions("1");
-    this.activities = this.activities[0].activity;
-    console.log("in the low-workoutpage");
-    console.log(this.activities);
+    console.log("in the log-workoutpage");
+    this.currentSession = this.servSession.getCurrentSession();
+    this.activities = this.currentSession.activities;
   }
 
   addNewComponent(){
-    this.container.createComponent(ExerciseComponent);
+    this.activities.push(new Activity("0"))
+    
+  }
+
+  saveSession(){
+    console.log("saving in logworkout.ts");
+    this.servSession.updateCurrentSession(this.currentSession);
+    this.servSession.saveSession();
+    
   }
   
 }
