@@ -1,3 +1,4 @@
+import { NavController } from '@ionic/angular';
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
 // install Swiper modules
@@ -10,6 +11,7 @@ SwiperCore.use([Pagination]);
 })
 export class HomePage implements OnInit, AfterContentChecked {
 
+  headers: any;
   workoutData: any[] = [];
   bannerConfig: SwiperOptions;
   featureConfig: SwiperOptions;
@@ -55,7 +57,8 @@ export class HomePage implements OnInit, AfterContentChecked {
     '/log-workout',
   ];
 
-  constructor() { }
+    constructor(public navCtrl: NavController) {
+  }
 
   ngOnInit() {
     this.workoutData = [
