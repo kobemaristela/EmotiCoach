@@ -50,7 +50,7 @@ export class HomePage implements OnInit, AfterContentChecked {
   routing: string[] = [
     '/log-workout',
     '/graph-hr',
-    '/log-workout',
+    '/login',
     '/log-workout',
     '/log-workout',
   ];
@@ -74,5 +74,4 @@ export class HomePage implements OnInit, AfterContentChecked {
       slidesPerView: 3.5,
     };
   }
-
 }

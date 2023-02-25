@@ -4,6 +4,7 @@
   "compilerOptions": {
     "strictPropertyInitialization": false,
     "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
