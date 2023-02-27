@@ -150,8 +150,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # MQTT Settings
-MQTT_SERVER = '10.69.69.182'
-MQTT_PORT = 1883
-MQTT_KEEPALIVE = 60
-MQTT_USER = ''
-MQTT_PASSWORD = ''
+MQTT_SERVER = os.environ.get("MQTT_SERVER")
+MQTT_PORT = os.environ.get("MQTT_PORT")
+MQTT_KEEPALIVE = os.environ.get("MQTT_KEEPALIVE")
+MQTT_USER = os.environ.get("MQTT_USER","")  # default blank
+MQTT_PASSWORD = os.environ.get("MQTT_PASSWORD","") # default blank
