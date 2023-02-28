@@ -1,13 +1,18 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+<ion-toolbar>
+  <ion-buttons slot="start" color="#fff" routerLink="/login">
+    <ion-button expand="block">
+      <ion-icon name="person-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
     <ion-title>Emoticoach</ion-title>
+    <ion-buttons slot="end">
+      <ion-button expand="block">
+        <ion-icon name="settings-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
-<ion-header>
-  <ion-toolbar>
+
+  <ion-toolbar color="#000000">
     <ion-buttons slot="start">
       <ion-button expand="block">
         <ion-icon name="chevron-back-outline"></ion-icon>
@@ -15,12 +20,11 @@
     </ion-buttons>
 
     <ion-buttons slot="end">
-      <ion-button expand="block">
+      <ion-button expand="block" routerLink="/log-workout">
         <ion-icon name="add-circle-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
 
 <ion-content>
   <ion-row class="banners">

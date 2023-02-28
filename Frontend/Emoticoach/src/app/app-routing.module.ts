@@ -27,17 +27,34 @@ const routes: Routes = [
     loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
   },
   {
-    path: 'metric-selection',
-    loadChildren: () => import('./pages/metric-selection/metric-selection.module').then( m => m.MetricSelectionPageModule)
-  },
-  {
     path: 'graph-hr',
     loadChildren: () => import('./pages/graph-hr/graph-hr.module').then( m => m.GraphHrPageModule)
   },
   {
     path: 'workouts-dashboard',
     loadChildren: () => import('./pages/workouts-dashboard/workouts-dashboard.module').then( m => m.WorkoutsDashboardPageModule)
+  },
+  {
+    path: 'graph-onerm',
+    loadChildren: () => import('./pages/graph-onerm/graph-onerm.module').then( m => m.GraphOnermPageModule)
+  },
+  {
+    path: 'graph-treps',
+    loadChildren: () => import('./pages/graph-treps/graph-treps.module').then( m => m.GraphTrepsPageModule)
+  },
+  {
+    path: 'graph-tweight',
+    loadChildren: () => import('./pages/graph-tweight/graph-tweight.module').then( m => m.GraphTweightPageModule)
+  },
+  {
+    path: 'templates',
+    loadChildren: () => import('./pages/templates/templates.module').then( m => m.TemplatesPageModule)
+  },
+  {
+    path: 'graph-rpe',
+    loadChildren: () => import('./pages/graph-rpe/graph-rpe.module').then( m => m.GraphRpePageModule)
   }
+
   
 
 

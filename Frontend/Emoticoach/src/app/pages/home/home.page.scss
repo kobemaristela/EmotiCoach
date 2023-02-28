@@ -1,3 +1,7 @@
+ion-icon{
+    color: #fff;
+}
+
 ion-content{
     --background : #000000;
     ion-col{
@@ -26,7 +30,7 @@ ion-content{
     ion-row.banners {
         position: relative;
         padding: 20px;
-        height: 210px;
+        height: 200px;
         background: #833535;
         border-radius: 2.5rem;
         margin: 6vh 1rem 0 1rem;
