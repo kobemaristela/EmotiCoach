@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.core import serializers
+
 from .models import Session, Activity, MuscleGroup, Set
 from .controller import parseActivity
 import json
@@ -107,4 +109,13 @@ class SetSessionData(APIView):
 
 
         return JsonResponse({"status":"0"})
-        
+
+
+class GetAllSessions(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        sessions = Session.objects.all()
+        response = serializers.serialize("json", sessions)
+        return JsonResponse(response, safe=False)
