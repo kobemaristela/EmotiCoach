@@ -8,6 +8,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgChartsModule } from 'ng2-charts';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 
 @NgModule({
@@ -18,7 +19,10 @@ import { NgChartsModule } from 'ng2-charts';
       IonicModule.forRoot(), 
       AppRoutingModule, 
       NgChartsModule ,
-      HttpClientModule
+      HttpClientModule,
+      NgxEchartsModule.forRoot({
+        echarts: () => import('echarts'),
+      }),
     ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

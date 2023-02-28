@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -13,7 +14,8 @@ import { GraphOnermPage } from './graph-onerm.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    GraphOnermPageRoutingModule
+    GraphOnermPageRoutingModule,
+    NgxEchartsModule.forChild()
   ],
   declarations: [GraphOnermPage]
 })
