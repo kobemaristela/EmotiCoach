@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MetricSelectionPageRoutingModule } from './metric-selection-routing.module';
+import { GraphTrepsPageRoutingModule } from './graph-treps-routing.module';
 
-import { MetricSelectionPage } from './metric-selection.page';
+import { GraphTrepsPage } from './graph-treps.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MetricSelectionPageRoutingModule
+    GraphTrepsPageRoutingModule
   ],
-  declarations: [MetricSelectionPage]
+  declarations: [GraphTrepsPage]
 })
-export class MetricSelectionPageModule {}
+export class GraphTrepsPageModule {}

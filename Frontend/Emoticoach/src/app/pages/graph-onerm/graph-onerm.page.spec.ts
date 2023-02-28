@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MetricSelectionPage } from './metric-selection.page';
+import { GraphOnermPage } from './graph-onerm.page';
 
-describe('MetricSelectionPage', () => {
-  let component: MetricSelectionPage;
-  let fixture: ComponentFixture<MetricSelectionPage>;
+describe('GraphOnermPage', () => {
+  let component: GraphOnermPage;
+  let fixture: ComponentFixture<GraphOnermPage>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MetricSelectionPage ],
+      declarations: [ GraphOnermPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MetricSelectionPage);
+    fixture = TestBed.createComponent(GraphOnermPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

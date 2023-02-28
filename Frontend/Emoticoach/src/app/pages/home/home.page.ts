@@ -50,11 +50,11 @@ export class HomePage implements OnInit, AfterContentChecked {
   ];
 
   routing: string[] = [
-    '/log-workout',
-    '/graph-hr',
-    '/login',
-    '/log-workout',
-    '/log-workout',
+    '/graph-rpe',
+    '/templates',
+    '/graph-tweight',
+    '/graph-onerm',
+    '/graph-treps',
   ];
 
     constructor(public navCtrl: NavController) {
