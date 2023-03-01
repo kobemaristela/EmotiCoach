@@ -8,7 +8,7 @@ import Chart from 'chart.js/auto'
   styleUrls: ['./graph-onerm.page.scss'],
 })
 export class GraphOnermPage implements OnInit {
-  public chart: any;
+  public chart: any; //hello
 
   constructor() { }
 
