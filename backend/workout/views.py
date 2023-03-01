@@ -31,7 +31,7 @@ class SessionData(APIView):
         sessionInfo["duration"] = session.duration
 
         activity = Activity.objects.filter(session_id = id).values_list("id", "name")
-        sessionInfo["activity"] = list(map(parseActivity, activity))
+        sessionInfo["activities"] = list(map(parseActivity, activity))
 
         return JsonResponse(sessionInfo)
     
