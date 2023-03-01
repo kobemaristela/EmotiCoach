@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EChartsOption } from 'echarts';
+import Chart from 'chart.js/auto'
 
 @Component({
   selector: 'app-graph-onerm',
@@ -7,32 +8,41 @@ import { EChartsOption } from 'echarts';
   styleUrls: ['./graph-onerm.page.scss'],
 })
 export class GraphOnermPage implements OnInit {
-  chartOption: EChartsOption = {
-    xAxis: {
-      type: 'category',
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: {
-      type: 'value'
-    },
-    series: [
-      {
-        data: [120, 200, 150, 80, 70, 110, 130],
-        type: 'bar',
-        itemStyle: {
-          color: '#833535'
-        },
-        showBackground: true,
-        backgroundStyle: {
-          color: '#929292'
-        }
-      }
-    ]
-  };
+  public chart: any;
 
   constructor() { }
 
   ngOnInit() {
+    this.createChart();
+  }
+  createChart(){
+  
+    this.chart = new Chart("MyChart", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
+								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
+	       datasets: [
+          {
+            label: "Sales",
+            data: ['467','576', '572', '79', '92',
+								 '574', '573', '576'],
+            backgroundColor: 'blue'
+          },
+          {
+            label: "Profit",
+            data: ['542', '542', '536', '327', '17',
+									 '0.00', '538', '541'],
+            backgroundColor: 'limegreen'
+          }  
+        ]
+      },
+      options: {
+        aspectRatio:2.5
+      }
+      
+    });
   }
 
 }

@@ -53,7 +53,7 @@ export class HomePage implements OnInit, AfterContentChecked {
     '/graph-rpe',
     '/templates',
     '/graph-tweight',
-    '/graph-onerm',
+    '/tabs/graph-onerm',
     '/graph-treps',
   ];
 
