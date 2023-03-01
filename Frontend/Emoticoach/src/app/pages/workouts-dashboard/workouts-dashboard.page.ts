@@ -10,7 +10,9 @@ import { SessionService } from 'src/app/services/sessions/session/session.servic
 export class WorkoutsDashboardPage implements OnInit {
   sessions: session[] = [];
 
-  constructor(private servSession: SessionService) { }
+  constructor(private servSession: SessionService) { 
+    
+  }
 
   ngOnInit() {
     this.sessions = this.servSession.getSessions()

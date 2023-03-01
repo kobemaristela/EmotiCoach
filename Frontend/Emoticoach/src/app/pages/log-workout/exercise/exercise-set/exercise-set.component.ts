@@ -11,18 +11,21 @@ import { EventEmitter } from 'stream';
 export class ExerciseSetComponent implements OnInit {
 
   @Input() activityIndex: number = 0;
-  @Input() setCount: number = 1;
+  @Input() setCount: number = 0;
   @Input()  set: set;
 
   constructor(private service: SessionService) { 
     this.set = {
+      set_num: 0,
       weight: 0,
       reps: 0,
       rpe: 0
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.set.set_num = this.setCount - 1;
+  }
 
   updateSet() {
     this.service.updateSet(this.activityIndex, this.setCount - 1, this.set);
