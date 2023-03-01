@@ -1,25 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>Sign Up</ion-title>
-  </ion-toolbar>
-</ion-header>
 <ion-content>
-  <form>
-    <ion-item lines="full">
-      <ion-label position="floating">Email</ion-label>
-      <ion-input type="text" required></ion-input>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Password</ion-label>
-      <ion-input type="password" required></ion-input>
-    </ion-item>
-    <ion-row>
-      <ion-col>
-        <ion-button type="submit" color="primary" expand="block" (click)="toLogin()">Sign Up</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+  <div id="header">
+    <div id="app-bar">
+    </div>
+    <h1>Sign Up</h1>
+    <p>Sign up for an Emoticoach account!</p>
+  </div>
+  <div class="wrapper">
+    <ion-card class="form-wrapper">
+      <ion-card-content>
+        <ion-item>
+          <ion-icon name="text-outline"></ion-icon>
+          <ion-input type="text" placeholder="First Name" [(ngModel)]="userData.firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="text-outline"></ion-icon>
+          <ion-input type="text" placeholder="Last Name" [(ngModel)]="userData.lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="mail"></ion-icon>
+          <ion-input type="text" placeholder="Email" [(ngModel)]="userData.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-input type="text" placeholder="Username" [(ngModel)]="userData.username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="lock-closed"></ion-icon>
+          <ion-input type="password" placeholder="Password" [(ngModel)]="userData.password"></ion-input>
+        </ion-item>
+        <ion-button expand="block" routerLink="/login" (click)="toRegister()">Sign Up</ion-button>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="line-text">
+      <span class="text">
+        Already have an account? <a routerLink="/login" (click)="toLogin()">Log in</a>
+      </span>
+  </div>
+  </div>
 </ion-content>

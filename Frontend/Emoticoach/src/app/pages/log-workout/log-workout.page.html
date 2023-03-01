@@ -1,29 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Workout</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="saveSession()">Save</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  
+</ion-header>
 <ion-content>
   <ion-list>
     <ion-item-divider sticky>
-      <ion-input [clearOnEdit]="true" [value]="workoutName"></ion-input>
-      <ion-icon slot="end" id="open-modal" name="calendar-outline"></ion-icon>
-      <ion-note slot="end">{{date | date:'short' }}</ion-note>
+      <ion-input 
+        [clearOnEdit]="true" 
+        [(ngModel)]="currentSession.name">
+      </ion-input>
+      <ion-icon 
+        slot="end" 
+        id="open-modal" 
+        name="calendar-outline">
+      </ion-icon>
+      <ion-note slot="end">
+        {{currentSession.datetime | date:'short' }}
+      </ion-note>
     </ion-item-divider>
-    <ion-modal trigger="open-modal" [cssClass]="'center'">
-      <ng-template>
-        <ion-datetime [(ngModel)]="date" size="cover"></ion-datetime>
-      </ng-template>
+    <ion-modal 
+      trigger="open-modal" 
+      [cssClass]="'center'">
+        <ng-template>
+          <ion-datetime [(ngModel)]="currentSession.datetime" size="cover"></ion-datetime>
+        </ng-template>
     </ion-modal>
  
-  <app-exercise></app-exercise>
+  <app-exercise 
+    *ngFor="let activity of activities; let i = index" 
+    [activity]="activity" 
+    [activityIndex]="i">
+  </app-exercise>
+  
   <ng-container #container></ng-container>
 
   <ion-row>
     <ion-col>
     </ion-col>
       <ion-col size="auto">
-        <ion-button (click)="addNewComponent()">Add Workout</ion-button>
+        <ion-button (click)="addNewComponent()">Add Excercise</ion-button>
       </ion-col>
       <ion-col>
       </ion-col>
   </ion-row>
-  <ion-card *ngFor="let activity of activities">{{activity.name}} </ion-card>
+  
   </ion-list>
 </ion-content>
 

@@ -1,50 +1,30 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-
-</ion-header>
-
 <ion-content>
-  <ion-item>
-    <ion-label>Email</ion-label>
-    <ion-input placeholder="Enter email"></ion-input>
-  </ion-item>
+  <div id="header">
+    <div id="app-bar">
+      <ion-icon name = "arrow-back" routerLink="/sign-up"></ion-icon>
+    </div>
+    <h1>Log In</h1>
+    <p>Log in to start logging your workouts!</p>
+  </div>
+  <div class="wrapper">
+    <ion-card class="form-wrapper">
+      <ion-card-content>
+        <ion-item>
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-input type="text" placeholder="Username" [(ngModel)]="userData.username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="lock-closed"></ion-icon>
+          <ion-input type="password" placeholder="Password" [(ngModel)]="userData.password"></ion-input>
+        </ion-item>
+        <ion-button expand="block" (click)="toHomepage()">Log in</ion-button>
+      </ion-card-content>
+    </ion-card>
 
-  <ion-item>
-    <ion-label>Password</ion-label>
-    <ion-input type="password" placeholder="Enter password"></ion-input>
-  </ion-item>
-
-  <ion-button>Log-In</ion-button>
-  <ion-button [disabled]="true">Register</ion-button>
-</ion-content> -->
-
-<ion-content>
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button></ion-back-button>
-      </ion-buttons>
-      <ion-title>Log In</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <form>
-      <ion-item lines="full">
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="text" required></ion-input>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" required></ion-input>
-      </ion-item>
-      <ion-row>
-        <ion-col>
-          <ion-button type="submit" color="primary" expand="block" (click)="home()">Sign In</ion-button>
-          <a [routerLink]="['/sign-up']" class="small-text">Register</a>
-        </ion-col>
-      </ion-row>
-    </form>
-  </ion-content>
+    <div class="line-text">
+        <span class="text">
+          Don't have an account? <a routerLink="/sign-up">Sign up</a>
+        </span>
+    </div>
+  </div>
 </ion-content>

@@ -1,5 +1,4 @@
 <ion-grid>
-
   <ion-row>
     <ion-col>
       <ion-item>
@@ -8,25 +7,39 @@
     </ion-col>
     <ion-col>
       <ion-item>
-        <ion-icon size="small" name="calendar-outline"></ion-icon>
-        <ion-input [clearOnEdit]="true" type="number" placeholder="Reps"></ion-input>
+        <ion-icon size="small" name="repeat-outline"></ion-icon>
+        <ion-input 
+          [clearOnEdit]="true" 
+          type="number"
+          placeholder="Reps" 
+          [(ngModel)]="set.reps"
+          (ionChange)="updateSet()">
+        </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <ion-item>
         <ion-icon size="small" name="barbell-outline"></ion-icon>
-        <ion-input [clearOnEdit]="true" type="number" placeholder="Lbs"></ion-input>
+        <ion-input 
+          [clearOnEdit]="true" 
+          type="number" 
+          placeholder="Lbs" 
+          [(ngModel)]="set.weight"
+          (ionChange)="updateSet()">
+        </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
       <ion-item>
         <ion-icon size="small" name="walk-outline"></ion-icon>
-        <ion-input [clearOnEdit]="true" type="number" placeholder="RPE"></ion-input>
+        <ion-input 
+          [clearOnEdit]="true" 
+          type="number"
+          placeholder="RPE" 
+          [(ngModel)]="set.rpe"
+          (ionChange)="updateSet()">
+        </ion-input>
       </ion-item>
     </ion-col>
-
-
-
-
   </ion-row>
 </ion-grid>

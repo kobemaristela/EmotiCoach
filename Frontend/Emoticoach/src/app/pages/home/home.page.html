@@ -1,48 +1,41 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button expand="block">
-        <ion-icon name="chevron-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
+<ion-toolbar>
+  <ion-buttons slot="start" color="#fff" routerLink="/login">
+    <ion-button expand="block">
+      <ion-icon name="person-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+    <ion-title>Emoticoach</ion-title>
     <ion-buttons slot="end">
       <ion-button expand="block">
-        <ion-icon name="add-circle-outline"></ion-icon>
+        <ion-icon name="settings-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-
-    <ion-title color="success">Today</ion-title>
   </ion-toolbar>
-</ion-header>
 
 <ion-content>
+  <ion-row class="banners">
+    <swiper [config]="bannerConfig">
+      <ng-template swiperSlide *ngFor="let data of workoutData">
+        <div align="center">
+          <ion-label>
+            <span><strong>Personal Record</strong></span>
+            <p class="acc-amt"><ion-text color="white">{{data?.record}} lbs.</ion-text></p>
+            <span>{{data?.workout_name}}</span>
+          </ion-label>
+        </div>
+      </ng-template>
+    </swiper>
+  </ion-row>
+
   <ion-grid>
     <ion-row>
-      <ion-col size="12">    
-      <ion-card color="dark">
-        <ion-card-header color ="primary" style="font-size: 24px">Squat PR</ion-card-header>
-        <ion-card-content>
-          <ion-list inset="true">
-            <ion-icon name="trophy-outline" color="dark" style="float:left"></ion-icon>
-            <ion-item color="dark">
-              <ion-label>185lbs</ion-label>
-            </ion-item>
-            <ion-item color="dark">
-              <ion-label>15 reps</ion-label>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </ion-card>
-      </ion-col>
-
       <ion-col size="12">
         <ion-card *ngFor="let card of homepageCards; let i = index" button="true" color="dark" routerLink={{routing[i]}} routerLinkActive="active" routerDirection="root">
-            <ion-icon name={{icons[i]}} color="light" style="float:left"></ion-icon>
+            <ion-icon name={{icons[i]}} color="#fff" style="float:left"></ion-icon>
         <ion-card-content>
           <ion-text color="light">
-            <h2 style="font-size:18px">{{upperText[i]}}</h2>
-            <h3 style="font-size:16px" style="color: medium">{{lowerText[i]}}</h3>
+            <h2 style="font-size:18px" style ="color: #fff">{{upperText[i]}}</h2>
+            <h3 style="font-size:16px" style="color: #929292">{{lowerText[i]}}</h3>
           </ion-text>
         </ion-card-content>
           </ion-card>

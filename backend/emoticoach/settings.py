@@ -44,9 +44,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
 
+    'corsheaders',
+
     "user",
     "workout",
     "website",
+    "demo",
 ]
 
 REST_FRAMEWORK = {
@@ -63,7 +66,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'emoticoach.urls'
 
@@ -141,3 +147,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# MQTT Settings
+MQTT_SERVER = os.environ.get("MQTT_SERVER")
+MQTT_PORT = int(os.environ.get("MQTT_PORT"))
+MQTT_KEEPALIVE = int(os.environ.get("MQTT_KEEPALIVE"))
+MQTT_USER = os.environ.get("MQTT_USER","")  # default blank
+MQTT_PASSWORD = os.environ.get("MQTT_PASSWORD","") # default blank

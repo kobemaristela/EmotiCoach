@@ -1,3 +1,7 @@
+ion-icon{
+    color: #fff;
+}
+
 ion-content{
     --background : #000000;
     ion-col{
@@ -14,6 +18,7 @@ ion-content{
             margin-top:0;
         }
         ion-card{
+            background: #833535;
             box-shadow: 0 !important;
             text-align: center;
             margin-bottom: 0px !important;
@@ -21,5 +26,37 @@ ion-content{
         ion-item{
             text-align: center;
         }
+    }
+    ion-row.banners {
+        position: relative;
+        padding: 20px;
+        height: 200px;
+        background: #833535;
+        border-radius: 2.5rem;
+        margin: 6vh 1rem 0 1rem;
+        swiper {
+            div {
+                ion-label {
+                    p.acc-amt {
+                        margin: 1rem 0;
+                        font-size: 3rem;
+                        font-weight: 700;
+                    }
+                }
+            }
+        }
+    }
+
+    ion-row.banners::after {
+        content: "";
+        position: absolute;
+        top: 1px;
+        left: 1px;
+        right: 1px;
+        bottom: 1px;
+        background: #833535;
+        border-radius: 2.5rem;
+        z-index: 0;
+        border: 2px solid transparent;
     }
 }

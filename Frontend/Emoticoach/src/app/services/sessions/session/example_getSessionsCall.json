@@ -1,0 +1,94 @@
+[
+    {
+        "id": "1234",
+        "name": "test day 1",
+        "datetime": "2023-02-25T13:47:00-08:00",
+        "duration": 120,
+        "muscleGroups": [
+            "chest",
+            "triceps"
+        ],
+        "activities": [
+            {
+                "id": "1111",
+                "name": "activityOne",
+                "muscleGroups": [
+                    "chest",
+                    "tris"
+                ],
+                "sets": [
+                    {
+                        "set_num": 0,
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    },
+                    {
+                        "set_num": 1,
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "1235",
+        "name": "test day 2",
+        "datetime": "2023-02-25T13:47:00-08:00",
+        "duration": 120,
+        "muscleGroups": [
+            "chest",
+            "triceps"
+        ],
+        "activities": [
+            {
+                "id": "1111",
+                "name": "activityOne",
+                "numberOfSets": 12,
+                "muscleGroups": [
+                    "chest",
+                    "tris"
+                ],
+                "sets": [
+                    {
+                        "set_num": 0,
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    },
+                    {
+                        "set_num": 1,
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    }
+                ]
+            },
+            {
+                "id": "2222",
+                "name": "activity2",
+                "numberOfSets": 12,
+                "muscleGroups": [
+                    "chest",
+                    "tris"
+                ],
+                "sets": [
+                    {
+                        "set_num": 0,
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    },
+                    {
+                        "set_num": 1,
+                        "weight": 185,
+                        "reps": 5,
+                        "rpe": 8
+                    }
+                ]
+            }
+        ]
+    }
+]

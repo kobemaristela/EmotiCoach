@@ -1,25 +1,41 @@
 <ion-content class="ion-padding" >
-  <ion-datetime 
+  <!-- <ion-datetime 
  
     presentation="date" 
     [multiple]="true" 
     [value]="['2022-12-03']">
-  </ion-datetime>
+  </ion-datetime> -->
   <ion-list>
     <ion-item-divider sticky>
       <ion-item>
         December 12 - December 19
       </ion-item>
-<!-- testing if sign works -->
       
     </ion-item-divider>
-    <ion-item *ngFor="let session of sessions; index as i;">
-      {{session.name}}
-    </ion-item>
+    <ion-card  
+      *ngFor="let session of sessions; index as i;"
+      button="true"
+      (click)="goToSession(i)"
+      routerDirection="forward"
+      routerLink="/log-workout" 
+      routerLinkActive="active" 
+    >
+      <ion-card-header>
+        <ion-card-title>{{session.name}}</ion-card-title>
+        <ion-card-subtitle>{{session.datetime}}</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content>
+      {{session.duration}} mins
+      {{session.muscleGroups}}
+      </ion-card-content>
+    </ion-card>
+
+  
     <ion-row>
       <ion-col></ion-col>
       <ion-col size="auto">
-        <ion-button routerLink="/log-workout" routerLinkActive="active" routerDirection="root">Log workout </ion-button>
+        <ion-button (click)="createNewSession()"routerLink="/log-workout" routerLinkActive="active" routerDirection="forward">Log A Workout </ion-button>
       </ion-col>
       <ion-col></ion-col>
     </ion-row>
