@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
+        path: 'graph-onerm',
+        loadChildren: () => import('../pages/graph-onerm/graph-onerm.module').then(m => m.GraphOnermPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

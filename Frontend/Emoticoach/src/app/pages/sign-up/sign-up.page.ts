@@ -7,13 +7,39 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./sign-up.page.scss'],
 })
 export class SignUpPage implements OnInit {
+  
+  userData = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  username: '',
+  password: ''
+  }
 
   constructor(public navCtrl: NavController) { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  toLogin() {}
+
+  toRegister(){
+    this.registerRequest();
   }
 
-  toLogin(){
-    this.navCtrl.navigateForward('/login')
+  async registerRequest(){
+    const formData = new FormData();
+    formData.append("first_name", this.userData.firstName);
+    formData.append("last_name", this.userData.lastName);
+    formData.append("email", this.userData.email);
+    formData.append("username", this.userData.username);
+    formData.append("password", this.userData.password);
+
+    let tableParam = {
+      method: "POST",
+      body: formData
+  }
+  const res = await fetch("https://emotidev.maristela.net/user/register", tableParam);
+  let registerResponse = await res.json();
+  console.log(registerResponse);
   }
 }
