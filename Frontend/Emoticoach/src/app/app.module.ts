@@ -11,6 +11,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 
+
 @NgModule({
   declarations: [AppComponent],
 
