@@ -16,17 +16,17 @@ class Activity(models.Model):
 
 class MuscleGroup(models.Model):
     activity = models.OneToOneField(Activity, on_delete=models.CASCADE)
-    chest = models.BooleanField()
-    tricep = models.BooleanField()
-    bicep = models.BooleanField()
-    shoulder = models.BooleanField()
-    upper_back = models.BooleanField()
-    lower_back = models.BooleanField()
-    quadricep = models.BooleanField()
-    hamstring = models.BooleanField()
-    glute = models.BooleanField()
-    calve = models.BooleanField()
-    abdominal = models.BooleanField()
+    chest = models.BooleanField(default=False, null=True)
+    tricep = models.BooleanField(default=False, null=True)
+    bicep = models.BooleanField(default=False, null=True)
+    shoulder = models.BooleanField(default=False, null=True)
+    upper_back = models.BooleanField(default=False, null=True)
+    lower_back = models.BooleanField(default=False, null=True)
+    quadricep = models.BooleanField(default=False, null=True)
+    hamstring = models.BooleanField(default=False, null=True)
+    glute = models.BooleanField(default=False, null=True)
+    calve = models.BooleanField(default=False, null=True)
+    abdominal = models.BooleanField(default=False, null=True)
 
 class Set(models.Model):
     set_num = models.IntegerField()
