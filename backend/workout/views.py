@@ -25,9 +25,10 @@ class SessionData(APIView):
         session = Session.objects.get(id=id, auth_user_id=user_id)
 
         sessionInfo = dict()
-        sessionInfo["session_name"] = session.name
-        sessionInfo["session_datetime"] = session.datetime
-        sessionInfo["session_duration"] = session.duration
+        sessionInfo["id"] = session.id
+        sessionInfo["name"] = session.name
+        sessionInfo["datetime"] = session.datetime
+        sessionInfo["duration"] = session.duration
 
         activity = Activity.objects.filter(session_id = id).values_list("id", "name")
         sessionInfo["activity"] = list(map(parseActivity, activity))
