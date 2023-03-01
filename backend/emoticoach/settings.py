@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "user",
     "workout",
     "website",
+    "graph",
     "demo",
 ]
 
@@ -151,7 +152,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # MQTT Settings
 MQTT_SERVER = os.environ.get("MQTT_SERVER")
-MQTT_PORT = os.environ.get("MQTT_PORT")
-MQTT_KEEPALIVE = os.environ.get("MQTT_KEEPALIVE")
+MQTT_PORT = int(os.environ.get("MQTT_PORT"))
+MQTT_KEEPALIVE = int(os.environ.get("MQTT_KEEPALIVE"))
 MQTT_USER = os.environ.get("MQTT_USER","")  # default blank
 MQTT_PASSWORD = os.environ.get("MQTT_PASSWORD","") # default blank
