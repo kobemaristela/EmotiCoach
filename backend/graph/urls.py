@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import displayPPG
+from .views import getHeartrateData
 
 urlpatterns = [
-    path('displayppg', displayPPG.as_view()),
+    path('getheartratedata', getHeartrateData.as_view()),
 ]

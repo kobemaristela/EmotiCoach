@@ -2,9 +2,9 @@ import paho.mqtt.client as mqtt
 from django.conf import settings
 from time import time
 
-ppg_infrared = list()
-ppg_red = list()
-ppg_green = list()
+ppg_infrared = [[0,0],[0,0]]
+ppg_red = [[0,0],[0,0]]
+ppg_green = [[0,0],[0,0]]
 
 # Connect to MQTT server
 def on_connect(mqtt_client, userdata, flags, rc):
@@ -21,15 +21,15 @@ def on_message(mqtt_client, userdata, msg):
     message = float(msg.payload[1:])
     if msg.topic == "emoticoach/ppg/infrared":
         ppg_infrared.append((time(), message))
-        if len(ppg_infrared) >= 100:
+        if len(ppg_infrared) >= 300:
             ppg_infrared.pop(0)
     if msg.topic == "emoticoach/ppg/red":
         ppg_red.append((time(), message))
-        if len(ppg_red) >= 100:
+        if len(ppg_red) >= 300:
             ppg_red.pop(0)
     if msg.topic == "emoticoach/ppg/green":
         ppg_green.append((time(), message))
-        if len(ppg_green) >= 100:
+        if len(ppg_green) >= 300:
             ppg_green.pop(0)
         
 
