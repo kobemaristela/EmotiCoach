@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core import serializers
 
 from .models import Session, Activity, MuscleGroup, Set
-from .controller import parseActivity
+from .controller import parseActivity, getMuscleGroups
 import json
 
 from rest_framework.views import APIView
@@ -117,6 +117,18 @@ class GetAllSessions(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        sessions = Session.objects.all()
-        response = serializers.serialize("json", sessions)
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        userId = Token.objects.get(key=token).user_id
+
+        sessions = Session.objects.filter(auth_user_id=userId)
+        response = list()
+
+        for session in sessions:
+            sessionDict = {"id": session.id,
+                           "name": session.name,
+                           "duration": session.duration,
+                           "datetime": session.datetime,
+                           "muscleGroups": getMuscleGroups(session)}
+            response.append(sessionDict)
+
         return JsonResponse(response, safe=False)

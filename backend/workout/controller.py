@@ -1,4 +1,4 @@
-from .models import MuscleGroup, Set
+from .models import MuscleGroup, Set, Activity
 
 def filterMuscleGroups(muscleGroup):
     allGroups = [f.name for f in MuscleGroup._meta.get_fields()]
@@ -22,3 +22,14 @@ def parseActivity(activity):
     activityDict["sets"] = list(Set.objects.filter(activity_id = activity[0]).values("id", "set_num", "weight", "reps", "rpe"))
     
     return activityDict
+
+def getMuscleGroups(sessionId):
+    activities = Activity.objects.filter(session_id=sessionId).values("id")
+
+    muscleGroups = list()
+    for activity in activities:
+        muscleGroup = MuscleGroup.objects.get(activity_id=activity["id"])
+        muscleGroup = filterMuscleGroups(muscleGroup)
+        muscleGroups += muscleGroup
+    return [*set(muscleGroups)]
+
