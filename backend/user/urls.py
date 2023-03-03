@@ -2,8 +2,8 @@ from django.urls import path, include
 from .views import Login, Register, Logout, show_database
 
 urlpatterns = [
-    path('login', Login.as_view()),
-    path('register', Register.as_view()),
-    path('logout', Logout.as_view()),
+    path('login', Login.as_view(), name="login"),
+    path('register', Register.as_view(), name="register"),
+    path('logout', Logout.as_view(), name="logout"),
     path('showDb', show_database)
 ]
