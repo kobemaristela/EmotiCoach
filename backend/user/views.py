@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
@@ -8,7 +9,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.exceptions import APIException, AuthenticationFailed, ValidationError, ParseError
 from django.http import JsonResponse, HttpResponse
 
 class Login(ObtainAuthToken):
@@ -27,12 +28,39 @@ class Login(ObtainAuthToken):
 class Register(APIView):
     def post(self, request):
         first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        username = request.POST.get("username")
-        email = request.POST.get("email")
-        password = request.POST.get("password")
+        last_name = str(request.POST.get("last_name"))
+        username = str(request.POST.get("username"))
+        email = str(request.POST.get("email"))
+        password = str(request.POST.get("password"))
 
-        user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+        # No Blank Fields
+        if (first_name == "" or last_name == "" or username == "" or
+            email == "" or password == ""):
+            raise ParseError()
+
+
+        # First and Last Name - must be alpha
+        if not first_name.isalpha() or not last_name.isalpha():
+            raise ParseError()
+        
+
+        # Username must be alphanum
+        if not username.isalnum():
+            raise ParseError()
+
+
+        # Email must match email format - test@example.com
+        email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_regex, email):
+            raise ParseError()
+
+
+        password_regex = r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$'
+        if not re.match(password_regex, password):
+            raise ParseError()
+
+
+        User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
 
         return JsonResponse({"response":"success"})
         
