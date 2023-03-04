@@ -1,4 +1,5 @@
 from rest_framework.test import APITestCase
+from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from parameterized import parameterized
@@ -226,3 +227,73 @@ class TestUserRegister(APITestCase):
 
         self.assertEqual(request.status_code, expected_status_code)
 
+class TestUserLogin(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            first_name="Kobe",
+            last_name="Maristela",
+            username="kobemaristela",
+            email="kobe@maristela.com",
+            password="Password123$"
+        )
+
+    def test_user_login_success(self):
+        response = self.client.post(
+            reverse("login"),
+            {
+                "username": "kobemaristela",
+                "password": "Password123$"
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIsNotNone(response.data["token"])
+        self.assertNotEqual(response.data["token"], '')
+
+
+    def test_user_login_fail(self):
+        response = self.client.post(
+            reverse("login"),
+            {
+                "username": "kobemaristela",
+                "password": "WrongPassword123$"
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+class TestUserLogout(APITestCase):
+    def setUp(self):
+        self.user = User.objects.create_user(
+            first_name="Kobe",
+            last_name="Maristela",
+            username="kobemaristela",
+            email="kobe@maristela.com",
+            password="Password123$"
+        )
+
+    def test_user_logout_success(self):
+        #  Login User
+        response = self.client.post(
+            reverse("login"),
+            {
+                "username": "kobemaristela",
+                "password": "Password123$",
+            },
+        )
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        
+        # Check Active Token
+        active_token = response.data["token"]
+        self.assertIsNotNone(active_token)
+        self.assertNotEqual(active_token, '')
+
+
+        # Logout User
+        response = self.client.get(reverse("logout"))
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        # Check Token Deleted
+        deleted_token = self.client.session.get('auth_token')
+        self.assertIsNone(deleted_token)

@@ -60,7 +60,13 @@ class Register(APIView):
             raise ParseError()
 
 
-        User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
+        User.objects.create_user(
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            password=password
+        )
 
         return JsonResponse({"response":"success"})
         
