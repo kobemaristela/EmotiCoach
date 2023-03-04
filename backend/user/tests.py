@@ -283,7 +283,7 @@ class TestUserLogout(APITestCase):
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        
+
         # Check Active Token
         active_token = response.data["token"]
         self.assertIsNotNone(active_token)
