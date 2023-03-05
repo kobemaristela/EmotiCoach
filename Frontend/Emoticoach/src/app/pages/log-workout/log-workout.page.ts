@@ -19,23 +19,28 @@ export class LogWorkoutPage implements OnInit {
 
   
   constructor(private servSession: SessionService) {
-    this.currentSession = {id: "", name: "", duration:0, datetime:"",muscleGroups:[],activities:[]};
+    this.currentSession = new Session("");
   }
 
   ngOnInit() {
-    console.log("in the log-workoutpage");
-    this.currentSession = this.servSession.getCurrentSession();
-    this.activities = this.currentSession.activities;
+    this.loadSession()
+    
   }
 
   addNewComponent(){
     this.activities.push(new Activity("0"))
     
   }
-
+  loadSession(){
+    this.servSession.getCurrentSession().subscribe(res => {
+      this.currentSession = res
+      this.activities = this.currentSession.activities
+      console.log("cs & activities",this.currentSession, this.activities)
+    });
+  }
   saveSession(){
     console.log("saving in logworkout.ts");
-    this.servSession.updateCurrentSession(this.currentSession);
+    // this.servSession.updateCurrentSession(this.currentSession);
     this.servSession.saveSession();
     
   }
