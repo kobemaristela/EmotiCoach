@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 from rest_framework.authtoken.models import Token
 import json
+from .test_data import *
 
 
 # Create your tests here.
@@ -20,80 +21,84 @@ def RegisterLogin(client):
     
     return token
 
-def SetSessionDataGood(userId):
-    setData = [
-            {
-                "set_num": 1,
-                "weight": 135,
-                "reps": 1,
-                "rpe": 1
-            }
-        ]
-    activityData = [
-        {
-            "name": "activity1",
-            "muscleGroups": ["chest","tricep"],
-            "sets": setData
-        }
-    ]
-    sessionData = {
-        "name": "session1",
-        "duration": "1",
-        "datetime": "2000-1-1 1:00:00",
-        "auth_user_id": userId,
-        "activities": activityData
-    }
-
-    return sessionData
 
 class TestCreateSession(APITestCase):
-    def test_create_session_success(self):
+    def get_set_token(self):
         token = RegisterLogin(self.client)
         userToken = token.data["token"]
-        userId = token.data["user_id"]
+        self.userId = token.data["user_id"]
 
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + userToken)
-        
-        url = reverse('setsessiondata')
 
-        data = {'session': json.dumps(SetSessionDataGood(userId))}
-        response = self.client.post(url, data)
+    def test_create_session_success(self):
+        self.get_set_token()
+        data = {'session': json.dumps(SetSessionDataGood(self.userId))}
+        response = self.client.post(reverse('setsessiondata'), data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
+    
+    def test_create_session_missing_fields(self):
+        self.get_set_token()
+        for session in SetSessionDataMissingFields(self.userId):
+            request_data = {'session': json.dumps(session[0])}
+            expected_status_code = session[1]
+            request = self.client.post(
+                reverse("setsessiondata"), request_data
+            )
+            self.assertEqual(request.status_code, expected_status_code)
 
 class TestGetSession(APITestCase):
-    def test_get_session_success(self):
+    def get_set_token(self):
         token = RegisterLogin(self.client)
         userToken = token.data["token"]
-        userId = token.data["user_id"]
+        self.userId = token.data["user_id"]
+
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + userToken)
 
-        data = {'session': json.dumps(SetSessionDataGood(userId))}
+    def test_get_session_success(self):
+        self.get_set_token()
+
+        data = {'session': json.dumps(SetSessionDataGood(self.userId))}
         session = self.client.post(reverse('setsessiondata'), data)
         session_id = json.loads(session.content)["id"]
 
-        url = reverse('sessiondata')
-
         data = {"id": session_id}
 
-        response = self.client.post(url, data)
+        response = self.client.post(reverse('sessiondata'), data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_session_no_data(self):
+        self.get_set_token()
+
+        data = {"id": 500}
+
+        response = self.client.post(reverse('sessiondata'), data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+
 
 class TestGetAllSession(APITestCase):
-    def test_get_all_session_success(self):
+    def get_set_token(self):
         token = RegisterLogin(self.client)
         userToken = token.data["token"]
-        userId = token.data["user_id"]
+        self.userId = token.data["user_id"]
+
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + userToken)
 
-        data = {'session': json.dumps(SetSessionDataGood(userId))}
-        self.client.post(reverse('setsessiondata'), data)
-        self.client.post(reverse('setsessiondata'), data)
-
-        url = reverse("getallsessions")
-
-        response = self.client.get(url)
+    def test_get_all_session_no_data(self):
+        self.get_set_token()
+        response = self.client.get(reverse("getallsessions"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_all_session_success(self):
+        self.get_set_token()
+
+        data = {'session': json.dumps(SetSessionDataGood(self.userId))}
+        self.client.post(reverse('setsessiondata'), data)
+        self.client.post(reverse('setsessiondata'), data)
+
+        response = self.client.get(reverse("getallsessions"))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
 
 
 

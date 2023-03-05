@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core import serializers
 
 from .models import Session, Activity, MuscleGroup, Set
-from .controller import parseActivity, getMuscleGroups
+from .controller import parseActivity, getMuscleGroups, checkIfInt
 from datetime import datetime
 from django.utils.timezone import make_aware
 import json
@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
+from rest_framework.exceptions import ParseError
 
 # Create your views here.
 
@@ -24,18 +25,21 @@ class SessionData(APIView):
         user_id = Token.objects.get(key=token).user_id
         id = request.POST["id"]
 
-        session = Session.objects.get(id=id, auth_user_id=user_id)
+        if Session.objects.filter(id=id):
+            session = Session.objects.get(id=id, auth_user_id=user_id)
 
-        sessionInfo = dict()
-        sessionInfo["id"] = session.id
-        sessionInfo["name"] = session.name
-        sessionInfo["datetime"] = session.datetime
-        sessionInfo["duration"] = session.duration
+            sessionInfo = dict()
+            sessionInfo["id"] = session.id
+            sessionInfo["name"] = session.name
+            sessionInfo["datetime"] = session.datetime
+            sessionInfo["duration"] = session.duration
 
-        activity = Activity.objects.filter(session_id = id).values_list("id", "name")
-        sessionInfo["activities"] = list(map(parseActivity, activity))
+            activity = Activity.objects.filter(session_id = id).values_list("id", "name")
+            sessionInfo["activities"] = list(map(parseActivity, activity))
 
-        return JsonResponse(sessionInfo)
+            return JsonResponse(sessionInfo)
+        else:
+            raise ParseError()
     
 class SetSessionData(APIView):
     authentication_classes = [TokenAuthentication]
@@ -97,10 +101,10 @@ class SetSessionData(APIView):
                 
 
             for sets in setsObject:
-                activitySetNum = sets["set_num"]
-                activityWeight = sets["weight"]
-                activityReps = sets["reps"]
-                activityRpe = sets["rpe"]
+                activitySetNum = checkIfInt(sets["set_num"])
+                activityWeight = checkIfInt(sets["weight"])
+                activityReps = checkIfInt(sets["reps"])
+                activityRpe = checkIfInt(sets["rpe"])
                 activityId = activity.id
 
                 set = Set.objects.create(set_num=activitySetNum,

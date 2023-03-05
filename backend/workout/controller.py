@@ -1,4 +1,5 @@
 from .models import MuscleGroup, Set, Activity
+from rest_framework.exceptions import ParseError
 
 def filterMuscleGroups(muscleGroup):
     allGroups = [f.name for f in MuscleGroup._meta.get_fields()]
@@ -32,4 +33,10 @@ def getMuscleGroups(sessionId):
         muscleGroup = filterMuscleGroups(muscleGroup)
         muscleGroups += muscleGroup
     return [*set(muscleGroups)]
+
+def checkIfInt(data):
+    if isinstance(data, int):
+        return data
+    else:
+        raise ParseError()
 
