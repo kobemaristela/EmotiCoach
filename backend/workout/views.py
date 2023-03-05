@@ -4,6 +4,8 @@ from django.core import serializers
 
 from .models import Session, Activity, MuscleGroup, Set
 from .controller import parseActivity, getMuscleGroups
+from datetime import datetime
+from django.utils.timezone import make_aware
 import json
 
 from rest_framework.views import APIView
@@ -46,7 +48,7 @@ class SetSessionData(APIView):
         sessionObject = json.loads(sessionObject)
         sessionName = sessionObject["name"]
         sessionDuration = sessionObject["duration"]
-        sessionDatetime = sessionObject["datetime"]
+        sessionDatetime = make_aware(datetime.strptime(sessionObject["datetime"], '%Y-%m-%d %H:%M:%S'))
         userId = Token.objects.get(key=token).user_id
 
         session = Session.objects.create(name=sessionName,
@@ -67,6 +69,7 @@ class SetSessionData(APIView):
             setsObject = activities["sets"]
 
             muscle = MuscleGroup.objects.create(activity_id=activity.id)
+            muscle = MuscleGroup.objects.filter(id=muscle.id)
             if muscleGroup:
                 for muscles in muscleGroup:
                     if muscles == "chest":
@@ -109,7 +112,7 @@ class SetSessionData(APIView):
 
 
 
-        return JsonResponse({"status":"0"})
+        return JsonResponse({"id":session.id})
 
 
 class GetAllSessions(APIView):
