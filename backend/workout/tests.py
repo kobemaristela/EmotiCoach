@@ -33,7 +33,7 @@ class TestCreateSession(APITestCase):
     def test_create_session_success(self):
         self.get_set_token()
         data = {'session': json.dumps(SetSessionDataGood(self.userId))}
-        response = self.client.post(reverse('setsessiondata'), data)
+        response = self.client.post(reverse('setsession'), data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
     
     def test_create_session_missing_fields(self):
@@ -42,7 +42,7 @@ class TestCreateSession(APITestCase):
             request_data = {'session': json.dumps(session[0])}
             expected_status_code = session[1]
             request = self.client.post(
-                reverse("setsessiondata"), request_data
+                reverse("setsession"), request_data
             )
             self.assertEqual(request.status_code, expected_status_code)
 
@@ -58,12 +58,12 @@ class TestGetSession(APITestCase):
         self.get_set_token()
 
         data = {'session': json.dumps(SetSessionDataGood(self.userId))}
-        session = self.client.post(reverse('setsessiondata'), data)
+        session = self.client.post(reverse('setsession'), data)
         session_id = json.loads(session.content)["id"]
 
         data = {"id": session_id}
 
-        response = self.client.post(reverse('getsessiondata'), data)
+        response = self.client.post(reverse('getsession'), data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_session_no_data(self):
@@ -71,7 +71,7 @@ class TestGetSession(APITestCase):
 
         data = {"id": 500}
 
-        response = self.client.post(reverse('getsessiondata'), data)
+        response = self.client.post(reverse('getsession'), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
 class TestGetAllSession(APITestCase):
@@ -91,12 +91,10 @@ class TestGetAllSession(APITestCase):
         self.get_set_token()
 
         data = {'session': json.dumps(SetSessionDataGood(self.userId))}
-        self.client.post(reverse('setsessiondata'), data)
-        self.client.post(reverse('setsessiondata'), data)
+        self.client.post(reverse('setsession'), data)
+        self.client.post(reverse('setsession'), data)
 
         response = self.client.get(reverse("getallsessions"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-
 
 

@@ -16,7 +16,7 @@ from rest_framework.exceptions import ParseError
 
 # Create your views here.
 
-class GetSessionData(APIView):
+class GetSession(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -41,7 +41,7 @@ class GetSessionData(APIView):
         else:
             raise ParseError()
     
-class SetSessionData(APIView):
+class SetSession(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -160,7 +160,7 @@ class EditSession(APIView):
 
         return JsonResponse({"status": "success"})
 
-class DeleteSessionData(APIView):
+class DeleteSession(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -180,7 +180,64 @@ class DeleteSessionData(APIView):
             return JsonResponse({"status": "success"})
         else:
             raise ParseError()
-        
+
+class SetActivity(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        sessionId = request.POST["session_id"]
+
+        activityName = request.POST["name"]
+
+        activity = Activity.objects.create(name=activityName, 
+                                               session_id=sessionId)
+
+        muscleGroup = request.POST["muscleGroups"]
+        setsObject = request.POST["sets"]
+
+        muscle = MuscleGroup.objects.create(activity_id=activity.id)
+        muscle = MuscleGroup.objects.filter(id=muscle.id)
+        if muscleGroup:
+            for muscles in muscleGroup:
+                if muscles == "chest":
+                    muscle.update(chest=True)
+                if muscles == "tricep":
+                    muscle.update(tricep=True)
+                if muscles == "bicep":
+                    muscle.update(bicep=True)
+                if muscles == "shoulder":
+                    muscle.update(shoulder=True)
+                if muscles == "upper_back":
+                    muscle.update(upper_back=True)
+                if muscles == "lower_back":
+                    muscle.update(lower_back=True)
+                if muscles == "quadricep":
+                    muscle.update(quadricep=True)
+                if muscles == "glute":
+                    muscle.update(glute=True)
+                if muscles == "calve":
+                    muscle.update(calve=True)
+                if muscles == "abdominal":
+                    muscle.update(abdominal=True)
+                if muscles == "hamstring":
+                    muscle.update(hamstring=True)
+                
+
+            for sets in setsObject:
+                activitySetNum = checkIfInt(sets["set_num"])
+                activityWeight = checkIfInt(sets["weight"])
+                activityReps = checkIfInt(sets["reps"])
+                activityRpe = checkIfInt(sets["rpe"])
+                activityId = activity.id
+
+                set = Set.objects.create(set_num=activitySetNum,
+                                         weight=activityWeight,
+                                         reps=activityReps,
+                                         rpe=activityRpe,
+                                         activity_id=activityId)
+
 class EditActivity(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -211,7 +268,25 @@ class DeleteActivity(APIView):
             return JsonResponse({"status": "success"})
         else:
             raise ParseError()
-        
+
+class SetSet(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        activityId = request.POST["activity_id"]
+
+        setNum = checkIfInt(sets["set_num"])
+        weight = checkIfInt(sets["weight"])
+        reps = checkIfInt(sets["reps"])
+        rpe = checkIfInt(sets["rpe"])
+
+        set = Set.objects.create(set_num=setNum,
+                                    weight=weight,
+                                    reps=reps,
+                                    rpe=rpe,
+                                    activity_id=activityId)
+x
 class EditSet(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
