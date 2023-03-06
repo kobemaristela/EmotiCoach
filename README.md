@@ -8,7 +8,7 @@ EmotiCoach is a web application that utilizes machine learning and data from the
 ### Frontend
 - [@Justin Fan](https://github.com/justinf0428) - Dashboard | Metric Selection
 - [@Blong Vang](https://github.com/Vang-Blong) - Login | Register | Heart Rate Graph
-- [@Chad Sherf](https://github.com/csherf) - Log workout | Navigation Bar | Workouts Dashboard
+- [@Chad Sherf](https://github.com/csherf) - Log workout | Tabs | Workouts Dashboard
 
 ### Backend
 - [@Kobe Maristela](https://github.com/kobemaristela) - Containerization | Environments (Dev/Prod) | Network Architecture
