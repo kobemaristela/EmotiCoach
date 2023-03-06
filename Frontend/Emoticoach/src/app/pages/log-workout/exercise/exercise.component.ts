@@ -16,13 +16,27 @@ export class ExerciseComponent implements OnInit {
   @Input() activity: activity = new Activity("");
   @Input() activityIndex: number = 0;
 
-  constructor(private service: SessionService) { }
+  constructor(private servSession: SessionService) { }
 
-  ngOnInit() {}
-  addSet(){
-    this.activity.sets.push(new Set());
+  ngOnInit() {
+    this.loadSets();
   }
+
+  loadSets(){
+    this.servSession.getCurrentSession()
+    .subscribe(res => {
+      this.activity = res.activities[this.activityIndex]
+      // console.log(this.activity)
+    });
+  }
+
+  addSet(){
+    this.servSession.addSet(this.activityIndex);
+    this.loadSets();
+  }
+  
   updateName(){
-    this.service.updateActivity(this.activity, this.activityIndex);
+    this.servSession.updateActivity(this.activity, this.activityIndex);
+    
   }
 }

@@ -11,8 +11,8 @@ import { SessionService } from 'src/app/services/sessions/session/session.servic
 })
 export class WorkoutsDashboardPage implements OnInit {
   sessions: sessionRequest[] = [];
-
-  constructor(private servSession: SessionService,private router: Router) { 
+  
+  constructor(private servSession: SessionService) { 
     
   }
 
@@ -21,7 +21,7 @@ export class WorkoutsDashboardPage implements OnInit {
   }
 
   //calls the get session function from the service to do the api call and set the current session
-  async loadSessions() {    
+  loadSessions() {    
     this.servSession.getSessions().subscribe((res)=> {
       this.sessions = [...this.sessions, ...res];
       console.log("loading sessions", this.sessions)

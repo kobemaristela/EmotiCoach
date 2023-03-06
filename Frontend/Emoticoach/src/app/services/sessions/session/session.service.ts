@@ -7,6 +7,8 @@ import { RequestSessionService } from './request-session.service';
 import { sessionRequest } from './IsessionRequest';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
+import { Activity } from '../activity/Activity';
+import { Set } from '../sets/Set';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,6 @@ import { map } from 'rxjs/operators'
 export class SessionService {
   sessions: sessionRequest[] = [];
   currentSession: Observable<session>;
-  currSession: session;
   newSession: boolean = false;
   date:Date;
   
@@ -40,7 +41,6 @@ export class SessionService {
   //api call to get the session data needs to be added
   loadSession(sessionID: number){ 
     this.currentSession = this.requestSessionService.postGetSessionObservable(sessionID);
-    this.currentSession.subscribe(data => this.currSession = data);
   }
 
   getSessionAPI(sessionID: number) {
@@ -54,25 +54,59 @@ export class SessionService {
     return activties
   }
 
-  //updates the set of a given activity
-  updateSet(activityIndex: number, setIndex: number, newSet: set){
-    // this.currentSession.activities[activityIndex].sets[setIndex] = newSet;
-  }
-
-  updateActivity(activity: activity, index: number){
-    this.currentSession.pipe(
+  addActivity(){
+    this.currentSession = this.currentSession.pipe(
       map(
-        d => d.activities[index] = activity
+        d => { 
+          d.activities.push(new Activity("0"))
+          return d 
+        }
       ));
   }
 
+  updateActivity(activity: activity, index: number){
+    this.currentSession = this.currentSession.pipe(
+      map(
+        d => { 
+          d.activities[index] = activity
+          return d 
+        }
+      ));   
+  }
+
+  addSet(activityIndex: number){
+    console.log("activity index",activityIndex)
+    this.currentSession = this.currentSession.pipe(
+      map(
+        d => {
+          let updateD = d
+          updateD.activities[activityIndex].sets.push(new Set())
+          return updateD
+        }
+      ));
+  }
+    //updates the set of a given activity
+  updateSet(activityIndex: number, setIndex: number, newSet: set){
+    this.currentSession = this.currentSession.pipe(map(data => {
+      data.activities[activityIndex].sets[setIndex] = newSet
+      return data
+    }));
+    
+  }
+
+  updateDate(datetime:string){
+    this.currentSession = this.currentSession.pipe(map(data => {
+      data.datetime = datetime
+      return data
+    }));
+  }
   //saves session in the db when saved button is pressed
   //decieds if its a new save or an update to an existing entry
-  saveSession(){
+  saveSession(toSave:session){
     if (this.newSession){
       console.log("saving new");
-      // this.newSession = false;
-      this.postCreateNewSession();
+      this.newSession = false;
+      this.postCreateNewSession(toSave);
     }
     else {
       console.log("saving existing");
@@ -81,10 +115,10 @@ export class SessionService {
   }
 
   //does a post request to update the table 
-  async postCreateNewSession(){
-    this.currentSession.subscribe(data => {
-      this.requestSessionService.postCreateNewSessionObservable(data);
-    });
+  async postCreateNewSession(toSave:session){
+    console.log("tosave",toSave)
+    this.requestSessionService.postCreateNewSessionObservable(toSave);
+  
   }
 
   async postSaveExisting(){
@@ -95,11 +129,12 @@ export class SessionService {
   createBlankSession(){
     this.newSession = true;
     console.log("creating new")
-    this.currentSession
+    this.currentSession = this.currentSession
       .pipe(
         map(d => {
-          "workout " + this.getDayMonth();
-          return 
+          d = new Session("")
+          d.name = "workout " + this.getDayMonth();
+          return d
           }
         )
       );
