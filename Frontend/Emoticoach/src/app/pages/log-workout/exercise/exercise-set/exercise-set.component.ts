@@ -16,6 +16,7 @@ export class ExerciseSetComponent implements OnInit {
 
   constructor(private service: SessionService) { 
     this.set = {
+      id: 0,
       set_num: 0,
       weight: 0,
       reps: 0,
