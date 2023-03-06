@@ -3,6 +3,7 @@ import { session } from './Isession';
 import { HttpClient } from '@angular/common/http';
 import { sessionRequest } from './IsessionRequest';
 import { Observable } from 'rxjs';
+import { CHAD_TOKEN } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +19,7 @@ export class RequestSessionService {
     console.log(session)
     let tableParam = {
             headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+              "Authorization": CHAD_TOKEN
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsessiondata", formData,tableParam);
@@ -35,7 +36,7 @@ export class RequestSessionService {
   //           method: "POST",
   //           // integrate with justins token later
   //           headers: {
-  //             "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+  //             "Authorization": CHAD_TOKEN,
   //           },
   //           body: formData
   //       }
@@ -51,7 +52,7 @@ export class RequestSessionService {
   getAllSessionsObservable():Observable<any>{
     let tableParam = {
             headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+              "Authorization":CHAD_TOKEN
             }
       }
     let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
@@ -66,13 +67,13 @@ export class RequestSessionService {
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
             headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+              "Authorization": CHAD_TOKEN
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/sessiondata", formData,tableParam);
-    res.subscribe(data => {
-      console.log("json parsing in the request",data)
-    })
+    // res.subscribe(data => {
+    //   console.log("json parsing in the request",data)
+    // })
     return res;
   
   }
