@@ -97,4 +97,65 @@ class TestGetAllSession(APITestCase):
         response = self.client.get(reverse("getallsessions"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
+class TestEditSession(APITestCase):
+    def get_set_token(self):
+        token = RegisterLogin(self.client)
+        userToken = token.data["token"]
+        self.userId = token.data["user_id"]
+    
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + userToken)
+
+    def test_edit_session_success(self):
+        self.get_set_token()
+
+        data = {'session': json.dumps(SetSessionDataGood(self.userId))}
+        session = self.client.post(reverse('setsession'), data)
+        session_id = json.loads(session.content)["id"]
+
+        data = {"id": session_id,
+                "name": "newName",
+                "duration": 1,
+                "datetime": "2022-01-01 10:30:30"}
+
+        response = self.client.post(reverse("editsession"), data)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
+    def test_edit_session_invalid_id(self):
+        self.get_set_token()
+
+        data = {"id": 500}
+
+        response = self.client.post(reverse('editsession'), data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+class TestDeleteSession(APITestCase):
+    def get_set_token(self):
+        token = RegisterLogin(self.client)
+        userToken = token.data["token"]
+        self.userId = token.data["user_id"]
+    
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + userToken)
+
+    def test_delete_session_success(self):
+        self.get_set_token()
+
+        data = {'session': json.dumps(SetSessionDataGood(self.userId))}
+        session = self.client.post(reverse('setsession'), data)
+        session_id = json.loads(session.content)["id"]
+
+        data = {"id": session_id}
+
+        response = self.client.post(reverse("deletesession"), data)
+    
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+    
+    def test_delete_session_invalid_id(self):
+        self.get_set_token()
+
+        data = {"id": 500}
+
+        response = self.client.post(reverse('deletesession'), data)
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    
 

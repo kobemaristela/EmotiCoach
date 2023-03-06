@@ -149,6 +149,9 @@ class EditSession(APIView):
         duration = checkIfParameter(request, "duration")
         dt = checkIfParameter(request, "datetime")
 
+        if not id or not Session.objects.filter(id=id):
+            raise ParseError()
+
         session = Session.objects.filter(id=id)
         if name:
             session.update(name=name)
@@ -156,7 +159,7 @@ class EditSession(APIView):
             session.update(duration=duration)
         if dt:
             dt = make_aware(datetime.strptime(dt, '%Y-%m-%d %H:%M:%S'))
-            session.update(dt=dt)
+            session.update(datetime=dt)
 
         return JsonResponse({"status": "success"})
 
@@ -167,7 +170,10 @@ class DeleteSession(APIView):
     def post(self, request):
         token = request.META['HTTP_AUTHORIZATION'].split()[1]
         user_id = Token.objects.get(key=token).user_id
-        id = request.POST["id"]
+        id = checkIfParameter(request, "id")
+
+        if not id or not Session.objects.filter(id=id):
+            raise ParseError()
 
         if Session.objects.filter(id=id):
             session = Session.objects.get(id=id, auth_user_id=user_id)
@@ -286,7 +292,7 @@ class SetSet(APIView):
                                     reps=reps,
                                     rpe=rpe,
                                     activity_id=activityId)
-x
+
 class EditSet(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
