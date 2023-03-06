@@ -18,7 +18,7 @@ export class RequestSessionService {
     console.log(session)
     let tableParam = {
             headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+              "Authorization": "token",
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsessiondata", formData,tableParam);
@@ -51,7 +51,7 @@ export class RequestSessionService {
   getAllSessionsObservable():Observable<any>{
     let tableParam = {
             headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+              "Authorization": "token",
             }
       }
     let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
@@ -66,7 +66,7 @@ export class RequestSessionService {
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
             headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+              "Authorization": "token",
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/sessiondata", formData,tableParam);
