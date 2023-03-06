@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-back-button (click)="goBack()"></ion-back-button>
     </ion-buttons>
     <ion-title>Add Workout</ion-title>
     <ion-buttons slot="end">
@@ -35,7 +35,7 @@
     </ion-modal>
  
   <app-exercise 
-    *ngFor="let activity of activities; let i = index" 
+    *ngFor="let activity of currentSession.activities; let i = index" 
     [activity]="activity" 
     [activityIndex]="i">
   </app-exercise>

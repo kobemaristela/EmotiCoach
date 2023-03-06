@@ -18,11 +18,13 @@
                 ],
                 "sets": [
                     {
+                        "set_num": 0,
                         "weight": 185,
                         "reps": 5,
                         "rpe": 8
                     },
                     {
+                        "set_num": 1,
                         "weight": 185,
                         "reps": 5,
                         "rpe": 8
@@ -51,11 +53,13 @@
                 ],
                 "sets": [
                     {
+                        "set_num": 0,
                         "weight": 185,
                         "reps": 5,
                         "rpe": 8
                     },
                     {
+                        "set_num": 1,
                         "weight": 185,
                         "reps": 5,
                         "rpe": 8
@@ -72,11 +76,13 @@
                 ],
                 "sets": [
                     {
+                        "set_num": 0,
                         "weight": 185,
                         "reps": 5,
                         "rpe": 8
                     },
                     {
+                        "set_num": 1,
                         "weight": 185,
                         "reps": 5,
                         "rpe": 8

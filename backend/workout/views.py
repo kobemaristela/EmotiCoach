@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse
+from django.core import serializers
+
 from .models import Session, Activity, MuscleGroup, Set
-from .controller import parseActivity
+from .controller import parseActivity, getMuscleGroups
 import json
 
 from rest_framework.views import APIView
@@ -23,12 +25,13 @@ class SessionData(APIView):
         session = Session.objects.get(id=id, auth_user_id=user_id)
 
         sessionInfo = dict()
-        sessionInfo["session_name"] = session.name
-        sessionInfo["session_datetime"] = session.datetime
-        sessionInfo["session_duration"] = session.duration
+        sessionInfo["id"] = session.id
+        sessionInfo["name"] = session.name
+        sessionInfo["datetime"] = session.datetime
+        sessionInfo["duration"] = session.duration
 
         activity = Activity.objects.filter(session_id = id).values_list("id", "name")
-        sessionInfo["activity"] = list(map(parseActivity, activity))
+        sessionInfo["activities"] = list(map(parseActivity, activity))
 
         return JsonResponse(sessionInfo)
     
@@ -107,4 +110,25 @@ class SetSessionData(APIView):
 
 
         return JsonResponse({"status":"0"})
-        
+
+
+class GetAllSessions(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        userId = Token.objects.get(key=token).user_id
+
+        sessions = Session.objects.filter(auth_user_id=userId)
+        response = list()
+
+        for session in sessions:
+            sessionDict = {"id": session.id,
+                           "name": session.name,
+                           "duration": session.duration,
+                           "datetime": session.datetime,
+                           "muscleGroups": getMuscleGroups(session)}
+            response.append(sessionDict)
+
+        return JsonResponse(response, safe=False)
