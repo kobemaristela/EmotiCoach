@@ -19,7 +19,7 @@ export class RequestSessionService {
     console.log(session)
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN
+              "Authorization": CHAD_TOKEN,
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsessiondata", formData,tableParam);
@@ -29,30 +29,12 @@ export class RequestSessionService {
     return res;
   }
 
-  // async postNewSession(session: session){
-  //   const formData = new FormData();
-  //   formData.append("session", JSON.stringify(session));
-  //   let tableParam = {
-  //           method: "POST",
-  //           // integrate with justins token later
-  //           headers: {
-  //             "Authorization": CHAD_TOKEN,
-  //           },
-  //           body: formData
-  //       }
-
-  //   // change link to be read for a config file https://emotidev.maristela.net/
-  //   const res = await fetch("https://emotidev.maristela.net/workout/setsessiondata", tableParam);
-  //   console.log(res)
-  //   return res;
-  // }
-
   async postSaveExisting(session: session){}
 
   getAllSessionsObservable():Observable<any>{
     let tableParam = {
             headers: {
-              "Authorization":CHAD_TOKEN
+              "Authorization": CHAD_TOKEN,
             }
       }
     let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
@@ -67,13 +49,13 @@ export class RequestSessionService {
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN
+              "Authorization": CHAD_TOKEN,
             }
       }
-    let res = this.http.post<any>("https://emotidev.maristela.net/workout/sessiondata", formData,tableParam);
-    // res.subscribe(data => {
-    //   console.log("json parsing in the request",data)
-    // })
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsessiondata", formData,tableParam);
+    res.subscribe(data => {
+      console.log("json parsing in the request",data)
+    })
     return res;
   
   }
