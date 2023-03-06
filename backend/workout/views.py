@@ -16,7 +16,7 @@ from rest_framework.exceptions import ParseError
 
 # Create your views here.
 
-class SessionData(APIView):
+class GetSessionData(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -118,7 +118,6 @@ class SetSessionData(APIView):
 
         return JsonResponse({"id":session.id})
 
-
 class GetAllSessions(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]
@@ -139,3 +138,15 @@ class GetAllSessions(APIView):
             response.append(sessionDict)
 
         return JsonResponse(response, safe=False)
+    
+# class EditSessionData(APIView):
+#     authentication_classes = [TokenAuthentication]
+#     permission_classes = [IsAuthenticated]
+
+#     def post(self, request):
+#         token = request.META['HTTP_AUTHORIZATION'].split()[1]
+
+#         sessionObject = request.POST["session"]
+#         userId = Token.objects.get(key=token).user_id
+
+

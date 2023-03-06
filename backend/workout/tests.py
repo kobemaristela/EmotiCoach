@@ -63,7 +63,7 @@ class TestGetSession(APITestCase):
 
         data = {"id": session_id}
 
-        response = self.client.post(reverse('sessiondata'), data)
+        response = self.client.post(reverse('getsessiondata'), data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_session_no_data(self):
@@ -71,10 +71,8 @@ class TestGetSession(APITestCase):
 
         data = {"id": 500}
 
-        response = self.client.post(reverse('sessiondata'), data)
+        response = self.client.post(reverse('getsessiondata'), data)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-
-
 
 class TestGetAllSession(APITestCase):
     def get_set_token(self):
