@@ -39,4 +39,10 @@ def checkIfInt(data):
         return data
     else:
         raise ParseError()
+    
+def checkIfParameter(request, parameter):
+    if parameter in request.POST:
+        return request.POST[parameter]
+    else:
+        return None
 

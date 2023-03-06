@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.core import serializers
 
 from .models import Session, Activity, MuscleGroup, Set
-from .controller import parseActivity, getMuscleGroups, checkIfInt
+from .controller import *
 from datetime import datetime
 from django.utils.timezone import make_aware
 import json
@@ -139,14 +139,108 @@ class GetAllSessions(APIView):
 
         return JsonResponse(response, safe=False)
     
-# class EditSessionData(APIView):
-#     authentication_classes = [TokenAuthentication]
-#     permission_classes = [IsAuthenticated]
+class EditSession(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-#     def post(self, request):
-#         token = request.META['HTTP_AUTHORIZATION'].split()[1]
+    def post(self, request):
+        id = checkIfParameter(request, "id")
+        name = checkIfParameter(request, "name")
+        duration = checkIfParameter(request, "duration")
+        dt = checkIfParameter(request, "datetime")
 
-#         sessionObject = request.POST["session"]
-#         userId = Token.objects.get(key=token).user_id
+        session = Session.objects.filter(id=id)
+        if name:
+            session.update(name=name)
+        if duration:
+            session.update(duration=duration)
+        if dt:
+            dt = make_aware(datetime.strptime(dt, '%Y-%m-%d %H:%M:%S'))
+            session.update(dt=dt)
 
+        return JsonResponse({"status": "success"})
+
+class DeleteSessionData(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        user_id = Token.objects.get(key=token).user_id
+        id = request.POST["id"]
+
+        if Session.objects.filter(id=id):
+            session = Session.objects.get(id=id, auth_user_id=user_id)
+            activities = Activity.objects.filter(session_id=session.id)
+
+            sets = Set.objects.filter(activity_id__in = activities.values("id")).delete()
+            activities.delete()
+            session.delete()
+
+            return JsonResponse({"status": "success"})
+        else:
+            raise ParseError()
+        
+class EditActivity(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        id = checkIfParameter(request, "id")
+        name = checkIfParameter(request, "name")
+
+        activity = Activity.objects.filter(id=id)
+
+        if name:
+            activity.update(name=name)
+
+        return JsonResponse({"status": "success"})
+
+class DeleteActivity(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        id = request.POST["id"]
+
+        if Activity.objects.filter(id=id):
+            activities = Activity.objects.filter(session_id=id)
+            sets = Set.objects.filter(activity_id__in = activities.values("id")).delete()
+            activities.delete()
+
+            return JsonResponse({"status": "success"})
+        else:
+            raise ParseError()
+        
+class EditSet(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        id = checkIfParameter(request, "id")
+        weight = checkIfParameter(request, "weight")
+        reps = checkIfParameter(request, "reps")
+        rpe = checkIfParameter(request, "rpe")
+
+        set = Set.objects.filter(id=id)
+
+        if weight:
+            set.update(weight=weight)
+        if reps:
+            set.update(reps=reps)
+        if rpe:
+            set.update(rpe=rpe)
+
+class DeleteSet(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        id = request.POST["id"]
+
+        if Set.objects.filter(id=id):
+            Set.objects.filter(id=id).delete()
+            return JsonResponse({"status": "success"})
+        else:
+            raise ParseError()
 
