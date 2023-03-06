@@ -15,6 +15,7 @@ import { map } from 'rxjs/operators'
 export class SessionService {
   sessions: sessionRequest[] = [];
   currentSession: Observable<session>;
+  currSession: session;
   newSession: boolean = false;
   date:Date;
   
@@ -39,6 +40,7 @@ export class SessionService {
   //api call to get the session data needs to be added
   loadSession(sessionID: number){ 
     this.currentSession = this.requestSessionService.postGetSessionObservable(sessionID);
+    this.currentSession.subscribe(data => this.currSession = data);
   }
 
   getSessionAPI(sessionID: number) {
@@ -57,8 +59,11 @@ export class SessionService {
     // this.currentSession.activities[activityIndex].sets[setIndex] = newSet;
   }
 
-  updateActivity(activity: activity){
-
+  updateActivity(activity: activity, index: number){
+    this.currentSession.pipe(
+      map(
+        d => d.activities[index] = activity
+      ));
   }
 
   //saves session in the db when saved button is pressed
@@ -66,7 +71,7 @@ export class SessionService {
   saveSession(){
     if (this.newSession){
       console.log("saving new");
-      this.newSession = false;
+      // this.newSession = false;
       this.postCreateNewSession();
     }
     else {
@@ -77,9 +82,9 @@ export class SessionService {
 
   //does a post request to update the table 
   async postCreateNewSession(){
-    // const res = await this.requestSessionService.postNewSession(this.currentSession);
-    // console.log(res);
-    // return res;
+    this.currentSession.subscribe(data => {
+      this.requestSessionService.postCreateNewSessionObservable(data);
+    });
   }
 
   async postSaveExisting(){

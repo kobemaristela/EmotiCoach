@@ -23,6 +23,6 @@ export class ExerciseComponent implements OnInit {
     this.activity.sets.push(new Set());
   }
   updateName(){
-    this.service.updateActivity(this.activity);
+    this.service.updateActivity(this.activity, this.activityIndex);
   }
 }

@@ -5,7 +5,7 @@ import { session } from 'src/app/services/sessions/session/Isession';
 import { activity } from 'src/app/services/sessions/activity/Iactivity';
 import { Activity } from 'src/app/services/sessions/activity/Activity';
 import { Session } from 'src/app/services/sessions/session/Session';
-
+import { map } from 'rxjs';
 @Component({
   selector: 'app-log-workout',
   templateUrl: './log-workout.page.html',
@@ -15,7 +15,7 @@ export class LogWorkoutPage implements OnInit {
   @ViewChild('container', { read: ViewContainerRef })
   container!: ViewContainerRef;
   currentSession: session;
-  activities: activity[] = [];
+ 
 
   
   constructor(private servSession: SessionService) {
@@ -28,21 +28,21 @@ export class LogWorkoutPage implements OnInit {
   }
 
   addNewComponent(){
-    this.activities.push(new Activity("0"))
+    this.currentSession.activities.push(new Activity("0"))
     
   }
   loadSession(){
-    this.servSession.getCurrentSession().subscribe(res => {
-      this.currentSession = res
-      this.activities = this.currentSession.activities
-      console.log("cs & activities",this.currentSession, this.activities)
-    });
+    this.servSession.getCurrentSession()
+      .subscribe(res => {
+        this.currentSession = res
+        this.currentSession.activities = this.currentSession.activities
+        console.log("cs & activities",this.currentSession)
+      });
   }
   saveSession(){
     console.log("saving in logworkout.ts");
-    // this.servSession.updateCurrentSession(this.currentSession);
-    this.servSession.saveSession();
-    
+    this.servSession
+    this.servSession.saveSession(); 
   }
   
 }
