@@ -1,12 +1,12 @@
 import { Component, OnInit,  ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
-
-
+import { AccountService } from 'src/app/services/user/account.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: [AccountService]
 })
 export class LoginPage implements OnInit {
 
@@ -15,13 +15,15 @@ export class LoginPage implements OnInit {
     password: ''
     }
   
-  constructor(public navCtrl: NavController) { }
+  constructor(private accountService: AccountService, public navCtrl: NavController) { }
 
   ngOnInit(){}
 
   toHomepage(){
     this.registerRequest();
-    this.navCtrl.navigateForward('/tabs/home') //add once login is complete
+    if(this.accountService.isLoggedIn){
+      this.navCtrl.navigateForward('/tabs/home') //add once login is complete
+    }
   }
 
   async registerRequest(){
