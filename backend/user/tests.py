@@ -227,6 +227,24 @@ class TestUserRegister(APITestCase):
 
         self.assertEqual(request.status_code, expected_status_code)
 
+    def test_validate_existing_user(self):
+        request_data = {
+            "first_name": "Kobe",
+            "last_name": "Maristela",
+            "username": "kobemaristela",
+            "email": "kobe@maristela.com",
+            "password": "Password123$"
+        }
+        self.client.post(
+            reverse("register"), request_data
+        )
+
+        request = self.client.post(
+            reverse("register"), request_data
+        )
+
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
+
 class TestUserLogin(APITestCase):
     def setUp(self):
         self.user = User.objects.create_user(

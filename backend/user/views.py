@@ -1,4 +1,5 @@
 import re
+import logging
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
@@ -9,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.exceptions import ParseError
+from rest_framework.exceptions import ParseError, ValidationError
 
 
 class Login(ObtainAuthToken):
@@ -56,6 +57,8 @@ class Register(APIView):
         if not re.match(password_regex, password):
             raise ParseError()
 
+        if User.objects.filter(username=username).exists():
+            raise ValidationError(f"Username ({username}) already exists...")
 
         User.objects.create_user(
             first_name=first_name,
