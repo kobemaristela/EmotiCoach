@@ -3,13 +3,14 @@
 // The list of file replacements can be found in `angular.json`.
 import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
 
-
+export const CHAD_TOKEN: string = "";
+//  = "insert token here 4ad8de41d4654423b98eb938a11fbc17afa25e4c";
 
 export const environment = {
   production: false,
 
 };
-export const CHAD_TOKEN: string = "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c";
+
 
 export const MQTT_SERVICE_OPTIONS:IMqttServiceOptions = {
   hostname: 'emotimqtt.maristela.net',
