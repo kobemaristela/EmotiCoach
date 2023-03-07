@@ -18,43 +18,43 @@ export class HomePage implements OnInit, AfterContentChecked {
   features: any[] = [];
 
   homepageCards: string[] = [
-    'Rate of perceived effort', 
-    'Templates', 
-    'Total Weight',
+    // 'Rate of perceived effort', 
+    // 'Templates', 
+    'Volume Data',
     'One Rep Max',
-    'Total Reps'
+    'Muscle Group Data'
   ];
 
   icons: string[] = [
-    'walk-outline',
-    'folder-open-outline',
+    // 'walk-outline',
+    // 'folder-open-outline',
     'analytics-outline',
     'analytics-outline',
     'analytics-outline'
   ];
 
   upperText: string[] = [
-    'Rate of perceived effort', 
-    'Templates', 
-    'Total Weight',
+    // 'Rate of perceived effort', 
+    // 'Templates', 
+    'Volume Data',
     'One Rep Max',
-    'Total Reps'
+    'Muscle Group Data'
   ];
 
   lowerText: string[] = [
-    'View your progress',
-    'Create a workout template',
-    'View total weight lifted on one day for each workout completed',
-    'View your one rep max on one day for each workout completed',
-    'View total reps completed on one day for each workout completed'
+    // 'View your progress',
+    // 'Create a workout template',
+    'View volume data from your workouts',
+    'View your one rep max data from your workouts',
+    'View your muscle group data from workouts'
   ];
 
   routing: string[] = [
-    '/graph-rpe',
-    '/templates',
-    '/graph-tweight',
+    // '/graph-rpe',
+    // '/templates',
+    '/tabs/graph-volume',
     '/tabs/graph-onerm',
-    '/graph-treps',
+    '/tabs/graph-musclegroup',
   ];
 
     constructor(public navCtrl: NavController) {

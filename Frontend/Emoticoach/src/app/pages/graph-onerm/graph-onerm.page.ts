@@ -17,7 +17,7 @@ export class GraphOnermPage implements OnInit {
   }
   createChart(){
   
-    this.chart = new Chart("MyChart", {
+    this.chart = new Chart("chart2", {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
