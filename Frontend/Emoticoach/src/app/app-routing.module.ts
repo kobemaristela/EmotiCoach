@@ -51,14 +51,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/templates/templates.module').then( m => m.TemplatesPageModule)
   },
   {
+    path: 'graph-volume',
+    loadChildren: () => import('./pages/graph-volume/graph-volume.module').then( m => m.GraphVolumePageModule)
+  },
+  {
+    path: 'graph-musclegroup',
+    loadChildren: () => import('./pages/graph-musclegroup/graph-musclegroup.module').then( m => m.GraphMusclegroupPageModule)
+  },
+  {
     path: 'graph-rpe',
     loadChildren: () => import('./pages/graph-rpe/graph-rpe.module').then( m => m.GraphRpePageModule)
   }
 
-  
-
-
-  
 ];
 
 @NgModule({

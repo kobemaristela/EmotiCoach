@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { LiveDataService } from './services/livedata/live-data.service';
+import { Chart } from 'chart.js';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -35,6 +36,9 @@ export class AppComponent {
     console.log("creating livedata service");
     // this.liveDataService.connectToBroker();
     // this.liveDataService.closeConnection();
+  }
+
+  ngOnInit(){
   }
   logout(){}
 }

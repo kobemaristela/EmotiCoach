@@ -10,7 +10,6 @@ import { RouterTestingModule } from "@angular/router/testing"
 
 @NgModule({
   imports: [
-    RouterTestingModule,
     IonicModule,
     CommonModule,
     FormsModule,

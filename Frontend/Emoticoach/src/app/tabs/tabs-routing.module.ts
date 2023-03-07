@@ -24,6 +24,14 @@ const routes: Routes = [
         loadChildren: () => import('../pages/graph-onerm/graph-onerm.module').then(m => m.GraphOnermPageModule)
       },
       {
+        path: 'graph-volume',
+        loadChildren: () => import('../pages/graph-volume/graph-volume.module').then(m => m.GraphVolumePageModule)
+      },
+      {
+        path: 'graph-musclegroup',
+        loadChildren: () => import('../pages/graph-musclegroup/graph-musclegroup.module').then(m => m.GraphMusclegroupPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
