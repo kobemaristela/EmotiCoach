@@ -52,7 +52,7 @@ class SetSession(APIView):
         sessionObject = json.loads(sessionObject)
         sessionName = sessionObject["name"]
         sessionDuration = sessionObject["duration"]
-        sessionDatetime = make_aware(datetime.strptime(sessionObject["datetime"], '%Y-%m-%d %H:%M:%S'))
+        sessionDatetime = make_aware(datetime.strptime(sessionObject["datetime"], '%Y-%m-%dT%H:%M:%S%z'))
         userId = Token.objects.get(key=token).user_id
 
         session = Session.objects.create(name=sessionName,
@@ -158,7 +158,7 @@ class EditSession(APIView):
         if duration:
             session.update(duration=duration)
         if dt:
-            dt = make_aware(datetime.strptime(dt, '%Y-%m-%d %H:%M:%S'))
+            dt = make_aware(datetime.strptime(dt, '%Y-%m-%dT%H:%M:%S%z'))
             session.update(datetime=dt)
 
         return JsonResponse({"status": "success"})
@@ -281,6 +281,8 @@ class SetSet(APIView):
 
     def post(self, request):
         activityId = request.POST["activity_id"]
+
+        sets = request.POST
 
         setNum = checkIfInt(sets["set_num"])
         weight = checkIfInt(sets["weight"])
