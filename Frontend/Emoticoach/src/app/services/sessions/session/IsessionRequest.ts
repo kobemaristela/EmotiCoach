@@ -1,9 +1,9 @@
 export interface sessionRequest {
-      datetime: string;
-      duration: number;
-      name: string;
-      id: number;
-      muscleGroups: string[];
+    id: number;
+    datetime: string;
+    duration: number;
+    name: string;
+    muscleGroups: string[];
   }
 
 

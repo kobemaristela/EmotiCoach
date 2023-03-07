@@ -16,20 +16,37 @@ export class RequestSessionService {
   postCreateNewSessionObservable(session: session){
     const formData = new FormData();
     formData.append("session", JSON.stringify(session));
-    console.log(session)
     let tableParam = {
             headers: {
               "Authorization": CHAD_TOKEN,
             }
       }
-    let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsessiondata", formData,tableParam);
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsession", formData,tableParam);
     res.subscribe(data => {
       console.log("post status",data)
     })
     return res;
   }
 
-  async postSaveExisting(session: session){}
+  postDeleteSessionObservable(sessionId: number){
+    const formData = new FormData();
+
+    formData.append("id", JSON.stringify(sessionId));
+    let tableParam = {
+            headers: {
+              "Authorization": CHAD_TOKEN,
+            }
+      }
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
+    res.subscribe(data => {
+      console.log("delete responce",data)
+    })
+    return res;
+  }
+  
+  postSaveExisting(session: session){
+
+  }
 
   getAllSessionsObservable():Observable<any>{
     let tableParam = {
@@ -52,7 +69,7 @@ export class RequestSessionService {
               "Authorization": CHAD_TOKEN,
             }
       }
-    let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsessiondata", formData,tableParam);
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsession", formData,tableParam);
     res.subscribe(data => {
       console.log("json parsing in the request",data)
     })
