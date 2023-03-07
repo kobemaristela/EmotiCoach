@@ -40,6 +40,7 @@ export class WorkoutsDashboardPage implements OnInit {
     
   }
 
+
   async deleteSession(sessionId:number) {
     this.servSession.deleteSession(sessionId).subscribe( data => {
       console.log(data);
@@ -48,5 +49,6 @@ export class WorkoutsDashboardPage implements OnInit {
       }
     });
     
+
   }
 }

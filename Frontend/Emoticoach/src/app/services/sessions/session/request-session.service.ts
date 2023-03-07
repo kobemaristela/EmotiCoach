@@ -37,6 +37,7 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
+
     // res.subscribe(data => {
     //   console.log("delete responce",data)
     // })

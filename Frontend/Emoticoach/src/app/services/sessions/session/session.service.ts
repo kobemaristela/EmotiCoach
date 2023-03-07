@@ -110,6 +110,7 @@ export class SessionService {
     if (this.newSession) {
       console.log("saving new");
       this.newSession = false;
+
       this.currentSession.subscribe( data => { 
         this.createNewSession(data);
       })
@@ -121,6 +122,7 @@ export class SessionService {
         this.saveExistingSession(data);
       })
       
+
     }
   }
 
@@ -151,6 +153,10 @@ export class SessionService {
 
   deleteSession(sessionId:number) {
     return this.requestSessionService.postDeleteSessionObservable(sessionId);
+  }
+
+  deleteSession(sessionId:number) {
+    this.requestSessionService.postDeleteSessionObservable(sessionId)
   }
 
   //Creates a new blank session

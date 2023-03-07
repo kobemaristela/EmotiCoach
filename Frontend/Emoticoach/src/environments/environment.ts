@@ -9,7 +9,8 @@ export const environment = {
   import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
   
   
-  export const CHAD_TOKEN: string = "token 1a01dbfd13486fca1469a734de65780d81f3aaa1";
+
+  export const CHAD_TOKEN: string = "insert";
   
   
   export const MQTT_SERVICE_OPTIONS:IMqttServiceOptions = {
