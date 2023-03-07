@@ -2,9 +2,9 @@ version: "3.8"
 services:
   django:
     build:
-      context: .
+      context: ../
       dockerfile: Dockerfile.dev
-    command: python manage.py runserver 0.0.0.0:1616
+    command: python ../manage.py runserver 0.0.0.0:1616
     ports:
       - 1616:1616
     volumes:

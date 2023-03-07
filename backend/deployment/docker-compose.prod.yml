@@ -2,7 +2,7 @@ version: "3.8"
 services:
   django:
     build:
-      context: .
+      context: ../
       dockerfile: Dockerfile.prod
     command: gunicorn emoticoach.wsgi:application --bind  0.0.0.0:1616
     ports:

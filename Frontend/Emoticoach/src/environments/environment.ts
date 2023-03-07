@@ -3,14 +3,23 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
-};
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
+    production: false
+  };
+  // The list of file replacements can be found in `angular.json`.
+  import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
+  
+  
+  export const CHAD_TOKEN: string = "insert";
+  
+  
+  export const MQTT_SERVICE_OPTIONS:IMqttServiceOptions = {
+    hostname: 'emotimqtt.maristela.net',
+    port: 8083,
+    protocol: 'wss',
+    username: 'emoticoach',
+    password: '7bf#oV&dq2HTLjG6',
+    connectOnCreate: false,
+    clean: true,
+    clientId: 'emoticoach-app-1',
+    ca:[]
+  };

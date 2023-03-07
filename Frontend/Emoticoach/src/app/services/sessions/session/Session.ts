@@ -8,7 +8,8 @@ export class Session implements session{
     datetime: string;
     muscleGroups: string[];
     activities: Activity[];
-
+    
+    
     constructor( id: string, name?: string,duration?: number, datetime?: string|undefined,muscleGroups?: string[],activities?: Activity[],){  
         this.id = id;
         this.name = ((name) ? name : "");

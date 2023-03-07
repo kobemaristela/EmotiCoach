@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-
+declare const expect: Chai.ExpectStatic
 import { RequestSessionService } from './request-session.service';
 import { Session } from './Session';
 import { session } from './Isession';
@@ -22,8 +22,8 @@ describe('HttpClient testing', () => {
       });
 
 
-      it('can test HttpClient.get', () => {
-        const testData: session = new Session("");
+      it('can getAllSessionsObservable', () => {
+        const testData: session = new Session("", "", 0, "0000/00/00T00:00:00-8");
         // Make an HTTP GET request
         requestSessionService.getAllSessionsObservable()
           .subscribe(data =>
@@ -36,7 +36,6 @@ describe('HttpClient testing', () => {
         // Assert that the request is a GET.
         expect(req.request.method).equal('GET');
       
-  
         // Subscribe callback asserts that correct data was returned.
         req.flush(testData);
       
@@ -44,6 +43,26 @@ describe('HttpClient testing', () => {
         httpTestingController.verify();
       });
 
+      it('can postCreateNewSessionObservable', () => {
+        const testData: session = new Session("00", "unittest", 0, "00/00/00T00:00:00",[]);
+        // Make an HTTP GET request
+        requestSessionService.postCreateNewSessionObservable(testData)
+          .subscribe(data =>
+            expect(data).equal(testData)
+          );
+            
+        //expect only one request to be made
+        const req = httpTestingController.expectOne('https://emotidev.maristela.net/workout/setsessiondata');
+      
+        // Assert that the request is a GET.
+        expect(req.request.method).equal('GET');
+      
+        // Subscribe callback asserts that correct data was returned.
+        req.flush(testData);
+      
+        // Assert that there are no outstanding requests.
+        httpTestingController.verify();
+      });
   
 
     });

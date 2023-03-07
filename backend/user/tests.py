@@ -1,7 +1,7 @@
 from rest_framework.test import APITestCase
+from rest_framework import status
 from django.contrib.auth.models import User
 from django.urls import reverse
-from rest_framework import status
 from parameterized import parameterized
 
 
@@ -226,6 +226,24 @@ class TestUserRegister(APITestCase):
         )
 
         self.assertEqual(request.status_code, expected_status_code)
+
+    def test_validate_existing_user(self):
+        request_data = {
+            "first_name": "Kobe",
+            "last_name": "Maristela",
+            "username": "kobemaristela",
+            "email": "kobe@maristela.com",
+            "password": "Password123$"
+        }
+        self.client.post(
+            reverse("register"), request_data
+        )
+
+        request = self.client.post(
+            reverse("register"), request_data
+        )
+
+        self.assertEqual(request.status_code, status.HTTP_400_BAD_REQUEST)
 
 class TestUserLogin(APITestCase):
     def setUp(self):

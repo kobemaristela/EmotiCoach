@@ -29,6 +29,7 @@
     "echarts": "^5.4.1",
     "ionicons": "^6.0.3",
     "ngx-echarts": "^15.0.1",
+    "ngx-mqtt": "^15.0.0-alpha.1",
     "rxjs": "~7.5.0",
     "swiper": "^8.4.7",
     "tslib": "^2.3.0",

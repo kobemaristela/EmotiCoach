@@ -9,7 +9,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NgChartsModule } from 'ng2-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
-
+import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
+import { MQTT_SERVICE_OPTIONS } from 'src/environments/environment';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
       NgxEchartsModule.forRoot({
         echarts: () => import('echarts'),
       }),
+      MqttModule.forRoot(MQTT_SERVICE_OPTIONS),
     ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

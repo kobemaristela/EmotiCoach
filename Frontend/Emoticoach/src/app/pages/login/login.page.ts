@@ -16,6 +16,7 @@ export class LoginPage implements OnInit {
     }
 
   user_token = '';
+
   isLoggedIn = false;
   
   constructor(private accountService: AccountService, public navCtrl: NavController) { }
@@ -53,7 +54,11 @@ export class LoginPage implements OnInit {
   //how to show user has successfully logged in?
   if(registerResponse["token"]){
     this.isLoggedIn = true;
+
     this.user_token = registerResponse["token"];
+
+    console.log(this.isLoggedIn);
+
   }
   }
 }
