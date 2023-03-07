@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { session } from 'src/app/services/sessions/session/Isession';
 import { sessionRequest } from 'src/app/services/sessions/session/IsessionRequest';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-workouts-dashboard',
@@ -12,7 +13,7 @@ import { SessionService } from 'src/app/services/sessions/session/session.servic
 export class WorkoutsDashboardPage implements OnInit {
   sessions: sessionRequest[] = [];
   
-  constructor(private servSession: SessionService) { 
+  constructor(private servSession: SessionService, private navCtrl: NavController) { 
     
   }
 
@@ -31,11 +32,16 @@ export class WorkoutsDashboardPage implements OnInit {
 
   loadSession(index: number) {
     this.servSession.loadSession(this.sessions[index].id)
-
+    this.navCtrl.navigateForward('/log-workout')
   }
 
   createNewSession() {
     this.servSession.createBlankSession();
   }
 
+  deleteSession(sessionId:number) {
+    this.servSession.deleteSession(sessionId);
+    this.sessions = [];
+    this.loadSessions();
+  }
 }
