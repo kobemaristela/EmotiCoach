@@ -47,7 +47,7 @@ def on_message(mqtt_client, userdata, msg):
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
-client.tls_set(ca_certs="/Users/jaeminbbq/Documents/Projects/Brogrammers/isrgrootx1.pem")
+client.tls_set(ca_certs="../certs/isrgrootx1.pem")
 client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
 client.connect(
     host=MQTT_SERVER,
