@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { session } from './Isession';
 import { HttpClient } from '@angular/common/http';
+import { sessionRequest } from './IsessionRequest';
+import { Observable } from 'rxjs';
+import { CHAD_TOKEN } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
@@ -10,40 +13,51 @@ export class RequestSessionService {
   
 
   //creates a new session in the database
-  async postNewSession(session: session){
+  postCreateNewSessionObservable(session: session){
     const formData = new FormData();
-
     formData.append("session", JSON.stringify(session));
-
+    console.log(session)
     let tableParam = {
-            method: "POST",
-            // integrate with justins token later
             headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
-            },
-            body: formData
-        }
-  
-    // change link to be read for a config file https://emotidev.maristela.net/
-    const res = await fetch("https://emotidev.maristela.net/workout/setsessiondata", tableParam);
-    return res.json();
-  }
-
-  async postSaveExisting(session: session){
-
-  }
-
-  async getAllSessions(){
-    let tableParam = {
-            method: "GET",
-            headers: {
-              "Authorization": "token 4ad8de41d4654423b98eb938a11fbc17afa25e4c",
+              "Authorization": CHAD_TOKEN,
             }
-        }
-  
-    // change link to be read for a config file https://emotidev.maristela.net/
-    const res = await fetch("https://emotidev.maristela.net/workout/getallsessions", tableParam).then(response => response.json());
-    console.log(res)
+      }
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsessiondata", formData,tableParam);
+    res.subscribe(data => {
+      console.log("post status",data)
+    })
     return res;
   }
+
+  async postSaveExisting(session: session){}
+
+  getAllSessionsObservable():Observable<any>{
+    let tableParam = {
+            headers: {
+              "Authorization": CHAD_TOKEN,
+            }
+      }
+    let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
+    
+    return res;
+  
+  }
+
+  postGetSessionObservable(sessionId: number):Observable<session>{
+    const formData = new FormData();
+
+    formData.append("id", JSON.stringify(sessionId));
+    let tableParam = {
+            headers: {
+              "Authorization": CHAD_TOKEN,
+            }
+      }
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsessiondata", formData,tableParam);
+    res.subscribe(data => {
+      console.log("json parsing in the request",data)
+    })
+    return res;
+  
+  }
+
 }
