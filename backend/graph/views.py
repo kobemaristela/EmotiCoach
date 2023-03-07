@@ -100,7 +100,6 @@ class GetMuscleGroupData(APIView):
         return JsonResponse({"X":list(muscleDict.keys()),
                              "y":list(muscleDict.values())})
 
-
 class GetOneRMData(APIView):
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsAuthenticated]

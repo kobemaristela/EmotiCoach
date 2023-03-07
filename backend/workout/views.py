@@ -243,6 +243,7 @@ class SetActivity(APIView):
                                          reps=activityReps,
                                          rpe=activityRpe,
                                          activity_id=activityId)
+        return JsonResponse({"status": "success"})
 
 class EditActivity(APIView):
     authentication_classes = [TokenAuthentication]
@@ -294,6 +295,7 @@ class SetSet(APIView):
                                     reps=reps,
                                     rpe=rpe,
                                     activity_id=activityId)
+        return JsonResponse({"status": "success"})
 
 class EditSet(APIView):
     authentication_classes = [TokenAuthentication]
@@ -313,6 +315,8 @@ class EditSet(APIView):
             set.update(reps=reps)
         if rpe:
             set.update(rpe=rpe)
+
+        return JsonResponse({"status": "success"})
 
 class DeleteSet(APIView):
     authentication_classes = [TokenAuthentication]
