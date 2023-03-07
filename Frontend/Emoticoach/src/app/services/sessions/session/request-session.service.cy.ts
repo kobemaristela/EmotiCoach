@@ -36,7 +36,6 @@ describe('HttpClient testing', () => {
         // Assert that the request is a GET.
         expect(req.request.method).equal('GET');
       
-  
         // Subscribe callback asserts that correct data was returned.
         req.flush(testData);
       
