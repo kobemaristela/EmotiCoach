@@ -39,7 +39,7 @@ class GetVolumeData(APIView):
         sessions = Session.objects.filter(datetime__gte = start_date, auth_user_id=userId)
         sessions = sessions.filter(datetime__lte = end_date).values("id", "datetime").order_by("datetime")
 
-        graph_data = dict()
+        volume_data = dict()
         for session in sessions:
             activities = Activity.objects.filter(session_id=session["id"], name=activity).values("id")
             sets = Set.objects.filter(activity_id__in=activities).values("weight", "reps")
@@ -47,9 +47,8 @@ class GetVolumeData(APIView):
             for set in sets:
                 volume += set["weight"] * set["reps"]
             date_key = session["datetime"].strftime("%m/%d")
-            graph_data[date_key] = volume
-
+            volume_data[date_key] = volume
         
-        return JsonResponse({"X":list(graph_data.keys()),
-                             "y":list(graph_data.values())})
+        return JsonResponse({"X":list(volume_data.keys()),
+                             "y":list(volume_data.values())})
 
