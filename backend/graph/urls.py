@@ -1,6 +1,7 @@
 from django.urls import path
-from .views import getHeartrateData
+from .views import *
 
 urlpatterns = [
     path('getheartratedata', getHeartrateData.as_view()),
+    path('getvolumedata', GetVolumeData.as_view()),
 ]
