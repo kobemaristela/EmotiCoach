@@ -24,7 +24,7 @@ export class WorkoutsDashboardPage implements OnInit {
   //calls the get session function from the service to do the api call and set the current session
   loadSessions() {    
     this.servSession.getSessions().subscribe((res)=> {
-      this.sessions = [...this.sessions, ...res];
+      this.sessions = res;
       console.log("loading sessions", this.sessions)
     });
     
@@ -36,12 +36,17 @@ export class WorkoutsDashboardPage implements OnInit {
   }
 
   createNewSession() {
-    this.servSession.createBlankSession();
+    this.servSession.createBlankSession()
+    
   }
 
-  deleteSession(sessionId:number) {
-    this.servSession.deleteSession(sessionId);
-    this.sessions = [];
-    this.loadSessions();
+  async deleteSession(sessionId:number) {
+    this.servSession.deleteSession(sessionId).subscribe( data => {
+      console.log(data);
+      if (data.status){
+        this.loadSessions();
+      }
+    });
+    
   }
 }
