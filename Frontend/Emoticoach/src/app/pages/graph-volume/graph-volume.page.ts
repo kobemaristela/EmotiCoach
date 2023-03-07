@@ -17,6 +17,7 @@ export class GraphVolumePage implements OnInit {
 
   loadData(){
     this.getData()
+
   }
 
   getData() {
@@ -31,12 +32,20 @@ export class GraphVolumePage implements OnInit {
     formData.append("activity", "bench");
 
     return this._http.post("https://emotidev.maristela.net/graph/getvolumedata", formData, tableParam)
-      .subscribe((result => {
+    .subscribe(((result: any) => {
 
-        // initialize chart data
-        // let workoutDates = result[X]
-        console.log(result);
-        return result}));
+      // initialize chart data
+      let workoutDates = result['X']
+      // let dateList = result['X'].map((result: any) => result.X)
+      
+      // let workoutDates = []
+      // dateList.forEach((result: string) => {
+      //   let date = new String
+      //   workoutDates.push(date)
+      // })
+
+      console.log(result);
+      return result}));
   }
 
   ngOnInit() {
@@ -48,8 +57,7 @@ export class GraphVolumePage implements OnInit {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12', '2022-05-13',
-          '2022-05-14', '2022-05-15', '2022-05-16', '2022-05-17',],
+        labels: workoutDates,
         datasets: [
           {
             label: "Sales",
