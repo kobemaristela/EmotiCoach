@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "user",
     "workout",
     "website",
+    "graph",
     "demo",
 ]
 

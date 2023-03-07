@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { LiveDataService } from './services/livedata/live-data.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -31,6 +31,10 @@ export class AppComponent {
   ];
   loggedIn = false;
 
-  constructor() {}
+  constructor(private liveDataService: LiveDataService) {
+    console.log("creating livedata service");
+    // this.liveDataService.connectToBroker();
+    // this.liveDataService.closeConnection();
+  }
   logout(){}
 }

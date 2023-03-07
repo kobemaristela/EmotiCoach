@@ -1,12 +1,12 @@
 import { Component, OnInit,  ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
-
-
+import { AccountService } from 'src/app/services/user/account.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: [AccountService]
 })
 export class LoginPage implements OnInit {
 
@@ -14,14 +14,22 @@ export class LoginPage implements OnInit {
     username: '',
     password: ''
     }
-  
-  constructor(public navCtrl: NavController) { }
 
-  ngOnInit(){}
+  isLoggedIn = false;
+  
+  constructor(private accountService: AccountService, public navCtrl: NavController) { }
+
+  ngOnInit(){
+    if(this.accountService.isLoggedIn){
+      this.isLoggedIn = true;
+    }
+  }
 
   toHomepage(){
     this.registerRequest();
-    this.navCtrl.navigateForward('/tabs/home') //add once login is complete
+    if(this.isLoggedIn){
+      this.navCtrl.navigateForward('/tabs/home') //add once login is complete
+    }
   }
 
   async registerRequest(){
@@ -36,5 +44,11 @@ export class LoginPage implements OnInit {
   const res = await fetch("https://emotidev.maristela.net/user/login", tableParam);
   let registerResponse = await res.json();
   console.log(registerResponse);
+  console.log(this.isLoggedIn);
+  //how to show user has successfully logged in?
+  if(registerResponse["token"]){
+    this.isLoggedIn = true;
+    console.log(this.isLoggedIn);
+  }
   }
 }
