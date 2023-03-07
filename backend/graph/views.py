@@ -4,11 +4,13 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.utils.timezone import make_aware
+from django.db.models import Sum
 
 from .mqtt import ppg_infrared, ppg_green, ppg_red
 from django.http import JsonResponse
 from datetime import datetime, timedelta
-from workout.models import Session, Activity, Set
+from workout.models import Session, Activity, Set, MuscleGroup
+from workout.controller import filterMuscleGroups
 
 # Create your views here.
 
@@ -52,3 +54,52 @@ class GetVolumeData(APIView):
         return JsonResponse({"X":list(volume_data.keys()),
                              "y":list(volume_data.values())})
 
+class GetMuscleGroupData(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        userId = Token.objects.get(key=token).user_id
+
+        week_num = int(request.POST["week_num"])
+
+        today = datetime.now()
+        week0 = today - timedelta(days=today.weekday())
+        week_begin = week0 - timedelta(days=week_num * 7)
+        week_begin = make_aware(week_begin)
+        week_end = week_begin + timedelta(days=6)
+
+        sessions = Session.objects.filter(datetime__gte=week_begin, auth_user_id=userId)
+        sessions = sessions.filter(datetime__lte=week_end).values("id", "datetime").order_by("datetime")
+
+        muscleDict = dict()
+        for session in sessions:
+            activity_id = Activity.objects.filter(session_id=session["id"]).values("id")
+            # muscleGroups = MuscleGroup.objects.filter(activity_id__in=activity_id)
+            # reps = Set.objects.filter(activity_id__in=activity_id)
+            muscleList = list()
+            for activity in activity_id:
+                muscleGroups = MuscleGroup.objects.get(activity_id=activity["id"])
+                muscleGroups = filterMuscleGroups(muscleGroups)
+                reps = Set.objects.filter(activity_id=activity["id"]).values("reps")
+                
+                for muscle in muscleGroups:
+                    # print(reps.aggregate(Sum('reps'))['reps__sum'])
+                    repsToAdd = reps.aggregate(Sum('reps'))['reps__sum']
+                    if muscle in muscleDict:
+                        if repsToAdd:
+                            muscleDict[muscle] += repsToAdd
+                    else:
+                        muscleDict[muscle] = repsToAdd
+                
+        return JsonResponse({"X":list(muscleDict.keys()),
+                             "y":list(muscleDict.values())})
+
+
+            
+
+
+
+
+        return JsonResponse({"test":"Hello"})
