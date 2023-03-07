@@ -285,10 +285,10 @@ class SetSet(APIView):
 
         sets = request.POST
 
-        setNum = checkIfInt(sets["set_num"])
-        weight = checkIfInt(sets["weight"])
-        reps = checkIfInt(sets["reps"])
-        rpe = checkIfInt(sets["rpe"])
+        setNum = sets["set_num"]
+        weight = sets["weight"]
+        reps = sets["reps"]
+        rpe = sets["rpe"]
 
         set = Set.objects.create(set_num=setNum,
                                     weight=weight,
