@@ -106,23 +106,26 @@ export class SessionService {
     if (this.newSession){
       console.log("saving new");
       this.newSession = false;
-      this.postCreateNewSession(toSave);
+      this.createNewSession(toSave);
     }
     else {
       console.log("saving existing");
-      this.postSaveExisting();
+      this.saveExistingSession(toSave);
     }
   }
 
   //does a post request to update the table 
-  async postCreateNewSession(toSave:session){
+  createNewSession(toSave:session){
     console.log("tosave",toSave)
     this.requestSessionService.postCreateNewSessionObservable(toSave);
-  
   }
 
-  async postSaveExisting(){
+  saveExistingSession(toSave:session){
     
+  }
+
+  deleteSession(sessionId:number) {
+    this.requestSessionService.postDeleteSessionObservable(sessionId)
   }
 
   //Creates a new blank session
