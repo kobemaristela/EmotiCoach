@@ -49,7 +49,11 @@ class GetVolumeData(APIView):
             for set in sets:
                 volume += set["weight"] * set["reps"]
             date_key = session["datetime"].strftime("%m/%d")
-            volume_data[date_key] = volume
+
+            if date_key in volume_data:
+                volume_data[date_key] += volume
+            else:
+                volume_data[date_key] = volume
         
         return JsonResponse({"X":list(volume_data.keys()),
                              "y":list(volume_data.values())})
@@ -128,7 +132,14 @@ class GetOneRMData(APIView):
                     current_one_rm = one_rm
 
             date_key = session["datetime"].strftime("%m/%d")
+
             one_rm_data[date_key] = current_one_rm
+
+            if date_key in one_rm_data:
+                if one_rm_data[date_key] < current_one_rm:
+                    one_rm_data[date_key] = current_one_rm
+            else:
+                one_rm_data[date_key] = current_one_rm
 
         return JsonResponse({"X":list(one_rm_data.keys()),
                              "y":list(one_rm_data.values())})
