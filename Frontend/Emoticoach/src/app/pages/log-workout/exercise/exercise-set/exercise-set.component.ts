@@ -27,6 +27,7 @@ export class ExerciseSetComponent implements OnInit {
   ngOnInit() {
     //load set here given session and activty index
     this.set.set_num = this.setCount - 1;
+    this.loadSet();
   }
   loadSet() {
     this.service.getCurrentSession()

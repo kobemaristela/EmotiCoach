@@ -88,6 +88,7 @@ export class SessionService {
           return updateD
         }
       ));
+    return activityIndex+1;
   }
     //updates the set of a given activity
   updateSet(activityIndex: number, setIndex: number, newSet: set) {
@@ -155,9 +156,6 @@ export class SessionService {
     return this.requestSessionService.postDeleteSessionObservable(sessionId);
   }
 
-  deleteSession(sessionId:number) {
-    this.requestSessionService.postDeleteSessionObservable(sessionId)
-  }
 
   //Creates a new blank session
   createBlankSession() {

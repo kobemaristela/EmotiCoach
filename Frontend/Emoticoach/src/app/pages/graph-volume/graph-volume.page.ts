@@ -57,7 +57,7 @@ export class GraphVolumePage implements OnInit {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: workoutDates,
+        // labels: workoutDates,
         datasets: [
           {
             label: "Sales",
