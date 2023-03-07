@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { session } from 'src/app/services/sessions/session/Isession';
 import { Session } from 'src/app/services/sessions/session/Session';
+import { Activity } from 'src/app/services/sessions/activity/Activity';
 
 @Component({
   selector: 'app-log-workout',
@@ -24,7 +25,7 @@ export class LogWorkoutPage implements OnInit {
 
   addNewComponent(){
     this.servSession.addActivity();
-    this.loadSession();
+    this.currentSession.activities.push(new Activity("0"))
   }
 
   loadSession(){
@@ -42,9 +43,9 @@ export class LogWorkoutPage implements OnInit {
   saveSession(){
     console.log("saving in logworkout.ts");
     this.servSession.updateDate(this.currentSession.datetime);
-    this.loadSession();
+    
 
-    this.servSession.saveSession(this.currentSession); 
+    this.servSession.saveSession(); 
   }
   
 }
