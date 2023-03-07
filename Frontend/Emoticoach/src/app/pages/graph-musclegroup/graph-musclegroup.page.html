@@ -1,9 +1,15 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>graph-musclegroup</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+  <ion-toolbar>
+    <ion-title>Muslce Group Graph</ion-title>
+    <ion-buttons slot="start" color="#fff" (click)="loadData()">
+      <ion-button expand="block">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="chart-container">
+      <canvas  id="MuscleGroupChart" >{{ chart }}</canvas>
+  </div>
 
 </ion-content>
+

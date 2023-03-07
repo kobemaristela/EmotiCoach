@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { EChartsOption } from 'echarts';
 import Chart from 'chart.js/auto'
+import { HttpClient } from '@angular/common/http';
+import { AccountService } from 'src/app/services/user/account.service';
+import { map } from 'rxjs/operators';
+import { result } from 'cypress/types/lodash';
+import { table } from 'console';
 
 @Component({
   selector: 'app-graph-onerm',
@@ -9,40 +13,58 @@ import Chart from 'chart.js/auto'
 })
 export class GraphOnermPage implements OnInit {
   public chart: any; //hello
+  workoutDates: any = [];
 
-  constructor() { }
+  constructor(private _http: HttpClient) { }
+
+  loadData(){
+    this.getData()
+
+  }
+
+  getData() {
+    let tableParam = {
+      headers: {
+        "Authorization": "token 1a01dbfd13486fca1469a734de65780d81f3aaa1",
+      }
+    }
+    const formData = new FormData();
+    formData.append("start_date", "2023-03-07");
+    formData.append("length", "30");
+    formData.append("activity", "bench");
+
+    return this._http.post("https://emotidev.maristela.net/graph/getonermdata", formData, tableParam)
+    .subscribe(((result: any) => {
+
+      // initialize chart data
+      let workoutDates = result['X']
+      let onermData = result['y']
+      console.log(workoutDates[0])
+      console.log(result);
+
+      this.chart = new Chart("OneRMChart", {
+        type: 'bar', //this denotes tha type of chart
+  
+        data: {// values on X-Axis
+          labels: workoutDates,
+          datasets: [
+            {
+              label: "One Rep Max",
+              data: onermData,
+              backgroundColor: 'blue'
+            }
+          ]
+        },
+        options: {
+          aspectRatio: 2.5
+        }
+  
+      });
+      return result}));
+  }
 
   ngOnInit() {
-    this.createChart();
-  }
-  createChart(){
-  
-    this.chart = new Chart("chart2", {
-      type: 'bar', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], 
-	       datasets: [
-          {
-            label: "Sales",
-            data: ['467','576', '572', '79', '92',
-								 '574', '573', '576'],
-            backgroundColor: 'blue'
-          },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-									 '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }  
-        ]
-      },
-      options: {
-        aspectRatio:2.5
-      }
-      
-    });
+    this.getData();
   }
 
 }

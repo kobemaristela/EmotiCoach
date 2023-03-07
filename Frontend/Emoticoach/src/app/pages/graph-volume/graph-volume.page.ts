@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { HttpClient } from '@angular/common/http';
+import { AccountService } from 'src/app/services/user/account.service';
 import { map } from 'rxjs/operators';
 import { result } from 'cypress/types/lodash';
 import { table } from 'console';
@@ -12,6 +13,7 @@ import { table } from 'console';
 })
 export class GraphVolumePage implements OnInit {
   public chart: any; //hello
+  workoutDates: any = [];
 
   constructor(private _http: HttpClient) { }
 
@@ -36,48 +38,33 @@ export class GraphVolumePage implements OnInit {
 
       // initialize chart data
       let workoutDates = result['X']
-      // let dateList = result['X'].map((result: any) => result.X)
-      
-      // let workoutDates = []
-      // dateList.forEach((result: string) => {
-      //   let date = new String
-      //   workoutDates.push(date)
-      // })
-
+      let volumeData = result['y']
+      console.log(workoutDates[0])
       console.log(result);
+
+      this.chart = new Chart("MyChart", {
+        type: 'bar', //this denotes tha type of chart
+  
+        data: {// values on X-Axis
+          labels: workoutDates,
+          datasets: [
+            {
+              label: "Volume",
+              data: volumeData,
+              backgroundColor: 'blue'
+            }
+          ]
+        },
+        options: {
+          aspectRatio: 2.5
+        }
+  
+      });
       return result}));
   }
 
   ngOnInit() {
-    this.createChart();
-  }
-  createChart() {
-
-    this.chart = new Chart("MyChart", {
-      type: 'bar', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        labels: workoutDates,
-        datasets: [
-          {
-            label: "Sales",
-            data: ['467', '576', '572', '79', '92',
-              '574', '573', '576'],
-            backgroundColor: 'blue'
-          },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-              '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }
-        ]
-      },
-      options: {
-        aspectRatio: 2.5
-      }
-
-    });
+    this.getData();
   }
 
 }
