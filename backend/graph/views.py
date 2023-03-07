@@ -97,9 +97,38 @@ class GetMuscleGroupData(APIView):
                              "y":list(muscleDict.values())})
 
 
-            
+class GetOneRMData(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    def post(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        userId = Token.objects.get(key=token).user_id
 
+        start_date = request.POST["start_date"]
+        start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
 
+        length = int(request.POST["length"])
+        end_date = start_date + timedelta(days=length)
 
-        return JsonResponse({"test":"Hello"})
+        activity = request.POST["activity"]
+ 
+        sessions = Session.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        sessions = sessions.filter(datetime__lte = end_date).values("id", "datetime").order_by("datetime")
+
+        one_rm_data = dict()
+        for session in sessions:
+            activities = Activity.objects.filter(session_id=session["id"], name=activity).values("id")
+            sets = Set.objects.filter(activity_id__in=activities).values("weight", "reps")
+            current_one_rm = 0
+            for set in sets:
+                one_rm = set["weight"] / ((1.0278) - (0.0278 * set["reps"]))
+
+                if one_rm > current_one_rm:
+                    current_one_rm = one_rm
+
+            date_key = session["datetime"].strftime("%m/%d")
+            one_rm_data[date_key] = current_one_rm
+
+        return JsonResponse({"X":list(one_rm_data.keys()),
+                             "y":list(one_rm_data.values())})
