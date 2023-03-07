@@ -25,10 +25,19 @@ export class ExerciseSetComponent implements OnInit {
   }
 
   ngOnInit() {
+    //load set here given session and activty index
     this.set.set_num = this.setCount - 1;
+  }
+  loadSet() {
+    this.service.getCurrentSession()
+    .subscribe(res => {
+      this.set = res.activities[this.activityIndex].sets[this.setCount-1]
+      console.log(this.set)
+    });
   }
 
   updateSet() {
+    console.log("updating set", this.set);
     this.service.updateSet(this.activityIndex, this.setCount - 1, this.set);
   }
 }
