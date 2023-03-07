@@ -33,21 +33,21 @@ def on_message(mqtt_client, userdata, msg):
     message = float(msg.payload[1:])
     if msg.topic == "emoticoach/ppg/infrared":
         ppg_infrared.append([time(), message])
-        if len(ppg_infrared) >= 300:
+        if len(ppg_infrared) >= 100:
             ppg_infrared.pop(0)
     if msg.topic == "emoticoach/ppg/red":
         ppg_red.append([time(), message])
-        if len(ppg_red) >= 300:
+        if len(ppg_red) >= 100:
             ppg_red.pop(0)
     if msg.topic == "emoticoach/ppg/green":
         ppg_green.append([time(), message])
-        if len(ppg_green) >= 300:
+        if len(ppg_green) >= 100:
             ppg_green.pop(0)
 
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
-client.tls_set(ca_certs="../certs/isrgrootx1.pem")
+client.tls_set(ca_certs="../../certs/isrgrootx1.pem")
 client.username_pw_set(MQTT_USER, MQTT_PASSWORD)
 client.connect(
     host=MQTT_SERVER,

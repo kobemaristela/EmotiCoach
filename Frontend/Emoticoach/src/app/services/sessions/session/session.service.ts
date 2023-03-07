@@ -170,7 +170,6 @@ export class SessionService {
     return this.requestSessionService.postDeleteSessionObservable(sessionId);
   }
 
-
   //Creates a new blank session
   createBlankSession() {
     this.newSession = true;
