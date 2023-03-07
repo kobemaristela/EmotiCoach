@@ -78,13 +78,13 @@ export class SessionService {
     })
   }
 
-  addSet(activityIndex: number) {
+  addSet(activityIndex: number, setIndex: number) {
     console.log("activity index",activityIndex)
     this.currentSession = this.currentSession.pipe(
       map(
         d => {
           let updateD = d
-          updateD.activities[activityIndex].sets.push(new Set())
+          updateD.activities[activityIndex].sets.push(new Set(0,setIndex,0,0,0))
           return updateD
         }
       ));
@@ -140,12 +140,26 @@ export class SessionService {
   
     for (var i = 0; i < saveActivities.length; i++) {
       let currA = saveActivities[i];
-      console.log("saving activity", currA)
-      this.requestSessionService.postSaveExistingActivity(currA.id,currA.name);
+      if (currA.id == "0"){
+        console.log("creating activity", currA.sets[i])
+        //set activity
+        // this.requestSessionService.post(currA.id,currA.sets[i]);
+      } else {
+        console.log("saving activity", currA)
+        this.requestSessionService.postSaveExistingActivity(currA.id,currA.name);
+     
 
-      for (var i = 0; i < currA.sets.length; i++) {
-        console.log("saving set", currA.sets[i])
-        this.requestSessionService.postSaveExistingSet(currA.sets[i]);
+      
+   
+        for (var i = 0; i < currA.sets.length; i++) {
+          if (currA.sets[i].id == 0){
+            console.log("creating set", currA.sets[i])
+            this.requestSessionService.postSetSet(currA.id,currA.sets[i]);
+          } else {  
+            console.log("saving set", currA.sets[i])
+            this.requestSessionService.postSaveExistingSet(currA.sets[i]);
+          }
+          }
 
       }
     

@@ -12,16 +12,9 @@ export class ExerciseSetComponent implements OnInit {
 
   @Input() activityIndex: number = 0;
   @Input() setCount: number = 0;
-  @Input()  set: set;
+  @Input() set: set;
 
   constructor(private service: SessionService) { 
-    this.set = {
-      id: 0,
-      set_num: 0,
-      weight: 0,
-      reps: 0,
-      rpe: 0
-    }
   }
 
   ngOnInit() {
@@ -29,6 +22,7 @@ export class ExerciseSetComponent implements OnInit {
     this.set.set_num = this.setCount - 1;
     this.loadSet();
   }
+
   loadSet() {
     this.service.getCurrentSession()
     .subscribe(res => {
