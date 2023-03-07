@@ -81,6 +81,7 @@ export class RequestSessionService {
   }
 
   postSaveExistingSet(set:set){
+    console.log("setset post", set)
     const formData = new FormData();
     formData.append("id", set.id.toString());
     formData.append("weight",set.weight.toString());
@@ -94,6 +95,28 @@ export class RequestSessionService {
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editset", formData,tableParam);
     res.subscribe(data => {
       console.log("post save set",data)
+    })
+    return res;
+  }
+
+  postSetSet(activityId:string, set: set){
+    console.log("set set",activityId, set);
+    const formData = new FormData();
+ 
+    formData.append("activity_id", activityId);
+    formData.append("set_num", set.set_num.toString());
+    formData.append("weight",set.set_num.toString());
+    formData.append("reps", set.set_num.toString());
+    formData.append("rpe", set.set_num.toString());
+
+    let tableParam = {
+            headers: {
+              "Authorization": CHAD_TOKEN,
+            }
+      }
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
+    res.subscribe(data => {
+      console.log("post status",data)
     })
     return res;
   }

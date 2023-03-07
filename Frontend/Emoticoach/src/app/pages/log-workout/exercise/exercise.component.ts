@@ -31,8 +31,11 @@ export class ExerciseComponent implements OnInit {
   }
 
   addSet(){
-    this.servSession.addSet(this.activityIndex);
-    this.loadSets();
+    console.log("adding");
+    this.servSession.addSet(this.activityIndex,this.activity.sets.length+1);
+    this.activity.sets.push(new Set(0,this.activity.sets.length+1,0,0,0));
+    
+    // 
   }
   
   updateName(){
