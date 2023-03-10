@@ -4,6 +4,7 @@ import { session } from 'src/app/services/sessions/session/Isession';
 import { sessionRequest } from 'src/app/services/sessions/session/IsessionRequest';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { NavController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-workouts-dashboard',
@@ -12,7 +13,7 @@ import { NavController } from '@ionic/angular';
 })
 export class WorkoutsDashboardPage implements OnInit {
   sessions: sessionRequest[] = [];
-  
+  sessions$: Observable<sessionRequest[]>
   constructor(private servSession: SessionService, private navCtrl: NavController) { 
     
   }
@@ -23,7 +24,8 @@ export class WorkoutsDashboardPage implements OnInit {
 
   //calls the get session function from the service to do the api call and set the current session
   loadSessions() {    
-    this.servSession.getSessions().subscribe((res)=> {
+    this.sessions$ = this.servSession.getSessions();
+    this.sessions$.subscribe((res)=> {
       this.sessions = res;
       console.log("loading sessions", this.sessions)
     });
@@ -39,7 +41,6 @@ export class WorkoutsDashboardPage implements OnInit {
     this.servSession.createBlankSession()
     
   }
-
 
   async deleteSession(sessionId:number) {
     this.servSession.deleteSession(sessionId).subscribe( data => {

@@ -5,6 +5,7 @@ import { AccountService } from 'src/app/services/user/account.service';
 import { map } from 'rxjs/operators';
 import { result } from 'cypress/types/lodash';
 import { table } from 'console';
+import { CHAD_TOKEN } from 'src/environments/environment';
 
 @Component({
   selector: 'app-graph-musclegroup',
@@ -25,7 +26,7 @@ export class GraphMusclegroupPage implements OnInit {
   getData() {
     let tableParam = {
       headers: {
-        "Authorization": "token 1a01dbfd13486fca1469a734de65780d81f3aaa1",
+        "Authorization": CHAD_TOKEN,
       }
     }
     const formData = new FormData();

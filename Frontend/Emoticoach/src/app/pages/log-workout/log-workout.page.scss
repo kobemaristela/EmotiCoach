@@ -9,4 +9,22 @@ ion-modal {
         contain: content;
       }
     }
+}
+
+ion-icon {
+  font-size: 28px;
+}
+
+ion-button.redbutton {
+    --color: #833535;
+    --border-radius: 0;
+    --border-color: #833535;
+    --border-style: solid;
+    --border-width: 1px;
+    --padding-top: 10px;
+    --padding-bottom: 10px;
   }
+
+ion-button.save {
+  --color: #833535;
+}

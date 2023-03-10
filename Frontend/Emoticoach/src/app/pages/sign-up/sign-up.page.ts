@@ -22,8 +22,10 @@ export class SignUpPage implements OnInit {
 
   toLogin() {}
 
-  toRegister(){
-    this.registerRequest();
+  async toRegister(){
+    await this.registerRequest();
+    
+    // routerLink="/login"
   }
 
   async registerRequest(){

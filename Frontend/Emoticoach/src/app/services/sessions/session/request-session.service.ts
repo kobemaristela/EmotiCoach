@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CHAD_TOKEN } from 'src/environments/environment';
 import { set } from '../sets/Iset';
+
+//API calls for workout are stored in this file
 @Injectable({
   providedIn: 'root'
 })
@@ -11,9 +13,8 @@ export class RequestSessionService {
 
   constructor(private http: HttpClient) { }
   
-
   //creates a new session in the database
-  postCreateNewSessionObservable(session: session){
+  postCreateNewSessionObservable(session: session):Observable<any> {
     const formData = new FormData();
     formData.append("session", JSON.stringify(session));
     let tableParam = {
@@ -28,7 +29,7 @@ export class RequestSessionService {
     return res;
   }
 
-  postDeleteSessionObservable(sessionId: number){
+  postDeleteSessionObservable(sessionId: number):Observable<any> {
     const formData = new FormData();
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
@@ -44,7 +45,7 @@ export class RequestSessionService {
     return res;
   }
   
-  postSaveExistingSession(id: string, name: string, duration: string, datetime: string){
+  postSaveExistingSession(id: string, name: string, duration: string, datetime: string):Observable<any> {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("name", name);
@@ -63,7 +64,7 @@ export class RequestSessionService {
     return res;
   }
 
-  postSaveExistingActivity(id: string, name: string){
+  postSaveExistingActivity(id: string, name: string):Observable<any> {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("name", name);
@@ -80,7 +81,7 @@ export class RequestSessionService {
     return res;
   }
 
-  postSaveExistingSet(set:set){
+  postSaveExistingSet(set:set):Observable<any> {
     console.log("setset post", set)
     const formData = new FormData();
     formData.append("id", set.id.toString());
@@ -99,7 +100,29 @@ export class RequestSessionService {
     return res;
   }
 
-  postSetSet(activityId:string, set: set){
+  postSetAcitvity():Observable<any> {
+    console.log("set acitivity");
+    const formData = new FormData();
+ 
+    // formData.append("activity_id", activityId);
+    // formData.append("set_num", set.set_num.toString());
+    // formData.append("weight",set.set_num.toString());
+    // formData.append("reps", set.set_num.toString());
+    // formData.append("rpe", set.set_num.toString());
+
+    let tableParam = {
+            headers: {
+              "Authorization": CHAD_TOKEN,
+            }
+      }
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
+    res.subscribe(data => {
+      console.log("post status",data)
+    })
+    return res;
+  }
+  
+  postSetSet(activityId:string, set: set):Observable<any> {
     console.log("set set",activityId, set);
     const formData = new FormData();
  
@@ -121,7 +144,7 @@ export class RequestSessionService {
     return res;
   }
 
-  getAllSessionsObservable():Observable<any>{
+  getAllSessionsObservable():Observable<any> {
     let tableParam = {
             headers: {
               "Authorization": CHAD_TOKEN,
@@ -133,7 +156,7 @@ export class RequestSessionService {
   
   }
 
-  postGetSessionObservable(sessionId: number):Observable<session>{
+  postGetSessionObservable(sessionId: number):Observable<session> {
     const formData = new FormData();
 
     formData.append("id", JSON.stringify(sessionId));
