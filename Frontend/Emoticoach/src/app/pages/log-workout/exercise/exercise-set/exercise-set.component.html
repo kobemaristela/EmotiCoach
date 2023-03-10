@@ -12,8 +12,9 @@
           [clearOnEdit]="true" 
           type="number"
           placeholder="Reps" 
+          (ionChange)="setChanges()"
           [(ngModel)]="set.reps"
-          (ionChange)="updateSet()">
+        >
         </ion-input>
       </ion-item>
     </ion-col>
@@ -24,8 +25,9 @@
           [clearOnEdit]="true" 
           type="number" 
           placeholder="Lbs" 
+          (ionChange)="setChanges()"
           [(ngModel)]="set.weight"
-          (ionChange)="updateSet()">
+         >
         </ion-input>
       </ion-item>
     </ion-col>
@@ -36,8 +38,9 @@
           [clearOnEdit]="true" 
           type="number"
           placeholder="RPE" 
+          (ionChange)="setChanges()"
           [(ngModel)]="set.rpe"
-          (ionChange)="updateSet()">
+          >
         </ion-input>
       </ion-item>
     </ion-col>

@@ -15,16 +15,14 @@ import { Set } from '../sets/Set';
 })
 
 export class SessionService {
-  sessions: sessionRequest[] = [];
-  currentSession: Observable<session>;
-  newSession: boolean = false;
-  date:Date;
-  
+  private currentSession: session;
+  private newSession: boolean = false;
+  private date:Date;
+  private loading: boolean = true;
+  private saving: boolean = false;
   constructor(private requestSessionService: RequestSessionService) { 
     this.date = new Date();
-    this.currentSession = new Observable((observer) => {
-      observer.next(new Session("0","workout " + this.getDayMonth()));
-    });
+    this.currentSession = new Session("0","workout " + this.getDayMonth(), 0);
   }
 
   //returns a list of all sessions and does an api call to get them
@@ -33,14 +31,25 @@ export class SessionService {
   }
   
   //returns the current session secleted
-  getCurrentSession(): Observable<session> {
+  async getCurrentSession(): Promise<session> {
+    if(this.loading){
+     await this.delay(1000);
+    }
+    this.loading = true;
     return this.currentSession;
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
   }
 
   //searches through all the sessions to find a session with a given id
   //api call to get the session data needs to be added
   loadSession(sessionID: number) { 
-    this.currentSession = this.requestSessionService.postGetSessionObservable(sessionID);
+    this.requestSessionService.postGetSessionObservable(sessionID).subscribe( (data) => {
+      this.currentSession = data;
+      this.loading = false;
+    })
   }
 
   getSessionAPI(sessionID: number) {
@@ -48,82 +57,43 @@ export class SessionService {
   }
 
   //returns the activities of a given session
-  getActivites(sessionID:number): activity[] {
-    let activties:activity[] = []
-    this.currentSession.subscribe(res => {activties = res.activities}) 
-    return activties
+  getActivites(): activity[] {
+    return this.currentSession.activities
+   
   }
 
-  addActivity() {
-    this.currentSession = this.currentSession.pipe(
-      map(
-        d => { 
-          d.activities.push(new Activity("0"))
-          return d 
-        }
-      ));
+  addActivity(): void {
+    this.currentSession.activities.push(new Activity("0"));
   }
 
-  updateActivity(activity: activity, index: number) {
-    console.log("updating activity",activity)
-    this.currentSession = this.currentSession.pipe(
-      map(
-        d => { 
-          d.activities[index] = activity
-          return d 
-        }
-      ));   
-    this.currentSession.subscribe ( data => {
-      console.log(data);
-    })
+  updateActivity(activity: activity, index: number): void {
+    console.log("updating activity",activity);
+    this.currentSession.activities[index] = activity;
   }
 
-  addSet(activityIndex: number, setIndex: number) {
-    console.log("activity index",activityIndex)
-    this.currentSession = this.currentSession.pipe(
-      map(
-        d => {
-          let updateD = d
-          updateD.activities[activityIndex].sets.push(new Set(0,setIndex,0,0,0))
-          return updateD
-        }
-      ));
-    return activityIndex+1;
+  addSet(activityIndex: number, setIndex: number): void {
+    this.currentSession.activities[activityIndex].sets.push(new Set(0,setIndex,0,0,0))
   }
     //updates the set of a given activity
-  updateSet(activityIndex: number, setIndex: number, newSet: set) {
-    this.currentSession = this.currentSession.pipe(map(data => {
-      data.activities[activityIndex].sets[setIndex] = newSet
-      return data
-    }));
-    
+  updateSet(activityIndex: number, setIndex: number, newSet: set): void {
+    this.currentSession.activities[activityIndex].sets[setIndex] = newSet
   }
 
   updateDate(datetime:string) {
-    this.currentSession = this.currentSession.pipe(map(data => {
-      data.datetime = datetime
-      return data
-    }));
+    this.currentSession.datetime = datetime
   }
+  
   //saves session in the db when saved button is pressed
   //decieds if its a new save or an update to an existing entry
   saveSession() {
+    this.saving = true;
     if (this.newSession) {
       console.log("saving new");
-      this.newSession = false;
-
-      this.currentSession.subscribe( data => { 
-        this.createNewSession(data);
-      })
-      
+      this.createNewSession(this.currentSession);
     }
     else {
       console.log("saving existing");
-      this.currentSession.subscribe( data => { 
-        this.saveExistingSession(data);
-      })
-      
-
+      this.saveExistingSession(this.currentSession);
     }
   }
 
@@ -135,9 +105,8 @@ export class SessionService {
 
   saveExistingSession(toSave:session) {
     console.log("Saving Session", toSave);
-    this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration.toString(), toSave.datetime); 
+    // this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration.toString(), toSave.datetime); 
     let saveActivities = toSave.activities;
-  
     for (var i = 0; i < saveActivities.length; i++) {
       let currA = saveActivities[i];
       if (currA.id == "0"){
@@ -147,10 +116,6 @@ export class SessionService {
       } else {
         console.log("saving activity", currA)
         this.requestSessionService.postSaveExistingActivity(currA.id,currA.name);
-     
-
-      
-   
         for (var i = 0; i < currA.sets.length; i++) {
           if (currA.sets[i].id == 0){
             console.log("creating set", currA.sets[i])
@@ -160,9 +125,7 @@ export class SessionService {
             this.requestSessionService.postSaveExistingSet(currA.sets[i]);
           }
           }
-
       }
-    
     }
   }
 
@@ -174,20 +137,12 @@ export class SessionService {
   createBlankSession() {
     this.newSession = true;
     console.log("creating new")
-    this.currentSession = this.currentSession
-      .pipe(
-        map(d => {
-          d = new Session("")
-          d.name = "workout " + this.getDayMonth();
-          return d
-          }
-        )
-      );
-    return this.currentSession;
+    this.currentSession = new Session("")
+    this.currentSession.name = "workout " + this.getDayMonth();
   }
 
   //returns current day/month
-  getDayMonth(): string{
+  private getDayMonth(): string{
     return (this.date.getMonth() + 1) + "/" + this.date.getDate()
   }
 

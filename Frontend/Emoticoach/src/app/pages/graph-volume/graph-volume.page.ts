@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AccountService } from 'src/app/services/user/account.service';
 import { map } from 'rxjs/operators';
 import { result } from 'cypress/types/lodash';
-import { table } from 'console';
+import { CHAD_TOKEN } from 'src/environments/environment';
 
 @Component({
   selector: 'app-graph-volume',
@@ -12,7 +12,7 @@ import { table } from 'console';
   styleUrls: ['./graph-volume.page.scss'],
 })
 export class GraphVolumePage implements OnInit {
-  public chart: any; //hello
+  public chart: any; 
   workoutDates: any = [];
 
   constructor(private _http: HttpClient) { }
@@ -25,7 +25,7 @@ export class GraphVolumePage implements OnInit {
   getData() {
     let tableParam = {
       headers: {
-        "Authorization": "token 1a01dbfd13486fca1469a734de65780d81f3aaa1",
+        "Authorization": CHAD_TOKEN,
       }
     }
     const formData = new FormData();
@@ -64,36 +64,7 @@ export class GraphVolumePage implements OnInit {
   }
 
   ngOnInit() {
-
-    this.createChart();
-  }
-  createChart() {
-
-    this.chart = new Chart("MyChart", {
-      type: 'bar', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        // labels: workoutDates,
-        datasets: [
-          {
-            label: "Sales",
-            data: ['467', '576', '572', '79', '92',
-              '574', '573', '576'],
-            backgroundColor: 'blue'
-          },
-          {
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-              '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }
-        ]
-      },
-      options: {
-        aspectRatio: 2.5
-      }
-
-    });
+    this.getData();
   }
 
 }

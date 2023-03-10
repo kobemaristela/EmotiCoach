@@ -1,16 +1,15 @@
+<ion-toolbar>
+  <ion-title>Workouts Dashboard</ion-title>
+</ion-toolbar>
 <ion-content class="ion-padding" >
-  <!-- <ion-datetime 
-    presentation="date" 
-    [multiple]="true" 
-    [value]="['2022-12-03']">
-  </ion-datetime> -->
+  
   <ion-list>
-    <ion-item-divider sticky>
+    <!-- <ion-item-divider sticky>
       <ion-item>
         December 12 - December 19
       </ion-item>
-      
-    </ion-item-divider>
+    </ion-item-divider> -->
+
     <ion-card  
       *ngFor="let session of sessions; index as i;"
     >
