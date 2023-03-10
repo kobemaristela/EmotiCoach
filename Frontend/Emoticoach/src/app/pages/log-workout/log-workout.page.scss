@@ -28,3 +28,15 @@ ion-button.redbutton {
 ion-button.save {
   --color: #833535;
 }
+
+
+ion-item {
+  --inner-padding-end: 10px;
+  --inner-padding-start: 10px;
+  --background: "fff";
+  --border-width: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-sop: 0px;
+}
