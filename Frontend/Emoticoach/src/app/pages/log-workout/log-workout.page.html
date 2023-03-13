@@ -25,6 +25,50 @@
       </ng-template>
     </ion-modal>
 
+<<<<<<< Updated upstream
+=======
+    <ion-card>
+
+      <ion-card-content>
+  
+
+
+        <ion-grid>
+          <ion-row>
+          <ion-col size="6">
+            <ion-row class="cardHeader">
+              <div class="cardHeader" >Duration</div>
+            </ion-row>
+           <ion-row>
+            <ion-item>
+              <ion-icon size="small" name="timer-outline"></ion-icon>
+              <ion-input [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number" placeholder="Mins" ></ion-input>
+            </ion-item>
+           </ion-row>
+          </ion-col>
+          <ion-col size="6">
+            <ion-row class="cardHeader">
+              <div class="cardHeader" >Muscle Groups</div>
+            </ion-row>
+            <ion-row>
+              <ion-select placeholder="Select all muscles that apply" [multiple]="true">
+                <ion-select-option value="apples">Apples</ion-select-option>
+                <ion-select-option value="oranges">Oranges</ion-select-option>
+                <ion-select-option value="bananas">Bananas</ion-select-option>
+              </ion-select>
+            </ion-row>
+            
+          </ion-col>
+          </ion-row>
+ 
+        </ion-grid>
+          
+      </ion-card-content>
+    </ion-card>
+   
+    
+
+>>>>>>> Stashed changes
     <app-exercise *ngFor="let activity of currentSession.activities; let i = index" [activity]="activity"
       [activityIndex]="i">
     </app-exercise>

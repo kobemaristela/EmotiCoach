@@ -1,6 +1,6 @@
 <ion-grid>
   <ion-row>
-    <ion-col>
+    <ion-col size="%5">
       <ion-item>
       {{setCount}}
       </ion-item>
@@ -11,8 +11,8 @@
         <ion-input 
           [clearOnEdit]="true" 
           type="number"
+          min = "0"
           placeholder="Reps" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.reps"
         >
         </ion-input>
@@ -24,8 +24,8 @@
         <ion-input 
           [clearOnEdit]="true" 
           type="number" 
+          min = 0
           placeholder="Lbs" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.weight"
          >
         </ion-input>
@@ -37,8 +37,8 @@
         <ion-input 
           [clearOnEdit]="true" 
           type="number"
+          min = 0
           placeholder="RPE" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.rpe"
           >
         </ion-input>

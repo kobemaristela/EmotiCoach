@@ -105,7 +105,7 @@ export class SessionService {
 
   saveExistingSession(toSave:session) {
     console.log("Saving Session", toSave);
-    // this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration.toString(), toSave.datetime); 
+    this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration.toString(), toSave.datetime); 
     let saveActivities = toSave.activities;
     for (var i = 0; i < saveActivities.length; i++) {
       let currA = saveActivities[i];
