@@ -12,3 +12,4 @@ class Update(APIView):
             return Response('Invalid request', status=status.HTTP_400_BAD_REQUEST)
             
         subprocess.Popen(['./update/scripts/update_server.sh'])  # Spawn child process of update_server.sh
+        return Response('Starting Update', status=status.HTTP_200_OK)

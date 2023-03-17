@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=root
 WorkingDirectory=/root/EmotiCoach/backend
-ExecStart=python3 manage.py runserver 0.0.0.0:1617
+ExecStart=/usr/bin/python3  manage.py runserver 0.0.0.0:1617
 Restart=always
 Type=simple
 
