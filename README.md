@@ -13,6 +13,7 @@ by providing an affordable and open-source solution.
 
 
 ## Contributors
+
 ### Frontend
 - [@Justin Fan](https://github.com/justinf0428) - Dashboard | Metric Selection
 - [@Blong Vang](https://github.com/Vang-Blong) - Login | Register | Heart Rate Graph
