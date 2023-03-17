@@ -11,4 +11,4 @@ class Update(APIView):
         if payload.get('ref') != 'refs/heads/main':
             return Response('Invalid request', status=status.HTTP_400_BAD_REQUEST)
             
-        subprocess.Popen(['.update/scripts/update_server.sh'])  # Spawn child process of update_server.sh
+        subprocess.Popen(['./update/scripts/update_server.sh'])  # Spawn child process of update_server.sh

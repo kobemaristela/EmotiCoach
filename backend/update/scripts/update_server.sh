@@ -10,6 +10,7 @@ git pull
 pip3 install -r requirements.txt
 
 # Run Django database migrations
+python3 manage.py makemigrations
 python3 manage.py migrate
 
 # Restart EmotiDev
