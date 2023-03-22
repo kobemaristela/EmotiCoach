@@ -38,8 +38,8 @@ export class WorkoutsDashboardPage implements OnInit {
   }
 
   createNewSession() {
-    this.servSession.createBlankSession()
-    
+    this.servSession.createBlankSession();
+    this.navCtrl.navigateForward('/log-workout')
   }
 
   async deleteSession(sessionId:number) {

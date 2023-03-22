@@ -8,6 +8,7 @@
   </ion-toolbar>
 
 </ion-header>
+
 <ion-content>
   <ion-list>
     <ion-item-divider sticky>
@@ -26,11 +27,7 @@
     </ion-modal>
 
     <ion-card>
-
       <ion-card-content>
-  
-
-
         <ion-grid>
           <ion-row>
           <ion-col size="6">
@@ -49,10 +46,10 @@
               <div class="cardHeader" >Muscle Groups</div>
             </ion-row>
             <ion-row>
-              <ion-select placeholder="Select all muscles that apply" [multiple]="true">
-                <ion-select-option value="apples">Apples</ion-select-option>
-                <ion-select-option value="oranges">Oranges</ion-select-option>
-                <ion-select-option value="bananas">Bananas</ion-select-option>
+              <ion-select placeholder="Select all muscles that apply" [multiple]="true" [(ngModel)]="currentSession.muscleGroups">
+                <div *ngFor="let muscle of muscleList">
+                  <ion-select-option [value]="muscle">{{muscle}}</ion-select-option>
+                </div>
               </ion-select>
             </ion-row>
             

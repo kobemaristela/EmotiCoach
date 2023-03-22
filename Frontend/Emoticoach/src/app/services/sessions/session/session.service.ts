@@ -4,11 +4,12 @@ import { Session } from './Session';
 import { activity } from '../activity/Iactivity';
 import { set } from '../sets/Iset';
 import { RequestSessionService } from './request-session.service';
-import { sessionRequest } from './IsessionRequest';
-import { Observable } from 'rxjs';
+
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Activity } from '../activity/Activity';
 import { Set } from '../sets/Set';
+import { sessionRequest } from './IsessionRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -18,29 +19,31 @@ export class SessionService {
   private currentSession: session;
   private newSession: boolean = false;
   private date:Date;
-  private loading: boolean = true;
-  private saving: boolean = false;
+
+
+  private session$: Subject<sessionRequest[]>;
+  private currentSession$: Subject<session>;
+
+
   constructor(private requestSessionService: RequestSessionService) { 
     this.date = new Date();
     this.currentSession = new Session("0","workout " + this.getDayMonth(), 0);
+    this.session$ = new Subject()
+    this.currentSession$ = new Subject()
+
   }
 
   //returns a list of all sessions and does an api call to get them
   getSessions(): Observable<any> {
-    return this.requestSessionService.getAllSessionsObservable();
+    this.requestSessionService.getAllSessions().subscribe( v => {
+      this.session$.next(v)
+    });
+    return this.session$
   }
   
-  //returns the current session secleted
-  async getCurrentSession(): Promise<session> {
-    if(this.loading){
-     await this.delay(1000);
-    }
-    this.loading = true;
-    return this.currentSession;
-  }
-
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+  getCurrentSession(): Subject<session> {
+    this.currentSession$.next(this.currentSession);
+    return this.currentSession$;
   }
 
   //searches through all the sessions to find a session with a given id
@@ -48,7 +51,7 @@ export class SessionService {
   loadSession(sessionID: number) { 
     this.requestSessionService.postGetSessionObservable(sessionID).subscribe( (data) => {
       this.currentSession = data;
-      this.loading = false;
+      this.currentSession$.next( this.currentSession)
     })
   }
 
@@ -86,7 +89,7 @@ export class SessionService {
   //saves session in the db when saved button is pressed
   //decieds if its a new save or an update to an existing entry
   saveSession() {
-    this.saving = true;
+    console.log("saviong", this.currentSession)
     if (this.newSession) {
       console.log("saving new");
       this.createNewSession(this.currentSession);
@@ -95,36 +98,51 @@ export class SessionService {
       console.log("saving existing");
       this.saveExistingSession(this.currentSession);
     }
+    this.getSessions();
   }
 
   //does a post request to update the table 
   createNewSession(toSave:session) {
-    console.log("tosave",toSave)
+    console.log("tosave", toSave)
     this.requestSessionService.postCreateNewSessionObservable(toSave);
+    
   }
 
   saveExistingSession(toSave:session) {
     console.log("Saving Session", toSave);
-    this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration.toString(), toSave.datetime); 
+
+    this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration, toSave.datetime); 
+    
     let saveActivities = toSave.activities;
+    
     for (var i = 0; i < saveActivities.length; i++) {
+      
       let currA = saveActivities[i];
       if (currA.id == "0"){
         console.log("creating activity", currA.sets[i])
         //set activity
         // this.requestSessionService.post(currA.id,currA.sets[i]);
       } else {
+        
         console.log("saving activity", currA)
-        this.requestSessionService.postSaveExistingActivity(currA.id,currA.name);
+        this.requestSessionService.postSaveExistingActivity(currA.id, currA.name, currA.muscleGroups);
+        
         for (var i = 0; i < currA.sets.length; i++) {
+          
           if (currA.sets[i].id == 0){
+
             console.log("creating set", currA.sets[i])
             this.requestSessionService.postSetSet(currA.id,currA.sets[i]);
+
           } else {  
+
             console.log("saving set", currA.sets[i])
-            this.requestSessionService.postSaveExistingSet(currA.sets[i]);
+            this.requestSessionService.postSaveExistingSet(currA.sets[i]).subscribe( () => {
+
+            });
           }
-          }
+
+        }
       }
     }
   }
@@ -136,14 +154,14 @@ export class SessionService {
   //Creates a new blank session
   createBlankSession() {
     this.newSession = true;
-    console.log("creating new")
-    this.currentSession = new Session("")
-    this.currentSession.name = "workout " + this.getDayMonth();
+    this.currentSession = new Session("", "workout " + this.getDayMonth());
+
+    console.log("creating new", this.currentSession)
   }
 
   //returns current day/month
   private getDayMonth(): string{
-    return (this.date.getMonth() + 1) + "/" + this.date.getDate()
+    return (this.date.getMonth() + 1) + "-" + this.date.getDate()
   }
 
 }
