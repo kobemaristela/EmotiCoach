@@ -1,6 +1,7 @@
 #!/bin/sh
 
-if [ "$DATABASE_TYPE" = "postgres" ]
+# Verifies database is running
+if [ "$SQL_TYPE" = "postgres" ]
 then
     echo "Starting up PostgreSQL database..."
 
