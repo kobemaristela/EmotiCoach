@@ -1,4 +1,5 @@
 # Setup
-1. Copy 'emotidev.service' to '/etc/systemd/system'
-2. systemctl daemon-reload
-3. systemctl start emotidev.service
+1. Update the emotidev.service with the appropriate WORKDIR (Emoticoach backend directory)
+2. Copy THE unit service (emotidev.service) to '/etc/systemd/system'
+3. systemctl daemon-reload
+4. systemctl start emotidev.service 

@@ -30,8 +30,8 @@ RUN pip install --upgrade pip
 RUN pip install -r $EMOTICOACH_SERVER/requirements.txt
 
 # Give permissions to migration script | Removes all the carriage return (\r) characters
-RUN sed -i 's/\r$//g'  $EMOTICOACH_SERVER/deployment/migrate_database.sh
-RUN chmod +x  $EMOTICOACH_SERVER/deployment/migrate_database.sh
+RUN sed -i 's/\r$//g'  $EMOTICOACH_SERVER/deployment/scripts/migrate_database.sh
+RUN chmod +x  $EMOTICOACH_SERVER/deployment/scripts/migrate_database.sh
 
 # Chown all the files to the emoticoach user
 RUN chown -R emoticoach:emoticoach $EMOTICOACH_HOME
@@ -40,4 +40,4 @@ RUN chown -R emoticoach:emoticoach $EMOTICOACH_HOME
 USER emoticoach
 
 # Run migrations
-ENTRYPOINT ["/home/emoticoach/EmotiCoach/backend/deployment/migrate_database.sh"]
+ENTRYPOINT ["/home/emoticoach/EmotiCoach/backend/deployment/scripts/migrate_database.sh"]

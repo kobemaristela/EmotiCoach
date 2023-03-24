@@ -1,17 +1,17 @@
 version: "3.8"
 services:
-  django:
+  django_prod:
     build:
-      context: https://github.com/kobemaristela/EmotiCoach.git#:/backend/deployment
+      context: https://github.com/kobemaristela/EmotiCoach.git#:/backend/deployment/docker
     command: gunicorn emoticoach.wsgi:application --bind  0.0.0.0:1616
     ports:
       - 1616:1616
     env_file:
       - .env.prod
     depends_on:
-      - db
+      - db_prod
 
-  db:
+  db_prod:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
