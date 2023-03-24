@@ -41,8 +41,8 @@ done
 
 
 # Docker Container (Dev) - DEFAULT CONDITION
-if [[ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]] && \
-    [[ "$ENVIRONMENT" == "dev" ] || [ "$ENVIRONMENT" == "development" ]]; then
+if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
+    ([ "$ENVIRONMENT" == "dev" ] || [ "$ENVIRONMENT" == "development" ]); then
 
     # Shutdown Service
     if [ "$SHUTDOWN" == "1"]; then
@@ -65,8 +65,8 @@ fi
 
 
 # Docker Container (Prod)
-if [[ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]] && \
-    [[ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "production" ]]; then
+if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
+    ([ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "production" ]); then
 
     # Shutdown Service
     if [ "$SHUTDOWN" == "1"]; then
@@ -81,8 +81,8 @@ fi
 
 
 # Standalone (Dev)
-if [[ "$DOCKER" == "0" ] || [ "$DOCKER" == "false" ]] && \
-    [[ "$ENVIRONMENT" == "dev" ] || [ "$ENVIRONMENT" == "development" ]]; then
+if ([ "$DOCKER" == "0" ] || [ "$DOCKER" == "false" ]) && \
+    ([ "$ENVIRONMENT" == "dev" ] || [ "$ENVIRONMENT" == "development" ]); then
 
     # Shutdown Service
     if [ "$SHUTDOWN" == "1"]; then
@@ -106,8 +106,8 @@ fi
 
 
 #  Standalone (Prod)
-if [[ "$DOCKER" == "0" ] || [ "$DOCKER" == "false" ]] && \
-    [[ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "production" ]]; then
+if ([ "$DOCKER" == "0" ] || [ "$DOCKER" == "false" ]) && \
+    ([ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "production" ]); then
     
     # Shutdown Service
     if [ "$SHUTDOWN" == "1"]; then
