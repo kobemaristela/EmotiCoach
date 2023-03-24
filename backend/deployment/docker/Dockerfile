@@ -18,7 +18,7 @@ ENV EMOTICOACH_HOME=/home/emoticoach
 RUN addgroup -S emoticoach && adduser -S emoticoach -G emoticoach
 
 # Clone GitHub repo
-RUN apt update && apt install git -y
+RUN apt update && apt install git netcat -y
 RUN git clone https://github.com/kobemaristela/EmotiCoach.git
 
 # Update working directory
