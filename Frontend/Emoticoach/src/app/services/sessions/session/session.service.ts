@@ -6,7 +6,7 @@ import { set } from '../sets/Iset';
 import { RequestSessionService } from './request-session.service';
 
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators'
+import { debounceTime, map, throttleTime } from 'rxjs/operators'
 import { Activity } from '../activity/Activity';
 import { Set } from '../sets/Set';
 import { sessionRequest } from './IsessionRequest';
@@ -35,8 +35,9 @@ export class SessionService {
 
   //returns a list of all sessions and does an api call to get them
   getSessions(): Observable<any> {
-    this.requestSessionService.getAllSessions().subscribe( v => {
+    this.requestSessionService.getAllSessions().pipe(throttleTime(1000)).subscribe( v => {
       this.session$.next(v)
+
     });
     return this.session$
   }
@@ -52,6 +53,7 @@ export class SessionService {
     this.requestSessionService.postGetSessionObservable(sessionID).subscribe( (data) => {
       this.currentSession = data;
       this.currentSession$.next( this.currentSession)
+      this.currentSession$.pipe(debounceTime(1000))
     })
   }
 

@@ -4,7 +4,7 @@ import { session } from 'src/app/services/sessions/session/Isession';
 import { Session } from 'src/app/services/sessions/session/Session';
 import { Activity } from 'src/app/services/sessions/activity/Activity';
 import { MUSCLE_LIST } from 'src/environments/environment';
-import { Observable, Subject, map } from 'rxjs';
+import { Observable, Subject, debounceTime, map, throttleTime } from 'rxjs';
  
 @Component({
   selector: 'app-log-workout',
@@ -18,7 +18,7 @@ export class LogWorkoutPage implements OnInit {
 
 
   constructor(private servSession: SessionService) {
-    this.currentSession = new Session("", "not named");  
+    this.currentSession = new Session("");  
   }
 
   ngOnInit() {
@@ -34,16 +34,20 @@ export class LogWorkoutPage implements OnInit {
 
   loadSession(){
     this.currentSession$ = this.servSession.getCurrentSession();
+    this.currentSession$.pipe(throttleTime(1000))
     this.currentSession$.subscribe( data => {
       console.log("loading session", data);
       this.currentSession = data;
     })
+
+
 
   }
 
   saveSession(){
     console.log("saving in logworkout", this.currentSession);
     this.servSession.saveSession(); 
+    this.servSession.getSessions();
   }
 
   goBack(){
