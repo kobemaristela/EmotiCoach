@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Go to EmotiCoach directory
-cd ~/EmotiCoach/backend
+# Go to server directory
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd ../..
 
 # Update changes from main
 git pull
@@ -13,5 +14,5 @@ pip3 install -r requirements.txt
 python3 manage.py makemigrations
 python3 manage.py migrate
 
-# Restart EmotiDev
-systemctl restart emotidev.service
+# Restart service
+systemctl restart emotidev.service  # Development Service
