@@ -10,7 +10,7 @@ ENVIRONMENT_VALUES=("dev" "prod" "development" "production")
 DOCKER_VALUES=("true" "false" "1" "0")
 
 # Parse Arguments
-while getopts ":d:e:s:" opt; do
+while getopts ":d:e:s" opt; do
     case $opt in
         e)
             if [[ " ${ENVIRONMENT_VALUES[@]} " =~ " ${OPTARG} " ]]; then
@@ -46,7 +46,7 @@ if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
 
     # Shutdown Service
     if [ "$SHUTDOWN" == "1" ]; then
-        docker compose up -f ./deployment/docker/docker-compose.dev.yml stop
+        docker compose -f ./deployment/docker/docker-compose.dev.yml stop
         kill $(cat .updater_dev)
         rm -rf .updater_dev
         exit 0
