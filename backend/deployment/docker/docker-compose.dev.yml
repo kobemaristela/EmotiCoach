@@ -7,7 +7,7 @@ services:
     ports:
       - 1617:1617
     depends_on:
-      - db
+      - db_dev
 
   db_dev:
     image: postgres:latest
