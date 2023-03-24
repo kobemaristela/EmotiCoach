@@ -6,8 +6,6 @@ services:
     command: gunicorn emoticoach.wsgi:application --bind  0.0.0.0:1616
     ports:
       - 1616:1616
-    env_file:
-      - .env.prod
     depends_on:
       - db_prod
 
@@ -15,8 +13,6 @@ services:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .env.db.prod
 
 volumes:
   postgres_data:

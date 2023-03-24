@@ -6,8 +6,6 @@ services:
     command: python manage.py runserver 0.0.0.0:1617
     ports:
       - 1617:1617
-    env_file:
-      - .env.dev
     depends_on:
       - db
 
@@ -15,8 +13,6 @@ services:
     image: postgres:latest
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    env_file:
-      - .env.db.dev
 
 volumes:
   postgres_data:
