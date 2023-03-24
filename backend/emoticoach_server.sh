@@ -46,17 +46,17 @@ if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
 
     # Shutdown Service
     if [ "$SHUTDOWN" == "1"]; then
-        docker compose up -f ./deployment/docker-compose.dev.yml stop
+        docker compose up -f ./deployment/docker/docker-compose.dev.yml stop
         kill $(cat .updater_dev)
         rm -rf .updater_dev
         exit 0
     fi
     
     # Deploy dev container
-    docker compose --env-file .env.dev -f ./deployment/docker-compose.dev.yml up -d --build
+    docker compose --env-file .env.dev -f ./deployment/docker/docker-compose.dev.yml up -d --build
 
     # Deploy Flask Service
-    nohup python ./development/update_container.py $(readlink -f .env.template) $(readlink -f ./deployment/docker-compose.dev.yml)> /dev/null 2>&1 &
+    nohup python ./development/scripts/update_container.py $(readlink -f .env.template) $(readlink -f ./deployment/docker-compose.dev.yml)> /dev/null 2>&1 &
 
     # Record PID of update service
     echo $! > .updater_dev
@@ -70,12 +70,12 @@ if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
 
     # Shutdown Service
     if [ "$SHUTDOWN" == "1"]; then
-        docker compose -f ./deployment/docker-compose.prod.yml stop
+        docker compose -f ./deployment/docker/docker-compose.prod.yml stop
         exit 0
     fi
 
     # Deploy prod container
-    docker compose --env-file .env.prod -f ./deployment/docker-compose.prod.yml up -d --build
+    docker compose --env-file .env.prod -f ./deployment/docker/docker-compose.prod.yml up -d --build
 
 fi
 
