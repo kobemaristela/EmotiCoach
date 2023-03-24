@@ -15,7 +15,7 @@ ENV PYTHONUNBUFFERED 1
 ENV EMOTICOACH_HOME=/home/emoticoach
 
 # Create emoticoach user
-RUN addgroup -S emoticoach && adduser -S emoticoach -G emoticoach
+RUN groupadd -r emoticoach && useradd -r -g emoticoach emoticoach
 
 # Clone GitHub repo
 RUN apt update && apt install git netcat -y
