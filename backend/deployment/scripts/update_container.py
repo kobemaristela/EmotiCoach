@@ -36,7 +36,7 @@ def update_container():
 
     # Check event from main
     if request.headers.get('X-GitHub-Event') == 'push' and request.json['ref'] == 'refs/heads/main':
-        # Rebuild the Docker Compose container
+        # Rebuild containers
         subprocess.run(['docker-compose', '-f', docker_dev_path, 'stop'],
                        check=True)
         subprocess.run(['docker-compose', '--env-file', env_path, '-f',
