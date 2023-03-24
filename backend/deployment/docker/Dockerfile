@@ -41,4 +41,4 @@ RUN chown -R emoticoach:emoticoach $EMOTICOACH_HOME
 # USER emoticoach
 
 # Run migrations
-ENTRYPOINT ["/home/emoticoach/EmotiCoach/backend/deployment/scripts/migrate_database.sh"]
+# ENTRYPOINT ["/home/emoticoach/EmotiCoach/backend/deployment/scripts/migrate_database.sh"]
