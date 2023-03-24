@@ -48,7 +48,7 @@ if [[ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]] && \
     if [ "$SHUTDOWN" == "1"]; then
         docker compose up -f ./deployment/docker-compose.dev.yml stop
         kill $(cat .updater_dev)
-        rm .updater_dev
+        rm -rf .updater_dev
         exit 0
     fi
     
@@ -112,7 +112,7 @@ if [[ "$DOCKER" == "0" ] || [ "$DOCKER" == "false" ]] && \
     # Shutdown Service
     if [ "$SHUTDOWN" == "1"]; then
         kill $(cat .deploy_prod)
-        rm .deploy_prod
+        rm -rf .deploy_prod
         exit 0
     fi
 
