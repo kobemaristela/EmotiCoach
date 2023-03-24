@@ -16,7 +16,7 @@ fi
 # python manage.py flush --no-input
 
 # Always migrate database for changes
-python manage.py makemigrations
-python manage.py migrate
+# python manage.py makemigrations
+# python manage.py migrate
 
 exec "$@"
