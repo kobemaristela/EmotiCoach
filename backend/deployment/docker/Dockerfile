@@ -38,7 +38,7 @@ RUN chmod +x  $EMOTICOACH_SERVER/deployment/scripts/migrate_database.sh
 RUN chown -R emoticoach:emoticoach $EMOTICOACH_HOME
 
 # Change to the app user
-USER emoticoach
+# USER emoticoach
 
 # Run migrations
 ENTRYPOINT ["/home/emoticoach/EmotiCoach/backend/deployment/scripts/migrate_database.sh"]
