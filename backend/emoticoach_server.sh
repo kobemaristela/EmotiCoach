@@ -45,7 +45,7 @@ if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
     ([ "$ENVIRONMENT" == "dev" ] || [ "$ENVIRONMENT" == "development" ]); then
 
     # Shutdown Service
-    if [ "$SHUTDOWN" == "1"]; then
+    if [ "$SHUTDOWN" == "1" ]; then
         docker compose up -f ./deployment/docker/docker-compose.dev.yml stop
         kill $(cat .updater_dev)
         rm -rf .updater_dev
@@ -69,7 +69,7 @@ if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
     ([ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "production" ]); then
 
     # Shutdown Service
-    if [ "$SHUTDOWN" == "1"]; then
+    if [ "$SHUTDOWN" == "1"] ; then
         docker compose -f ./deployment/docker/docker-compose.prod.yml stop
         exit 0
     fi
@@ -85,7 +85,7 @@ if ([ "$DOCKER" == "0" ] || [ "$DOCKER" == "false" ]) && \
     ([ "$ENVIRONMENT" == "dev" ] || [ "$ENVIRONMENT" == "development" ]); then
 
     # Shutdown Service
-    if [ "$SHUTDOWN" == "1"]; then
+    if [ "$SHUTDOWN" == "1" ]; then
         systemctl stop emotidev.service
         exit 0
     fi
@@ -110,7 +110,7 @@ if ([ "$DOCKER" == "0" ] || [ "$DOCKER" == "false" ]) && \
     ([ "$ENVIRONMENT" == "prod" ] || [ "$ENVIRONMENT" == "production" ]); then
     
     # Shutdown Service
-    if [ "$SHUTDOWN" == "1"]; then
+    if [ "$SHUTDOWN" == "1" ]; then
         kill $(cat .deploy_prod)
         rm -rf .deploy_prod
         exit 0
