@@ -9,7 +9,7 @@
 
 </ion-header>
 <ion-content>
-  <ion-list>
+  <ion-list lines="none">
     <ion-item-divider sticky>
       <ion-input [clearOnEdit]="true" [(ngModel)]="currentSession.name">
       </ion-input>
@@ -24,6 +24,28 @@
         <ion-datetime [(ngModel)]="currentSession.datetime" size="cover"></ion-datetime>
       </ng-template>
     </ion-modal>
+
+    <ion-card>
+
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="cardHeader">
+            <div class="cardHeader" >Duration</div>
+          </ion-row>
+         <ion-row>
+          <ion-item>
+            <ion-icon size="small" name="timer-outline"></ion-icon>
+            <ion-input [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number" placeholder="Mins" ></ion-input>
+          </ion-item>
+            
+         </ion-row>
+ 
+        </ion-grid>
+          
+      </ion-card-content>
+    </ion-card>
+   
+    
 
     <app-exercise *ngFor="let activity of currentSession.activities; let i = index" [activity]="activity"
       [activityIndex]="i">
