@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  django_dev:
+    build:
+      context: https://github.com/kobemaristela/EmotiCoach.git#:/backend/deployment/docker
+    command: python manage.py runserver 0.0.0.0:1617
+    ports:
+      - 1617:1617
+    depends_on:
+      - db_dev
+
+  db_dev:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:

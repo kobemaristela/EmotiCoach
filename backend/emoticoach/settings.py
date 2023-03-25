@@ -30,8 +30,10 @@ DEBUG = int(os.environ.get("DEBUG", default=0))
 
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
-# Application definition
+# Docker Environment
+DOCKER_CONTAINER = int(os.environ.get("DOCKER_CONTAINER", default=1))
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     "website",
     "graph",
     "demo",
+    "update"
 ]
 
 REST_FRAMEWORK = {
