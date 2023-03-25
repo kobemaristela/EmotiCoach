@@ -1,12 +1,12 @@
 <ion-grid>
   <ion-row>
     <ion-col size="%5">
-      <ion-item>
+      <ion-item lines="none">
       {{setCount}}
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
+      <ion-item lines="none">
         <ion-icon size="small" name="repeat-outline"></ion-icon>
         <ion-input 
           [clearOnEdit]="true" 
@@ -19,20 +19,19 @@
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
+      <ion-item lines="none">
         <ion-icon size="small" name="barbell-outline"></ion-icon>
         <ion-input 
           [clearOnEdit]="true" 
           type="number" 
           min = 0
           placeholder="Lbs" 
-          [(ngModel)]="set.weight"
-         >
+          [(ngModel)]="set.weight">
         </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
+      <ion-item lines="none">
         <ion-icon size="small" name="walk-outline"></ion-icon>
         <ion-input 
           [clearOnEdit]="true" 

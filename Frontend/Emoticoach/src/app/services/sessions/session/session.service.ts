@@ -39,7 +39,7 @@ export class SessionService {
       this.session$.next(v)
 
     });
-    return this.session$
+    return this.session$;
   }
   
   getCurrentSession(): Subject<session> {
@@ -112,7 +112,9 @@ export class SessionService {
 
   saveExistingSession(toSave:session) {
     console.log("Saving Session", toSave);
-
+    if (!toSave.duration){
+      toSave.duration = 0
+    }
     this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration, toSave.datetime); 
     
     let saveActivities = toSave.activities;
@@ -157,8 +159,11 @@ export class SessionService {
   createBlankSession() {
     this.newSession = true;
     this.currentSession = new Session("", "workout " + this.getDayMonth());
-
     console.log("creating new", this.currentSession)
+  }
+
+  getMuscleGroups() {
+
   }
 
   //returns current day/month

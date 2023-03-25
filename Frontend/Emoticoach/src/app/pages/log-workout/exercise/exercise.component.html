@@ -26,11 +26,13 @@
         [setCount]="i+1">
     </app-exercise-set>
     <ion-row>
-      <ion-col></ion-col>
-      <ion-col size="auto">
-        <ion-button (click)="addSet()" fill="clear">Add Set</ion-button>
+      <ion-col>
+        <ion-button class="Delete" (click)="deleteSet()" fill="clear">Delete Set</ion-button>
       </ion-col>
       <ion-col></ion-col>
+      <ion-col>
+        <ion-button class="Add" (click)="addSet()" fill="clear">Add Set</ion-button>
+      </ion-col>
     </ion-row>
   </ion-card-content>
 </ion-card>

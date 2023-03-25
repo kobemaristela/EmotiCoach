@@ -1,0 +1,18 @@
+ion-select {
+    font-size: 0px !important;
+   
+}
+
+ion-select::part(icon) {
+    content: url('../../../../assets/icons/lifter-white.svg');
+    width: 50px;
+    --color: #ffffff;
+}
+
+ion-button.Delete{
+    --color: #833535;
+}
+
+ion-button.Add{
+    --color: #ffffff;
+}

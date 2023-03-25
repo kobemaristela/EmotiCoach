@@ -35,4 +35,7 @@ export class ExerciseComponent implements OnInit {
     this.servSession.updateActivity(this.activity, this.activityIndex);
     
   }
+  deleteSet(){
+
+  }
 }
