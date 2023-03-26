@@ -20,9 +20,12 @@ class Login(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
         return Response({
-            'token': token.key,
+            'first_name': user.first_name,
+            'last_name': user.last_name,
+            'email': user.email,
+            'username': user.username,
             'user_id': user.pk,
-            'email': user.email
+            'token': token.key,
         })
 
 class Register(APIView):
