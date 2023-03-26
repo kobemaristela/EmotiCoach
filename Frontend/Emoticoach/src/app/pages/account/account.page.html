@@ -1,9 +1,46 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>account</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button expand="block">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Profile</ion-title>
+</ion-toolbar>
 
 <ion-content>
+  <ion-grid>
+    <ion-row>
+        <ion-col size="12">
 
+          <ion-card class="form-wrapper">
+            <ion-card-content>
+              <ion-icon name="person"></ion-icon>
+              <ion-item>
+                <ion-text>Justin Fan</ion-text>
+              </ion-item>
+              <ion-button size="small">Account</ion-button>
+              <ion-button [disabled]="true" size="small">EmotiBit</ion-button>
+              <ion-button [disabled]="true" size="small">Settings</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+
+      <ion-col size="12">
+        <ion-card class="form-wrapper">
+          <ion-card-content>
+            <ion-item>
+              <ion-icon name="mail-outline"></ion-icon>
+              <ion-text>Email</ion-text>
+            </ion-item>
+            <ion-item>
+              <ion-icon name="lock-closed"></ion-icon>
+              <ion-text>Password</ion-text>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
 </ion-content>
