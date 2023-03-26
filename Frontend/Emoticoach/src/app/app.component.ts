@@ -32,10 +32,8 @@ export class AppComponent {
   ];
   loggedIn = false;
 
-  constructor(private liveDataService: LiveDataService) {
-    console.log("creating livedata service");
-    // this.liveDataService.connectToBroker();
-    // this.liveDataService.closeConnection();
+  constructor() {
+   
   }
 
   ngOnInit(){

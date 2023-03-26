@@ -22,12 +22,14 @@ export class HomePage implements OnInit, AfterContentChecked {
     // 'Templates', 
     'Volume Data',
     'One Rep Max',
-    'Muscle Group Data'
+    'Muscle Group Data',
+    'Live Data Graph'
   ];
 
   icons: string[] = [
     // 'walk-outline',
     // 'folder-open-outline',
+    'analytics-outline',
     'analytics-outline',
     'analytics-outline',
     'analytics-outline'
@@ -38,7 +40,8 @@ export class HomePage implements OnInit, AfterContentChecked {
     // 'Templates', 
     'Volume Data',
     'One Rep Max',
-    'Muscle Group Data'
+    'Muscle Group Data',
+    'Live Data Graph'
   ];
 
   lowerText: string[] = [
@@ -46,7 +49,8 @@ export class HomePage implements OnInit, AfterContentChecked {
     // 'Create a workout template',
     'View volume data from your workouts',
     'View your one rep max data from your workouts',
-    'View your muscle group data from workouts'
+    'View your muscle group data from workouts',
+    'View live data from your Emotibit'
   ];
 
   routing: string[] = [
@@ -55,6 +59,7 @@ export class HomePage implements OnInit, AfterContentChecked {
     '/tabs/graph-volume',
     '/tabs/graph-onerm',
     '/tabs/graph-musclegroup',
+    '/tabs/graph-livedata'
   ];
 
     constructor(public navCtrl: NavController) {

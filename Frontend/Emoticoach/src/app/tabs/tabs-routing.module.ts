@@ -32,6 +32,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/graph-musclegroup/graph-musclegroup.module').then(m => m.GraphMusclegroupPageModule)
       },
       {
+        path: 'graph-livedata',
+        loadChildren: () => import('../pages/graph-livedata/graph-livedata.module').then(m => m.GraphLivedataPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
