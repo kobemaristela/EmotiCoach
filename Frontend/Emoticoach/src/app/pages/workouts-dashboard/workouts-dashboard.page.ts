@@ -4,7 +4,7 @@ import { session } from 'src/app/services/sessions/session/Isession';
 import { sessionRequest } from 'src/app/services/sessions/session/IsessionRequest';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { NavController } from '@ionic/angular';
-import { Observable } from 'rxjs';
+import { Observable, bufferCount, debounceTime } from 'rxjs';
 
 @Component({
   selector: 'app-workouts-dashboard',
@@ -29,7 +29,7 @@ export class WorkoutsDashboardPage implements OnInit {
       this.sessions = res;
       console.log("loading sessions", this.sessions)
     });
-    
+
   }
 
   loadSession(index: number) {
@@ -38,11 +38,12 @@ export class WorkoutsDashboardPage implements OnInit {
   }
 
   createNewSession() {
-    this.servSession.createBlankSession()
-    
+    this.servSession.createBlankSession();
+    this.navCtrl.navigateForward('/log-workout')
   }
 
   async deleteSession(sessionId:number) {
+    
     this.servSession.deleteSession(sessionId).subscribe( data => {
       console.log(data);
       if (data.status){

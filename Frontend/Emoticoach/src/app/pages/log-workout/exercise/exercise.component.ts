@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { Activity } from 'src/app/services/sessions/activity/Activity';
 import { activity } from 'src/app/services/sessions/activity/Iactivity';
+import { MUSCLE_LIST } from 'src/environments/environment';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
@@ -13,7 +14,7 @@ export class ExerciseComponent implements OnInit {
   container!: ViewContainerRef
   @Input() activity: activity = new Activity("");
   @Input() activityIndex: number = 0;
-
+  muscleList = MUSCLE_LIST;
   constructor(private servSession: SessionService) { }
 
   ngOnInit() {
@@ -33,5 +34,8 @@ export class ExerciseComponent implements OnInit {
   updateName(){
     this.servSession.updateActivity(this.activity, this.activityIndex);
     
+  }
+  deleteSet(){
+
   }
 }

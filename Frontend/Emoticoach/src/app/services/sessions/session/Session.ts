@@ -22,7 +22,9 @@ export class Session implements session{
     createCopy(oldSession: session){
         this.id = oldSession.id;
         this.name = oldSession.name;
-        this.duration = oldSession.duration;
+        if (oldSession.duration){
+            this.duration = oldSession.duration;
+        }
         this.datetime = oldSession.datetime;
         this.muscleGroups = oldSession.muscleGroups;
         // this.activities = new Activity oldSession.activities;

@@ -15,6 +15,18 @@ ion-icon {
   font-size: 28px;
 }
 
+ion-item {
+  --inner-padding-end: 2px;
+  --inner-padding-start: 2px;
+  --background: "fff";
+  --border-width: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-sop: 0px;
+}
+
+
 ion-button.redbutton {
     --color: #833535;
     --border-radius: 0;
@@ -29,14 +41,7 @@ ion-button.save {
   --color: #833535;
 }
 
-
-ion-item {
-  --inner-padding-end: 10px;
-  --inner-padding-start: 10px;
-  --background: "fff";
-  --border-width: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
-  --padding-end: 0px;
-  --padding-sop: 0px;
+ion-back-button {
+  --color: #ffffff;
 }
+

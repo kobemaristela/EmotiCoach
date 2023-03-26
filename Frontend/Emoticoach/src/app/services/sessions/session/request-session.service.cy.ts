@@ -25,7 +25,7 @@ describe('HttpClient testing', () => {
       it('can getAllSessionsObservable', () => {
         const testData: session = new Session("", "", 0, "0000/00/00T00:00:00-8");
         // Make an HTTP GET request
-        requestSessionService.getAllSessionsObservable()
+        requestSessionService.getAllSessions()
           .subscribe(data =>
             expect(data).equal(testData)
           );
