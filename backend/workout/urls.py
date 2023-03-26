@@ -15,4 +15,6 @@ urlpatterns = [
     path('setset', SetSet.as_view(), name="setset"),
     path('editset', EditSet.as_view(), name="editset"),
     path('deleteset', DeleteSet.as_view(), name="deleteset"),
+
+    path('getmusclegroups', GetMuscleGroups.as_view(), name="getmusclegroups"),
 ]
