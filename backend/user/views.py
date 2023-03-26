@@ -75,6 +75,14 @@ class Logout(APIView):
     def get(self, request):
         request.user.auth_token.delete()
         return JsonResponse({"response": "success"})
+    
+class DeleteAccount(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        request.user.delete()
+        return JsonResponse({"response": "success"})
+        
 
 def show_database(request):
     if request.method == "GET":
