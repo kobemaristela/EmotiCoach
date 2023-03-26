@@ -1,6 +1,6 @@
 <ion-toolbar>
   <ion-buttons slot="start">
-    <ion-button expand="block">
+    <ion-button expand="block" routerLink="/tabs/home">
       <ion-icon name="arrow-back"></ion-icon>
     </ion-button>
   </ion-buttons>
@@ -19,8 +19,8 @@
                 <ion-text>Justin Fan</ion-text>
               </ion-item>
               <ion-button size="small">Account</ion-button>
-              <ion-button [disabled]="true" size="small">EmotiBit</ion-button>
-              <ion-button [disabled]="true" size="small">Settings</ion-button>
+              <ion-button fill="outline" size="small">EmotiBit</ion-button>
+              <ion-button fill="outline" size="small">Settings</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-col>
