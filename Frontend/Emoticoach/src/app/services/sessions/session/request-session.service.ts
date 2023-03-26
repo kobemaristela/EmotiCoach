@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { session } from './Isession';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CHAD_TOKEN } from 'src/environments/environment';
+import { CHAD_TOKEN } from 'src/environments/tokens';
 import { set } from '../sets/Iset';
 
 //API calls for workout are stored in this file

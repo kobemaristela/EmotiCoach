@@ -26,35 +26,7 @@ export class LoginPage implements OnInit {
     }
   }
 
-  getUserToken(){
-    return this.user_token;
-  }
-
   async toHomepage(){
-    await this.registerRequest();
-    if(this.isLoggedIn){
-      this.navCtrl.navigateForward('/tabs/home') //add once login is complete
-    }
-  }
 
-  async registerRequest(){
-    const formData = new FormData();
-    formData.append("username", this.userData.username);
-    formData.append("password", this.userData.password);
-
-    let tableParam = {
-      method: "POST",
-      body: formData
-  }
-  const res = await fetch("https://emotidev.maristela.net/user/login", tableParam);
-  let registerResponse = await res.json();
-  console.log(registerResponse);
-  console.log(this.isLoggedIn);
-
-  if(registerResponse["token"]){
-    this.isLoggedIn = true;
-    this.user_token = registerResponse["token"];
-    console.log(this.isLoggedIn);
-  }
   }
 }

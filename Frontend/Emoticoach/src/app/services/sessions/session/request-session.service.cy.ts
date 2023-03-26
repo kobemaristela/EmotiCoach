@@ -1,11 +1,12 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
-declare const expect: Chai.ExpectStatic
+
 import { RequestSessionService } from './request-session.service';
 import { Session } from './Session';
 import { session } from './Isession';
 
+declare const expect: Chai.ExpectStatic
 
 describe('HttpClient testing', () => {
       let httpClient: HttpClient;
