@@ -45,13 +45,14 @@ export class RequestSessionService {
     return res;
   }
   
-  postSaveExistingSession(id: string, name: string, duration: string, datetime: string):Observable<any> {
+  postSaveExistingSession(id: string, name: string, duration: number, datetime: string):Observable<any> {
     const formData = new FormData();
+    let strduration = duration+""
     formData.append("id", id);
     formData.append("name", name);
-    formData.append("duration", duration);
+    formData.append("duration", strduration);
     formData.append("datetime", datetime);
-    
+    // formData.append("muscleGroup", datetime);
     let tableParam = {
             headers: {
               "Authorization": CHAD_TOKEN,
@@ -64,11 +65,11 @@ export class RequestSessionService {
     return res;
   }
 
-  postSaveExistingActivity(id: string, name: string):Observable<any> {
+  postSaveExistingActivity(id: string, name: string, muscleGroups:string[]):Observable<any> {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("name", name);
-    
+    formData.append("muscleGroups", JSON.stringify(muscleGroups));
     let tableParam = {
             headers: {
               "Authorization": CHAD_TOKEN,
@@ -144,7 +145,7 @@ export class RequestSessionService {
     return res;
   }
 
-  getAllSessionsObservable():Observable<any> {
+  getAllSessions():Observable<any> {
     let tableParam = {
             headers: {
               "Authorization": CHAD_TOKEN,

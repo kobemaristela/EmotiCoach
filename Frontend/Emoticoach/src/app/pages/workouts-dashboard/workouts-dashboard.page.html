@@ -15,7 +15,7 @@
     >
       <ion-card-header>
         <ion-card-title>{{session.name}} </ion-card-title>
-        <ion-card-subtitle>{{session.datetime}}</ion-card-subtitle>
+        <ion-card-subtitle>{{session.datetime | date}}</ion-card-subtitle>
       </ion-card-header>
     
       <ion-card-content>
@@ -31,7 +31,7 @@
     <ion-row>
       <ion-col></ion-col>
       <ion-col size="auto">
-        <ion-button id="createNewButton" (click)="createNewSession()" routerLink="/log-workout" routerLinkActive="active" routerDirection="forward">Log A Workout </ion-button>
+        <ion-button id="createNewButton" (click)="createNewSession()">Log A Workout </ion-button>
       </ion-col>
       <ion-col></ion-col>
     </ion-row>

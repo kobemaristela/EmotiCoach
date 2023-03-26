@@ -1,44 +1,43 @@
 <ion-grid>
   <ion-row>
-    <ion-col>
-      <ion-item>
+    <ion-col size="%5">
+      <ion-item lines="none">
       {{setCount}}
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
+      <ion-item lines="none">
         <ion-icon size="small" name="repeat-outline"></ion-icon>
         <ion-input 
           [clearOnEdit]="true" 
           type="number"
+          min = "0"
           placeholder="Reps" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.reps"
         >
         </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
+      <ion-item lines="none">
         <ion-icon size="small" name="barbell-outline"></ion-icon>
         <ion-input 
           [clearOnEdit]="true" 
           type="number" 
+          min = 0
           placeholder="Lbs" 
-          (ionChange)="setChanges()"
-          [(ngModel)]="set.weight"
-         >
+          [(ngModel)]="set.weight">
         </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
+      <ion-item lines="none">
         <ion-icon size="small" name="walk-outline"></ion-icon>
         <ion-input 
           [clearOnEdit]="true" 
           type="number"
+          min = 0
           placeholder="RPE" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.rpe"
           >
         </ion-input>
