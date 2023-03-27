@@ -15,7 +15,7 @@ export class GraphVolumePage implements OnInit {
   public chart: any; 
   workoutDates: any = [];
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private accountService: AccountService) { }
 
   loadData(){
     this.getData()
@@ -23,9 +23,10 @@ export class GraphVolumePage implements OnInit {
   }
 
   getData() {
+    console.log(this.accountService.returnUserToken());
     let tableParam = {
       headers: {
-        "Authorization": CHAD_TOKEN,
+        "Authorization": "token " + this.accountService.returnUserToken(),
       }
     }
     const formData = new FormData();
