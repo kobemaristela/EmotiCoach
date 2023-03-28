@@ -6,7 +6,7 @@ import { set } from '../sets/Iset';
 import { RequestSessionService } from './request-session.service';
 
 import { Observable, Subject, first } from 'rxjs';
-import { debounceTime, map, takeUntil, tap,throttleTime, } from 'rxjs/operators'
+import { debounceTime, tap,throttleTime, } from 'rxjs/operators'
 import { Activity } from '../activity/Activity';
 import { Set } from '../sets/Set';
 import { sessionRequest } from './IsessionRequest';
@@ -37,7 +37,6 @@ export class SessionService {
   getSessions(): Observable<any> {
     this.requestSessionService.getAllSessions().pipe(throttleTime(1000)).subscribe( v => {
       this.session$.next(v)
-
     });
     return this.session$;
   }
@@ -95,7 +94,6 @@ export class SessionService {
     if (this.newSession) {
       console.log("saving new");
       this.createNewSession(this.currentSession);
-
     }
     else {
       console.log("saving existing");
@@ -107,10 +105,11 @@ export class SessionService {
   //does a post request to update the table 
   createNewSession(toSave:session) {
     console.log("tosave", toSave);
-    this.requestSessionService.postCreateNewSessionObservable(toSave).pipe(tap(v => {
+    this.requestSessionService.postCreateNewSessionObservable(toSave)
+    .subscribe(v => {
       this.getSessions();
       this.newSession = false;
-    }));
+    });
    
   }
 

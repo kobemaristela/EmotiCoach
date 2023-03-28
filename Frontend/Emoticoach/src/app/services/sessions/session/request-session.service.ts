@@ -23,9 +23,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsession", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post status",data)
-    })
     return res;
   }
 

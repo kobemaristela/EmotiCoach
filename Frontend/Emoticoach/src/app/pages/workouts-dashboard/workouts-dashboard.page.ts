@@ -12,21 +12,19 @@ import { Observable, Subscription } from 'rxjs';
 export class WorkoutsDashboardPage implements OnInit {
   sessions: sessionRequest[] = [];
   sessions$: Observable<sessionRequest[]>
-  subscriber: Subscription;
   constructor(private servSession: SessionService, private navCtrl: NavController) { 
     
   }
+
 
   ngOnInit() {
     this.loadSessions();
   }
 
-
-
   //calls the get session function from the service to do the api call and set the current session
   loadSessions() {    
     this.sessions$ = this.servSession.getSessions();
-    this.subscriber = this.sessions$.subscribe((res)=> {
+    this.sessions$.subscribe((res)=> {
       this.sessions = res;
       console.log("loading sessions", this.sessions)
     });
