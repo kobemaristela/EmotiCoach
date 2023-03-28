@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from 'src/app/services/user/account.service';
+import { Platform } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { result } from 'cypress/types/lodash';
 import { CHAD_TOKEN } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-graph-volume',
@@ -13,19 +15,33 @@ import { CHAD_TOKEN } from 'src/environments/environment';
 })
 export class GraphVolumePage implements OnInit {
   public chart: any; 
+  workouts: any = [];
   workoutDates: any = [];
+  currentWorkout: string;
 
-  constructor(private _http: HttpClient) { }
 
-  loadData(){
-    this.getData()
+  constructor(private _http: HttpClient, private accountService: AccountService) { 
 
+  }
+
+  getWorkouts(): Observable<any>{
+    let tableParam = {
+      headers: {
+        "Authorization": "token " + this.accountService.returnUserToken(),
+      }
+  }
+  let res = this._http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
+  res.subscribe(data => {
+    console.log("workout list",data)
+    this.workouts = data;
+  })
+    return res;
   }
 
   getData() {
     let tableParam = {
       headers: {
-        "Authorization": CHAD_TOKEN,
+        "Authorization": "token " + this.accountService.returnUserToken(),
       }
     }
     const formData = new FormData();
@@ -41,6 +57,7 @@ export class GraphVolumePage implements OnInit {
       let volumeData = result['y']
       console.log(workoutDates[0])
       console.log(result);
+      console.log(this.workouts);
 
       this.chart = new Chart("MyChart", {
         type: 'bar', //this denotes tha type of chart
@@ -65,6 +82,7 @@ export class GraphVolumePage implements OnInit {
 
   ngOnInit() {
     this.getData();
+    this.getWorkouts;
   }
 
 }

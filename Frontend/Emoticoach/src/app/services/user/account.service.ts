@@ -11,6 +11,7 @@ import { accountRequest } from './IaccountRequest';
 export class AccountService {
   userInfo: user;
   isLoggedIn: false;
+  static user_token: string = "";
 
   private user$: Subject<accountRequest[]>;
 
@@ -19,5 +20,18 @@ export class AccountService {
     this.userInfo = new Account("");
     this.user$ = new Subject();
     }
-   }
+
+  login(username:string , password: string): Observable<any>{
+    this.requestAccountService.getUserToken(username, password).subscribe( d => {
+      this.user$.next(d)
+      AccountService.user_token = d.token;
+      console.log(AccountService.user_token);
+    });
+    return this.user$;
+  }
+
+  returnUserToken(){
+    return AccountService.user_token;
+  }
+}
 

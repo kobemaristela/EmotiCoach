@@ -5,6 +5,21 @@
   <div class="chart-container">
       <canvas  id="MyChart" >{{ chart }}</canvas>
   </div>
-
+  <ion-list>
+    <ion-item>
+      <ion-label>
+        <ion-icon name="barbell-outline"></ion-icon>
+      </ion-label>
+      <!-- <ion-select placeholder="Select workout" interface="popover"
+      (ionChange)="workoutSelected($event)">
+        <ion-select-option value="apples">Apples</ion-select-option>
+      </ion-select> -->
+      <ion-select interface="popover" placeholder="Select workout" [(ngModel)]="currentWorkout">
+        <div *ngFor="let workout of workouts;">
+          <ion-select-option  [value]="workout"> {{workout}}</ion-select-option>
+        </div>
+      </ion-select>
+    </ion-item>
+  </ion-list>
 </ion-content>
 
