@@ -16,7 +16,7 @@ export class GraphMusclegroupPage implements OnInit {
   public chart: any; //hello
   workoutDates: any = [];
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private accountService: AccountService) { }
 
   loadData(){
     this.getData()
@@ -26,7 +26,7 @@ export class GraphMusclegroupPage implements OnInit {
   getData() {
     let tableParam = {
       headers: {
-        "Authorization": CHAD_TOKEN,
+        "Authorization": "token " + this.accountService.returnUserToken(),
       }
     }
     const formData = new FormData();

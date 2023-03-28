@@ -35,7 +35,7 @@ export class LoginPage implements OnInit {
     this.user$ = this.accountService.login(this.userData.username, this.userData.password);
     this.user$.subscribe((res)=> {
       if(res){
-        this.navCtrl.navigateForward('/home')
+        this.navCtrl.navigateForward('/tabs/home')
       }
     })
   }
