@@ -33,3 +33,10 @@
 ion-toolbar {
     --background: #833535;
   }
+
+ion-content {
+  // overwrite inline styles
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

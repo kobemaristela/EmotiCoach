@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { Activity } from 'src/app/services/sessions/activity/Activity';
 import { activity } from 'src/app/services/sessions/activity/Iactivity';
@@ -14,6 +14,8 @@ export class ExerciseComponent implements OnInit {
   container!: ViewContainerRef
   @Input() activity: activity = new Activity("");
   @Input() activityIndex: number = 0;
+  // @Output() delete: EventEmitter<any> = new EventEmitter();
+
   muscleList = MUSCLE_LIST;
   constructor(private servSession: SessionService) { }
 
@@ -21,6 +23,7 @@ export class ExerciseComponent implements OnInit {
     this.loadSets();
   }
 
+  
   loadSets(){
     this.servSession.getCurrentSession()
   }
@@ -35,7 +38,8 @@ export class ExerciseComponent implements OnInit {
     this.servSession.updateActivity(this.activity, this.activityIndex);
     
   }
-  deleteSet(){
 
+  deleteSet(){
+    this.servSession.deleteSet(this.activityIndex);
   }
 }

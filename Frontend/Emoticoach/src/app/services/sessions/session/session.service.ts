@@ -5,11 +5,13 @@ import { activity } from '../activity/Iactivity';
 import { set } from '../sets/Iset';
 import { RequestSessionService } from './request-session.service';
 
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, map, throttleTime } from 'rxjs/operators'
+import { Observable, Subject, first } from 'rxjs';
+import { debounceTime, map, takeUntil, tap,throttleTime, } from 'rxjs/operators'
 import { Activity } from '../activity/Activity';
 import { Set } from '../sets/Set';
 import { sessionRequest } from './IsessionRequest';
+import { data } from 'cypress/types/jquery';
+
 
 @Injectable({
   providedIn: 'root'
@@ -19,8 +21,6 @@ export class SessionService {
   private currentSession: session;
   private newSession: boolean = false;
   private date:Date;
-
-
   private session$: Subject<sessionRequest[]>;
   private currentSession$: Subject<session>;
 
@@ -95,19 +95,23 @@ export class SessionService {
     if (this.newSession) {
       console.log("saving new");
       this.createNewSession(this.currentSession);
+
     }
     else {
       console.log("saving existing");
       this.saveExistingSession(this.currentSession);
     }
-    this.getSessions();
+   
   }
 
   //does a post request to update the table 
   createNewSession(toSave:session) {
-    console.log("tosave", toSave)
-    this.requestSessionService.postCreateNewSessionObservable(toSave);
-    
+    console.log("tosave", toSave);
+    this.requestSessionService.postCreateNewSessionObservable(toSave).pipe(tap(v => {
+      this.getSessions();
+      this.newSession = false;
+    }));
+   
   }
 
   saveExistingSession(toSave:session) {
@@ -153,6 +157,11 @@ export class SessionService {
 
   deleteSession(sessionId:number) {
     return this.requestSessionService.postDeleteSessionObservable(sessionId);
+  }
+
+  deleteSet(activityID: number){
+    this.currentSession.activities[activityID].sets.pop();
+    this.currentSession$.next(this.currentSession);
   }
 
   //Creates a new blank session

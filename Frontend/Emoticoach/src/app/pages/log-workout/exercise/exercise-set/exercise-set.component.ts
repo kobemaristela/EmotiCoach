@@ -35,12 +35,4 @@ export class ExerciseSetComponent implements OnInit {
 
   }
 
-  loadSet() {
-      // this.service.getCurrentSession()
-      // .subscribe(res => {
-      //   console.log(this.set)
-      //   this.set = res.activities[this.activityIndex].sets[this.setCount-1]
-      // });
-  }
-
 }

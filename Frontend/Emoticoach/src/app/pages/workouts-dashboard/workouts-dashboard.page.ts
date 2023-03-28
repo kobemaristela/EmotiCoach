@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { session } from 'src/app/services/sessions/session/Isession';
 import { sessionRequest } from 'src/app/services/sessions/session/IsessionRequest';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { NavController } from '@ionic/angular';
-import { Observable, bufferCount, debounceTime } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-workouts-dashboard',
@@ -14,6 +12,7 @@ import { Observable, bufferCount, debounceTime } from 'rxjs';
 export class WorkoutsDashboardPage implements OnInit {
   sessions: sessionRequest[] = [];
   sessions$: Observable<sessionRequest[]>
+  subscriber: Subscription;
   constructor(private servSession: SessionService, private navCtrl: NavController) { 
     
   }
@@ -22,10 +21,12 @@ export class WorkoutsDashboardPage implements OnInit {
     this.loadSessions();
   }
 
+
+
   //calls the get session function from the service to do the api call and set the current session
   loadSessions() {    
     this.sessions$ = this.servSession.getSessions();
-    this.sessions$.subscribe((res)=> {
+    this.subscriber = this.sessions$.subscribe((res)=> {
       this.sessions = res;
       console.log("loading sessions", this.sessions)
     });
