@@ -3,9 +3,6 @@ import Chart from 'chart.js/auto'
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from 'src/app/services/user/account.service';
 import { Platform } from '@ionic/angular';
-import { map } from 'rxjs/operators';
-import { result } from 'cypress/types/lodash';
-import { CHAD_TOKEN } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
 @Component({

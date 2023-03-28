@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { session } from './Isession';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CHAD_TOKEN } from 'src/environments/tokens';
+import { AccountService } from '../../user/account.service';
 import { set } from '../sets/Iset';
 
 //API calls for workout are stored in this file
@@ -11,7 +11,7 @@ import { set } from '../sets/Iset';
 })
 export class RequestSessionService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private accountService: AccountService) { }
   
   //creates a new session in the database
   postCreateNewSessionObservable(session: session):Observable<any> {
@@ -19,7 +19,7 @@ export class RequestSessionService {
     formData.append("session", JSON.stringify(session));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsession", formData,tableParam);
@@ -34,7 +34,7 @@ export class RequestSessionService {
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
@@ -55,7 +55,7 @@ export class RequestSessionService {
     // formData.append("muscleGroup", datetime);
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editsession", formData,tableParam);
@@ -72,7 +72,7 @@ export class RequestSessionService {
     formData.append("muscleGroups", JSON.stringify(muscleGroups));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editactivity", formData,tableParam);
@@ -91,7 +91,7 @@ export class RequestSessionService {
     formData.append("rpe", set.rpe.toString());
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editset", formData,tableParam);
@@ -113,7 +113,7 @@ export class RequestSessionService {
 
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
@@ -135,7 +135,7 @@ export class RequestSessionService {
 
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
@@ -148,7 +148,7 @@ export class RequestSessionService {
   getAllSessions():Observable<any> {
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
@@ -163,7 +163,7 @@ export class RequestSessionService {
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsession", formData,tableParam);
