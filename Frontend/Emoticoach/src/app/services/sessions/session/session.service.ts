@@ -158,10 +158,15 @@ export class SessionService {
     return this.requestSessionService.postDeleteSessionObservable(sessionId);
   }
 
-  deleteSet(activityID: number){
-    this.currentSession.activities[activityID].sets.pop();
+  deleteActivity(activityIndex: number){
+    this.currentSession.activities.splice(activityIndex,1);
+  }
+
+  deleteSet(activityIndex: number){
+    this.currentSession.activities[activityIndex].sets.pop();
     this.currentSession$.next(this.currentSession);
   }
+
 
   //Creates a new blank session
   createBlankSession() {

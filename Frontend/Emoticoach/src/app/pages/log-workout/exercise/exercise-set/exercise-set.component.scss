@@ -1,11 +1,29 @@
 ion-item {
-    --inner-padding-end: 2px;
-    --inner-padding-start: 2px;
-    --background: "fff";
-    --border-width: 0px;
+    --inner-padding-end: 2px !important;
+    --inner-padding-start: 2px ;
+    --background: #232323;
+    --border-width: 0px !important;
     --padding-bottom: 0px;
     --padding-start: 0px;
     --padding-end: 0px;
-    --padding-sop: 0px;
+    --padding-top: 0px;
 }
+
+ion-item-options {
+    --inner-padding-end: 2px !important;
+    --inner-padding-start: 2px ;
+    --background: #232323;
+    --border-width: 0px !important;
+    --padding-bottom: 0px;
+    --padding-start: 0px;
+    --padding-end: 0px;
+    --padding-top: 0px;
+
+}
+ion-item-option {
+    background-color: #833535 !important;
+    
+}
+
+
 

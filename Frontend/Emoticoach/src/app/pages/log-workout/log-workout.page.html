@@ -4,7 +4,9 @@
       <ion-back-button (click)="goBack()"></ion-back-button>
     </ion-buttons>
     <ion-title>Add Workout</ion-title>
+    <ion-button slot="end" class="save" fill="outline" (click)="saveSession()">Save</ion-button>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content>
@@ -25,63 +27,42 @@
     </ion-modal>
 
     <ion-card>
-
       <ion-card-content>
         <ion-grid>
           <ion-row>
-          <ion-col size="6">
-            <ion-row class="cardHeader">
-              <div class="cardHeader">Duration</div>
-            </ion-row>
-           <ion-row>
-            <ion-item>
-              <ion-icon size="small" name="timer-outline"></ion-icon>
-              <ion-input #duration [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number" placeholder="Mins" ></ion-input>
-             
-            </ion-item>
-            
-            
-            
-           </ion-row>
-          </ion-col>
-          <ion-col size="6">
-            <ion-row class="cardHeader">
-              <div class="cardHeader" >Muscle Groups</div>
-            </ion-row>
-            <ion-row>
-              <!-- <ion-select placeholder="Select all muscles that apply" [multiple]="true" [(ngModel)]="currentSession.muscleGroups">
-                <div *ngFor="let muscle of muscleList">
-                  <ion-select-option [value]="muscle">{{muscle}}</ion-select-option>
-                </div>
-              </ion-select> -->
-              <ion-text>{{currentSession.muscleGroups}}</ion-text>
-            </ion-row>
-            
-          </ion-col>
+            <ion-col size="6">
+              <ion-row class="cardHeader">
+                <div class="cardHeader label">Duration</div>
+              </ion-row>
+              <ion-row>
+                <ion-item>
+                  <ion-icon size="small" name="timer-outline"></ion-icon>
+                  <ion-input #duration [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number"
+                    placeholder="Mins"></ion-input>
+                </ion-item>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="cardHeader">
+                <div class="cardHeader label">Muscle Groups</div>
+              </ion-row>
+              <ion-row>
+                <ion-text>{{currentSession.muscleGroups}}</ion-text>
+              </ion-row>
+            </ion-col>
           </ion-row>
-
- 
         </ion-grid>
-          
       </ion-card-content>
     </ion-card>
-   
-    
 
     <app-exercise *ngFor="let activity of currentSession.activities; let i = index" [activity]="activity"
       [activityIndex]="i">
     </app-exercise>
 
-    <ion-button expand="block" class="redbutton" fill="clear" color="transparent" (click)="addNewComponent()">Add Excercise</ion-button>
-    <ion-grid>
-    <ion-row>
-      <ion-col></ion-col>
-      <ion-col>
-        <ion-button expand="block" class="save" fill="clear" color="transparent" (click)="saveSession()">Save</ion-button>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-  </ion-grid>
-
   </ion-list>
 </ion-content>
+<ion-footer>
+  <ion-button expand="block" class="redbutton" fill="clear" color="transparent" (click)="addNewComponent()">Add
+    Excercise
+  </ion-button>
+</ion-footer>

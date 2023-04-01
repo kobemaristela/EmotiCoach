@@ -28,6 +28,10 @@ export class ExerciseComponent implements OnInit {
     this.servSession.getCurrentSession()
   }
 
+  deleteActivity(){
+    console.log("deleting activty")
+    this.servSession.deleteActivity(this.activityIndex);
+  } 
   addSet(){
     console.log("adding", this.activityIndex,this.activity.sets.length);
     this.servSession.addSet(this.activityIndex,this.activity.sets.length);

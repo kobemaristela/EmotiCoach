@@ -39,4 +39,10 @@ ion-content {
   &::-webkit-scrollbar {
     display: none;
   }
+  --background: #323232;
+}
+
+
+ion-list {
+  background: #323232;
 }

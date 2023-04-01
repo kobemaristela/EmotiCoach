@@ -45,9 +45,6 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
       this.currentSession = data;
       this.currentSession.duration = this.currentSession.duration == 0 ? undefined :  this.currentSession.duration;
     })
-
-
-
   }
 
   saveSession(){

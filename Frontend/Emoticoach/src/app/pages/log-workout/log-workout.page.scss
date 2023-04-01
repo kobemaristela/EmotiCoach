@@ -11,6 +11,12 @@ ion-modal {
     }
 }
 
+ion-content{
+  --background: #000000 !important;
+}
+ion-item-divider {
+  background-color: #323232 !important;
+}
 ion-icon {
   font-size: 28px;
 }
@@ -35,13 +41,27 @@ ion-button.redbutton {
     --border-width: 1px;
     --padding-top: 10px;
     --padding-bottom: 10px;
+    height: 65px;
   }
 
 ion-button.save {
-  --color: #833535;
+  --color: #ffffff;
+  height: 30px;
 }
 
 ion-back-button {
   --color: #ffffff;
 }
 
+ion-card {
+  width:100%;
+  margin: 0;
+  margin-top: 2%;
+  padding: 0 !important;
+  background-color: #323232 !important;
+}
+  
+
+.label {
+  color: #ffffff;
+}
