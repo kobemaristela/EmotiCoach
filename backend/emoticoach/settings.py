@@ -52,7 +52,8 @@ INSTALLED_APPS = [
     "website",
     "graph",
     "demo",
-    "update"
+    "update",
+    "webapp",
 ]
 
 REST_FRAMEWORK = {
