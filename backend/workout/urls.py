@@ -17,4 +17,5 @@ urlpatterns = [
     path('deleteset', DeleteSet.as_view(), name="deleteset"),
 
     path('getmusclegroups', GetMuscleGroups.as_view(), name="getmusclegroups"),
+    path('getactivitynames', GetActivityNames.as_view(), name="getactivitynames"),
 ]
