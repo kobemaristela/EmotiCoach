@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
+import { HttpClient } from '@angular/common/http';
+import { AccountService } from 'src/app/services/user/account.service';
+import { Platform } from '@ionic/angular';
 import { GraphService } from 'src/app/services/graph/graph.service';
 import { Observable } from 'rxjs';
 
