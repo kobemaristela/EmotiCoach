@@ -3,10 +3,20 @@ ion-list {
   }
 
 ion-item-divider {
-    background: #643232 !important;
+    margin-top: 2px !important;
+    background: #833535 !important;
     text-align: center;
 }
-
+ion-card {
+    --background: #833535 !important;
+    height: 70%;
+    border: 2px solid #ffffff;
+    border-radius: 10px !important;
+    ion-card-content{
+        padding: 0px !important;
+        border-width: 0px;
+    }
+}
 ion-item {
     background-color: #323232 !important;
     text-align: center;
@@ -14,4 +24,23 @@ ion-item {
 
 ion-button {
     color: #ffffff;
+}
+
+ion-header {
+    color: #ffffff;
+    font-size: 110%;
+    
+}
+ion-title {
+   
+    color: #ffffff;
+}
+
+.name {
+    font-size: 115%;
+}
+ion-icon {
+    color:#ffffff;
+    opacity: 100%;
+    size: large !important;
 }

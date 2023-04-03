@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { GraphService } from 'src/app/services/graph/graph.service';
+import { MUSCLE_LIST } from 'src/environments/environment';
 
 @Component({
   selector: 'app-graph-musclegroup',
@@ -13,27 +14,26 @@ export class GraphMusclegroupPage implements OnInit {
   musclegroups: any[] = [];
   workoutDates: string[] = [];
   selectedGroup = "";
+  muscleList = MUSCLE_LIST;
 
   constructor(private graphService: GraphService) { }
 
   getMuscleGroups(){ //change to getmusclegroups api
-    this.graphService.getActivityNames().subscribe(data => {
-      for(let i=0; i<data.activities.length; i++){
-        this.musclegroups.push(data.activities[i]);
-      }
-    })
+    for(let i=0; i<this.muscleList.length; i++){
+      this.musclegroups.push(this.muscleList[i]);
+    }
   }
 
   updateChart(){
-    this.graphService.getMuscleXandY("0").subscribe( x_data => {
+    this.graphService.getMuscleXandY("1").subscribe( x_data => { //don't we need musclegroup parameter?
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.workoutDates;
-      this.chart.update('none');
+      this.chart.update();
     });
-    this.graphService.getMuscleXandY("0").subscribe( y_data => {
+    this.graphService.getMuscleXandY("1").subscribe( y_data => {
       this.workoutData = y_data.y;
       this.chart.data.datasets[0].data = this.workoutData;
-      this.chart.update('none');
+      this.chart.update();
     });
   }
 

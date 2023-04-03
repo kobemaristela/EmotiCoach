@@ -30,12 +30,12 @@ export class GraphVolumePage implements OnInit {
     this.graphService.getVolumeXandY("2023-03-23", this.selectedWorkout).subscribe( x_data => {
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.workoutDates;
-      this.chart.update('none');
+      this.chart.update();
     });
     this.graphService.getVolumeXandY("2023-03-23", this.selectedWorkout).subscribe( y_data => {
       this.workoutData = y_data.y;
       this.chart.data.datasets[0].data = this.workoutData;
-      this.chart.update('none');
+      this.chart.update();
     });
   }
 
@@ -59,6 +59,7 @@ export class GraphVolumePage implements OnInit {
           }
     });
 
+    this.chart.options.animation = true;
     this.getWorkoutNames();
   }
 

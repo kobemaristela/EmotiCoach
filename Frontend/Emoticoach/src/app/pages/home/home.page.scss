@@ -7,19 +7,7 @@ ion-content {
 
     ion-col {
         text-align: center;
-
-        ion-icon {
-            zoom: 2.8;
-            padding: 3px;
-
-            &:first-child {
-                zoom: 3.8;
-                padding: 3px;
-            }
-        }
-
-        h2,
-        h1 {
+        h2,h1 {
             margin-top: 0;
         }
 
@@ -28,7 +16,7 @@ ion-content {
             box-shadow: 0 !important;
             margin-bottom: 0px !important;
             border: 1px solid #ffffff !important;
-           padding: 5px;
+            padding: 5px;
         }
 
     }
@@ -85,7 +73,9 @@ ion-item {
 
 ion-card-content {
     --background: #833535 !important;
+    border-width: 0px;
     padding: 0px !important;
+    height: 50px !important;
 }
 
 img {
