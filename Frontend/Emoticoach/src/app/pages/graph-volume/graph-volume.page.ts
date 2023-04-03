@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
-import { HttpClient } from '@angular/common/http';
-import { AccountService } from 'src/app/services/user/account.service';
-import { Platform } from '@ionic/angular';
-import { map } from 'rxjs/operators';
-import { result } from 'cypress/types/lodash';
-import { CHAD_TOKEN } from 'src/environments/environment';
+import { GraphService } from 'src/app/services/graph/graph.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -15,74 +10,55 @@ import { Observable } from 'rxjs';
 })
 export class GraphVolumePage implements OnInit {
   public chart: any; 
-  workouts: any = [];
-  workoutDates: any = [];
-  currentWorkout: string;
+  workoutData: number[] = [];
+  workouts: any[] = [];
+  workoutDates: string[] = [];
+  selectedWorkout = "";
 
-
-  constructor(private _http: HttpClient, private accountService: AccountService) { 
+  constructor(private graphService: GraphService) { 
 
   }
-
-  getWorkouts(): Observable<any>{
-    let tableParam = {
-      headers: {
-        "Authorization": "token " + this.accountService.returnUserToken(),
+  getWorkoutNames(){
+    this.graphService.getActivityNames().subscribe(data => {
+      for(let i=0; i<data.activities.length; i++){
+        this.workouts.push(data.activities[i]);
       }
-  }
-  let res = this._http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
-  res.subscribe(data => {
-    console.log("workout list",data)
-    this.workouts = data;
-  })
-    return res;
+    })
   }
 
-  getData() {
-    let tableParam = {
-      headers: {
-        "Authorization": "token " + this.accountService.returnUserToken(),
-      }
-    }
-    const formData = new FormData();
-    formData.append("start_date", "2023-03-07");
-    formData.append("length", "30");
-    formData.append("activity", "bench");
-
-    return this._http.post("https://emotidev.maristela.net/graph/getvolumedata", formData, tableParam)
-    .subscribe(((result: any) => {
-
-      // initialize chart data
-      let workoutDates = result['X']
-      let volumeData = result['y']
-      console.log(workoutDates[0])
-      console.log(result);
-      console.log(this.workouts);
-
-      this.chart = new Chart("MyChart", {
-        type: 'bar', //this denotes tha type of chart
-  
-        data: {// values on X-Axis
-          labels: workoutDates,
-          datasets: [
-            {
-              label: "Volume",
-              data: volumeData,
-              backgroundColor: 'blue'
-            }
-          ]
-        },
-        options: {
-          aspectRatio: 2.5
-        }
-  
-      });
-      return result}));
+  updateChart(){
+    this.graphService.getVolumeXandY("2023-03-28", this.selectedWorkout).subscribe( x_data => {
+      this.workoutDates = x_data.X;
+      this.chart.data.labels = this.workoutDates;
+      this.chart.update('none');
+    });
+    this.graphService.getVolumeXandY("2023-03-28", this.selectedWorkout).subscribe( y_data => {
+      this.workoutData = y_data.y;
+      this.chart.data.datasets[0].data = this.workoutData;
+      this.chart.update('none');
+    });
   }
 
   ngOnInit() {
-    this.getData();
-    this.getWorkouts;
+    this.chart = new Chart("MyChart", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: [], //workoutDates
+        datasets: [
+          {
+            label: "Volume",
+            data: [], //volumeData here
+            backgroundColor: '#833535'
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 1
+      }
+
+    });
+    this.getWorkoutNames();
   }
 
 }
