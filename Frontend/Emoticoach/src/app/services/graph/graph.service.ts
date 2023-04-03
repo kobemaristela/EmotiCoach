@@ -37,6 +37,11 @@ export class GraphService {
     return this.graph$;
   }
 
+  getPreviousWeek(){
+    //calls getgraph data with start_date 7 days before as new parameter
+    //getVolumeXandY(start_date - 7, activity)
+  }
+
   getActivityNames(): Observable<any>{
     this.requestGraphService.getWorkoutNames().subscribe( d => {
       this.workouts$.next(d);
