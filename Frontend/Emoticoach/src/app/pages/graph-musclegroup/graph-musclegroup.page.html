@@ -1,11 +1,35 @@
 <ion-content>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Muscle Group Graph</ion-title>
- 
   </ion-toolbar>
+
   <div class="chart-container">
       <canvas  id="MuscleGroupChart" >{{ chart }}</canvas>
   </div>
+
+  <!-- user date input goes here -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" offset="4.5">
+        <ion-item lines="none">
+          <ion-select 
+          interface="popover" 
+          placeholder="Select muscle group" 
+          [(ngModel)]="selectedGroup"
+          (ionChange)="updateChart()">
+            <div *ngFor="let muscle of musclegroups; let i = index">
+              <ion-select-option [value]="muscle">{{musclegroups[i]}}</ion-select-option> 
+            </div>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
 

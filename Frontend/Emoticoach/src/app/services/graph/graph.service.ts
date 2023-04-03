@@ -8,24 +8,28 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class GraphService {
-  //for volume graph
-  vworkout_names: volumeGraph[] = []; 
-  vworkout_dates: string[] = [];
-  vworkout_data: string[] = [];
-
-  private graph$: Subject<GraphService[]>;
+  private vgraph$: Subject<GraphService[]>;
+  private mgraph$: Subject<GraphService[]>;
   private workouts$: Subject<GraphService[]>;
 
   constructor(private requestGraphService: RequestGraphService, private accountService: AccountService) {
-    this.graph$ = new Subject();
+    this.vgraph$ = new Subject();
+    this.mgraph$ = new Subject();
     this.workouts$ = new Subject();
    }
 
   getVolumeXandY(start_date: string, activity: string): Observable<any>{
     this.requestGraphService.getVolumeData(start_date, activity).subscribe( d => {
-      this.graph$.next(d)
+      this.vgraph$.next(d)
     });
-    return this.graph$;
+    return this.vgraph$;
+  }
+  
+  getMuscleXandY(week_num: string): Observable<any>{
+    this.requestGraphService.getMuscleGroups(week_num).subscribe( d => {
+      this.mgraph$.next(d)
+    });
+    return this.mgraph$;
   }
 
   getActivityNames(): Observable<any>{
