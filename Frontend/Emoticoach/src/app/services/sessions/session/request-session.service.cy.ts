@@ -19,7 +19,7 @@ describe('HttpClient testing', () => {
         });
         httpClient = TestBed.inject(HttpClient);
         httpTestingController = TestBed.inject(HttpTestingController);
-        requestSessionService = new RequestSessionService(httpClient);
+        // requestSessionService = new RequestSessionService(httpClient);
       });
 
 
