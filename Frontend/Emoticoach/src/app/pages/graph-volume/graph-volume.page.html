@@ -1,25 +1,35 @@
 <ion-content>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Volume Graph</ion-title>
   </ion-toolbar>
+
   <div class="chart-container">
       <canvas  id="MyChart" >{{ chart }}</canvas>
   </div>
+
+  <!-- user date input goes here -->
+
   <ion-list>
     <ion-item>
       <ion-label>
         <ion-icon name="barbell-outline"></ion-icon>
       </ion-label>
-      <!-- <ion-select placeholder="Select workout" interface="popover"
-      (ionChange)="workoutSelected($event)">
-        <ion-select-option value="apples">Apples</ion-select-option>
-      </ion-select> -->
-      <ion-select interface="popover" placeholder="Select workout" [(ngModel)]="currentWorkout">
-        <div *ngFor="let workout of workouts;">
-          <ion-select-option  [value]="workout"> {{workout}}</ion-select-option>
+      <ion-select 
+      interface="popover" 
+      placeholder="Select workout" 
+      [(ngModel)]="selectedWorkout"
+      (ionChange)="updateChart()">
+        <div *ngFor="let workout of workouts; let i = index">
+          <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
         </div>
       </ion-select>
     </ion-item>
   </ion-list>
+
 </ion-content>
 
