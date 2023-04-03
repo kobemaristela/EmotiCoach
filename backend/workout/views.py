@@ -101,10 +101,10 @@ class SetSession(APIView):
                 
 
             for sets in setsObject:
-                activitySetNum = checkIfInt(sets["set_num"])
-                activityWeight = checkIfInt(sets["weight"])
-                activityReps = checkIfInt(sets["reps"])
-                activityRpe = checkIfInt(sets["rpe"])
+                activitySetNum = sets["set_num"]
+                activityWeight = sets["weight"]
+                activityReps = sets["reps"]
+                activityRpe = sets["rpe"]
                 activityId = activity.id
 
                 set = Set.objects.create(set_num=activitySetNum,
