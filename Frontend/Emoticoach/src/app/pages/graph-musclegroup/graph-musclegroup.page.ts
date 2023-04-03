@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from 'src/app/services/user/account.service';
-import { map } from 'rxjs/operators';
-import { result } from 'cypress/types/lodash';
-import { table } from 'console';
-import { CHAD_TOKEN } from 'src/environments/environment';
 
 @Component({
   selector: 'app-graph-musclegroup',
