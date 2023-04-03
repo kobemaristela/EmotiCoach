@@ -119,7 +119,7 @@ export class RequestSessionService {
     
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
     }
 
@@ -137,7 +137,7 @@ export class RequestSessionService {
     
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
 
