@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { session } from 'src/app/services/sessions/session/Isession';
 import { sessionRequest } from 'src/app/services/sessions/session/IsessionRequest';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { NavController } from '@ionic/angular';
-import { Observable, bufferCount, debounceTime } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-workouts-dashboard',
@@ -18,6 +16,7 @@ export class WorkoutsDashboardPage implements OnInit {
   constructor(private servSession: SessionService, private navCtrl: NavController) { 
     
   }
+
 
   ngOnInit() {
     this.loadSessions();
@@ -34,13 +33,15 @@ export class WorkoutsDashboardPage implements OnInit {
   }
 
   loadSession(index: number) {
-    this.servSession.loadSession(this.sessions[index].id)
-    this.navCtrl.navigateForward('/log-workout')
+    this.servSession.loadSession(this.sessions[index].id);
+    this.navCtrl.navigateForward('/log-workout');
+    this.servSession.clearDeletes();
   }
 
   createNewSession() {
     this.servSession.createBlankSession();
-    this.navCtrl.navigateForward('/log-workout')
+    this.servSession.clearDeletes();
+    this.navCtrl.navigateForward('/log-workout');
   }
 
   async deleteSession(sessionId:number) {

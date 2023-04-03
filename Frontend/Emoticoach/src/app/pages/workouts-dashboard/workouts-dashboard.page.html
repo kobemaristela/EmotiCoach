@@ -1,23 +1,26 @@
 <ion-toolbar>
   <ion-title>Workouts Dashboard</ion-title>
 </ion-toolbar>
-<ion-content class="ion-padding" >
-  
-  <ion-list>
-    <!-- <ion-item-divider sticky>
-      <ion-item>
-        December 12 - December 19
-      </ion-item>
-    </ion-item-divider> -->
 
-    <ion-card  
-      *ngFor="let session of sessions; index as i;"
-    >
+<ion-content>
+
+  <ion-list lines="none">
+    <ion-item-divider sticky>
+      <ion-title>Add Workout</ion-title>
+
+      <ion-button fill="clear" slot="end"
+        (click)="createNewSession()">
+        <ion-icon name="close-circle-outline"></ion-icon>
+  
+      </ion-button>
+
+    </ion-item-divider>
+    <ion-card *ngFor="let session of sessions; index as i;">
       <ion-card-header>
         <ion-card-title>{{session.name}} </ion-card-title>
         <ion-card-subtitle>{{session.datetime | date}}</ion-card-subtitle>
       </ion-card-header>
-    
+
       <ion-card-content>
         <ion-row>
           {{session.duration}} mins
@@ -25,16 +28,16 @@
         </ion-row>
       </ion-card-content>
       <ion-button fill="clear" (click)="loadSession(i)">Edit</ion-button>
-    <ion-button fill="clear" (click)="deleteSession(session.id)">Delete</ion-button>
+      <ion-button fill="clear" (click)="deleteSession(session.id)">Delete</ion-button>
     </ion-card>
 
-    <ion-row>
+    <!-- <ion-row>
       <ion-col></ion-col>
       <ion-col size="auto">
         <ion-button id="createNewButton" (click)="createNewSession()">Log A Workout </ion-button>
       </ion-col>
       <ion-col></ion-col>
-    </ion-row>
+    </ion-row> -->
 
   </ion-list>
 

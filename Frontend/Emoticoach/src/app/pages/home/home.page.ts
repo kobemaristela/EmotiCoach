@@ -29,7 +29,7 @@ export class HomePage implements OnInit, AfterContentChecked {
   icons: string[] = [
     // 'walk-outline',
     // 'folder-open-outline',
-    'analytics-outline',
+    'folder-outline',
     'analytics-outline',
     'analytics-outline',
     'analytics-outline'

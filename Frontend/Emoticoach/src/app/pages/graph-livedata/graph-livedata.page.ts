@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LiveDataService } from 'src/app/services/livedata/live-data.service';
 import Chart from 'chart.js/auto'
+import { IMqttMessage } from 'ngx-mqtt';
 
 @Component({
   selector: 'app-graph-livedata',
@@ -11,6 +12,8 @@ export class GraphLivedataPage implements OnInit {
   chart: Chart;
   count = 0;
   connectionOpen = false;
+  connections = ['emoticoach/ppg/infrared', 'emoticoach/eda/activity']
+  currentConnection = 'emoticoach/eda/activity'
   constructor(private liveDataService: LiveDataService) {
 
   }
@@ -23,7 +26,7 @@ export class GraphLivedataPage implements OnInit {
         labels: [],
         datasets: [
           {
-            label: "ppg",
+            label: this.currentConnection,
             data: [],
           }
         ]
@@ -36,42 +39,49 @@ export class GraphLivedataPage implements OnInit {
 
 
   openConnection() {
+    if(this.connectionOpen){
+      return;
+    }
+
     this.connectionOpen = true;
+    console.log("Current connection", this.currentConnection);
+
     if (this.chart) {
       console.log("creating livedata service");
-      this.liveDataService.connectToBroker().observe('emoticoach/ppg/infrared')
-        .subscribe((message) => {
-          console.log('Received message on topic my/topic: message.payload', message.payload);
+      
+      
+      this.liveDataService.connectToBroker() 
+      .observe(this.currentConnection)
+        .subscribe((message: IMqttMessage) => {
+          console.log('Received message on topic my/topic: message.payload', message.payload.toString());
+          
           this.count += 1
           if (this.chart.data.labels) {
             this.chart.data.labels.push(this.count);
 
           }
 
-          Array.from(message.payload).forEach((dataPoint) => {
-            this.chart.data.datasets.forEach((dataset) => {
-              dataset.data.push(dataPoint);
-            });
-          })
-          if (this.chart.data.labels && this.chart.data.labels.length > 50) {
-            
+          this.chart.data.datasets.forEach((dataset) => {
+            dataset.data.push(+message.payload.toString());
+          });
+          
+          if (this.chart.data.labels && this.chart.data.labels.length > 100) {
             this.chart.data.labels.shift();
             this.chart.data.datasets.forEach((dataset) => {
               dataset.data.shift();
-
             });
           }
           this.chart.update('none');
         });
     }
-
-
   }
+
 
   closeConnection() {
     if (this.connectionOpen) {
       this.connectionOpen = false;
       this.liveDataService.closeConnection();
+      this.chart.update('none');
     }
 
   }
