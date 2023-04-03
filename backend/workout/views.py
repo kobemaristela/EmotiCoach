@@ -330,4 +330,28 @@ class DeleteSet(APIView):
             return JsonResponse({"status": "success"})
         else:
             raise ParseError()
+        
+class GetMuscleGroups(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        muscle = [f.name for f in MuscleGroup._meta.get_fields()]
+        muscle.remove("activity")
+        muscle.remove("id")
+
+        return JsonResponse({"groups":muscle})
+
+class GetActivityNames(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        token = request.user.auth_token
+        user_id = Token.objects.get(key=token).user_id
+        session_id = Session.objects.filter(auth_user_id=user_id).values("id")
+        activities = Activity.objects.filter(session_id__in=session_id).values("name")
+        
+        response = {"activities":[x["name"] for x in activities]}
+
+        return JsonResponse(response)
