@@ -268,7 +268,7 @@ class DeleteActivity(APIView):
         id = request.POST["id"]
 
         if Activity.objects.filter(id=id):
-            activities = Activity.objects.filter(session_id=id)
+            activities = Activity.objects.filter(id=id)
             sets = Set.objects.filter(activity_id__in = activities.values("id")).delete()
             activities.delete()
 
