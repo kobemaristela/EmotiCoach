@@ -101,10 +101,10 @@ class SetSession(APIView):
                 
 
             for sets in setsObject:
-                activitySetNum = checkIfInt(sets["set_num"])
-                activityWeight = checkIfInt(sets["weight"])
-                activityReps = checkIfInt(sets["reps"])
-                activityRpe = checkIfInt(sets["rpe"])
+                activitySetNum = sets["set_num"]
+                activityWeight = sets["weight"]
+                activityReps = sets["reps"]
+                activityRpe = sets["rpe"]
                 activityId = activity.id
 
                 set = Set.objects.create(set_num=activitySetNum,
@@ -268,7 +268,7 @@ class DeleteActivity(APIView):
         id = request.POST["id"]
 
         if Activity.objects.filter(id=id):
-            activities = Activity.objects.filter(session_id=id)
+            activities = Activity.objects.filter(id=id)
             sets = Set.objects.filter(activity_id__in = activities.values("id")).delete()
             activities.delete()
 
@@ -330,4 +330,28 @@ class DeleteSet(APIView):
             return JsonResponse({"status": "success"})
         else:
             raise ParseError()
+        
+class GetMuscleGroups(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
+    def get(self, request):
+        muscle = [f.name for f in MuscleGroup._meta.get_fields()]
+        muscle.remove("activity")
+        muscle.remove("id")
+
+        return JsonResponse({"groups":muscle})
+
+class GetActivityNames(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        token = request.user.auth_token
+        user_id = Token.objects.get(key=token).user_id
+        session_id = Session.objects.filter(auth_user_id=user_id).values("id")
+        activities = Activity.objects.filter(session_id__in=session_id).values("name")
+        
+        response = {"activities":[x["name"] for x in activities]}
+
+        return JsonResponse(response)

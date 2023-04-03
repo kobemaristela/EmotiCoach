@@ -12,6 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 export class WorkoutsDashboardPage implements OnInit {
   sessions: sessionRequest[] = [];
   sessions$: Observable<sessionRequest[]>
+  
   constructor(private servSession: SessionService, private navCtrl: NavController) { 
     
   }

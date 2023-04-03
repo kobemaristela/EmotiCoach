@@ -2,6 +2,8 @@ import re
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
+from django.contrib.auth import authenticate
+from .controller import *
 
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -77,6 +79,34 @@ class Logout(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         request.user.auth_token.delete()
+        return JsonResponse({"response": "success"})
+    
+class EditAccount(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        first_name = checkIfParameter(request, "first_name")
+        last_name = checkIfParameter(request, "last_name")
+        email = checkIfParameter(request, "email")
+        password = checkIfParameter(request, "password")
+
+        if first_name:
+            request.user.first_name = first_name
+            request.user.save()
+        if last_name:
+            request.user.last_name = last_name
+            request.user.save()
+        if email:
+            request.user.email = email
+            request.user.email
+        if password:
+            # user = authenticate(username=request.user.username, password=password)
+            # if user:
+            #     user.set_password(newpassword)
+            #     user.save()
+            request.user.set_password(password)
+            request.user.save()
+
         return JsonResponse({"response": "success"})
     
 class DeleteAccount(APIView):

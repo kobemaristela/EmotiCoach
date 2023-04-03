@@ -13,7 +13,7 @@ export class RequestAccountService {
 
   constructor(private http: HttpClient) { }
 
-  async getUserToken(username: string, password: string){
+  getUserToken(username: string, password: string): Observable<any>{
     const formData = new FormData();
     formData.append("username", username);
     formData.append("password", password);

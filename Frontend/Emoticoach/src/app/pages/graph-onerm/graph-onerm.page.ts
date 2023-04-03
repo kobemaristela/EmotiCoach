@@ -5,7 +5,6 @@ import { AccountService } from 'src/app/services/user/account.service';
 import { map } from 'rxjs/operators';
 import { result } from 'cypress/types/lodash';
 import { table } from 'console';
-import { CHAD_TOKEN } from 'src/environments/environment';
 
 @Component({
   selector: 'app-graph-onerm',
@@ -16,7 +15,7 @@ export class GraphOnermPage implements OnInit {
   public chart: any; //hello
   workoutDates: any = [];
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private accountService: AccountService) { }
 
   loadData(){
     this.getData()
@@ -26,7 +25,7 @@ export class GraphOnermPage implements OnInit {
   getData() {
     let tableParam = {
       headers: {
-        "Authorization": CHAD_TOKEN,
+        "Authorization": "token " + this.accountService.returnUserToken(),
       }
     }
     const formData = new FormData();

@@ -23,5 +23,6 @@ urlpatterns = [
     path('workout/', include('workout.urls')),
     path('graph/', include('graph.urls')),
     path('demo/', include('demo.urls')),
-    path('update', include('update.urls'))
+    path('update', include('update.urls')),
+    path('webapp/', include('webapp.urls')),
 ]

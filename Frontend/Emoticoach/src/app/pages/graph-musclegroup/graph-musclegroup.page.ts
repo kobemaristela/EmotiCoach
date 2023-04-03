@@ -2,10 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from 'src/app/services/user/account.service';
-import { map } from 'rxjs/operators';
-import { result } from 'cypress/types/lodash';
-import { table } from 'console';
-import { CHAD_TOKEN } from 'src/environments/environment';
 
 @Component({
   selector: 'app-graph-musclegroup',
@@ -16,7 +12,7 @@ export class GraphMusclegroupPage implements OnInit {
   public chart: any; //hello
   workoutDates: any = [];
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient, private accountService: AccountService) { }
 
   loadData(){
     this.getData()
@@ -26,7 +22,7 @@ export class GraphMusclegroupPage implements OnInit {
   getData() {
     let tableParam = {
       headers: {
-        "Authorization": CHAD_TOKEN,
+        "Authorization": "token " + this.accountService.returnUserToken(),
       }
     }
     const formData = new FormData();

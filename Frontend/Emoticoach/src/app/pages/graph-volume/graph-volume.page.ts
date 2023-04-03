@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from 'src/app/services/user/account.service';
-import { map } from 'rxjs/operators';
-import { result } from 'cypress/types/lodash';
-import { CHAD_TOKEN } from 'src/environments/environment';
+import { Platform } from '@ionic/angular';
+import { GraphService } from 'src/app/services/graph/graph.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-graph-volume',
@@ -13,58 +13,55 @@ import { CHAD_TOKEN } from 'src/environments/environment';
 })
 export class GraphVolumePage implements OnInit {
   public chart: any; 
-  workoutDates: any = [];
+  workoutData: number[] = [];
+  workouts: any[] = [];
+  workoutDates: string[] = [];
+  selectedWorkout = "";
 
-  constructor(private _http: HttpClient) { }
-
-  loadData(){
-    this.getData()
+  constructor(private graphService: GraphService) { 
 
   }
-
-  getData() {
-    let tableParam = {
-      headers: {
-        "Authorization": CHAD_TOKEN,
+  getWorkoutNames(){
+    this.graphService.getActivityNames().subscribe(data => {
+      for(let i=0; i<data.activities.length; i++){
+        this.workouts.push(data.activities[i]);
       }
-    }
-    const formData = new FormData();
-    formData.append("start_date", "2023-03-07");
-    formData.append("length", "30");
-    formData.append("activity", "bench");
+    })
+  }
 
-    return this._http.post("https://emotidev.maristela.net/graph/getvolumedata", formData, tableParam)
-    .subscribe(((result: any) => {
-
-      // initialize chart data
-      let workoutDates = result['X']
-      let volumeData = result['y']
-      console.log(workoutDates[0])
-      console.log(result);
-
-      this.chart = new Chart("MyChart", {
-        type: 'bar', //this denotes tha type of chart
-  
-        data: {// values on X-Axis
-          labels: workoutDates,
-          datasets: [
-            {
-              label: "Volume",
-              data: volumeData,
-              backgroundColor: 'blue'
-            }
-          ]
-        },
-        options: {
-          aspectRatio: 2.5
-        }
-  
-      });
-      return result}));
+  updateChart(){
+    this.graphService.getVolumeXandY("2023-03-28", this.selectedWorkout).subscribe( x_data => {
+      this.workoutDates = x_data.X;
+      this.chart.data.labels = this.workoutDates;
+      this.chart.update('none');
+    });
+    this.graphService.getVolumeXandY("2023-03-28", this.selectedWorkout).subscribe( y_data => {
+      this.workoutData = y_data.y;
+      this.chart.data.datasets[0].data = this.workoutData;
+      this.chart.update('none');
+    });
   }
 
   ngOnInit() {
-    this.getData();
+    this.chart = new Chart("MyChart", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: [], //workoutDates
+        datasets: [
+          {
+            label: "Volume",
+            data: [], //volumeData here
+            backgroundColor: '#833535'
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 1
+      }
+
+    });
+    this.getWorkoutNames();
   }
 
 }
