@@ -6,12 +6,14 @@ ion-select {
 
 ion-select::part(icon) {
     content: url('../../../../assets/icons/lifter-white.svg');
-    width: 18px;
+    width: 20px;
     --color: #ffffff;
+    --padding: 0px;
 }
 
 ion-button.Delete{
     --color: #833535;
+    // width: 50px;
 }
 
 ion-button.Add{
@@ -23,7 +25,10 @@ ion-card {
     margin: 0 ;
     margin-top: 2%;
     background-color: #323232 !important;
+    --border-radius: 0px !important;
+
 }
+
 
 app-exercise-set {
     display: inline-block;
@@ -34,5 +39,5 @@ app-exercise-set {
     width:100%;
     margin: 0 ;
     margin-top: 2%;
-    background-color: #323232 !important;
+    background-color: #606060 !important;
 }

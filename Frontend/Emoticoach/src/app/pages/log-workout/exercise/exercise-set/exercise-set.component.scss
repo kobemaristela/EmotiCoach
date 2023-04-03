@@ -1,7 +1,7 @@
 ion-item {
     --inner-padding-end: 2px !important;
     --inner-padding-start: 2px ;
-    --background: #232323;
+    --background: #696969;
     --border-width: 0px !important;
     --padding-bottom: 0px;
     --padding-start: 0px;
@@ -9,10 +9,11 @@ ion-item {
     --padding-top: 0px;
 }
 
+
 ion-item-options {
     --inner-padding-end: 2px !important;
     --inner-padding-start: 2px ;
-    --background: #232323;
+    --background: #606060;
     --border-width: 0px !important;
     --padding-bottom: 0px;
     --padding-start: 0px;
@@ -22,8 +23,13 @@ ion-item-options {
 }
 ion-item-option {
     background-color: #833535 !important;
-    
+   
 }
 
+ion-icon {
+    color:#000000;
+    opacity: 100%;
+    size: large !important;
+}
 
 

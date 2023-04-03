@@ -32,13 +32,15 @@ export class WorkoutsDashboardPage implements OnInit {
   }
 
   loadSession(index: number) {
-    this.servSession.loadSession(this.sessions[index].id)
-    this.navCtrl.navigateForward('/log-workout')
+    this.servSession.loadSession(this.sessions[index].id);
+    this.navCtrl.navigateForward('/log-workout');
+    this.servSession.clearDeletes();
   }
 
   createNewSession() {
     this.servSession.createBlankSession();
-    this.navCtrl.navigateForward('/log-workout')
+    this.servSession.clearDeletes();
+    this.navCtrl.navigateForward('/log-workout');
   }
 
   async deleteSession(sessionId:number) {

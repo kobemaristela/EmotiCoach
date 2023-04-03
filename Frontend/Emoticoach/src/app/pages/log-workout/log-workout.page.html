@@ -46,8 +46,8 @@
               <ion-row class="cardHeader">
                 <div class="cardHeader label">Muscle Groups</div>
               </ion-row>
-              <ion-row>
-                <ion-text>{{currentSession.muscleGroups}}</ion-text>
+              <ion-row *ngFor="let muscle of muscleGroups">
+                <ion-text>{{muscle}}</ion-text>
               </ion-row>
             </ion-col>
           </ion-row>
@@ -62,7 +62,7 @@
   </ion-list>
 </ion-content>
 <ion-footer>
-  <ion-button expand="block" class="redbutton" fill="clear" color="transparent" (click)="addNewComponent()">Add
+  <ion-button expand="block" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
     Excercise
   </ion-button>
 </ion-footer>

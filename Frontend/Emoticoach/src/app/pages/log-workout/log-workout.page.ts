@@ -17,6 +17,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
   currentSession$: Subject<session>;
   muscleList = MUSCLE_LIST;
   subscriber: Subscription;
+  muscleGroups: string[] = [];
 
   constructor(private servSession: SessionService, private alertController: AlertController) {
     this.currentSession = new Session("");  
@@ -24,6 +25,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loadSession(); 
+    this.servSession.clearDeletes();
   }
 
   ngOnDestroy(): void {
@@ -35,6 +37,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
     this.servSession.addActivity();
     this.loadSession();
 
+
   }
 
   loadSession(){
@@ -44,8 +47,22 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
       console.log("loading session", data);
       this.currentSession = data;
       this.currentSession.duration = this.currentSession.duration == 0 ? undefined :  this.currentSession.duration;
+      this.loadMuscleGroups();
     })
   }
+
+  loadMuscleGroups(){
+    for(let i = 0; i < this.currentSession.activities.length; i++){
+      this.currentSession.activities[i].muscleGroups.forEach(muscle => {
+        if (!this.muscleGroups.includes(muscle)) {
+          console.log("adding", muscle)
+          this.muscleGroups.push(muscle);
+        }
+      }); 
+    }
+  }
+
+
 
   saveSession(){
     //run checks to see if all fields have a value 

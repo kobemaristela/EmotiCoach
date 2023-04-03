@@ -28,6 +28,7 @@ ion-content {
             box-shadow: 0 !important;
             margin-bottom: 0px !important;
             border: 1px solid #ffffff !important;
+           padding: 5px;
         }
 
     }
@@ -35,7 +36,7 @@ ion-content {
     ion-row.banners {
         position: relative;
         padding: 10px;
-        height: 190px;
+        height: 100px;
         background: #833535;
         border-radius: 2.5rem;
         margin: 6vh 1rem 0 1rem;
@@ -84,7 +85,7 @@ ion-item {
 
 ion-card-content {
     --background: #833535 !important;
-    padding: 10px !important;
+    padding: 0px !important;
 }
 
 img {
@@ -115,5 +116,5 @@ img {
 }
 
 .card-subtitle{
-    font-size: x-large;
+    font-size: large;
 }

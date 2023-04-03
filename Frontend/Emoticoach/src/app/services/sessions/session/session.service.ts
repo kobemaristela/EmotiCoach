@@ -5,7 +5,7 @@ import { activity } from '../activity/Iactivity';
 import { set } from '../sets/Iset';
 import { RequestSessionService } from './request-session.service';
 
-import { Observable, Subject, first } from 'rxjs';
+import { Observable, Subject, Subscription, first } from 'rxjs';
 import { debounceTime, tap,throttleTime, } from 'rxjs/operators'
 import { Activity } from '../activity/Activity';
 import { Set } from '../sets/Set';
@@ -23,13 +23,14 @@ export class SessionService {
   private date:Date;
   private session$: Subject<sessionRequest[]>;
   private currentSession$: Subject<session>;
-
+  private setsToDelete: set[] = [];
+  private activitiesToDelete: activity[] =[];
 
   constructor(private requestSessionService: RequestSessionService) { 
     this.date = new Date();
-    this.currentSession = new Session("0","workout " + this.getDayMonth(), 0);
-    this.session$ = new Subject()
-    this.currentSession$ = new Subject()
+    this.currentSession = new Session("0","workout" + this.getDayMonth(), 0);
+    this.session$ = new Subject();
+    this.currentSession$ = new Subject();
 
   }
 
@@ -63,7 +64,6 @@ export class SessionService {
   //returns the activities of a given session
   getActivites(): activity[] {
     return this.currentSession.activities
-   
   }
 
   addActivity(): void {
@@ -126,32 +126,45 @@ export class SessionService {
       
       let currA = saveActivities[i];
       if (currA.id == "0"){
-        console.log("creating activity", currA.sets[i])
-        //set activity
-        // this.requestSessionService.post(currA.id,currA.sets[i]);
+        console.log("creating activity", currA)
+        this.requestSessionService.postSetAcitvity(toSave.id, currA.name, currA.muscleGroups, currA.sets);
       } else {
         
         console.log("saving activity", currA)
         this.requestSessionService.postSaveExistingActivity(currA.id, currA.name, currA.muscleGroups);
         
-        for (var i = 0; i < currA.sets.length; i++) {
+        for (var x = 0; x < currA.sets.length; x++) {
           
-          if (currA.sets[i].id == 0){
+          if (currA.sets[x].id == 0){
 
-            console.log("creating set", currA.sets[i])
-            this.requestSessionService.postSetSet(currA.id,currA.sets[i]);
+            console.log("creating set", currA.sets[x])
+            this.requestSessionService.postSetSet(currA.id,currA.sets[x]);
 
           } else {  
-
-            console.log("saving set", currA.sets[i])
-            this.requestSessionService.postSaveExistingSet(currA.sets[i]).subscribe( () => {
-
-            });
+            console.log("saving set", currA.sets[x])
+            this.requestSessionService.postSaveExistingSet(currA.sets[x])
           }
 
         }
       }
-    }
+      }
+      this.deleteExistings();
+  }
+
+  //Loop through both arrays of to delete and delete them after they click save
+  private deleteExistings(){
+    console.log("deleting existing")
+    console.log(this.activitiesToDelete);
+    console.log(this.setsToDelete);
+    for (var x = 0; x < this.setsToDelete.length; x++) {
+      console.log("deleting", this.setsToDelete[x])
+      this.requestSessionService.postDeleteSet(this.setsToDelete[x].id.toString());
+    };
+    for (var x = 0; x < this.activitiesToDelete.length; x++) {
+      console.log("deleting", this.activitiesToDelete[x])
+      this.requestSessionService.postDeleteActivity(this.activitiesToDelete[x].id);
+    };
+   
   }
 
   deleteSession(sessionId:number) {
@@ -159,14 +172,36 @@ export class SessionService {
   }
 
   deleteActivity(activityIndex: number){
+    if (this.newSession){
+      this.currentSession.activities.splice(activityIndex,1);
+      // this.currentSession$.next(this.currentSession);
+      return
+    }
+   
+    let dAct = this.currentSession.activities[activityIndex];
+    this.activitiesToDelete.push(dAct);
     this.currentSession.activities.splice(activityIndex,1);
+    return
   }
 
-  deleteSet(activityIndex: number){
-    this.currentSession.activities[activityIndex].sets.pop();
-    this.currentSession$.next(this.currentSession);
+  deleteSet(activityIndex: number, setIndex: number){
+    if (this.newSession){
+      this.currentSession.activities[activityIndex].sets.splice(setIndex,1);
+      // this.currentSession$.next(this.currentSession);
+      return
+    }
+   
+    let dSet = this.currentSession.activities[activityIndex].sets[setIndex]
+    this.setsToDelete.push(dSet);
+    this.currentSession.activities[activityIndex].sets.splice(setIndex,1);
+    return
   }
 
+  clearDeletes() {
+    this.setsToDelete.length = 0;
+    this.activitiesToDelete.length =0;
+    console.log("clearing Deletes")
+  }
 
   //Creates a new blank session
   createBlankSession() {
