@@ -96,7 +96,7 @@ export class RequestSessionService {
   }
 
   postSetAcitvity(sessionid: string, name: string, muscleGroups:string[], sets: set[]):Observable<any> {
-    console.log("set acitivity");
+    console.log("set acitivity", sessionid, name);
     const formData = new FormData();
     formData.append("session_id", sessionid);
     formData.append("name", name);
@@ -109,6 +109,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setactivity", formData,tableParam)
+    res.subscribe( (d)=>{
+      console.log(d)
+    })
     return res;
   }
 
