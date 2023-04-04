@@ -184,16 +184,16 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'profile' %}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'account' %}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Account
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a id="logout" class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -202,11 +202,17 @@
                     </ul>
 
                 </nav>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">{% block pageTitle %}<!-- Title of Page -->{% endblock %}</h1>
+                    </div>
+                    {% block content %}<!-- Content Goes Here -->{% endblock %}
+                </div>
+
             </div>
         </div>
 
-
-    {% block content %}<!-- Content Goes Here -->{% endblock %}
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'webapp/js/jquery.min.js' %}"></script>
@@ -217,6 +223,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'webapp/js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Custom script for base -->
+    <script src="{% static 'webapp/js/base.js' %}"></script>
 
     <!-- Page level plugins -->
     <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
