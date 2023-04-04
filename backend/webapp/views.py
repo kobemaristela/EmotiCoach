@@ -21,9 +21,6 @@ class Login(TemplateView):
     redirect_field_name = 'redirect_to'
 
     def post(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return JsonResponse({"Status":"Authenticated"})
-
         username = request.POST["username"]
         password = request.POST["password"]
         user = authenticate(request, username=username, password=password)

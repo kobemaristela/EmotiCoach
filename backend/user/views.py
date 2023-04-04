@@ -9,7 +9,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import ParseError, ValidationError
 
@@ -115,7 +115,13 @@ class DeleteAccount(APIView):
     def get(self, request):
         request.user.delete()
         return JsonResponse({"response": "success"})
-        
+    
+class AuthenticateUser(APIView):
+    def get(self, request):
+        if request.user.is_authenticated:
+            return JsonResponse({"Status":"Authenticated"})
+        else:
+            return JsonResponse({"Status":"Not Authenticated"})
 
 def show_database(request):
     if request.method == "GET":
