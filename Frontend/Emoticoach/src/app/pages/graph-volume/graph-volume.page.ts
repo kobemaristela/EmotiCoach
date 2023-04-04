@@ -25,8 +25,8 @@ export class GraphVolumePage implements OnInit {
       }
     })
   }
-
   updateChart(){ //need function to get today's date in correct format
+
     this.graphService.getVolumeXandY("2023-03-23", this.selectedWorkout).subscribe( x_data => {
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.workoutDates;
