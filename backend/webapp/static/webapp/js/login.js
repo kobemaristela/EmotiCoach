@@ -35,13 +35,10 @@ const login = async(e) => {
 }
 
 let tableParam = {
-    method: 'POST',
-    headers: {
-              'X-CSRFToken': csrfToken,
-             },
+    method: 'GET',
 };
 
-fetch("login", tableParam)
+fetch(window.location.origin + '/user/authenticate', tableParam)
     .then((res) => res.json())
     .then((data) => {
         if (data["Status"] == "Authenticated") {
