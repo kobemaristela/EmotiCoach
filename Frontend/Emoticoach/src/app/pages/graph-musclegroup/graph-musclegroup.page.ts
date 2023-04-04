@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
-import { HttpClient } from '@angular/common/http';
-import { AccountService } from 'src/app/services/user/account.service';
+import { GraphService } from 'src/app/services/graph/graph.service';
+import { MUSCLE_LIST } from 'src/environments/environment';
 
 @Component({
   selector: 'app-graph-musclegroup',
@@ -9,57 +9,55 @@ import { AccountService } from 'src/app/services/user/account.service';
   styleUrls: ['./graph-musclegroup.page.scss'],
 })
 export class GraphMusclegroupPage implements OnInit {
-  public chart: any; //hello
-  workoutDates: any = [];
+  public chart: any; 
+  workoutData: number[] = [];
+  musclegroups: any[] = [];
+  workoutDates: string[] = [];
+  selectedGroup = "";
+  muscleList = MUSCLE_LIST;
 
-  constructor(private _http: HttpClient, private accountService: AccountService) { }
+  constructor(private graphService: GraphService) { }
 
-  loadData(){
-    this.getData()
-
+  getMuscleGroups(){ //change to getmusclegroups api
+    for(let i=0; i<this.muscleList.length; i++){
+      this.musclegroups.push(this.muscleList[i]);
+    }
   }
 
-  getData() {
-    let tableParam = {
-      headers: {
-        "Authorization": "token " + this.accountService.returnUserToken(),
-      }
-    }
-    const formData = new FormData();
-    formData.append("week_num", "0");
-
-    return this._http.post("https://emotidev.maristela.net/graph/getmusclegroupdata", formData, tableParam)
-    .subscribe(((result: any) => {
-
-      // initialize chart data
-      let workoutDates = result['X']
-      let musclegroupData = result['y']
-      console.log(workoutDates[0])
-      console.log(result);
-
-      this.chart = new Chart("MuscleGroupChart", {
-        type: 'bar', //this denotes tha type of chart
-  
-        data: {// values on X-Axis
-          labels: workoutDates,
-          datasets: [
-            {
-              label: "Muscle Group",
-              data: musclegroupData,
-              backgroundColor: 'blue'
-            }
-          ]
-        },
-        options: {
-          aspectRatio: 2.5
-        }
-  
-      });
-      return result}));
+  updateChart(){
+    this.graphService.getMuscleXandY("1").subscribe( x_data => { //don't we need musclegroup parameter?
+      this.workoutDates = x_data.X;
+      this.chart.data.labels = this.workoutDates;
+      this.chart.update();
+    });
+    this.graphService.getMuscleXandY("1").subscribe( y_data => {
+      this.workoutData = y_data.y;
+      this.chart.data.datasets[0].data = this.workoutData;
+      this.chart.update();
+    });
   }
 
   ngOnInit() {
-    this.getData();
+    this.chart = new Chart("MuscleGroupChart", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: [], //workoutDates
+        datasets: [
+          {
+            label: "Muscle Groups",
+            data: [], //volumeData here
+            backgroundColor: '#833535',
+            borderColor: '#6D6D6D'
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 1
+          }
+    });
+
+    this.getMuscleGroups();
   }
 
 }

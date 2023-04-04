@@ -1,11 +1,33 @@
 <ion-content>
   <ion-toolbar>
-    <ion-title>One Rep Max</ion-title>
-
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>One Rep Max Graph</ion-title>
   </ion-toolbar>
+
   <div class="chart-container">
-      <canvas  id="OneRMChart" >{{ chart }}</canvas>
+      <canvas  id="OneRMgraph" >{{ chart }}</canvas>
   </div>
+
+  <!-- user date input goes here -->
+  <ion-grid>
+    <ion-row>
+        <ion-item lines="none">
+          <ion-select 
+          interface="popover" 
+          placeholder="Select workout" 
+          [(ngModel)]="selectedWorkout"
+          (ionChange)="updateChart()">
+            <div *ngFor="let workout of workouts; let i = index">
+              <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
+            </div>
+          </ion-select>
+        </ion-item>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
 

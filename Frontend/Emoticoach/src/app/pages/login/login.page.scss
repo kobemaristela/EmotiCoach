@@ -1,5 +1,4 @@
 ion-content{
-    --background: #000000;
 
     #header{
         height: 33%;
@@ -7,7 +6,7 @@ ion-content{
         border-radius: 0 0 20px 20px;
         display: flex;
         flex-direction: column;
-        color: #fff;
+        color: #ffffff;
         padding: 20px;
 
         #app-bar{
@@ -58,7 +57,7 @@ ion-content{
                     color: #000000;
                 }
                 ion-input{
-                    color: #5B5959;
+                    color: #606060;
                     margin-left: 10px;
                     font-size: 14px;
                 }
@@ -83,4 +82,10 @@ ion-content{
             }
         }
     }
+}
+ion-card {
+    background-color: #606060;
+}
+ion-card-content {
+    background-color: #606060;
 }

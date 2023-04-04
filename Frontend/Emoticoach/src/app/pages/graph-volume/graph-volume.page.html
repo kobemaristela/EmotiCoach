@@ -13,23 +13,21 @@
   </div>
 
   <!-- user date input goes here -->
-
-  <ion-list>
-    <ion-item>
-      <ion-label>
-        <ion-icon name="barbell-outline"></ion-icon>
-      </ion-label>
-      <ion-select 
-      interface="popover" 
-      placeholder="Select workout" 
-      [(ngModel)]="selectedWorkout"
-      (ionChange)="updateChart()">
-        <div *ngFor="let workout of workouts; let i = index">
-          <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
-        </div>
-      </ion-select>
-    </ion-item>
-  </ion-list>
+  <ion-grid>
+    <ion-row>
+        <ion-item lines="none">
+          <ion-select 
+          interface="popover" 
+          placeholder="Select workout" 
+          [(ngModel)]="selectedWorkout"
+          (ionChange)="updateChart()">
+            <div *ngFor="let workout of workouts; let i = index">
+              <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
+            </div>
+          </ion-select>
+        </ion-item>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
 
