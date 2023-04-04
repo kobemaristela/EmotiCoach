@@ -42,9 +42,9 @@
                                     </div>
                                     <form class="user">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="email" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
+                                            <input type="username" class="form-control form-control-user"
+                                                id="username" aria-describedby="usernameHelp"
+                                                placeholder="Enter Username Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
@@ -66,7 +66,7 @@
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div> -->
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="{% url 'register' %}">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>

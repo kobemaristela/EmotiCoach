@@ -30,3 +30,33 @@ class Login(TemplateView):
             return JsonResponse({"Status":"Success"})
         else:
             return JsonResponse({"Status":"Incorrect username or password."}) 
+        
+class Register(TemplateView):
+    template_name = "webapp/register.html"
+    next_page = "webapp/login"
+    redirect_field_name = 'redirect_to'
+
+
+class Profile(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    template_name = "webapp/profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['first_name'] = self.request.user.first_name
+        context['last_name'] = self.request.user.last_name
+        context['email'] = self.request.user.email
+        return context
+    
+class Account(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    template_name = "webapp/account.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['first_name'] = self.request.user.first_name
+        context['last_name'] = self.request.user.last_name
+        context['email'] = self.request.user.email
+        return context
