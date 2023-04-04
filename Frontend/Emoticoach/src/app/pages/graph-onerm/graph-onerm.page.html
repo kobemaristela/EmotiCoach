@@ -12,10 +12,31 @@
       <canvas  id="OneRMgraph" >{{ chart }}</canvas>
   </div>
 
-  <!-- user date input goes here -->
+  <ion-grid style="border-bottom: 2px solid grey">
+    <ion-row>
+    <ion-buttons color="#1E1E1E" lines="none">
+      <ion-col>
+      <ion-button>
+        <ion-icon slot="start" name="chevron-back-outline" size="large"></ion-icon>
+      </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-text>{{workoutDates[0]}} - {{workoutDates[5]}}</ion-text>
+      </ion-col>
+
+      <ion-col>
+      <ion-button>
+        <ion-icon slot="end" name="chevron-forward-outline" size="large"></ion-icon>
+       </ion-button>
+      </ion-col>
+      </ion-buttons>
+    </ion-row>
+  </ion-grid>
+
   <ion-grid>
     <ion-row>
-        <ion-item lines="none">
+        <ion-item lines="none" color="#1E1E1E">
           <ion-select 
           interface="popover" 
           placeholder="Select workout" 
