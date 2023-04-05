@@ -10,10 +10,22 @@ import { Observable, Subject } from 'rxjs';
 export class GraphService {
   private graph$: Subject<GraphService[]>;
   private workouts$: Subject<GraphService[]>;
+  public currentDate: Date;
+  private formattedDate: string;
+  public currentDateFormatted: string;
+  public previousDateFormatted: string;
+  private dd: string;
+  private mm: string;
+  private yyyy: number;
 
   constructor(private requestGraphService: RequestGraphService, private accountService: AccountService) {
     this.graph$ = new Subject();
     this.workouts$ = new Subject();
+    this.currentDate = new Date();
+    this.dd = String(this.currentDate.getDate()).padStart(2, '0');
+    this.mm = String(this.currentDate.getMonth() + 1).padStart(2, '0');
+    this.yyyy = this.currentDate.getFullYear();
+    this.currentDateFormatted = this.yyyy + '-' + this.mm + '-' + this.dd;
    }
 
   getVolumeXandY(start_date: string, activity: string): Observable<any>{
@@ -37,9 +49,24 @@ export class GraphService {
     return this.graph$;
   }
 
+  formatDate(date: Date){
+    this.dd = String(date.getDate()).padStart(2, '0');
+    this.mm = String(date.getMonth() + 1).padStart(2, '0');
+    this.yyyy = date.getFullYear();
+    this.formattedDate = this.yyyy + '-' + this.mm + '-' + this.dd;
+    return this.formattedDate;
+  }
+
+  getCurrentDate(){
+    return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate());
+  }
+
   getPreviousWeek(){
-    //calls getgraph data with start_date 7 days before as new parameter
-    //getVolumeXandY(start_date - 7, activity)
+    return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate() - 7);
+  }
+
+  getNextWeek(){
+    return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate() + 7);
   }
 
   getActivityNames(): Observable<any>{
