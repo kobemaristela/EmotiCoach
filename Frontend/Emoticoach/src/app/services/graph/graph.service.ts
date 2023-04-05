@@ -12,8 +12,6 @@ export class GraphService {
   private workouts$: Subject<GraphService[]>;
   public currentDate: Date;
   private formattedDate: string;
-  public currentDateFormatted: string;
-  public previousDateFormatted: string;
   private dd: string;
   private mm: string;
   private yyyy: number;
@@ -22,10 +20,6 @@ export class GraphService {
     this.graph$ = new Subject();
     this.workouts$ = new Subject();
     this.currentDate = new Date();
-    this.dd = String(this.currentDate.getDate()).padStart(2, '0');
-    this.mm = String(this.currentDate.getMonth() + 1).padStart(2, '0');
-    this.yyyy = this.currentDate.getFullYear();
-    this.currentDateFormatted = this.yyyy + '-' + this.mm + '-' + this.dd;
    }
 
   getVolumeXandY(start_date: string, activity: string): Observable<any>{
@@ -38,6 +32,7 @@ export class GraphService {
   getOneRMXandY(start_date: string, activity: string): Observable<any>{
     this.requestGraphService.getOneRMData(start_date, activity).subscribe( d => {
       this.graph$.next(d)
+      console.log(d)
     });
     return this.graph$;
   }
@@ -49,7 +44,7 @@ export class GraphService {
     return this.graph$;
   }
 
-  formatDate(date: Date){
+  formatDateforAPI(date: Date){
     this.dd = String(date.getDate()).padStart(2, '0');
     this.mm = String(date.getMonth() + 1).padStart(2, '0');
     this.yyyy = date.getFullYear();
@@ -57,16 +52,23 @@ export class GraphService {
     return this.formattedDate;
   }
 
+  formatDate(date: Date){
+    this.dd = String(date.getDate()).padStart(2, '0');
+    this.mm = String(date.getMonth() + 1).padStart(2, '0');
+    this.formattedDate =  this.mm + '/' + this.dd;
+    return this.formattedDate;
+  }
+
   getCurrentDate(){
     return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate());
   }
 
-  getPreviousWeek(){
-    return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate() - 7);
+  getPreviousWeek(date: Date){
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
   }
 
-  getNextWeek(){
-    return new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate() + 7);
+  getNextWeek(date: Date){
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
   }
 
   getActivityNames(): Observable<any>{

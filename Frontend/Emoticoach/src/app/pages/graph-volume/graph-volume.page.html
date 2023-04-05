@@ -16,17 +16,17 @@
     <ion-row>
     <ion-buttons color="#1E1E1E" lines="none">
       <ion-col>
-      <ion-button (click)="getPreviousWeek()">
+      <ion-button (click)="displayPreviousWeek()">
         <ion-icon slot="start" name="chevron-back-outline" size="large"></ion-icon>
       </ion-button>
       </ion-col>
 
       <ion-col>
-        <ion-text>{{previousWeek}} - {{rightsideWeek}}</ion-text>
+        <ion-text>{{previousWeekFormatted}} - {{rightsideWeekFormatted}}</ion-text>
       </ion-col>
 
       <ion-col>
-      <ion-button (click)="getNextWeek()">
+      <ion-button (click)="displayNextWeek()">
         <ion-icon slot="end" name="chevron-forward-outline" size="large"></ion-icon>
        </ion-button>
       </ion-col>
