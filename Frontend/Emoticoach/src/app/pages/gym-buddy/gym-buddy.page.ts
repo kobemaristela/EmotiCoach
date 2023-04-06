@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalAddFriendsComponent } from './modal-add-friends/modal-add-friends.component';
+import { ModalSendMsgComponent } from './modal-send-msg/modal-send-msg.component';
 
 declare var google: any;
 
@@ -33,6 +34,21 @@ export class GymBuddyPage implements OnInit {
       });
       modal.present();
     }
+   
+
+    // const { data, role } = await modal.onWillDismiss();
+
+    // if (role === 'confirm') {
+    //   this.message = `Hello, ${data}!`;
+    // }
+  }
+  async modelSendMsg() {
+   
+      const modal = await this.modalCtrl.create({
+        component: ModalSendMsgComponent,
+      });
+      modal.present();
+    
    
 
     // const { data, role } = await modal.onWillDismiss();

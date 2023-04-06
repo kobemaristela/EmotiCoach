@@ -14,9 +14,10 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { ModalAddFriendsComponent } from './pages/gym-buddy/modal-add-friends/modal-add-friends.component';
 import { FormsModule } from '@angular/forms';
 import { GoogleApiComponent } from './pages/widgets/google-api/google-api.component';
+import { ModalSendMsgComponent } from './pages/gym-buddy/modal-send-msg/modal-send-msg.component';
 
 @NgModule({
-  declarations: [AppComponent, ModalAddFriendsComponent, GoogleApiComponent],
+  declarations: [AppComponent, ModalAddFriendsComponent, ModalSendMsgComponent,GoogleApiComponent],
 
   imports: [
       BrowserModule, 
