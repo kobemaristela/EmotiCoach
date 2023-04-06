@@ -1,0 +1,31 @@
+{% extends "website/base.html" %}
+
+{% block title %}
+  Documentation
+{% endblock %}
+
+{% block content %}
+<div class="col-xs-12" style="height:20px;"></div>
+
+<div class="container">
+    <table class="table table-bordered">
+        <thead class="thead-light">
+            <tr>
+              <th scope="col">Type</th>
+              <th scope="col">Address</th>
+              <th scope="col">Parameters</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in api %}
+              <tr>
+                <td>{{ i.type }}</td>
+                <td>{{ i.address }}</td>
+                <td>{{ i.parameters|linebreaks }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+    </table>
+</div>
+
+{% endblock %}

@@ -84,6 +84,13 @@
                     <i class="fas fa-weight"></i>
                     <span>Weight</span></a>
             </li>
+
+            <!-- Nav Item - Water -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-tint"></i>
+                    <span>Water</span></a>
+            </li>
             
             <!-- Divider -->
             <hr class="sidebar-divider">
@@ -107,6 +114,7 @@
                         <a class="collapse-item" href="register.html">Calories</a>
                         <a class="collapse-item" href="forgot-password.html">Sleep</a>
                         <a class="collapse-item" href="forgot-password.html">Weight</a>
+                        <a class="collapse-item" href="forgot-password.html">Water</a>
                         <div class="collapse-divider"></div>
                         <h6 class="collapse-header">Live Charts</h6>
                         <a class="collapse-item" href="404.html">Heart Rate</a>
@@ -128,6 +136,7 @@
                         <a class="collapse-item" href="register.html">Calories</a>
                         <a class="collapse-item" href="forgot-password.html">Sleep</a>
                         <a class="collapse-item" href="forgot-password.html">Weight</a>
+                        <a class="collapse-item" href="forgot-password.html">Water</a>
                     </div>
                 </div>
             </li>
@@ -141,11 +150,11 @@
             </div>
 
             <!-- Sidebar Message -->
-            <div class="sidebar-card d-none d-lg-flex">
+            <!-- <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="{% static 'webapp/img/mindfulness.svg' %}" alt="...">
                 <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
                 <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div>
+            </div> -->
 
         </ul>
         <!-- End of Sidebar -->
@@ -168,23 +177,23 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ first_name }} {{ last_name }}</span>
                                 <img class="img-profile rounded-circle"
                                     src="{% static 'webapp/img/undraw_profile.svg' %}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'profile' %}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{% url 'account' %}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Account
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a id="logout" class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -193,11 +202,17 @@
                     </ul>
 
                 </nav>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">{% block pageTitle %}<!-- Title of Page -->{% endblock %}</h1>
+                    </div>
+                    {% block content %}<!-- Content Goes Here -->{% endblock %}
+                </div>
+
             </div>
         </div>
 
-
-    {% block content %}<!-- Content Goes Here -->{% endblock %}
 
     <!-- Bootstrap core JavaScript-->
     <script src="{% static 'webapp/js/jquery.min.js' %}"></script>
@@ -208,6 +223,9 @@
 
     <!-- Custom scripts for all pages-->
     <script src="{% static 'webapp/js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Custom script for base -->
+    <script src="{% static 'webapp/js/base.js' %}"></script>
 
     <!-- Page level plugins -->
     <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->

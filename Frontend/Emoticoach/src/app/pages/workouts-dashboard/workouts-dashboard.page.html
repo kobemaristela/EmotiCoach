@@ -5,17 +5,59 @@
 <ion-content>
 
   <ion-list lines="none">
-    <ion-item-divider sticky>
-      <ion-title>Add Workout</ion-title>
+    <ion-item-divider class="ion-text-center" sticky>
+      
+        <ion-title>Add Workout</ion-title>
+ 
+     
 
-      <ion-button fill="clear" slot="end"
-        (click)="createNewSession()">
-        <ion-icon name="close-circle-outline"></ion-icon>
-  
-      </ion-button>
+        <ion-button fill="clear" slot="end" (click)="createNewSession()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
 
     </ion-item-divider>
     <ion-card *ngFor="let session of sessions; index as i;">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col>
+              <ion-row>
+                <ion-col size="auto">
+                  <ion-header class="name">{{session.name}}</ion-header>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="auto">
+                  <ion-header>{{session.datetime | date}}</ion-header>
+                </ion-col>
+                <ion-col size="auto">
+                  <ion-icon name="ellipse"></ion-icon>
+                </ion-col>
+                <ion-col size="auto">
+                  <ion-header>
+                    {{session.duration}} mins
+                  </ion-header>
+
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <!-- <ion-col>
+                  <ion-header>
+                    {{session.muscleGroups.join(', ')}}
+                  </ion-header>
+                </ion-col> -->
+                <ion-button fill="clear" (click)="loadSession(i)">Edit</ion-button>
+                <ion-button fill="clear" (click)="deleteSession(session.id)">Delete</ion-button>
+
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card-content>
+    </ion-card>
+
+    <!-- <ion-card *ngFor="let session of sessions; index as i;">
       <ion-card-header>
         <ion-card-title>{{session.name}} </ion-card-title>
         <ion-card-subtitle>{{session.datetime | date}}</ion-card-subtitle>
@@ -29,7 +71,7 @@
       </ion-card-content>
       <ion-button fill="clear" (click)="loadSession(i)">Edit</ion-button>
       <ion-button fill="clear" (click)="deleteSession(session.id)">Delete</ion-button>
-    </ion-card>
+    </ion-card> -->
 
     <!-- <ion-row>
       <ion-col></ion-col>
