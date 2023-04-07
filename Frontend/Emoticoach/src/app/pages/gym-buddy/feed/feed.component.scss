@@ -1,0 +1,52 @@
+$back-color: #323232;
+$my-msg-color: #ab6868;
+$other-msg-color: #464646;
+
+
+ion-grid {
+    display:inline-block;
+}
+
+ion-item {
+    --background: $back-color !important;
+}
+
+ion-list {
+    background: $back-color;
+    color: $back-color;
+}
+
+
+.message-input {
+    width: 100%;
+    border: 1px solid var(--ion-color-medium);
+    border-radius: 6px;
+    background: #fff;
+    resize: none;
+    margin-top: 0px;
+    --padding-start: 8px;
+    
+}
+
+.message {
+    padding: 10px !important;
+    border-radius: 10px !important;
+    margin-bottom: 10px !important;
+    white-space: pre-wrap;
+}
+
+.my-message {
+    background: $my-msg-color;
+    color: #fff;
+}
+
+.other-message {
+    background: $other-msg-color;
+    color: #fff;
+}
+
+.time {
+    color: #dfdfdf;
+    float: right;
+    font-size: small;
+}

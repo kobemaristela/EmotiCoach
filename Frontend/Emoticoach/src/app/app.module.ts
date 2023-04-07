@@ -10,10 +10,14 @@ import { NgChartsModule } from 'ng2-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
 import { MQTT_SERVICE_OPTIONS } from 'src/environments/environment';
-
+import { GoogleMapsModule } from '@angular/google-maps';
+import { ModalAddFriendsComponent } from './pages/gym-buddy/modal-add-friends/modal-add-friends.component';
+import { FormsModule } from '@angular/forms';
+import { GoogleApiComponent } from './pages/widgets/google-api/google-api.component';
+import { ModalSendMsgComponent } from './pages/gym-buddy/modal-send-msg/modal-send-msg.component';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ModalAddFriendsComponent, ModalSendMsgComponent,GoogleApiComponent],
 
   imports: [
       BrowserModule, 
@@ -21,6 +25,9 @@ import { MQTT_SERVICE_OPTIONS } from 'src/environments/environment';
       AppRoutingModule, 
       NgChartsModule ,
       HttpClientModule,
+      GoogleMapsModule,
+      FormsModule,
+      
       NgxEchartsModule.forRoot({
         echarts: () => import('echarts'),
       }),
