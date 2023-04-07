@@ -50,8 +50,8 @@ export class GraphOnermPage implements OnInit {
     this.formatXaxis(this.returnPast7Days(this.previousWeek))
     this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
     this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
-    this.previousWeekFormatted = this.graphService.formatDate(this.previousWeek);
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
+    this.previousWeekFormatted = this.xAxisDates[0];
+    this.rightsideWeekFormatted = this.xAxisDates[6];
     this.updateChart();
   }
 
@@ -59,8 +59,8 @@ export class GraphOnermPage implements OnInit {
     this.formatXaxis(this.returnPast7Days(this.graphService.getNextWeek(this.rightsideWeek)))
     this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
     this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
-    this.previousWeekFormatted = this.graphService.formatDate(this.previousWeek);
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
+    this.previousWeekFormatted = this.xAxisDates[0];
+    this.rightsideWeekFormatted = this.xAxisDates[6];
     this.updateChart();
   }
 

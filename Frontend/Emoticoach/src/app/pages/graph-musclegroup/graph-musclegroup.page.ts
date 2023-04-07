@@ -53,16 +53,30 @@ export class GraphMusclegroupPage implements OnInit {
     this.updateChart();
   }
 
+  indexSelect(selectedGroup: string){
+    return this.selectedGroup = selectedGroup;
+  }
+
   updateChart(){
     this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( x_data => { 
-      this.musclegroups = x_data.X;
-      this.chart.data.labels = this.musclegroups;
-      this.chart.update();
+      console.log(this.musclegroups)
+      if(this.musclegroups.includes(this.selectedGroup)){
+        let x_axis = new Array<string>(0);
+        x_axis.push(this.selectedGroup)
+        this.chart.data.labels = x_axis
+        this.chart.update();
+      }
     });
     this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( y_data => {
+      this.musclegroups = y_data.X;
       this.workoutData = y_data.y;
-      this.chart.data.datasets[0].data = this.workoutData;
-      this.chart.update();
+      let index = this.musclegroups.indexOf(this.selectedGroup) //gets index of selected group
+      if(index != -1){
+        let y_axis = new Array<number>(0);
+        y_axis.push(this.workoutData[index])
+        this.chart.data.datasets[0].data = y_axis;
+        this.chart.update();
+      }
     });
   }
 
