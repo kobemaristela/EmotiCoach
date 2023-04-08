@@ -15,9 +15,15 @@ import { ModalAddFriendsComponent } from './pages/gym-buddy/modal-add-friends/mo
 import { FormsModule } from '@angular/forms';
 import { GoogleApiComponent } from './pages/widgets/google-api/google-api.component';
 import { ModalSendMsgComponent } from './pages/gym-buddy/modal-send-msg/modal-send-msg.component';
+import { ModalMuscleComponent } from './pages/widgets/muscle-groups/modal-muscle/modal-muscle.component';
 
 @NgModule({
-  declarations: [AppComponent, ModalAddFriendsComponent, ModalSendMsgComponent,GoogleApiComponent],
+  declarations: [
+    AppComponent, 
+    ModalAddFriendsComponent, 
+    ModalSendMsgComponent,
+    ModalMuscleComponent,
+    GoogleApiComponent],
 
   imports: [
       BrowserModule, 

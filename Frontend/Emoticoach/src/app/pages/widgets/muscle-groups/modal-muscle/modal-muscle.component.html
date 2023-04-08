@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Muscle Groups</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col class="ion-justify-content-center">
+        <ion-select class="select" [multiple]="true" [(ngModel)]="muscles">
+          Muscle Groups
+          <div *ngFor="let muscle of muscleList">
+            <ion-select-option [value]="muscle">{{muscle}}</ion-select-option>
+          </div>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+    <ion-row size="10" class="ion-justify-content-center">
+      <ion-col size="12" class="ion-justify-content-center">
+        <ion-icon *ngIf="muscles[0] == undefined" [src]="'../../../../../assets/muscles/muscle_none.svg'"></ion-icon>
+
+        <div class="muscle-box" *ngFor="let muscle of muscles">
+          <ion-icon class="overlap" [src]="'../../../../../assets/muscles/muscle_'+muscle+'.svg'"></ion-icon>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+
+
+</ion-content>

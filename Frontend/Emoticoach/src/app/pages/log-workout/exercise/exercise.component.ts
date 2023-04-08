@@ -42,4 +42,7 @@ export class ExerciseComponent implements OnInit {
     this.servSession.updateActivity(this.activity, this.activityIndex);
     
   }
+  addMuscles(event: string[]){
+    this.activity.muscleGroups = event;
+  }
 }

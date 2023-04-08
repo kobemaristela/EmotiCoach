@@ -8,6 +8,8 @@ import { LogWorkoutPageRoutingModule } from './log-workout-routing.module';
 import { LogWorkoutPage } from './log-workout.page';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { ExerciseSetComponent } from './exercise/exercise-set/exercise-set.component';
+import { MuscleGroupsComponent } from '../widgets/muscle-groups/muscle-groups/muscle-groups.component';
+
 
 @NgModule({
   imports: [
@@ -20,7 +22,8 @@ import { ExerciseSetComponent } from './exercise/exercise-set/exercise-set.compo
   declarations: [
       LogWorkoutPage,
       ExerciseComponent, 
-      ExerciseSetComponent
+      ExerciseSetComponent,
+      MuscleGroupsComponent
     ]
 })
 export class LogWorkoutPageModule {}

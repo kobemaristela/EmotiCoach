@@ -20,6 +20,7 @@
         {{currentSession.datetime | date:'short' }}
       </ion-note>
     </ion-item-divider>
+
     <ion-modal trigger="open-modal" [cssClass]="'center'">
       <ng-template>
         <ion-datetime [(ngModel)]="currentSession.datetime" size="cover"></ion-datetime>
@@ -46,9 +47,8 @@
               <ion-row class="cardHeader">
                 <div class="cardHeader label">Muscle Groups</div>
               </ion-row>
-              <ion-row *ngFor="let muscle of muscleGroups">
-                <ion-text>{{muscle}}</ion-text>
-              </ion-row>
+              <app-muscle-groups  height="100%" width="80%"  [muscles]="muscleGroups" ></app-muscle-groups>
+             
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -60,6 +60,7 @@
     </app-exercise>
 
   </ion-list>
+
 </ion-content>
 <ion-footer>
   <ion-button expand="block" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
