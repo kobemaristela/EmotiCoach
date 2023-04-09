@@ -67,14 +67,27 @@ export class GraphMusclegroupPage implements OnInit {
         this.chart.data.labels = x_axis
         this.chart.update();
       }
+      else{
+        let x_axis = new Array<string>(0);
+        x_axis.push(this.selectedGroup)
+        this.chart.data.labels = x_axis
+        this.chart.update();
+      }
     });
     this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( y_data => {
       this.musclegroups = y_data.X;
       this.workoutData = y_data.y;
       let index = this.musclegroups.indexOf(this.selectedGroup) //gets index of selected group
+      console.log(index)
       if(index != -1){
         let y_axis = new Array<number>(0);
         y_axis.push(this.workoutData[index])
+        this.chart.data.datasets[0].data = y_axis;
+        this.chart.update();
+      }
+      else{
+        let y_axis = new Array<number>(0);
+        y_axis.push(0)
         this.chart.data.datasets[0].data = y_axis;
         this.chart.update();
       }
