@@ -111,7 +111,6 @@ export class GraphVolumePage implements OnInit {
         },
       },
     });
-
     this.chart.options.animation = true;
     this.getWorkoutNames();
   }

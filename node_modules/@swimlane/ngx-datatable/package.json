@@ -1,0 +1,52 @@
+{
+  "name": "@swimlane/ngx-datatable",
+  "version": "20.1.0",
+  "description": "ngx-datatable is an Angular table grid component for presenting large and complex data.",
+  "peerDependencies": {
+    "@angular/common": ">=11.0.2",
+    "@angular/core": ">=11.0.2",
+    "@angular/platform-browser": ">=11.0.2",
+    "rxjs": "^6.6.3 || ^7.4.0"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/swimlane/ngx-datatable.git"
+  },
+  "keywords": [
+    "angularjs",
+    "angular",
+    "javascript",
+    "datatable",
+    "grid",
+    "table"
+  ],
+  "author": "Swimlane",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/swimlane/ngx-datatable/issues"
+  },
+  "homepage": "https://github.com/swimlane/ngx-datatable#readme",
+  "module": "fesm2015/swimlane-ngx-datatable.mjs",
+  "es2020": "fesm2020/swimlane-ngx-datatable.mjs",
+  "esm2020": "esm2020/swimlane-ngx-datatable.mjs",
+  "fesm2020": "fesm2020/swimlane-ngx-datatable.mjs",
+  "fesm2015": "fesm2015/swimlane-ngx-datatable.mjs",
+  "typings": "swimlane-ngx-datatable.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./swimlane-ngx-datatable.d.ts",
+      "esm2020": "./esm2020/swimlane-ngx-datatable.mjs",
+      "es2020": "./fesm2020/swimlane-ngx-datatable.mjs",
+      "es2015": "./fesm2015/swimlane-ngx-datatable.mjs",
+      "node": "./fesm2015/swimlane-ngx-datatable.mjs",
+      "default": "./fesm2020/swimlane-ngx-datatable.mjs"
+    }
+  },
+  "sideEffects": false
+}

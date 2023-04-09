@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@swimlane/ngx-datatable": "^20.1.0"
+  }
+}
