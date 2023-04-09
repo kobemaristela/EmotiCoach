@@ -11,35 +11,63 @@
   <ion-grid>
     <ion-row>
         <ion-col size="12">
-
           <ion-card class="form-wrapper">
             <ion-card-content>
               <ion-icon name="person"></ion-icon>
               <ion-item>
-                <ion-text>Justin Fan</ion-text>
+                <ion-text>{{user_firstlast}}</ion-text>
               </ion-item>
-              <ion-button size="small">Account</ion-button>
-              <ion-button fill="outline" size="small">EmotiBit</ion-button>
-              <ion-button fill="outline" size="small">Settings</ion-button>
+              <ion-button fill={{accountButton}} size="small" (click)="displayAccountPage()">Account</ion-button>
+              <ion-button fill={{emotibitButton}} size="small" (click)="displayEmotibitPage()">EmotiBit</ion-button>
+              <ion-button fill={{settingsButton}} size="small" (click)="displaySettingsPage()">Settings</ion-button>
             </ion-card-content>
           </ion-card>
         </ion-col>
 
+          <ion-col size="12" *ngIf="accountPage">
+            <ion-card class="form-wrapper">
+              <ion-card-content>
+                <ion-item>
+                  <ion-icon name="mail-outline"></ion-icon>
+                  <ion-text>{{user_email}}</ion-text>
+                </ion-item>
+                <ion-item>
+                  <ion-icon name="lock-closed"></ion-icon>
+                  <ion-text>*********</ion-text>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
 
-      <ion-col size="12">
-        <ion-card class="form-wrapper">
-          <ion-card-content>
-            <ion-item>
-              <ion-icon name="mail-outline"></ion-icon>
-              <ion-text>Email</ion-text>
-            </ion-item>
-            <ion-item>
-              <ion-icon name="lock-closed"></ion-icon>
-              <ion-text>Password</ion-text>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+          <ion-col size="12" *ngIf="emotibitPage">
+            <ion-card class="form-wrapper">
+              <ion-card-content>
+                <ion-item>
+                  <ion-icon name="hardware-chip-outline"></ion-icon>
+                  <ion-text>Current EmotiBit</ion-text>
+                </ion-item>
+                <ion-item>
+                  <ion-icon name="lock-closed"></ion-icon>
+                  <ion-text>Server Cert</ion-text>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <ion-col size="12" *ngIf="settingsPage">
+            <ion-card class="form-wrapper">
+              <ion-card-content>
+                <ion-item>
+                  <ion-icon name="time-outline"></ion-icon>
+                  <ion-text>{{timezone}}</ion-text>
+                </ion-item>
+                <ion-item>
+                  <ion-icon name="lock-closed"></ion-icon>
+                  <ion-text>*********</ion-text>
+                </ion-item>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
 
     </ion-row>
   </ion-grid>
