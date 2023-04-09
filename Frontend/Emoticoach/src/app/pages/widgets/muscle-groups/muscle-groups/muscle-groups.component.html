@@ -1,10 +1,1 @@
-<ion-icon *ngIf="muscles[0] == undefined" style="--size:{{ width }}" (click)="openModal()"
-    [src]="'../../../../../assets/muscles/muscle_none.svg'"></ion-icon>
-
-<div *ngFor="let muscle of muscles">
-
-    
-  <ion-icon style="--size:{{ width }}" (click)="openModal()"
-    [src]="'../../../../../assets/muscles/muscle_'+muscle+'.svg'"></ion-icon>
-</div>
-
+<app-muscle-svg [selectedMuscles]="muscles" [canClick]="canSelect" (click)="openModal()" (muscleSelected)="muscleSelected($event)"></app-muscle-svg>

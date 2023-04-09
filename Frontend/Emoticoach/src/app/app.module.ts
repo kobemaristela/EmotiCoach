@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { GoogleApiComponent } from './pages/widgets/google-api/google-api.component';
 import { ModalSendMsgComponent } from './pages/gym-buddy/modal-send-msg/modal-send-msg.component';
 import { ModalMuscleComponent } from './pages/widgets/muscle-groups/modal-muscle/modal-muscle.component';
+import { ComponentsModule } from './components.module';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,9 @@ import { ModalMuscleComponent } from './pages/widgets/muscle-groups/modal-muscle
     ModalAddFriendsComponent, 
     ModalSendMsgComponent,
     ModalMuscleComponent,
-    GoogleApiComponent],
+    GoogleApiComponent
+    
+  ],
 
   imports: [
       BrowserModule, 
@@ -33,7 +36,7 @@ import { ModalMuscleComponent } from './pages/widgets/muscle-groups/modal-muscle
       HttpClientModule,
       GoogleMapsModule,
       FormsModule,
-      
+      ComponentsModule,
       NgxEchartsModule.forRoot({
         echarts: () => import('echarts'),
       }),

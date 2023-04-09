@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { MUSCLE_LIST } from 'src/environments/environment';
 import { ModalMuscleComponent } from '../modal-muscle/modal-muscle.component';
 import { Output, EventEmitter } from '@angular/core';
+import { MuscleSvgComponent } from '../muscle-svg/muscle-svg.component';
+import { muscleOptions } from '../muscle-svg/IOpacity-muscle';
 
 
 @Component({
@@ -11,33 +13,50 @@ import { Output, EventEmitter } from '@angular/core';
   styleUrls: ['./muscle-groups.component.scss'],
 })
 export class MuscleGroupsComponent implements OnInit {
-  @Output() newMuscleList = new EventEmitter<string[]>();
-  @Input() muscles: string[] = ["chest"];
-  CanOpen = true;
+  @Output() newMuscleList = new EventEmitter<muscleOptions[]>();
+  @Input() muscles: muscleOptions[] = ["chest"];
+  @Input() canOpen = true;
+  @Input() canSelect = true;
 
-  @Input() width: string = "100";
-  @Input() height: string = "100";
   muscleList = MUSCLE_LIST
 
-  constructor( private modalCtrl: ModalController) { }
+  constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {
+    
   }
 
   async openModal() {
+    if (!this.canOpen) {
+      return
+    }
 
     const modal = await this.modalCtrl.create({
       component: ModalMuscleComponent,
       componentProps: {
         muscles: this.muscles
       }
-      
+
     });
+
     modal.present();
+
     const { data, role } = await modal.onWillDismiss()
+
     if (role == "confirm") {
-     this.newMuscleList.emit(data)
+      this.muscles = data;
+      this.newMuscleList.emit(data)
+     
+
     }
+  }
+
+
+  muscleSelected(event:any){
+    console.log("emiting in mg", event)
+  
+    this.newMuscleList.emit(event)
+   
   }
 
 

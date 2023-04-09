@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { MUSCLE_LIST } from 'src/environments/environment';
+import { muscleOptions } from '../muscle-svg/IOpacity-muscle';
 
 @Component({
   selector: 'app-modal-muscle',
@@ -8,9 +9,8 @@ import { MUSCLE_LIST } from 'src/environments/environment';
   styleUrls: ['./modal-muscle.component.scss'],
 })
 export class ModalMuscleComponent implements OnInit {
-  user_name: string;
-  muscles: string[];
-  muscleList = MUSCLE_LIST;
+  muscles: muscleOptions[];
+
   constructor(private modalCtrl: ModalController) { }
 
   ngOnInit() {}
@@ -22,4 +22,11 @@ export class ModalMuscleComponent implements OnInit {
   confirm() {
     return this.modalCtrl.dismiss(this.muscles, 'confirm');
   }
+
+  updateMuscle($event: any) {
+    console.log("emiting from mm",$event)
+    this.muscles = $event;
+  }
+    
+  
 }

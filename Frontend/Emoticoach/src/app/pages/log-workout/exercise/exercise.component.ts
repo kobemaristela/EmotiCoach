@@ -3,6 +3,7 @@ import { SessionService } from 'src/app/services/sessions/session/session.servic
 import { Activity } from 'src/app/services/sessions/activity/Activity';
 import { activity } from 'src/app/services/sessions/activity/Iactivity';
 import { MUSCLE_LIST } from 'src/environments/environment';
+import { muscleOptions } from '../../widgets/muscle-groups/muscle-svg/IOpacity-muscle';
 @Component({
   selector: 'app-exercise',
   templateUrl: './exercise.component.html',
@@ -42,7 +43,7 @@ export class ExerciseComponent implements OnInit {
     this.servSession.updateActivity(this.activity, this.activityIndex);
     
   }
-  addMuscles(event: string[]){
+  addMuscles(event: muscleOptions[]){
     this.activity.muscleGroups = event;
   }
 }

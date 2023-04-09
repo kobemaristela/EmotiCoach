@@ -6,6 +6,7 @@ import { Activity } from 'src/app/services/sessions/activity/Activity';
 import { MUSCLE_LIST } from 'src/environments/environment';
 import { Observable, Subject, Subscription, debounceTime, map, throttleTime } from 'rxjs';
 import { AlertController } from '@ionic/angular';
+import { muscleOptions } from '../widgets/muscle-groups/muscle-svg/IOpacity-muscle';
 
 @Component({
   selector: 'app-log-workout',
@@ -17,7 +18,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
   currentSession$: Subject<session>;
   muscleList = MUSCLE_LIST;
   subscriber: Subscription;
-  muscleGroups: string[] = [];
+  muscleGroups: muscleOptions[] = [];
 
   constructor(private servSession: SessionService, private alertController: AlertController) {
     this.currentSession = new Session("");  
@@ -36,7 +37,6 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
     console.log("adding acitvity");
     this.servSession.addActivity();
     this.loadSession();
-
 
   }
 
@@ -61,8 +61,6 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
       }); 
     }
   }
-
-
 
   saveSession(){
     //run checks to see if all fields have a value 
@@ -126,6 +124,10 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
   goBack(){
     
   }
+  muscleSelected(event: any) {
+    console.log("log workout",event)
+  }
+  
   
   
 }
