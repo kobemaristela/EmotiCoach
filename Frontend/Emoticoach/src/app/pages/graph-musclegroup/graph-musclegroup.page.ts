@@ -11,29 +11,73 @@ import { MUSCLE_LIST } from 'src/environments/environment';
 export class GraphMusclegroupPage implements OnInit {
   public chart: any; 
   workoutData: number[] = [];
-  musclegroups: any[] = [];
-  workoutDates: string[] = [];
+  musclegrouplist: any[] = [];
+  musclegroups: string[] = [];
   selectedGroup = "";
   muscleList = MUSCLE_LIST;
+  previousWeek: Date;
+  previousWeekFormatted: string;
+  rightsideWeek: Date;
+  rightsideWeekFormatted: string;
+  weekNumber: number;
 
-  constructor(private graphService: GraphService) { }
+  constructor(private graphService: GraphService) {
+    this.previousWeek = this.graphService.getPreviousWeek(this.graphService.getCurrentDate());
+    this.rightsideWeek = this.graphService.getCurrentDate();
+    this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
+    this.rightsideWeekFormatted = this.graphService.formatDate(this.graphService.getCurrentDate())
+    this.weekNumber = 0;
+   }
 
   getMuscleGroups(){ //change to getmusclegroups api
     for(let i=0; i<this.muscleList.length; i++){
-      this.musclegroups.push(this.muscleList[i]);
+      this.musclegrouplist.push(this.muscleList[i]);
     }
   }
 
+  displayPreviousWeek(){
+    this.weekNumber += 1;
+    this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
+    this.previousWeekFormatted = this.graphService.formatDate(this.previousWeek);
+    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
+    this.updateChart();
+  }
+
+  displayNextWeek(){
+    this.weekNumber -= 1;
+    this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
+    this.previousWeekFormatted = this.graphService.formatDate(this.previousWeek);
+    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
+    this.updateChart();
+  }
+
+  indexSelect(selectedGroup: string){
+    return this.selectedGroup = selectedGroup;
+  }
+
+
   updateChart(){
-    this.graphService.getMuscleXandY("1").subscribe( x_data => { //don't we need musclegroup parameter?
-      this.workoutDates = x_data.X;
-      this.chart.data.labels = this.workoutDates;
-      this.chart.update();
+    this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( x_data => { 
+      console.log(this.musclegroups)
+      if(this.musclegroups.includes(this.selectedGroup)){
+        let x_axis = new Array<string>(0);
+        x_axis.push(this.selectedGroup)
+        this.chart.data.labels = x_axis
+        this.chart.update();
+      }
     });
-    this.graphService.getMuscleXandY("1").subscribe( y_data => {
+    this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( y_data => {
+      this.musclegroups = y_data.X;
       this.workoutData = y_data.y;
-      this.chart.data.datasets[0].data = this.workoutData;
-      this.chart.update();
+      let index = this.musclegroups.indexOf(this.selectedGroup) //gets index of selected group
+      if(index != -1){
+        let y_axis = new Array<number>(0);
+        y_axis.push(this.workoutData[index])
+        this.chart.data.datasets[0].data = y_axis;
+        this.chart.update();
+      }
     });
   }
 
@@ -45,7 +89,7 @@ export class GraphMusclegroupPage implements OnInit {
         labels: [], //workoutDates
         datasets: [
           {
-            label: "Muscle Groups",
+            label: "Reps",
             data: [], //volumeData here
             backgroundColor: '#833535',
             borderColor: '#6D6D6D'
@@ -53,10 +97,24 @@ export class GraphMusclegroupPage implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 1
-          }
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              display: true,
+              autoSkip: false,
+            },
+          },
+        },
+      },
     });
-
+    
+    this.chart.options.animation = true;
     this.getMuscleGroups();
   }
 
