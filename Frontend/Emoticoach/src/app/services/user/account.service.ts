@@ -13,6 +13,10 @@ export class AccountService {
   userInfo: user;
   isLoggedIn: false;
   static user_token: string = "";
+  static user_email: string = "";
+  static user_firstname: string = "";
+  static user_lastname: string = "";
+  user_first_last: string = "";
 
   private user$: Subject<accountRequest[]>;
 
@@ -28,13 +32,28 @@ export class AccountService {
     this.requestAccountService.getUserToken(username, password).subscribe( d => {
       this.user$.next(d)
       AccountService.user_token = d.token;
-      console.log(AccountService.user_token);
+      AccountService.user_email = d.email;
+      AccountService.user_firstname = d.first_name;
+      AccountService.user_lastname = d.last_name;
     });
     return this.user$;
   }
 
   returnUserToken(){
     return AccountService.user_token;
+  }
+
+  returnUserEmail(){
+    return AccountService.user_email;
+  }
+
+  returnFirstLastName(){
+    this.user_first_last = (this.capitalizeFirstLetter(AccountService.user_firstname) + " " + this.capitalizeFirstLetter(AccountService.user_lastname))
+    return this.user_first_last;
+  }
+
+  capitalizeFirstLetter(input:string){
+    return input.charAt(0).toUpperCase() + input.slice(1);
   }
 }
 
