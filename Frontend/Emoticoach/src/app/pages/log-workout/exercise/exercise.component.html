@@ -10,13 +10,7 @@
       </ion-col>
       <ion-col size="2">
         <ion-row>
-          <app-muscle-groups (newMuscleList)="addMuscles($event)" [muscles]="activity.muscleGroups" ></app-muscle-groups>
-          <!-- <ion-select  [multiple]="true" [(ngModel)]="activity.muscleGroups">
-            Muscle Groups
-            <div *ngFor="let muscle of muscleList">
-              <ion-select-option [value]="muscle">{{muscle}}</ion-select-option>
-            </div>
-          </ion-select> -->
+          <app-muscle-svg (muscleSelected)="addMuscles($event)" [canSelect]="false" [muscles]="activity.muscleGroups" ></app-muscle-svg>
         </ion-row>
       </ion-col>
     </ion-row>

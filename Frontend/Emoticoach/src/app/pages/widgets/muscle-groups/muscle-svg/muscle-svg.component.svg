@@ -1,4 +1,4 @@
-<svg width="100%" height="100%" viewBox="0 0 550 473" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg (click)="openModal()" width="100%" height="100%" viewBox="0 0 550 473" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 <!-- Chest  -->
 <path (click)="changeColor('chest')" [attr.fill]="fillColor" [attr.fill-opacity]="opacity.chest" d="M142.038 85.475L125.521 78.6737L127.471 46.5H151.849L172.4 60.2009L165.617 79.5803L142.038 85.475Z" stroke="black"/>

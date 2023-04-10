@@ -47,7 +47,7 @@
               <ion-row class="cardHeader">
                 <div class="cardHeader label">Muscle Groups</div>
               </ion-row>
-              <app-muscle-groups [canSelect]="false" [muscles]="muscleGroups" ></app-muscle-groups>
+              <app-muscle-svg (muscleSelected)="muscleSelected($event)" [canSelect]="false" [muscles]="muscleGroups" ></app-muscle-svg>
              
             </ion-col>
           </ion-row>
@@ -62,7 +62,7 @@
   </ion-list>
 
   <!-- using the svg angular combo here -->
-  <app-muscle-groups [canOpen]="false" [muscles]="['chest']" (newMuscleList)="muscleSelected($event)" ></app-muscle-groups>
+  <app-muscle-svg [canOpen]="false" [muscles]="['chest']" (newMuscleList)="muscleSelected($event)" ></app-muscle-svg>
 </ion-content>
 
 <ion-footer>

@@ -10,5 +10,5 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <app-muscle-groups [muscles]="muscles" (newMuscleList)="updateMuscle($event)" [canOpen]="false"></app-muscle-groups>
+  <app-muscle-svg [muscles]="muscles" (muscleSelected)="updateMuscle($event)" [canOpen]="false"></app-muscle-svg>
 </ion-content>

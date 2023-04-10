@@ -125,6 +125,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
     
   }
   muscleSelected(event: any) {
+    this.muscleGroups = event;
     console.log("log workout",event)
   }
   
