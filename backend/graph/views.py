@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from django.utils.timezone import make_aware
+from django.utils import timezone
 from django.db.models import Sum
 
 from .mqtt import ppg_infrared, ppg_green, ppg_red
@@ -23,12 +24,15 @@ class getHeartrateData(APIView):
         return JsonResponse({"test":"Hello"})
     
 class GetVolumeData(APIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token = request.META['HTTP_AUTHORIZATION'].split()[1]
-        userId = Token.objects.get(key=token).user_id
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
 
         start_date = request.POST["start_date"]
         start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
@@ -48,7 +52,7 @@ class GetVolumeData(APIView):
             volume = 0
             for set in sets:
                 volume += set["weight"] * set["reps"]
-            date_key = session["datetime"].strftime("%m/%d")
+            date_key = session["datetime"].strftime("%b %d")
 
             if date_key in volume_data:
                 volume_data[date_key] += volume
@@ -101,12 +105,15 @@ class GetMuscleGroupData(APIView):
                              "y":list(muscleDict.values())})
 
 class GetOneRMData(APIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        token = request.META['HTTP_AUTHORIZATION'].split()[1]
-        userId = Token.objects.get(key=token).user_id
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
 
         start_date = request.POST["start_date"]
         start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
@@ -130,7 +137,7 @@ class GetOneRMData(APIView):
                 if one_rm > current_one_rm:
                     current_one_rm = one_rm
 
-            date_key = session["datetime"].strftime("%m/%d")
+            date_key = session["datetime"].strftime("%b %d")
 
             one_rm_data[date_key] = current_one_rm
 
@@ -142,3 +149,84 @@ class GetOneRMData(APIView):
 
         return JsonResponse({"X":list(one_rm_data.keys()),
                              "y":list(one_rm_data.values())})
+
+class GetPieVolumeData(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
+
+        start_date = request.POST["start_date"]
+        start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
+
+        length = int(request.POST["length"])
+        end_date = start_date + timedelta(days=length)
+
+        sessions = Session.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        sessions = sessions.filter(datetime__lte = end_date).values("id")
+        activities = Activity.objects.filter(session_id__in=sessions).values("id", "name")
+
+        volume_data = dict()
+        for activity in activities:
+            activity_id = activity["id"]
+            activity_name = activity["name"]
+            sets = Set.objects.filter(activity_id=activity_id).values("weight", "reps")
+
+            if activity_name not in volume_data:
+                volume_data[activity_name] = 0
+            
+            volume = 0
+            for set in sets:
+                volume += set["weight"] * set["reps"]
+            volume_data[activity_name] += volume
+        
+        return JsonResponse({"values":list(volume_data.values()),
+                             "labels":list(volume_data.keys())})
+    
+class GetActivityHeatmap(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
+
+        activity = request.POST["activity"]
+        end_date = timezone.now()
+        start_date = datetime(year=end_date.year, month=1, day=1, tzinfo=timezone.utc)
+
+        response = [
+            [None for i in range(12)],
+            [None for i in range(12)],
+            [None for i in range(12)],
+            [None for i in range(12)],
+            [None for i in range(12)],
+            [None for i in range(12)],
+            [None for i in range(12)],
+        ]
+
+        sessions = Session.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        sessions = sessions.filter(datetime__lte = end_date).values("id", "datetime").order_by("datetime")
+
+        for session in sessions:
+            activities = Activity.objects.filter(session_id=session["id"], name=activity).values("id")
+            sets = Set.objects.filter(activity_id__in=activities).values("weight", "reps")
+            volume = 0
+            for set in sets:
+                volume += set["weight"] * set["reps"]
+            month_number = session["datetime"].month - 1
+            week_day = session["datetime"].weekday()
+
+            if not response[week_day][month_number]:
+                response[week_day][month_number] = 0
+            response[week_day][month_number] += volume
+
+        return JsonResponse({"z":response})

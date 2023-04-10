@@ -344,7 +344,7 @@ class GetMuscleGroups(APIView):
         return JsonResponse({"groups":muscle})
 
 class GetActivityNames(APIView):
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -352,8 +352,10 @@ class GetActivityNames(APIView):
         user_id = Token.objects.get(key=token).user_id
         session_id = Session.objects.filter(auth_user_id=user_id).values("id")
         activities = Activity.objects.filter(session_id__in=session_id).values("name")
+        activities = [x["name"] for x in activities]
+        activities = [*set(activities)]
         
-        response = {"activities":[x["name"] for x in activities]}
+        response = {"activities":activities}
 
         return JsonResponse(response)
     
