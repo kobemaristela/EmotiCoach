@@ -217,7 +217,10 @@ class GetActivityHeatmap(APIView):
         sessions = sessions.filter(datetime__lte = end_date).values("id", "datetime").order_by("datetime")
 
         for session in sessions:
-            activities = Activity.objects.filter(session_id=session["id"], name=activity).values("id")
+            if activity == "all":
+                activities = Activity.objects.filter(session_id=session["id"]).values("id")
+            else:
+                activities = Activity.objects.filter(session_id=session["id"], name=activity).values("id")
             sets = Set.objects.filter(activity_id__in=activities).values("weight", "reps")
             volume = 0
             for set in sets:
