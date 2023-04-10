@@ -65,7 +65,11 @@ const routes: Routes = [
   {
     path: 'graph-livedata',
     loadChildren: () => import('./pages/graph-livedata/graph-livedata.module').then( m => m.GraphLivedataPageModule)
-  }
+  },
+  {
+    path: 'gym-buddy',
+    loadChildren: () => import('./pages/gym-buddy/gym-buddy.module').then( m => m.GymBuddyPageModule)
+  },
 
 ];
 
