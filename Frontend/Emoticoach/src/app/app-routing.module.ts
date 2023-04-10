@@ -70,6 +70,10 @@ const routes: Routes = [
     path: 'gym-buddy',
     loadChildren: () => import('./pages/gym-buddy/gym-buddy.module').then( m => m.GymBuddyPageModule)
   },
+  {
+    path: 'template-creator',
+    loadChildren: () => import('./pages/template-creator/template-creator.module').then( m => m.TemplateCreatorPageModule)
+  },
 
 ];
 
