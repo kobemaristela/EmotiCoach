@@ -1,0 +1,129 @@
+{% extends "webapp/base.html" %}
+{% load static %}
+
+{% block title %}
+  EmotiCoach
+{% endblock %}
+
+{% block pageTitle %}
+Activity
+{% endblock %}
+
+{% block head %}
+<script src="{% static 'webapp/js/plotly-2.20.0.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row pb-3 pl-3">
+    <div class="dropdown">
+        <button id="activityButton" class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Deadlift
+        </button>
+        <div id="activitiesDropdown" class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="col-xl-7 col-lg-6">
+        <!-- Area Chart -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">One RM Chart</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Time Frame:</div>
+                        <a class="dropdown-item" href="#">Weekly</a>
+                        <a class="dropdown-item" href="#">Monthly</a>
+                        <!-- <div class="dropdown-divider"></div> -->
+                        <a class="dropdown-item" href="#">Yearly</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="lineChart" class="chart-area">
+                    <!-- <canvas id="myAreaChart"></canvas> -->
+                </div>
+                <hr>
+                One RM Calculated using the Bryzcki formula to track improvement.
+            </div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Volume Chart</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Time Frame:</div>
+                        <a class="dropdown-item" href="#">Weekly</a>
+                        <a class="dropdown-item" href="#">Monthly</a>
+                        <!-- <div class="dropdown-divider"></div> -->
+                        <a class="dropdown-item" href="#">Yearly</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="barChart" class="chart-bar">
+                    <!-- <canvas id="myBarChart"></canvas> -->
+                </div>
+                <hr>
+                Compare how much volume you tend to do on different days.
+            </div>
+        </div>
+    </div>
+
+    <!-- Donut Chart -->
+    <div class="col-xl-5 col-lg-6">
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Volume Comparison Chart</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div id="pieChart" class="chart-pie pt-4">
+                    <!-- <canvas id="myPieChart"></canvas> -->
+                </div>
+                <hr>
+                Compare how much volume you do compared to other activities.
+            </div>
+        </div>
+
+        <div class="card shadow mb-4">
+            <!-- Card Header - Dropdown -->
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Consistency Heatmap</h6>
+            </div>
+            <!-- Card Body -->
+            <div class="card-body">
+                <div id="heatChart" class="chart-pie pt-4">
+                    <!-- <canvas id="myPieChart"></canvas> -->
+                </div>
+                <hr>
+                How often you stay physically active.
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'webapp/js/activity-chart.js' %}"></script>
+{% endblock %}

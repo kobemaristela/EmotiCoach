@@ -36,7 +36,6 @@ class Register(TemplateView):
     next_page = "webapp/login"
     redirect_field_name = 'redirect_to'
 
-
 class Profile(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
@@ -59,4 +58,26 @@ class Account(LoginRequiredMixin, TemplateView):
         context['first_name'] = self.request.user.first_name
         context['last_name'] = self.request.user.last_name
         context['email'] = self.request.user.email
+        return context
+
+class Activity(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    template_name = "webapp/activity.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['first_name'] = self.request.user.first_name
+        context['last_name'] = self.request.user.last_name
+        return context
+    
+class ActivityChart(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    template_name = "webapp/activitychart.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['first_name'] = self.request.user.first_name
+        context['last_name'] = self.request.user.last_name
         return context

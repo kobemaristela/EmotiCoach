@@ -1,0 +1,48 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button expand="block" routerLink="/tabs/templates">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
+  </ion-buttons>
+  <ion-title>Create a New Template</ion-title>
+</ion-toolbar>
+
+<ion-content>
+  <ion-list lines="none">
+
+    <ion-card>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-row class="cardHeader">
+                <div class="cardHeader label">Duration</div>
+              </ion-row>
+              <ion-row>
+                <ion-item>
+                  <ion-icon size="small" name="timer-outline"></ion-icon>
+                  <ion-input #duration [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number"
+                    placeholder="Mins"></ion-input>
+                </ion-item>
+              </ion-row>
+            </ion-col>
+            <ion-col size="6">
+              <ion-row class="cardHeader">
+                <div class="cardHeader label">Muscle Groups</div>
+              </ion-row>
+              <ion-row *ngFor="let muscle of muscleGroups">
+                <ion-text>{{muscle}}</ion-text>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-list>
+</ion-content>
+<ion-footer>
+  <ion-button expand="block" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
+    Excercise
+  </ion-button>
+</ion-footer>

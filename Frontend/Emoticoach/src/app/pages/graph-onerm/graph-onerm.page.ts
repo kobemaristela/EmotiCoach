@@ -80,11 +80,16 @@ export class GraphOnermPage implements OnInit {
   }
 
   ngOnInit() {
+    let xAxisInit = this.returnPast7Days(this.previousWeek);
+    this.xAxisDates.length = 0
+    for(let i=0; i<xAxisInit.length; i++){
+      this.xAxisDates.push(this.graphService.formatDate(xAxisInit[i]));
+    }
     this.chart = new Chart("OneRMgraph", {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: [], //workoutDates
+        labels: this.xAxisDates, //workoutDates
         datasets: [
           {
             label: "One Rep Max",

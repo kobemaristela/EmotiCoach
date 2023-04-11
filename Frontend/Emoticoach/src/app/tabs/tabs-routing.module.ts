@@ -40,6 +40,14 @@ const routes: Routes = [
         loadChildren: () => import('../pages/graph-livedata/graph-livedata.module').then(m => m.GraphLivedataPageModule)
       },
       {
+        path: 'account',
+        loadChildren: () => import('../pages/account/account.module').then( m => m.AccountPageModule)
+      },
+      {
+        path: 'templates',
+        loadChildren: () => import('../pages/templates/templates.module').then( m => m.TemplatesPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'

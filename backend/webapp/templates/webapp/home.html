@@ -1,8 +1,55 @@
 {% extends "webapp/base.html" %}
+{% load static %}
 
 {% block title %}
   EmotiCoach
 {% endblock %}
 
+{% block pageTitle %}
+Dashboard
+{% endblock %}
+
+{% block head %}
+<script src="{% static 'webapp/js/plotly-2.20.0.min.js' %}"></script>
+{% endblock %}
+
 {% block content %}
+<div class="row">
+  <div class="col-xl-7 col-lg-6">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Consistency Heatmap</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div id="heatChart" class="chart-pie pt-4">
+          <!-- <canvas id="myPieChart"></canvas> -->
+        </div>
+        <hr>
+        How often you stay physically active.
+      </div>
+    </div>
+  </div>
+  <div class="col-xl-5 col-lg-6">
+    <div class="card shadow mb-4">
+      <!-- Card Header - Dropdown -->
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Volume Comparison Chart</h6>
+      </div>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div id="pieChart" class="chart-pie pt-4">
+          <!-- <canvas id="myPieChart"></canvas> -->
+        </div>
+        <hr>
+        Compare how much volume you do compared to other activities.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'webapp/js/dashboard.js' %}"></script>
 {% endblock %}
