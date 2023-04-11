@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { GraphService } from 'src/app/services/graph/graph.service';
 
-
 @Component({
   selector: 'app-graph-volume',
   templateUrl: './graph-volume.page.html',
@@ -50,22 +49,24 @@ export class GraphVolumePage implements OnInit {
   displayPreviousWeek(){
     this.formatXaxis(this.returnPast7Days(this.previousWeek))
     this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
     this.rightsideWeekFormatted = this.xAxisDates[6];
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
     this.updateChart();
   }
 
   displayNextWeek(){
     this.formatXaxis(this.returnPast7Days(this.graphService.getNextWeek(this.rightsideWeek)))
     this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
     this.rightsideWeekFormatted = this.xAxisDates[6];
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
     this.updateChart();
   }
 
   updateChart(){
+    console.log(this.workoutDates)
+    console.log(this.workoutData)
     this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( x_data => {
       this.workoutDates.length = 7;
       this.workoutDates = x_data.X;
@@ -75,6 +76,7 @@ export class GraphVolumePage implements OnInit {
     this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( y_data => {
       this.workoutData.length = 7;
       this.workoutData = y_data.y;
+      console.log(this.workoutData[0])
       this.chart.data.datasets[0].data = this.workoutData;
       this.chart.update();
     });
