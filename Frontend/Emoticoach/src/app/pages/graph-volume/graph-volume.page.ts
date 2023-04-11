@@ -20,19 +20,19 @@ export class GraphVolumePage implements OnInit {
   previousWeekFormatted: string; //need this to be set to most recent sunday
   rightsideWeekFormatted: string;
 
-  constructor(private graphService: GraphService) { 
+constructor(private graphService: GraphService) {
     this.previousWeek = this.graphService.getPreviousWeek(this.graphService.getCurrentDate());
     this.rightsideWeek = this.graphService.getCurrentDate();
     this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
     this.rightsideWeekFormatted = this.graphService.formatDate(this.graphService.getCurrentDate())
-  }
+   }
 
-  returnPast7Days(date: Date) {
+   returnPast7Days(date: Date) {
     return Array(7).fill(new Date(date)).map((el, idx) =>
       new Date(el.setDate(el.getDate() - el.getDay() + idx)))
   }
 
-  formatXaxis(dates: Date[]){
+    formatXaxis(dates: Date[]){
     this.xAxisDates.length = 0
     for(let i=0; i<dates.length; i++){
       this.xAxisDates.push(this.graphService.formatDate(dates[i]));
@@ -50,18 +50,18 @@ export class GraphVolumePage implements OnInit {
   displayPreviousWeek(){
     this.formatXaxis(this.returnPast7Days(this.previousWeek))
     this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
     this.rightsideWeekFormatted = this.xAxisDates[6];
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
     this.updateChart();
   }
 
   displayNextWeek(){
     this.formatXaxis(this.returnPast7Days(this.graphService.getNextWeek(this.rightsideWeek)))
     this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
     this.rightsideWeekFormatted = this.xAxisDates[6];
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
     this.updateChart();
   }
 
@@ -80,12 +80,18 @@ export class GraphVolumePage implements OnInit {
     });
   }
 
+
   ngOnInit() {
+    let xAxisInit = this.returnPast7Days(this.previousWeek);
+    this.xAxisDates.length = 0
+    for(let i=0; i<xAxisInit.length; i++){
+      this.xAxisDates.push(this.graphService.formatDate(xAxisInit[i]));
+    }
     this.chart = new Chart("MyChart", {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: [], //workoutDates
+        labels: this.xAxisDates, //workoutDates
         datasets: [
           {
             label: "Volume",
