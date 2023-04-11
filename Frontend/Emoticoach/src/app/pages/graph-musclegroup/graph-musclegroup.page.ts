@@ -60,7 +60,7 @@ export class GraphMusclegroupPage implements OnInit {
 
   updateChart(){
     this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( x_data => { 
-      console.log(this.musclegroups)
+
       if(this.musclegroups.includes(this.selectedGroup)){
         let x_axis = new Array<string>(0);
         x_axis.push(this.selectedGroup)
@@ -78,7 +78,8 @@ export class GraphMusclegroupPage implements OnInit {
       this.musclegroups = y_data.X;
       this.workoutData = y_data.y;
       let index = this.musclegroups.indexOf(this.selectedGroup) //gets index of selected group
-      console.log(index)
+
+
       if(index != -1){
         let y_axis = new Array<number>(0);
         y_axis.push(this.workoutData[index])
@@ -99,7 +100,7 @@ export class GraphMusclegroupPage implements OnInit {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: [], //workoutDates
+        labels: ["Select muscle group"], //workoutDates
         datasets: [
           {
             label: "Reps",

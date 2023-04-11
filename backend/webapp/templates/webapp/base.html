@@ -22,6 +22,8 @@
     <link href="{% static 'webapp/css/sb-admin-2.min.css' %}" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="{% static 'webapp/img/favicon.png' %}">
 
+    {% block head %}<!-- Title Goes Here -->{% endblock %}
+
 </head>
 
 <body id="page-top">
@@ -44,7 +46,7 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{% url 'home' %}">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -59,7 +61,7 @@
 
             <!-- Nav Item - Activities -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{% url 'activity' %}">
                     <i class="fas fa-running"></i>
                     <span>Activities</span></a>
             </li>
@@ -110,7 +112,7 @@
                 <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Health Charts</h6>
-                        <a class="collapse-item" href="login.html">Activities</a>
+                        <a class="collapse-item" href="{% url 'activitychart' %}">Activities</a>
                         <a class="collapse-item" href="register.html">Calories</a>
                         <a class="collapse-item" href="forgot-password.html">Sleep</a>
                         <a class="collapse-item" href="forgot-password.html">Weight</a>
@@ -123,7 +125,7 @@
                 </div>
             </li>
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables"
                     aria-expanded="true" aria-controls="collapseTables">
                     <i class="fas fa-fw fa-table"></i>
@@ -139,7 +141,7 @@
                         <a class="collapse-item" href="forgot-password.html">Water</a>
                     </div>
                 </div>
-            </li>
+            </li> -->
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -227,12 +229,7 @@
     <!-- Custom script for base -->
     <script src="{% static 'webapp/js/base.js' %}"></script>
 
-    <!-- Page level plugins -->
-    <!-- <script src="vendor/chart.js/Chart.min.js"></script> -->
-
-    <!-- Page level custom scripts -->
-    <!-- <script src="js/demo/chart-area-demo.js"></script> -->
-    <!-- <script src="js/demo/chart-pie-demo.js"></script> -->
+    {% block scripts %}<!-- Content Goes Here -->{% endblock %}
 
 </body>
 

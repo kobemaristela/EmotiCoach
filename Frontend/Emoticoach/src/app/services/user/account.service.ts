@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { user } from './Iuser';
+import { HttpClient } from '@angular/common/http';
 import { Account } from './Account';
 import { RequestAccountService } from './request-account.service';
 import { Observable, Subject } from 'rxjs';
@@ -21,7 +22,7 @@ export class AccountService {
   private user$: Subject<accountRequest[]>;
 
 
-  constructor(private requestAccountService: RequestAccountService) {
+  constructor(private requestAccountService: RequestAccountService, private http: HttpClient) {
     this.userInfo = new Account("");
     this.user$ = new Subject();
     //Remove this ;ater this defaults it to justins hard coded token for testing
@@ -33,10 +34,29 @@ export class AccountService {
       this.user$.next(d)
       AccountService.user_token = d.token;
       AccountService.user_email = d.email;
+
+      console.log(d.first_name)
+
       AccountService.user_firstname = d.first_name;
       AccountService.user_lastname = d.last_name;
     });
     return this.user$;
+  }
+
+  editAccountInfo(first_name:string, last_name:string, email:string, password:string):Observable<any>{
+    const formData = new FormData();
+    formData.append("first_name", first_name);
+    formData.append("last_name", last_name);
+    formData.append("email", email);
+    formData.append("password", password);
+
+    let tableParam = {
+      headers: {
+        "Authorization": CHAD_TOKEN,
+      }
+  }
+  let res = this.http.post<any>("https://emotidev.maristela.net/user/edit", formData,tableParam);
+    return res;
   }
 
   returnUserToken(){
@@ -46,6 +66,16 @@ export class AccountService {
   returnUserEmail(){
     return AccountService.user_email;
   }
+
+
+  returnUserFirstName(){
+    return this.capitalizeFirstLetter(AccountService.user_firstname);
+  }
+
+  returnUserLastName(){
+    return this.capitalizeFirstLetter(AccountService.user_lastname);
+  }
+
 
   returnFirstLastName(){
     this.user_first_last = (this.capitalizeFirstLetter(AccountService.user_firstname) + " " + this.capitalizeFirstLetter(AccountService.user_lastname))

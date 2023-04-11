@@ -15,7 +15,7 @@ export class RequestGraphService {
 getVolumeData(start_date: string, activity: string){
     const formData = new FormData();
     formData.append("start_date", start_date); //format 2023-03-07
-    formData.append("length", "8");
+    formData.append("length", "7");
     formData.append("activity", activity);
 
     let tableParam = {

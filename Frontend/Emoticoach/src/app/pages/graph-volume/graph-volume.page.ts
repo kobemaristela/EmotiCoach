@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
+import { empty } from 'rxjs';
 import { GraphService } from 'src/app/services/graph/graph.service';
-
 
 @Component({
   selector: 'app-graph-volume',
@@ -16,27 +16,72 @@ export class GraphVolumePage implements OnInit {
   selectedWorkout = "";
   previousWeek: Date;
   xAxisDates: string[] = [];
+
+  yAxisData: number[] = [];
   rightsideWeek: Date;
-  previousWeekFormatted: string; //need this to be set to most recent sunday
+  previousWeekFormatted: string;
   rightsideWeekFormatted: string;
 
-  constructor(private graphService: GraphService) { 
+constructor(private graphService: GraphService) {
     this.previousWeek = this.graphService.getPreviousWeek(this.graphService.getCurrentDate());
     this.rightsideWeek = this.graphService.getCurrentDate();
     this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.graphService.getCurrentDate())
-  }
+    this.rightsideWeekFormatted = this.graphService.formatDate(this.graphService.currentDate)
+   }
 
-  returnPast7Days(date: Date) {
+  returnPast7Days(date: Date) { //this always starts on sunday
+
     return Array(7).fill(new Date(date)).map((el, idx) =>
       new Date(el.setDate(el.getDate() - el.getDay() + idx)))
   }
+
+
+  last7Days(d: Date){
+    let result = [];
+    for(let i=0; i<7; i++){
+      let x = new Date(d)
+      x.setDate(x.getDate() - i)
+      result.push(x)
+    }
+    return result.reverse();
+  }
+
+
 
   formatXaxis(dates: Date[]){
     this.xAxisDates.length = 0
     for(let i=0; i<dates.length; i++){
       this.xAxisDates.push(this.graphService.formatDate(dates[i]));
     }
+
+  populateYAxis(y_data: number[]){
+    this.yAxisData.length = 0;
+    console.log("workout dates api", this.workoutDates)
+    console.log("x axis dates", this.xAxisDates)
+    for(let i=0; i<this.xAxisDates.length; i++){
+      if(this.getAfterSpace(this.workoutDates).includes(this.getAfterSlash(this.xAxisDates[i]))){
+        let index = this.getAfterSpace(this.workoutDates).indexOf(this.getAfterSlash(this.xAxisDates[i]))
+        this.yAxisData.push(y_data[index])
+      }
+      else{
+        this.yAxisData.push(0);
+      }
+    }
+    return this.yAxisData
+  }
+
+  getAfterSlash(input: string) {
+    return input.split('/')[1];
+ }
+
+  getAfterSpace(input: string[]) {
+    let result = []
+     for(let i=0; i<input.length; i++){
+      if(typeof input[i] !== 'undefined'){
+        result.push(input[i].split(' ')[1]);
+      }
+    }
+    return result
   }
 
   getWorkoutNames(){
@@ -48,44 +93,50 @@ export class GraphVolumePage implements OnInit {
   }
 
   displayPreviousWeek(){
-    this.formatXaxis(this.returnPast7Days(this.previousWeek))
+
+    this.formatXaxis(this.last7Days(this.previousWeek))
     this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
     this.rightsideWeekFormatted = this.xAxisDates[6];
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
     this.updateChart();
   }
 
   displayNextWeek(){
-    this.formatXaxis(this.returnPast7Days(this.graphService.getNextWeek(this.rightsideWeek)))
+
+    this.formatXaxis(this.last7Days(this.graphService.getNextWeek(this.rightsideWeek)))
     this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
     this.rightsideWeekFormatted = this.xAxisDates[6];
-    this.rightsideWeekFormatted = this.graphService.formatDate(this.rightsideWeek);
     this.updateChart();
   }
 
   updateChart(){
     this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( x_data => {
-      this.workoutDates.length = 7;
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.xAxisDates;
       this.chart.update();
     });
     this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( y_data => {
-      this.workoutData.length = 7;
       this.workoutData = y_data.y;
-      this.chart.data.datasets[0].data = this.workoutData;
+      this.chart.data.datasets[0].data = this.populateYAxis(this.workoutData)
       this.chart.update();
     });
   }
 
+
   ngOnInit() {
+    let xAxisInit = this.last7Days(this.graphService.currentDate);
+    this.xAxisDates.length = 0
+    for(let i=0; i<xAxisInit.length; i++){
+      this.xAxisDates.push(this.graphService.formatDate(xAxisInit[i]));
+    }
     this.chart = new Chart("MyChart", {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: [], //workoutDates
+        labels: this.xAxisDates, //workoutDates
         datasets: [
           {
             label: "Volume",

@@ -13,10 +13,13 @@ export class GraphOnermPage implements OnInit {
   workouts: any[] = [];
   workoutDates: string[] = [];
   selectedWorkout = "";
-  xAxisDates: string[] = [];
+
   previousWeek: Date;
-  previousWeekFormatted: string;
+  xAxisDates: string[] = [];
+  yAxisData: number[] = [];
   rightsideWeek: Date;
+  previousWeekFormatted: string;
+
   rightsideWeekFormatted: string;
 
   constructor(private graphService: GraphService) {
@@ -31,12 +34,54 @@ export class GraphOnermPage implements OnInit {
       new Date(el.setDate(el.getDate() - el.getDay() + idx)))
   }
 
+
+  last7Days(d: Date){
+    let result = [];
+    for(let i=0; i<7; i++){
+      let x = new Date(d)
+      x.setDate(x.getDate() - i)
+      result.push(x)
+    }
+    return result.reverse();
+  }
+
+
     formatXaxis(dates: Date[]){
     this.xAxisDates.length = 0
     for(let i=0; i<dates.length; i++){
       this.xAxisDates.push(this.graphService.formatDate(dates[i]));
     }
   }
+
+  populateYAxis(y_data: number[]){
+    this.yAxisData.length = 0;
+    for(let i=0; i<this.xAxisDates.length; i++){
+      if(this.getAfterSpace(this.workoutDates).includes(this.getAfterSlash(this.xAxisDates[i]))){
+        let index = this.getAfterSpace(this.workoutDates).indexOf(this.getAfterSlash(this.xAxisDates[i]))
+        this.yAxisData.push(y_data[index])
+        console.log(typeof y_data[index])
+      }
+      else{
+        this.yAxisData.push(0);
+      }
+    }
+    return this.yAxisData
+  }
+  
+  getAfterSlash(input: string) {
+    return input.split('/')[1];
+ }
+
+  getAfterSpace(input: string[]) {
+    let result = []
+     for(let i=0; i<input.length; i++){
+      if(typeof input[i] !== 'undefined'){
+        result.push(input[i].split(' ')[1]);
+      }
+    }
+    return result
+  }
+
 
   getWorkoutNames(){
     this.graphService.getActivityNames().subscribe(data => {
@@ -47,7 +92,9 @@ export class GraphOnermPage implements OnInit {
   }
 
   displayPreviousWeek(){
-    this.formatXaxis(this.returnPast7Days(this.previousWeek))
+
+    this.formatXaxis(this.last7Days(this.previousWeek))
+
     this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
     this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
@@ -56,7 +103,9 @@ export class GraphOnermPage implements OnInit {
   }
 
   displayNextWeek(){
-    this.formatXaxis(this.returnPast7Days(this.graphService.getNextWeek(this.rightsideWeek)))
+
+    this.formatXaxis(this.last7Days(this.graphService.getNextWeek(this.rightsideWeek)))
+
     this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
     this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
@@ -66,25 +115,32 @@ export class GraphOnermPage implements OnInit {
 
   updateChart(){
     this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( x_data => {
-      this.workoutDates.length = 7;
+
+
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.xAxisDates;
       this.chart.update();
     });
     this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( y_data => {
-      this.workoutData.length = 7;
+
       this.workoutData = y_data.y;
-      this.chart.data.datasets[0].data = this.workoutData;
+      this.chart.data.datasets[0].data = this.populateYAxis(this.workoutData)
       this.chart.update();
     });
   }
 
+
   ngOnInit() {
+    let xAxisInit = this.last7Days(this.graphService.currentDate);
+    this.xAxisDates.length = 0
+    for(let i=0; i<xAxisInit.length; i++){
+      this.xAxisDates.push(this.graphService.formatDate(xAxisInit[i]));
+    }
     this.chart = new Chart("OneRMgraph", {
       type: 'bar', //this denotes tha type of chart
 
       data: {// values on X-Axis
-        labels: [], //workoutDates
+        labels: this.xAxisDates, //workoutDates
         datasets: [
           {
             label: "One Rep Max",

@@ -28,13 +28,24 @@
             <ion-card class="form-wrapper">
               <ion-card-content>
                 <ion-item>
-                  <ion-icon name="mail-outline"></ion-icon>
-                  <ion-text>{{user_email}}</ion-text>
+
+                  <ion-icon name="person-outline"></ion-icon>
+                  <ion-input type="text" placeholder={{user_firstname}} [(ngModel)]="user_firstname"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon name="person-outline"></ion-icon>
+                  <ion-input type="text" placeholder={{user_lastname}} [(ngModel)]="user_lastname"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-icon name="person-outline"></ion-icon>
+                  <ion-input type="text" placeholder={{user_email}} [(ngModel)]="user_email"></ion-input>
                 </ion-item>
                 <ion-item>
                   <ion-icon name="lock-closed"></ion-icon>
-                  <ion-text>*********</ion-text>
+                  <ion-input type="text" placeholder="********" [(ngModel)]="user_pass"></ion-input>
                 </ion-item>
+                <ion-button expand="block" (click)="editInfo()">Save</ion-button>
+
               </ion-card-content>
             </ion-card>
           </ion-col>
