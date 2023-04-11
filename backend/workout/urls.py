@@ -18,4 +18,6 @@ urlpatterns = [
 
     path('getmusclegroups', GetMuscleGroups.as_view(), name="getmusclegroups"),
     path('getactivitynames', GetActivityNames.as_view(), name="getactivitynames"),
+
+    path('getactivitytable', GetActivityTable.as_view(), name="getactivitytable"),
 ]
