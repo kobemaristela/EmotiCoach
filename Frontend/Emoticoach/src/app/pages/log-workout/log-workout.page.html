@@ -20,6 +20,7 @@
         {{currentSession.datetime | date:'short' }}
       </ion-note>
     </ion-item-divider>
+
     <ion-modal trigger="open-modal" [cssClass]="'center'">
       <ng-template>
         <ion-datetime [(ngModel)]="currentSession.datetime" size="cover"></ion-datetime>
@@ -38,7 +39,7 @@
                 <ion-item>
                   <ion-icon size="small" name="timer-outline"></ion-icon>
                   <ion-input #duration [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number"
-                    placeholder="Mins"></ion-input>
+                    placeholder="Mins"  inputmode="numeric"></ion-input>
                 </ion-item>
               </ion-row>
             </ion-col>
@@ -46,9 +47,8 @@
               <ion-row class="cardHeader">
                 <div class="cardHeader label">Muscle Groups</div>
               </ion-row>
-              <ion-row *ngFor="let muscle of muscleGroups">
-                <ion-text>{{muscle}}</ion-text>
-              </ion-row>
+              <app-muscle-svg (muscleSelected)="muscleSelected($event)" [canSelect]="false" [muscles]="muscleGroups" ></app-muscle-svg>
+             
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -60,7 +60,11 @@
     </app-exercise>
 
   </ion-list>
+
+  <!-- using the svg angular combo here -->
+  <app-muscle-svg [canOpen]="false" [muscles]="['chest']" (newMuscleList)="muscleSelected($event)" ></app-muscle-svg>
 </ion-content>
+
 <ion-footer>
   <ion-button expand="block" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
     Excercise

@@ -63,6 +63,7 @@ export class GraphService {
   }
 
   getPreviousWeek(date: Date){
+
     return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
   }
 
@@ -76,6 +77,7 @@ export class GraphService {
 
   getNextSaturday(date: Date){
     return new Date(date.setDate(date.getDate() + (6 + 7 - date.getDay()) % 7));
+
   }
 
   getActivityNames(): Observable<any>{

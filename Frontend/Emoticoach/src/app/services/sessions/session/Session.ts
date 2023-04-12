@@ -1,16 +1,17 @@
 import { session } from "./Isession";
 import { Activity } from "../activity/Activity";
+import { muscleOptions } from "src/app/pages/widgets/muscle-groups/muscle-svg/IOpacity-muscle";
 
 export class Session implements session{
     id: string;
     name: string;
     duration: number;
     datetime: string;
-    muscleGroups: string[];
+    muscleGroups: muscleOptions[];
     activities: Activity[];
     
     
-    constructor( id: string, name?: string,duration?: number, datetime?: string|undefined,muscleGroups?: string[],activities?: Activity[],){  
+    constructor( id: string, name?: string,duration?: number, datetime?: string|undefined,muscleGroups?: muscleOptions[],activities?: Activity[],){  
         this.id = id;
         this.name = ((name) ? name : "");
         this.duration = ((duration) ? duration : 0);
@@ -38,7 +39,7 @@ export class Session implements session{
         this.name = name;
     }
 
-    updateMuscleGroups(muscleGroups: string[]){
+    updateMuscleGroups(muscleGroups: muscleOptions[]){
         this.muscleGroups = muscleGroups;
     }
 

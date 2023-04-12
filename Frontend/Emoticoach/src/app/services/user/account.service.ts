@@ -34,7 +34,9 @@ export class AccountService {
       this.user$.next(d)
       AccountService.user_token = d.token;
       AccountService.user_email = d.email;
+
       console.log(d.first_name)
+
       AccountService.user_firstname = d.first_name;
       AccountService.user_lastname = d.last_name;
     });
@@ -65,6 +67,7 @@ export class AccountService {
     return AccountService.user_email;
   }
 
+
   returnUserFirstName(){
     return this.capitalizeFirstLetter(AccountService.user_firstname);
   }
@@ -72,6 +75,7 @@ export class AccountService {
   returnUserLastName(){
     return this.capitalizeFirstLetter(AccountService.user_lastname);
   }
+
 
   returnFirstLastName(){
     this.user_first_last = (this.capitalizeFirstLetter(AccountService.user_firstname) + " " + this.capitalizeFirstLetter(AccountService.user_lastname))

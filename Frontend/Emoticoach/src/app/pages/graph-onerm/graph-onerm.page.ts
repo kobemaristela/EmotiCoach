@@ -13,11 +13,13 @@ export class GraphOnermPage implements OnInit {
   workouts: any[] = [];
   workoutDates: string[] = [];
   selectedWorkout = "";
+
   previousWeek: Date;
   xAxisDates: string[] = [];
   yAxisData: number[] = [];
   rightsideWeek: Date;
   previousWeekFormatted: string;
+
   rightsideWeekFormatted: string;
 
   constructor(private graphService: GraphService) {
@@ -32,6 +34,7 @@ export class GraphOnermPage implements OnInit {
       new Date(el.setDate(el.getDate() - el.getDay() + idx)))
   }
 
+
   last7Days(d: Date){
     let result = [];
     for(let i=0; i<7; i++){
@@ -41,6 +44,7 @@ export class GraphOnermPage implements OnInit {
     }
     return result.reverse();
   }
+
 
     formatXaxis(dates: Date[]){
     this.xAxisDates.length = 0
@@ -78,6 +82,7 @@ export class GraphOnermPage implements OnInit {
     return result
   }
 
+
   getWorkoutNames(){
     this.graphService.getActivityNames().subscribe(data => {
       for(let i=0; i<data.activities.length; i++){
@@ -87,7 +92,9 @@ export class GraphOnermPage implements OnInit {
   }
 
   displayPreviousWeek(){
+
     this.formatXaxis(this.last7Days(this.previousWeek))
+
     this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
     this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
@@ -96,7 +103,9 @@ export class GraphOnermPage implements OnInit {
   }
 
   displayNextWeek(){
+
     this.formatXaxis(this.last7Days(this.graphService.getNextWeek(this.rightsideWeek)))
+
     this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
     this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
     this.previousWeekFormatted = this.xAxisDates[0];
@@ -106,11 +115,14 @@ export class GraphOnermPage implements OnInit {
 
   updateChart(){
     this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( x_data => {
+
+
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.xAxisDates;
       this.chart.update();
     });
     this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( y_data => {
+
       this.workoutData = y_data.y;
       this.chart.data.datasets[0].data = this.populateYAxis(this.workoutData)
       this.chart.update();

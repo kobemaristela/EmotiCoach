@@ -67,6 +67,7 @@ export class RequestSessionService {
     formData.append("id", id);
     formData.append("name", name);
     formData.append("muscleGroups", JSON.stringify(muscleGroups));
+    console.log("saving activity", muscleGroups)
     let tableParam = {
             headers: {
               "Authorization": "token " + this.accountService.returnUserToken(),

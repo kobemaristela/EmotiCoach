@@ -1,3 +1,4 @@
+import { muscleOptions } from "src/app/pages/widgets/muscle-groups/muscle-svg/IOpacity-muscle";
 import { activity } from "../activity/Iactivity";
 
 export interface session {
@@ -5,7 +6,7 @@ export interface session {
     name: string;
     duration: number | undefined;
     datetime: string;
-    muscleGroups: string[];
+    muscleGroups: muscleOptions[];
     activities: activity[];
   }
 

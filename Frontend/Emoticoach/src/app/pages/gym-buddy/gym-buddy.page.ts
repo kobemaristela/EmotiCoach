@@ -34,13 +34,7 @@ export class GymBuddyPage implements OnInit {
       });
       modal.present();
     }
-   
 
-    // const { data, role } = await modal.onWillDismiss();
-
-    // if (role === 'confirm') {
-    //   this.message = `Hello, ${data}!`;
-    // }
   }
   async modelSendMsg() {
    
@@ -48,14 +42,8 @@ export class GymBuddyPage implements OnInit {
         component: ModalSendMsgComponent,
       });
       modal.present();
-    
-   
 
     // const { data, role } = await modal.onWillDismiss();
-
-    // if (role === 'confirm') {
-    //   this.message = `Hello, ${data}!`;
-    // }
   }
 
 

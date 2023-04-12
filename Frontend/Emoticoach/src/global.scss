@@ -30,15 +30,19 @@
 @import 'swiper/scss/keyboard';
 @import 'swiper/scss/pagination';
 
+
+
 ion-toolbar {
-    --background: #833535;
-  }
+  --background: #833535;
+}
 
 ion-content {
+
   // overwrite inline styles
   &::-webkit-scrollbar {
     display: none;
   }
+
   --background: #323232;
 }
 
@@ -46,3 +50,21 @@ ion-content {
 ion-list {
   background: #323232;
 }
+
+ion-modal {
+  
+  &::part(content){
+    ion-icon {
+      position: absolute;
+    }
+    .overlap {
+      position: absolute;
+    }
+  }
+  
+  --height: 50%;
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
+}
+

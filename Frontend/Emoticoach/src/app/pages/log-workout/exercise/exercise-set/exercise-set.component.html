@@ -17,6 +17,7 @@
           min = "0"
           placeholder="Reps" 
           [(ngModel)]="set.reps"
+          inputmode="numeric"
         >
         </ion-input>
       </ion-item>
@@ -29,7 +30,8 @@
           type="number" 
           min = 0
           placeholder="Lbs" 
-          [(ngModel)]="set.weight">
+          [(ngModel)]="set.weight"
+          inputmode="numeric">
         </ion-input>
       </ion-item>
     </ion-col>
@@ -42,6 +44,7 @@
           min = 0
           placeholder="RPE" 
           [(ngModel)]="set.rpe"
+          inputmode="numeric"
           >
         </ion-input>
       </ion-item>

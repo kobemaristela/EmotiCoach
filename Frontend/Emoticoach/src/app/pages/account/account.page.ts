@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Observable } from 'rxjs';
 import { user } from 'src/app/services/user/Iuser';
+
 import { AccountService } from 'src/app/services/user/account.service';
 
 @Component({
@@ -11,9 +13,11 @@ import { AccountService } from 'src/app/services/user/account.service';
 export class AccountPage implements OnInit {
 
   user_email: string;
+
   user_pass: string;
   user_firstname: string;
   user_lastname: string;
+
   user_firstlast: string;
   accountPage: boolean;
   emotibitPage: boolean;
@@ -23,8 +27,10 @@ export class AccountPage implements OnInit {
   settingsButton: string;
   timezone: string;
 
+
   user: Observable<any>;
   user$: Observable<user>;
+
 
   constructor(private accountService: AccountService) {
     this.accountPage = true;
@@ -33,6 +39,7 @@ export class AccountPage implements OnInit {
     this.accountButton = "solid"
     this.emotibitButton = "outline"
     this.settingsButton = "outline"
+
     this.user_firstname = "";
     this.user_lastname = "";
     this.user_email = "";
@@ -46,6 +53,7 @@ export class AccountPage implements OnInit {
   displayLastName(){
     this.user_lastname = this.accountService.returnUserLastName();
   }
+
 
   displayEmail(){
     this.user_email = this.accountService.returnUserEmail();
@@ -84,6 +92,7 @@ export class AccountPage implements OnInit {
     this.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
     return this.timezone;
   }
+
 
   editInfo(){
     console.log(this.user_firstname)
