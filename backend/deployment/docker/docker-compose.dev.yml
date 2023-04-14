@@ -2,7 +2,7 @@ version: "3.8"
 services:
   emotidev:
     build:
-      context: https://github.com/kobemaristela/EmotiCoach.git#137-hotfix-permission-and-syntax-fix:/backend/deployment/docker
+      context: https://github.com/kobemaristela/EmotiCoach.git#:/backend/deployment/docker
     command: python manage.py runserver 0.0.0.0:1617
     ports:
       - 1617:1617
