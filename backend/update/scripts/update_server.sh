@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Go to server directory
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-cd ../..
+# SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+# cd ../..
 
 # Update changes from main
 git pull

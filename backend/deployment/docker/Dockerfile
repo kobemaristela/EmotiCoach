@@ -15,11 +15,12 @@ ENV PYTHONUNBUFFERED 1
 ENV EMOTICOACH_HOME=/home/emoticoach
 
 # Create emoticoach user
-RUN addgroup -S emoticoach && adduser -S emoticoach -G emoticoach
+RUN groupadd -r emoticoach && useradd -r -g emoticoach emoticoach
 
 # Clone GitHub repo
 RUN apt update && apt install git netcat -y
-RUN git clone https://github.com/kobemaristela/EmotiCoach.git
+# RUN git clone https://github.com/kobemaristela/EmotiCoach.git
+RUN git clone -b 137-hotfix-permission-and-syntax-fix https://github.com/kobemaristela/EmotiCoach.git
 
 # Update working directory
 ENV EMOTICOACH_SERVER=/home/emoticoach/EmotiCoach/backend
