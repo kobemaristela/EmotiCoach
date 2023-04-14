@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { session } from './Isession';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CHAD_TOKEN } from 'src/environments/environment';
+import { AccountService } from '../../user/account.service';
 import { set } from '../sets/Iset';
 
 //API calls for workout are stored in this file
@@ -10,8 +10,10 @@ import { set } from '../sets/Iset';
   providedIn: 'root'
 })
 export class RequestSessionService {
+  private user_token: string;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private accountService: AccountService) { }
+
   
   //creates a new session in the database
   postCreateNewSessionObservable(session: session):Observable<any> {
@@ -19,13 +21,10 @@ export class RequestSessionService {
     formData.append("session", JSON.stringify(session));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsession", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post status",data)
-    })
     return res;
   }
 
@@ -34,7 +33,7 @@ export class RequestSessionService {
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
@@ -45,39 +44,36 @@ export class RequestSessionService {
     return res;
   }
   
-  postSaveExistingSession(id: string, name: string, duration: string, datetime: string):Observable<any> {
+
+  postSaveExistingSession(id: string, name: string, duration: number, datetime: string):Observable<any> {
     const formData = new FormData();
+    let strduration = duration+""
     formData.append("id", id);
     formData.append("name", name);
-    formData.append("duration", duration);
+    formData.append("duration", strduration);
     formData.append("datetime", datetime);
-    
+    // formData.append("muscleGroup", datetime);
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editsession", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post Save ExistingSession",data)
-    })
     return res;
   }
 
-  postSaveExistingActivity(id: string, name: string):Observable<any> {
+  postSaveExistingActivity(id: string, name: string, muscleGroups:string[]):Observable<any> {
     const formData = new FormData();
     formData.append("id", id);
     formData.append("name", name);
-    
+    formData.append("muscleGroups", JSON.stringify(muscleGroups));
+    console.log("saving activity", muscleGroups)
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editactivity", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post save acitivty",data)
-    })
     return res;
   }
 
@@ -90,7 +86,7 @@ export class RequestSessionService {
     formData.append("rpe", set.rpe.toString());
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editset", formData,tableParam);
@@ -100,54 +96,88 @@ export class RequestSessionService {
     return res;
   }
 
-  postSetAcitvity():Observable<any> {
-    console.log("set acitivity");
+  postSetAcitvity(sessionid: string, name: string, muscleGroups:string[], sets: set[]):Observable<any> {
+    console.log("set acitivity", sessionid, name);
     const formData = new FormData();
- 
-    // formData.append("activity_id", activityId);
-    // formData.append("set_num", set.set_num.toString());
-    // formData.append("weight",set.set_num.toString());
-    // formData.append("reps", set.set_num.toString());
-    // formData.append("rpe", set.set_num.toString());
+    formData.append("session_id", sessionid);
+    formData.append("name", name);
+    formData.append("muscleGroups", JSON.stringify(muscleGroups));
+    formData.append("sets", JSON.stringify(sets));
 
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
-    let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post status",data)
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/setactivity", formData,tableParam)
+    res.subscribe( (d)=>{
+      console.log(d)
     })
     return res;
   }
-  
+
+  postDeleteSet(setID: string){
+    console.log("delete set");
+    const formData = new FormData();
+    formData.append("id", setID);
+    
+    let tableParam = {
+            headers: {
+              "Authorization": "token " + this.accountService.returnUserToken(),
+            }
+    }
+
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteset", formData,tableParam)
+    res.subscribe( d => {
+      console.log("deleting set", d);
+    });
+    return res;
+  }
+
+  postDeleteActivity(activityID: string){
+    console.log("delete acitivity");
+    const formData = new FormData();
+    formData.append("id", activityID);
+    
+    let tableParam = {
+            headers: {
+              "Authorization": "token " + this.accountService.returnUserToken(),
+            }
+      }
+
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteactivity", formData,tableParam)
+    res.subscribe( d => {
+      console.log("deleting activity",d);
+    });
+    return res;
+  }
+
   postSetSet(activityId:string, set: set):Observable<any> {
     console.log("set set",activityId, set);
     const formData = new FormData();
  
     formData.append("activity_id", activityId);
     formData.append("set_num", set.set_num.toString());
-    formData.append("weight",set.set_num.toString());
-    formData.append("reps", set.set_num.toString());
-    formData.append("rpe", set.set_num.toString());
+    formData.append("weight",set.weight.toString());
+    formData.append("reps", set.reps.toString());
+    formData.append("rpe", set.rpe.toString());
 
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post status",data)
+    res.subscribe( data => {
+      console.log("set set",data)
     })
     return res;
   }
 
-  getAllSessionsObservable():Observable<any> {
+  getAllSessions():Observable<any> {
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
@@ -162,13 +192,10 @@ export class RequestSessionService {
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {
             headers: {
-              "Authorization": CHAD_TOKEN,
+              "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsession", formData,tableParam);
-    res.subscribe(data => {
-      console.log("json parsing in the request",data)
-    })
     return res;
 
   }

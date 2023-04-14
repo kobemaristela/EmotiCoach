@@ -1,48 +1,58 @@
+
+<ion-item-sliding>
+<ion-item class="slide">
 <ion-grid>
   <ion-row>
-    <ion-col>
-      <ion-item>
+    <ion-col size="%5">
+      <ion-item lines="none">
       {{setCount}}
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
-        <ion-icon size="small" name="repeat-outline"></ion-icon>
+      <ion-item lines="none">
+        <ion-icon size="medium" name="repeat-outline"></ion-icon>
         <ion-input 
-          [clearOnEdit]="true" 
+          [clearOnEdit]="false" 
           type="number"
+          min = "0"
           placeholder="Reps" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.reps"
+          inputmode="numeric"
         >
         </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
-        <ion-icon size="small" name="barbell-outline"></ion-icon>
+      <ion-item lines="none">
+        <ion-icon size="medium" name="barbell-outline"></ion-icon>
         <ion-input 
-          [clearOnEdit]="true" 
+          [clearOnEdit]="false" 
           type="number" 
+          min = 0
           placeholder="Lbs" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.weight"
-         >
+          inputmode="numeric">
         </ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
-      <ion-item>
-        <ion-icon size="small" name="walk-outline"></ion-icon>
+      <ion-item lines="none">
+        <ion-icon size="medium" name="walk-outline"></ion-icon>
         <ion-input 
-          [clearOnEdit]="true" 
+          [clearOnEdit]="false" 
           type="number"
+          min = 0
           placeholder="RPE" 
-          (ionChange)="setChanges()"
           [(ngModel)]="set.rpe"
+          inputmode="numeric"
           >
         </ion-input>
       </ion-item>
     </ion-col>
   </ion-row>
 </ion-grid>
+</ion-item>
+<ion-item-options>
+  <ion-item-option (click)="deleteSet()">Delete</ion-item-option>
+</ion-item-options>
+</ion-item-sliding>

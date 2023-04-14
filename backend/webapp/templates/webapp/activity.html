@@ -1,0 +1,131 @@
+{% extends "webapp/base.html" %}
+
+{% block title %}
+  EmotiCoach
+{% endblock %}
+
+{% block pageTitle %}
+Activity
+{% endblock %}
+
+
+{% block head %}
+{% load static %}
+<style>
+button.btn.date:hover {
+    border-bottom: 1px solid blue;
+    font-weight: bold;
+}
+i.fas:hover {
+    cursor: pointer;
+}
+</style>
+
+<link href="{% static 'webapp/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="col-xl-12 col-lg-12 col-md-12">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Activity Table</h6>
+        </div>
+        <!-- Title Row -->
+        <div class="card-body">
+            <div class="row border-bottom justify-content-between">
+                <div class="col-4">
+                    <div class="row">
+                        <button id="todayButton" type="button" class="btn btn-secondary btn-sm">Today</button>
+                        <div class="mx-3 mt-1">
+                            <i id="leftChevron" class="fas fa-chevron-left"></i>
+                        </div>
+                        <div class="mx-3 mt-1">
+                            <i id="rightChevron" class="fas fa-chevron-right"></i>
+                        </div>
+                        <div id="dateRangeDisplay" class="mt-1">
+                            Apr 1 - Apr 5
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="d-flex flex-row-reverse">
+                        <button id="weekButton" type="button" class="btn btn-outline-* date">4 Weeks</button>
+                        <button id="sevenDayButton" type="button" class="btn btn-outline-* date">7 Days</button>
+                        <button id="oneDayButton" type="button" class="btn btn-outline-* date">1 Day</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Total Sets</th>
+                                <th>Heaviest Weight</th>
+                                <th>Highest RPE</th>
+                                <th>Total Volume</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Total Sets</th>
+                                <th>Heaviest Weight</th>
+                                <th>Highest RPE</th>
+                                <th>Total Volume</th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="tableBody">
+                            <tr>
+                                <td>Apr 1</td>
+                                <td>Squat</td>
+                                <td>5</td>
+                                <td>385</td>
+                                <td>8</td>
+                                <td>3245</td>
+                            </tr>
+                            <tr>
+                                <td>Apr 1</td>
+                                <td>Bench</td>
+                                <td>3</td>
+                                <td>255</td>
+                                <td>7</td>
+                                <td>3125</td>
+                            </tr>
+                            <tr>
+                                <td>Apr 1</td>
+                                <td>Deadlift</td>
+                                <td>1</td>
+                                <td>495</td>
+                                <td>10</td>
+                                <td>495</td>
+                            </tr>
+                            <tr>
+                                <td>Apr 1</td>
+                                <td>Overhead Shoulder Press</td>
+                                <td>5</td>
+                                <td>135</td>
+                                <td>6</td>
+                                <td>2465</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <script src="{% static 'webapp/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'webapp/js/dataTables.bootstrap4.min.js' %}"></script> -->
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'webapp/js/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'webapp/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'webapp/js/datatable.js' %}"></script>
+{% endblock %}

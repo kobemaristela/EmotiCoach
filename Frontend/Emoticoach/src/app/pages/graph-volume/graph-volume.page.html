@@ -1,10 +1,89 @@
 <ion-content>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Volume Graph</ion-title>
   </ion-toolbar>
+
   <div class="chart-container">
-      <canvas  id="MyChart" >{{ chart }}</canvas>
+      <canvas id="MyChart" >{{ chart }}</canvas>
   </div>
+
+  <ion-grid style="border-bottom: 2px solid grey">
+    <ion-row>
+    <ion-buttons color="#1E1E1E" lines="none" class="date-selection">
+      <ion-col>
+        <ion-button (click)="displayPreviousWeek()">
+        <ion-icon slot="start" name="chevron-back-outline" size="large"></ion-icon>
+      </ion-button>
+      </ion-col>
+
+      <ion-col>
+
+        <ion-text text-align="center">{{previousWeekFormatted}} - {{rightsideWeekFormatted}}</ion-text>
+
+      </ion-col>
+
+      <ion-col>
+        <ion-button (click)="displayNextWeek()">
+        <ion-icon slot="end" name="chevron-forward-outline" size="large"></ion-icon>
+       </ion-button>
+      </ion-col>
+      </ion-buttons>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row>
+        <ion-item lines="none" color="#1E1E1E">
+          <ion-select 
+          interface="popover" 
+          placeholder="Select workout" 
+          [(ngModel)]="selectedWorkout"
+          (ionChange)="updateChart()">
+            <div *ngFor="let workout of workouts; let i = index">
+              <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
+            </div>
+          </ion-select>
+        </ion-item>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid>
+    <ion-row class="table-title-color">
+        <ion-col class="left-table-text">
+          <ion-text>This Week</ion-text>
+        </ion-col>
+
+        <ion-col class="right-table-text">
+          <ion-text>Total Weight</ion-text>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- add ngfor loop here to generate data -->
+  <ion-grid style="border-bottom: 2px solid grey">
+    <ion-row *ngFor="let row of workoutDates; let i = index">
+      <ion-buttons>
+        <ion-col class="left-table-text" size="auto">
+          <ion-text>{{workoutDates[i]}}</ion-text>
+        </ion-col>
+
+        <ion-col class="weight-text">
+          <ion-text>{{workoutData[i]}} lbs</ion-text>
+        </ion-col>
+
+        <ion-col class="right">
+          <ion-button>
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-buttons>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
 

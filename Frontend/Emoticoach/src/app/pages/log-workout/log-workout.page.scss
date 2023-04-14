@@ -10,21 +10,69 @@ ion-modal {
       }
     }
 }
-
+ion-note {
+  color: #ffffff !important;
+}
+ion-content{
+  --background: #323232 !important;
+}
+ion-item-divider {
+  background-color: #606060 !important;
+}
 ion-icon {
   font-size: 28px;
 }
+.big-icon {
+  height: 500px;
+  width: 500px;
+}
+ion-item {
+  --inner-padding-end: 2px;
+  --inner-padding-start: 2px;
+  --background: #606060;
+  --border-width: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --padding-sop: 0px;
+}
 
-ion-button.redbutton {
-    --color: #833535;
-    --border-radius: 0;
-    --border-color: #833535;
-    --border-style: solid;
-    --border-width: 1px;
+ion-footer {
+  background: #323232;
+}
+ion-button.addExcercise {
+    --color: #ffffff;
+    --border-radius: 10px;
+    --border-color: #ffffff;
+    margin-right: 2% !important;
+    margin-left: 2% !important;
     --padding-top: 10px;
     --padding-bottom: 10px;
+    height: 65px;
   }
 
 ion-button.save {
-  --color: #833535;
+  --color: #ffffff;
+  height: 30px;
+}
+
+ion-back-button {
+  --color: #ffffff;
+}
+
+ion-card {
+  width:100%;
+  margin: 0;
+  margin-top: 2%;
+  padding: 0 !important;
+  background-color: #606060 !important;
+  border-radius: 0px !important;
+}
+
+ion-list {
+  background-color: #323232 !important;
+}
+
+.label {
+  color: #ffffff;
 }

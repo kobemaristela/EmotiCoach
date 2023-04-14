@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
-import { HttpClient } from '@angular/common/http';
-import { AccountService } from 'src/app/services/user/account.service';
-import { map } from 'rxjs/operators';
-import { result } from 'cypress/types/lodash';
-import { table } from 'console';
-import { CHAD_TOKEN } from 'src/environments/environment';
+import { GraphService } from 'src/app/services/graph/graph.service';
 
 @Component({
   selector: 'app-graph-onerm',
@@ -13,59 +8,168 @@ import { CHAD_TOKEN } from 'src/environments/environment';
   styleUrls: ['./graph-onerm.page.scss'],
 })
 export class GraphOnermPage implements OnInit {
-  public chart: any; //hello
-  workoutDates: any = [];
+  public chart: any; 
+  workoutData: number[] = [];
+  workouts: any[] = [];
+  workoutDates: string[] = [];
+  selectedWorkout = "";
 
-  constructor(private _http: HttpClient) { }
+  previousWeek: Date;
+  xAxisDates: string[] = [];
+  yAxisData: number[] = [];
+  rightsideWeek: Date;
+  previousWeekFormatted: string;
 
-  loadData(){
-    this.getData()
+  rightsideWeekFormatted: string;
 
+  constructor(private graphService: GraphService) {
+    this.previousWeek = this.graphService.getPreviousWeek(this.graphService.getCurrentDate());
+    this.rightsideWeek = this.graphService.getCurrentDate();
+    this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
+    this.rightsideWeekFormatted = this.graphService.formatDate(this.graphService.getCurrentDate())
+   }
+
+   returnPast7Days(date: Date) {
+    return Array(7).fill(new Date(date)).map((el, idx) =>
+      new Date(el.setDate(el.getDate() - el.getDay() + idx)))
   }
 
-  getData() {
-    let tableParam = {
-      headers: {
-        "Authorization": CHAD_TOKEN,
+
+  last7Days(d: Date){
+    let result = [];
+    for(let i=0; i<7; i++){
+      let x = new Date(d)
+      x.setDate(x.getDate() - i)
+      result.push(x)
+    }
+    return result.reverse();
+  }
+
+
+    formatXaxis(dates: Date[]){
+    this.xAxisDates.length = 0
+    for(let i=0; i<dates.length; i++){
+      this.xAxisDates.push(this.graphService.formatDate(dates[i]));
+    }
+  }
+
+  populateYAxis(y_data: number[]){
+    this.yAxisData.length = 0;
+    for(let i=0; i<this.xAxisDates.length; i++){
+      if(this.getAfterSpace(this.workoutDates).includes(this.getAfterSlash(this.xAxisDates[i]))){
+        let index = this.getAfterSpace(this.workoutDates).indexOf(this.getAfterSlash(this.xAxisDates[i]))
+        this.yAxisData.push(y_data[index])
+        console.log(typeof y_data[index])
+      }
+      else{
+        this.yAxisData.push(0);
       }
     }
-    const formData = new FormData();
-    formData.append("start_date", "2023-03-07");
-    formData.append("length", "30");
-    formData.append("activity", "bench");
-
-    return this._http.post("https://emotidev.maristela.net/graph/getonermdata", formData, tableParam)
-    .subscribe(((result: any) => {
-
-      // initialize chart data
-      let workoutDates = result['X']
-      let onermData = result['y']
-      console.log(workoutDates[0])
-      console.log(result);
-
-      this.chart = new Chart("OneRMChart", {
-        type: 'bar', //this denotes tha type of chart
+    return this.yAxisData
+  }
   
-        data: {// values on X-Axis
-          labels: workoutDates,
-          datasets: [
-            {
-              label: "One Rep Max",
-              data: onermData,
-              backgroundColor: 'blue'
-            }
-          ]
-        },
-        options: {
-          aspectRatio: 2.5
-        }
-  
-      });
-      return result}));
+  getAfterSlash(input: string) {
+    return input.split('/')[1];
+ }
+
+  getAfterSpace(input: string[]) {
+    let result = []
+     for(let i=0; i<input.length; i++){
+      if(typeof input[i] !== 'undefined'){
+        result.push(input[i].split(' ')[1]);
+      }
+    }
+    return result
   }
 
+
+  getWorkoutNames(){
+    this.graphService.getActivityNames().subscribe(data => {
+      for(let i=0; i<data.activities.length; i++){
+        this.workouts.push(data.activities[i]);
+      }
+    })
+  }
+
+  displayPreviousWeek(){
+
+    this.formatXaxis(this.last7Days(this.previousWeek))
+
+    this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
+    this.previousWeekFormatted = this.xAxisDates[0];
+    this.rightsideWeekFormatted = this.xAxisDates[6];
+    this.updateChart();
+  }
+
+  displayNextWeek(){
+
+    this.formatXaxis(this.last7Days(this.graphService.getNextWeek(this.rightsideWeek)))
+
+    this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
+    this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
+    this.previousWeekFormatted = this.xAxisDates[0];
+    this.rightsideWeekFormatted = this.xAxisDates[6];
+    this.updateChart();
+  }
+
+  updateChart(){
+    this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( x_data => {
+
+
+      this.workoutDates = x_data.X;
+      this.chart.data.labels = this.xAxisDates;
+      this.chart.update();
+    });
+    this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( y_data => {
+
+      this.workoutData = y_data.y;
+      this.chart.data.datasets[0].data = this.populateYAxis(this.workoutData)
+      this.chart.update();
+    });
+  }
+
+
   ngOnInit() {
-    this.getData();
+    let xAxisInit = this.last7Days(this.graphService.currentDate);
+    this.xAxisDates.length = 0
+    for(let i=0; i<xAxisInit.length; i++){
+      this.xAxisDates.push(this.graphService.formatDate(xAxisInit[i]));
+    }
+    this.chart = new Chart("OneRMgraph", {
+      type: 'bar', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: this.xAxisDates, //workoutDates
+        datasets: [
+          {
+            label: "One Rep Max",
+            data: [], //volumeData here
+            backgroundColor: '#833535',
+            borderColor: '#6D6D6D'
+          }
+        ]
+      },
+      options: {
+        aspectRatio: 1,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              display: true,
+              autoSkip: false,
+            },
+          },
+        },
+      },
+    });
+
+    this.chart.options.animation = true;
+    this.getWorkoutNames();
   }
 
 }

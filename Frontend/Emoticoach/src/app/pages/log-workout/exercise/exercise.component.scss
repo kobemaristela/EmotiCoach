@@ -1,0 +1,47 @@
+ion-select {
+    font-size: 0px !important;
+    --padding-start: 0px;
+    --size:10px;
+}
+
+ion-select::part(icon) {
+    content: url('../../../../assets/icons/lifter-white.svg');
+    width: 20px;
+    --color: #ffffff;
+    --padding: 0px;
+}
+
+ion-button.Delete{
+    --color: #833535;
+    // width: 50px;
+}
+ion-list {
+    --background: #606060 !important;
+    background: #606060 !important;
+}
+
+ion-button.Add{
+    --color: #ffffff;
+}
+
+ion-card {
+    width:100%;
+    margin: 0 ;
+    margin-top: 2%;
+    background-color: #323232 !important;
+    --border-radius: 0px !important;
+
+}
+
+
+app-exercise-set {
+    display: inline-block;
+    height: 1px;
+}
+
+.background {
+    width:100%;
+    margin: 0 ;
+    margin-top: 2%;
+    background-color: #606060 !important;
+}

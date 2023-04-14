@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { LiveDataService } from './services/livedata/live-data.service';
 import { Chart } from 'chart.js';
+import { MuscleSvgComponent } from './pages/widgets/muscle-groups/muscle-svg/muscle-svg.component';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -32,10 +33,8 @@ export class AppComponent {
   ];
   loggedIn = false;
 
-  constructor(private liveDataService: LiveDataService) {
-    console.log("creating livedata service");
-    // this.liveDataService.connectToBroker();
-    // this.liveDataService.closeConnection();
+  constructor() {
+   
   }
 
   ngOnInit(){

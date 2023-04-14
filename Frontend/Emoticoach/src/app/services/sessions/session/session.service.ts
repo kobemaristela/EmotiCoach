@@ -4,11 +4,14 @@ import { Session } from './Session';
 import { activity } from '../activity/Iactivity';
 import { set } from '../sets/Iset';
 import { RequestSessionService } from './request-session.service';
-import { sessionRequest } from './IsessionRequest';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators'
+
+import { Observable, Subject, Subscription, first } from 'rxjs';
+import { debounceTime, tap,throttleTime, } from 'rxjs/operators'
 import { Activity } from '../activity/Activity';
 import { Set } from '../sets/Set';
+import { sessionRequest } from './IsessionRequest';
+import { data } from 'cypress/types/jquery';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,29 +21,30 @@ export class SessionService {
   private currentSession: session;
   private newSession: boolean = false;
   private date:Date;
-  private loading: boolean = true;
-  private saving: boolean = false;
+  private session$: Subject<sessionRequest[]>;
+  private currentSession$: Subject<session>;
+  private setsToDelete: set[] = [];
+  private activitiesToDelete: activity[] =[];
+
   constructor(private requestSessionService: RequestSessionService) { 
     this.date = new Date();
-    this.currentSession = new Session("0","workout " + this.getDayMonth(), 0);
+    this.currentSession = new Session("0","workout" + this.getDayMonth(), 0);
+    this.session$ = new Subject();
+    this.currentSession$ = new Subject();
+
   }
 
   //returns a list of all sessions and does an api call to get them
   getSessions(): Observable<any> {
-    return this.requestSessionService.getAllSessionsObservable();
+    this.requestSessionService.getAllSessions().pipe(throttleTime(1000)).subscribe( v => {
+      this.session$.next(v)
+    });
+    return this.session$;
   }
   
-  //returns the current session secleted
-  async getCurrentSession(): Promise<session> {
-    if(this.loading){
-     await this.delay(1000);
-    }
-    this.loading = true;
-    return this.currentSession;
-  }
-
-  delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
+  getCurrentSession(): Subject<session> {
+    this.currentSession$.next(this.currentSession);
+    return this.currentSession$;
   }
 
   //searches through all the sessions to find a session with a given id
@@ -48,7 +52,8 @@ export class SessionService {
   loadSession(sessionID: number) { 
     this.requestSessionService.postGetSessionObservable(sessionID).subscribe( (data) => {
       this.currentSession = data;
-      this.loading = false;
+      this.currentSession$.next( this.currentSession)
+      this.currentSession$.pipe(debounceTime(1000))
     })
   }
 
@@ -59,7 +64,6 @@ export class SessionService {
   //returns the activities of a given session
   getActivites(): activity[] {
     return this.currentSession.activities
-   
   }
 
   addActivity(): void {
@@ -86,7 +90,7 @@ export class SessionService {
   //saves session in the db when saved button is pressed
   //decieds if its a new save or an update to an existing entry
   saveSession() {
-    this.saving = true;
+    console.log("saviong", this.currentSession)
     if (this.newSession) {
       console.log("saving new");
       this.createNewSession(this.currentSession);
@@ -95,55 +99,124 @@ export class SessionService {
       console.log("saving existing");
       this.saveExistingSession(this.currentSession);
     }
+   
   }
 
   //does a post request to update the table 
   createNewSession(toSave:session) {
-    console.log("tosave",toSave)
-    this.requestSessionService.postCreateNewSessionObservable(toSave);
+    console.log("tosave", toSave);
+    this.requestSessionService.postCreateNewSessionObservable(toSave)
+    .subscribe(v => {
+      this.getSessions();
+      this.newSession = false;
+    });
+   
   }
 
   saveExistingSession(toSave:session) {
     console.log("Saving Session", toSave);
-    // this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration.toString(), toSave.datetime); 
+    if (!toSave.duration){
+      toSave.duration = 0
+    }
+    this.requestSessionService.postSaveExistingSession(toSave.id, toSave.name, toSave.duration, toSave.datetime); 
+    
     let saveActivities = toSave.activities;
+    
     for (var i = 0; i < saveActivities.length; i++) {
+      
       let currA = saveActivities[i];
       if (currA.id == "0"){
-        console.log("creating activity", currA.sets[i])
-        //set activity
-        // this.requestSessionService.post(currA.id,currA.sets[i]);
+        console.log("creating activity", currA)
+        this.requestSessionService.postSetAcitvity(toSave.id, currA.name, currA.muscleGroups, currA.sets);
       } else {
+        
         console.log("saving activity", currA)
-        this.requestSessionService.postSaveExistingActivity(currA.id,currA.name);
-        for (var i = 0; i < currA.sets.length; i++) {
-          if (currA.sets[i].id == 0){
-            console.log("creating set", currA.sets[i])
-            this.requestSessionService.postSetSet(currA.id,currA.sets[i]);
+        this.requestSessionService.postSaveExistingActivity(currA.id, currA.name, currA.muscleGroups);
+        
+        for (var x = 0; x < currA.sets.length; x++) {
+          
+          if (currA.sets[x].id == 0){
+
+            console.log("creating set", currA.sets[x])
+            this.requestSessionService.postSetSet(currA.id,currA.sets[x]);
+
           } else {  
-            console.log("saving set", currA.sets[i])
-            this.requestSessionService.postSaveExistingSet(currA.sets[i]);
+            console.log("saving set", currA.sets[x])
+            this.requestSessionService.postSaveExistingSet(currA.sets[x])
           }
-          }
+
+        }
       }
-    }
+      }
+      this.deleteExistings();
+  }
+
+  //Loop through both arrays of to delete and delete them after they click save
+  private deleteExistings(){
+    console.log("deleting existing")
+    console.log(this.activitiesToDelete);
+    console.log(this.setsToDelete);
+    for (var x = 0; x < this.setsToDelete.length; x++) {
+      console.log("deleting", this.setsToDelete[x])
+      this.requestSessionService.postDeleteSet(this.setsToDelete[x].id.toString());
+    };
+    for (var x = 0; x < this.activitiesToDelete.length; x++) {
+      console.log("deleting", this.activitiesToDelete[x])
+      this.requestSessionService.postDeleteActivity(this.activitiesToDelete[x].id);
+    };
+   
   }
 
   deleteSession(sessionId:number) {
     return this.requestSessionService.postDeleteSessionObservable(sessionId);
   }
 
+  deleteActivity(activityIndex: number){
+    if (this.newSession){
+      this.currentSession.activities.splice(activityIndex,1);
+      // this.currentSession$.next(this.currentSession);
+      return
+    }
+   
+    let dAct = this.currentSession.activities[activityIndex];
+    this.activitiesToDelete.push(dAct);
+    this.currentSession.activities.splice(activityIndex,1);
+    return
+  }
+
+  deleteSet(activityIndex: number, setIndex: number){
+    if (this.newSession){
+      this.currentSession.activities[activityIndex].sets.splice(setIndex,1);
+      // this.currentSession$.next(this.currentSession);
+      return
+    }
+   
+    let dSet = this.currentSession.activities[activityIndex].sets[setIndex]
+    this.setsToDelete.push(dSet);
+    this.currentSession.activities[activityIndex].sets.splice(setIndex,1);
+    return
+  }
+
+  clearDeletes() {
+    this.setsToDelete.length = 0;
+    this.activitiesToDelete.length =0;
+    console.log("clearing Deletes")
+  }
+
   //Creates a new blank session
   createBlankSession() {
     this.newSession = true;
-    console.log("creating new")
-    this.currentSession = new Session("")
-    this.currentSession.name = "workout " + this.getDayMonth();
+    this.currentSession = new Session("", "workout " + this.getDayMonth());
+    console.log("creating new", this.currentSession)
+  }
+
+  getMuscleGroups() {
+
   }
 
   //returns current day/month
   private getDayMonth(): string{
-    return (this.date.getMonth() + 1) + "/" + this.date.getDate()
+    return (this.date.getMonth() + 1) + "-" + this.date.getDate()
   }
 
 }

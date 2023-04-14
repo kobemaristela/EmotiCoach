@@ -1,6 +1,9 @@
 import { Component, OnInit,  ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { Observable } from 'rxjs';
+import { user } from 'src/app/services/user/Iuser';
 import { AccountService } from 'src/app/services/user/account.service';
+import { accountRequest } from 'src/app/services/user/IaccountRequest';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +19,8 @@ export class LoginPage implements OnInit {
     }
 
   user_token = '';
+  user: Observable<any>;
+  user$: Observable<user>;
   isLoggedIn = false;
   
   constructor(private accountService: AccountService, public navCtrl: NavController) { }
@@ -26,35 +31,12 @@ export class LoginPage implements OnInit {
     }
   }
 
-  getUserToken(){
-    return this.user_token;
-  }
-
   async toHomepage(){
-    await this.registerRequest();
-    if(this.isLoggedIn){
-      this.navCtrl.navigateForward('/tabs/home') //add once login is complete
-    }
-  }
-
-  async registerRequest(){
-    const formData = new FormData();
-    formData.append("username", this.userData.username);
-    formData.append("password", this.userData.password);
-
-    let tableParam = {
-      method: "POST",
-      body: formData
-  }
-  const res = await fetch("https://emotidev.maristela.net/user/login", tableParam);
-  let registerResponse = await res.json();
-  console.log(registerResponse);
-  console.log(this.isLoggedIn);
-
-  if(registerResponse["token"]){
-    this.isLoggedIn = true;
-    this.user_token = registerResponse["token"];
-    console.log(this.isLoggedIn);
-  }
+    this.user$ = this.accountService.login(this.userData.username, this.userData.password);
+    this.user$.subscribe((res)=> {
+      if(res){
+        this.navCtrl.navigateForward('/tabs/home')
+      }
+    })
   }
 }

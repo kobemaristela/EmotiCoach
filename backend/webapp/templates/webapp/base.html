@@ -1,0 +1,236 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}<!-- Title Goes Here -->{% endblock %}</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="{% static 'webapp/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="{% static 'webapp/css/sb-admin-2.min.css' %}" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{% static 'webapp/img/favicon.png' %}">
+
+    {% block head %}<!-- Title Goes Here -->{% endblock %}
+
+</head>
+
+<body id="page-top">
+    
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'home' %}">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3">EmotiCoach</div>
+            </a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Interface
+            </div>
+
+            <!-- Nav Item - Activities -->
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'activity' %}">
+                    <i class="fas fa-running"></i>
+                    <span>Activities</span></a>
+            </li>
+
+            <!-- Nav Item - Calories -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-fire"></i>
+                    <span>Calories</span></a>
+            </li>
+
+            <!-- Nav Item - Sleep -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-bed"></i>
+                    <span>Sleep</span></a>
+            </li>
+
+            <!-- Nav Item - Weight -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-weight"></i>
+                    <span>Weight</span></a>
+            </li>
+
+            <!-- Nav Item - Water -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-tint"></i>
+                    <span>Water</span></a>
+            </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
+                Visuals
+            </div>
+
+            <!-- Nav Item - Charts Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                    aria-expanded="true" aria-controls="collapseCharts">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Charts</span>
+                </a>
+                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Health Charts</h6>
+                        <a class="collapse-item" href="{% url 'activitychart' %}">Activities</a>
+                        <a class="collapse-item" href="register.html">Calories</a>
+                        <a class="collapse-item" href="forgot-password.html">Sleep</a>
+                        <a class="collapse-item" href="forgot-password.html">Weight</a>
+                        <a class="collapse-item" href="forgot-password.html">Water</a>
+                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Live Charts</h6>
+                        <a class="collapse-item" href="404.html">Heart Rate</a>
+                        <a class="collapse-item" href="blank.html">EDA</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables"
+                    aria-expanded="true" aria-controls="collapseTables">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span>
+                </a>
+                <div id="collapseTables" class="collapse" aria-labelledby="headingTables" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Health Tables</h6>
+                        <a class="collapse-item" href="login.html">Activities</a>
+                        <a class="collapse-item" href="register.html">Calories</a>
+                        <a class="collapse-item" href="forgot-password.html">Sleep</a>
+                        <a class="collapse-item" href="forgot-password.html">Weight</a>
+                        <a class="collapse-item" href="forgot-password.html">Water</a>
+                    </div>
+                </div>
+            </li> -->
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+            <!-- Sidebar Message -->
+            <!-- <div class="sidebar-card d-none d-lg-flex">
+                <img class="sidebar-card-illustration mb-2" src="{% static 'webapp/img/mindfulness.svg' %}" alt="...">
+                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
+                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
+            </div> -->
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+                        <i class="fa fa-bars"></i>
+                    </button>
+
+                    <ul class="navbar-nav ml-auto">
+                        <!-- Nav Item - User Information -->
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ first_name }} {{ last_name }}</span>
+                                <img class="img-profile rounded-circle"
+                                    src="{% static 'webapp/img/undraw_profile.svg' %}">
+                            </a>
+                            <!-- Dropdown - User Information -->
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{% url 'profile' %}">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Profile
+                                </a>
+                                <a class="dropdown-item" href="{% url 'account' %}">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Account
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a id="logout" class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+
+                </nav>
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">{% block pageTitle %}<!-- Title of Page -->{% endblock %}</h1>
+                    </div>
+                    {% block content %}<!-- Content Goes Here -->{% endblock %}
+                </div>
+
+            </div>
+        </div>
+
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'webapp/js/jquery.min.js' %}"></script>
+    <script src="{% static 'webapp/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'webapp/js/jquery.easing.min.js' %}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'webapp/js/sb-admin-2.min.js' %}"></script>
+
+    <!-- Custom script for base -->
+    <script src="{% static 'webapp/js/base.js' %}"></script>
+
+    {% block scripts %}<!-- Content Goes Here -->{% endblock %}
+
+</body>
+
+</html>

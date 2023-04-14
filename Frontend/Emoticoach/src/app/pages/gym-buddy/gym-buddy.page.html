@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Gym Buddy</ion-title>
+  </ion-toolbar>
+
+
+  <ion-toolbar>
+
+    <ion-title>
+      <ion-segment [(ngModel)]="currentPage">
+        <ion-segment-button value="feed">
+          <ion-label>Feed</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="friends">
+          <ion-label>Friends</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-title>
+
+    <ion-button (click)="openModal()" slot="end" fill="clear">
+      <ion-icon *ngIf="currentPage == 'feed'" size="small" slot="icon-only" name="settings-sharp"></ion-icon>
+      <ion-icon *ngIf="currentPage == 'friends'" size="small" name="add-circle-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-label *ngIf="currentPage == 'feed'">
+    <app-feed></app-feed>
+  </ion-label>
+  <ion-label *ngIf="currentPage == 'friends'">
+    <app-friends-list></app-friends-list>
+  </ion-label>
+</ion-content>
+
+<ion-footer *ngIf="currentPage == 'feed'">
+  <ion-toolbar color="light">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="2">
+
+        </ion-col>
+        <ion-col size="8">
+          <ion-row>
+            <ion-label>Tell Others Your Working Out!</ion-label>
+          </ion-row>
+          <ion-row>
+          </ion-row>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button (click)="modelSendMsg()" expand="block" fill="clear">
+            <ion-icon name="send" slot="icon-only"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+
+
+</ion-footer>

@@ -1,0 +1,33 @@
+<ion-content>
+  <ion-toolbar>
+    <ion-title>Live Data Graph</ion-title>
+  </ion-toolbar>
+
+  <div class="chart-container">
+      <canvas id="LiveDataChart"> {{ chart }} </canvas>
+  </div>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="openConnection()">Start</ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-button (click)="closeConnection()">Stop</ion-button>
+      </ion-col>
+      
+    </ion-row>
+    <ion-row>
+      <ion-col size="auto">
+        <ion-select interface="action-sheet" placeholder="Select Stream" [(ngModel)]="currentConnection">
+          <div *ngFor="let connection of connections;">
+            <ion-select-option  [value]="connection"> {{connection}}</ion-select-option>
+          </div>
+        </ion-select>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
+</ion-content>
+

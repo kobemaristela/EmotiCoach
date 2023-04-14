@@ -4,12 +4,13 @@ from django.core import serializers
 
 from .models import Session, Activity, MuscleGroup, Set
 from .controller import *
-from datetime import datetime
-from django.utils.timezone import make_aware
+from datetime import datetime, timedelta
+from django.utils.timezone import make_aware, now
+from django.db.models import Max, Sum
 import json
 
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import TokenAuthentication, SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from rest_framework.exceptions import ParseError
@@ -101,10 +102,10 @@ class SetSession(APIView):
                 
 
             for sets in setsObject:
-                activitySetNum = checkIfInt(sets["set_num"])
-                activityWeight = checkIfInt(sets["weight"])
-                activityReps = checkIfInt(sets["reps"])
-                activityRpe = checkIfInt(sets["rpe"])
+                activitySetNum = sets["set_num"]
+                activityWeight = sets["weight"]
+                activityReps = sets["reps"]
+                activityRpe = sets["rpe"]
                 activityId = activity.id
 
                 set = Set.objects.create(set_num=activitySetNum,
@@ -268,7 +269,7 @@ class DeleteActivity(APIView):
         id = request.POST["id"]
 
         if Activity.objects.filter(id=id):
-            activities = Activity.objects.filter(session_id=id)
+            activities = Activity.objects.filter(id=id)
             sets = Set.objects.filter(activity_id__in = activities.values("id")).delete()
             activities.delete()
 
@@ -330,4 +331,80 @@ class DeleteSet(APIView):
             return JsonResponse({"status": "success"})
         else:
             raise ParseError()
+        
+class GetMuscleGroups(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        muscle = [f.name for f in MuscleGroup._meta.get_fields()]
+        muscle.remove("activity")
+        muscle.remove("id")
+
+        return JsonResponse({"groups":muscle})
+
+class GetActivityNames(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        token = request.user.auth_token
+        user_id = Token.objects.get(key=token).user_id
+        session_id = Session.objects.filter(auth_user_id=user_id).values("id")
+        activities = Activity.objects.filter(session_id__in=session_id).values("name")
+        activities = [x["name"] for x in activities]
+        activities = [*set(activities)]
+        
+        response = {"activities":activities}
+
+        return JsonResponse(response)
+    
+class GetActivityTable(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        range = int(request.POST["range"])
+        interval = int(request.POST["interval"])
+        interval = interval * range
+
+        currentDatetime = now() - timedelta(days=interval)
+        currentDate = currentDatetime.date()
+
+        sessions = Session.objects.filter(auth_user_id=request.user.id).values("id", "datetime")
+
+        if range == 1:
+            dateRangeStr = currentDate.strftime("%b %d")
+            sessions = sessions.filter(datetime__date=currentDate)
+        elif range == 7:
+            dateRangeStr = (currentDate-timedelta(7)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
+            sessions = sessions.filter(datetime__date__gte=currentDate-timedelta(7))
+            sessions = sessions.filter(datetime__date__lte=currentDate)
+        elif range == 28:
+            dateRangeStr = (currentDate-timedelta(28)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
+            sessions = sessions.filter(datetime__date__gte=currentDate-timedelta(28))
+            sessions = sessions.filter(datetime__date__lte=currentDate)
+
+        response = list()
+
+        for session in sessions:
+            activities = Activity.objects.filter(session_id=session["id"]).values("id", "name")
+
+            for activity in activities:
+                row = dict()
+                row["date"] = session["datetime"].strftime("%b %d")
+                row["activity"] = activity["name"]
+                
+                sets = Set.objects.filter(activity_id=activity["id"]).values("weight", "reps", "rpe")
+                row["total_sets"] = len(sets)
+                row["heaviest_weight"] = sets.aggregate(Max('weight'))['weight__max']
+                row["highest_rpe"] = sets.aggregate(Max('rpe'))['rpe__max']
+                if sets.aggregate(Sum('weight'))['weight__sum'] != None and sets.aggregate(Sum('reps'))['reps__sum'] != None:
+                    row["total_volume"] = sets.aggregate(Sum('weight'))['weight__sum'] * sets.aggregate(Sum('reps'))['reps__sum']
+                else:
+                    row["total_volume"] = None
+
+                response.append(row)
+
+        return JsonResponse({"table":response, "daterange": dateRangeStr})
 

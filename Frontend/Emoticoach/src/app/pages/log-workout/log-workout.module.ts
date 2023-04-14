@@ -8,6 +8,9 @@ import { LogWorkoutPageRoutingModule } from './log-workout-routing.module';
 import { LogWorkoutPage } from './log-workout.page';
 import { ExerciseComponent } from './exercise/exercise.component';
 import { ExerciseSetComponent } from './exercise/exercise-set/exercise-set.component';
+import { ComponentsModule } from 'src/app/components.module';
+
+
 
 @NgModule({
   imports: [
@@ -15,7 +18,7 @@ import { ExerciseSetComponent } from './exercise/exercise-set/exercise-set.compo
     FormsModule,
     IonicModule,
     LogWorkoutPageRoutingModule,
-
+    ComponentsModule
   ],
   declarations: [
       LogWorkoutPage,

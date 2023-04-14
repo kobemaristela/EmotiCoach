@@ -1,39 +1,34 @@
-ion-icon{
+ion-icon {
     color: #fff;
 }
 
-ion-content{
-    --background : #000000;
-    ion-col{
-        text-align:center;
-        ion-icon{
-            zoom:2.8;
-            padding:3px;
-            &:first-child{
-                zoom:3.8;
-                padding:3px;
-            }
+ion-content {
+    --background: #323232;
+
+    ion-col {
+        text-align: center;
+        h2,h1 {
+            margin-top: 0;
         }
-        h2,h1{
-            margin-top:0;
-        }
-        ion-card{
-            background: #833535;
+
+        ion-card {
+            background: #833535 !important;
             box-shadow: 0 !important;
-            text-align: center;
             margin-bottom: 0px !important;
+            border: 1px solid #ffffff !important;
+            padding: 5px;
         }
-        ion-item{
-            text-align: center;
-        }
+
     }
+
     ion-row.banners {
         position: relative;
         padding: 10px;
-        height: 190px;
+        height: 100px;
         background: #833535;
         border-radius: 2.5rem;
         margin: 6vh 1rem 0 1rem;
+
         swiper {
             div {
                 ion-label {
@@ -59,4 +54,57 @@ ion-content{
         z-index: 0;
         border: 2px solid transparent;
     }
+}
+
+ion-label {
+    text-align: center;
+    background-color: #833535 !important;
+}
+
+ion-list {
+    --background: #833535 !important;
+    background: #833535 !important;
+}
+
+ion-item {
+
+    --background: #833535 !important;
+}
+
+ion-card-content {
+    --background: #833535 !important;
+    border-width: 0px;
+    padding: 0px !important;
+    height: 50px !important;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.myCard {
+    position: relative;
+    background-color: #323232;
+    box-shadow:none !important;
+    width: 90%;
+}
+
+.myOverlay {
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    bottom: 0px;
+    opacity: 1;
+    color: #ffffff;
+    text-align: center;
+}
+
+.card-title{
+    font-size: x-large;
+    color: #ffffff !important;
+}
+
+.card-subtitle{
+    font-size: large;
 }

@@ -1,9 +1,40 @@
-<ion-header>
   <ion-toolbar>
-    <ion-title>templates</ion-title>
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Templates</ion-title>
   </ion-toolbar>
-</ion-header>
 
-<ion-content>
+<ion-content>  
+
+    <ion-item-divider class="ion-text-center" sticky>
+        <ion-title>Add Template</ion-title>
+        <ion-button fill="clear" slot="end" (click)="addTemplate()">
+        <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+        </ion-button>
+    </ion-item-divider>
+
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-card *ngFor="let card of templates; let i = index" button="true" color="dark">
+            <ion-card-header>
+              <ion-card-title style="color: #fff">template name</ion-card-title>
+            </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+              <ion-label color="light">
+                <h3 style="font-size:16px" style="color: #fff">workout list</h3>
+              </ion-label>
+              </ion-item>
+          </ion-list>
+          </ion-card-content>
+            </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
 </ion-content>

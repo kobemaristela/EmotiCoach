@@ -20,6 +20,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
       {
+        path: 'social',
+        loadChildren: () => import('../pages/gym-buddy/gym-buddy.module').then( m => m.GymBuddyPageModule)
+      },
+      {
         path: 'graph-onerm',
         loadChildren: () => import('../pages/graph-onerm/graph-onerm.module').then(m => m.GraphOnermPageModule)
       },
@@ -30,6 +34,18 @@ const routes: Routes = [
       {
         path: 'graph-musclegroup',
         loadChildren: () => import('../pages/graph-musclegroup/graph-musclegroup.module').then(m => m.GraphMusclegroupPageModule)
+      },
+      {
+        path: 'graph-livedata',
+        loadChildren: () => import('../pages/graph-livedata/graph-livedata.module').then(m => m.GraphLivedataPageModule)
+      },
+      {
+        path: 'account',
+        loadChildren: () => import('../pages/account/account.module').then( m => m.AccountPageModule)
+      },
+      {
+        path: 'templates',
+        loadChildren: () => import('../pages/templates/templates.module').then( m => m.TemplatesPageModule)
       },
       {
         path: '',

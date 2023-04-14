@@ -19,15 +19,17 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   homepageCards: string[] = [
     // 'Rate of perceived effort', 
-    // 'Templates', 
+    'Templates', 
     'Volume Data',
     'One Rep Max',
-    'Muscle Group Data'
+    'Muscle Group Data',
+    'Live Data Graph'
   ];
 
   icons: string[] = [
     // 'walk-outline',
-    // 'folder-open-outline',
+    'folder-open-outline',
+    'folder-outline',
     'analytics-outline',
     'analytics-outline',
     'analytics-outline'
@@ -35,26 +37,29 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   upperText: string[] = [
     // 'Rate of perceived effort', 
-    // 'Templates', 
+    'Templates', 
     'Volume Data',
     'One Rep Max',
-    'Muscle Group Data'
+    'Muscle Group Data',
+    'Live Data Graph'
   ];
 
   lowerText: string[] = [
     // 'View your progress',
-    // 'Create a workout template',
+    'Create a workout template',
     'View volume data from your workouts',
     'View your one rep max data from your workouts',
-    'View your muscle group data from workouts'
+    'View your muscle group data from workouts',
+    'View live data from your Emotibit'
   ];
 
   routing: string[] = [
     // '/graph-rpe',
-    // '/templates',
+    '/tabs/templates',
     '/tabs/graph-volume',
     '/tabs/graph-onerm',
     '/tabs/graph-musclegroup',
+    '/tabs/graph-livedata'
   ];
 
     constructor(public navCtrl: NavController) {

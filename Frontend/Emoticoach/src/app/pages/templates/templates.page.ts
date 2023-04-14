@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-templates',
@@ -6,8 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./templates.page.scss'],
 })
 export class TemplatesPage implements OnInit {
+  templates:string[] = ["template 1"];
+  templatesTitle:string[] = [];
 
-  constructor() { }
+  constructor(private navCtrl: NavController) { }
+
+  addTemplate(){
+    this.navCtrl.navigateForward('/template-creator');
+  }
 
   ngOnInit() {
   }

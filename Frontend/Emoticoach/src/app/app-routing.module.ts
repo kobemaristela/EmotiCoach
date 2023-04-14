@@ -61,7 +61,19 @@ const routes: Routes = [
   {
     path: 'graph-rpe',
     loadChildren: () => import('./pages/graph-rpe/graph-rpe.module').then( m => m.GraphRpePageModule)
-  }
+  },
+  {
+    path: 'graph-livedata',
+    loadChildren: () => import('./pages/graph-livedata/graph-livedata.module').then( m => m.GraphLivedataPageModule)
+  },
+  {
+    path: 'gym-buddy',
+    loadChildren: () => import('./pages/gym-buddy/gym-buddy.module').then( m => m.GymBuddyPageModule)
+  },
+  {
+    path: 'template-creator',
+    loadChildren: () => import('./pages/template-creator/template-creator.module').then( m => m.TemplateCreatorPageModule)
+  },
 
 ];
 
