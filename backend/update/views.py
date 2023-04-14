@@ -14,7 +14,7 @@ class Update(APIView):
 
         payload = json.loads(request.body)
         if payload.get('ref') != 'refs/heads/main':
-            return Response('Invalid request', status=status.HTTP_400_BAD_REQUEST)
+            return Response('Main branch was not updated', status=status.HTTP_200_OK)
             
-        subprocess.Popen(['./update/scripts/update_server.sh'])  # Spawn child process of update_server.sh
+        subprocess.run(['./update/scripts/update_server.sh'])  # Spawn child process of update_server.sh
         return Response('Starting Update', status=status.HTTP_200_OK)

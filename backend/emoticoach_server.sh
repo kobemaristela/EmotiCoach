@@ -53,7 +53,7 @@ if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
     fi
     
     # Deploy dev container
-    docker compose --env-file .env.dev -f ./deployment/docker/docker-compose.dev.yml up -d --build
+    docker compose -f ./deployment/docker/docker-compose.dev.yml up -d --build
 
     # Deploy Flask Service
     nohup python ./development/scripts/update_container.py $(readlink -f .env.template) $(readlink -f ./deployment/docker-compose.dev.yml)> /dev/null 2>&1 &
@@ -75,7 +75,7 @@ if ([ "$DOCKER" == "1" ] || [ "$DOCKER" == "true" ]) && \
     fi
 
     # Deploy prod container
-    docker compose --env-file .env.prod -f ./deployment/docker/docker-compose.prod.yml up -d --build
+    docker compose -f ./deployment/docker/docker-compose.prod.yml up -d --build
 
 fi
 
