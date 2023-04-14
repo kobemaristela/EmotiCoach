@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     "webapp",
 ]
 
+CSRF_TRUSTED_ORIGINS = ["https://emotidev.maristela.net"]
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
