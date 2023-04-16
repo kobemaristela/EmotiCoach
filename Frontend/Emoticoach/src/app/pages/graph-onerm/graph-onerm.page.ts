@@ -55,7 +55,6 @@ export class GraphOnermPage implements OnInit {
       if(this.getAfterSpace(this.workoutDates).includes(this.getAfterSlash(this.xAxisDates[i]))){
         let index = this.getAfterSpace(this.workoutDates).indexOf(this.getAfterSlash(this.xAxisDates[i]))
         this.yAxisData.push(y_data[index])
-        console.log(typeof y_data[index])
       }
       else{
         this.yAxisData.push(0);
