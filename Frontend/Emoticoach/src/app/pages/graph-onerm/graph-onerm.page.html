@@ -37,14 +37,13 @@
   <ion-grid>
     <ion-row>
         <ion-item lines="none" color="dark">
-          <ion-select 
+          <ion-select
           interface="popover" 
           placeholder="Select workout" 
           [(ngModel)]="selectedWorkout"
-          (ionChange)="updateChart()">
-            <div *ngFor="let workout of workouts; let i = index">
-              <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
-            </div>
+          (ionChange)="updateChart()"
+          >
+              <ion-select-option *ngFor="let workout of workouts; let i = index" [value]="workout">{{workouts[i]}}</ion-select-option> 
           </ion-select>
         </ion-item>
     </ion-row>
@@ -69,7 +68,7 @@
         </ion-col>
 
         <ion-col class="weight-text">
-          <ion-text>{{workoutData[i]}} lbs</ion-text>
+          <ion-text color="success">{{workoutData[i] | number: '1.0-1' }} lbs</ion-text>
         </ion-col>
 
         <ion-col class="right">
