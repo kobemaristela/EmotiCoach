@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { LiveDataService } from 'src/app/services/livedata/live-data.service';
 import Chart from 'chart.js/auto'
 import { IMqttMessage } from 'ngx-mqtt';
+import { DataGeneratorService } from 'src/app/services/data-generator/data-generator.service';
 
 @Component({
   selector: 'app-graph-livedata',
@@ -14,7 +15,7 @@ export class GraphLivedataPage implements OnInit {
   connectionOpen = false;
   connections = ['emoticoach/ppg/infrared', 'emoticoach/eda/activity']
   currentConnection = 'emoticoach/eda/activity'
-  constructor(private liveDataService: LiveDataService) {
+  constructor(private liveDataService: LiveDataService, private dataGenerator: DataGeneratorService) {
 
   }
   //LiveDataChart
@@ -84,6 +85,10 @@ export class GraphLivedataPage implements OnInit {
       this.chart.update('none');
     }
 
+  }
+
+  generateworkouts() {
+    this.dataGenerator.runScript()
   }
 
 }
