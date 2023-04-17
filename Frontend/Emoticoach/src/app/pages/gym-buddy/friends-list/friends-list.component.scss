@@ -1,9 +1,6 @@
-ion-list {
-    background: #323232;
-    color: #323232;
-  }
+
 ion-item {
-    --background: #323232 !important;
+    --background: var(--ion-color-dark);
 }
 ion-row {
     text-align: center;
@@ -15,4 +12,10 @@ ion-button {
     --background-activated: #a8a8a8;
   }
 
+ion-searchbar {
+  background-color: var(--ion-color-dark);
+}
 
+h3, p {
+  color: var(--ion-color-primary);
+}

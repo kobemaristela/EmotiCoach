@@ -28,7 +28,7 @@ export class SessionService {
 
   constructor(private requestSessionService: RequestSessionService) { 
     this.date = new Date();
-    this.currentSession = new Session("0","workout" + this.getDayMonth(), 0);
+    this.currentSession = new Session("0","Workout " + this.getDayMonth(), 0);
     this.session$ = new Subject();
     this.currentSession$ = new Subject();
 
@@ -168,7 +168,7 @@ export class SessionService {
   }
 
   deleteSession(sessionId:number) {
-    return this.requestSessionService.postDeleteSessionObservable(sessionId);
+    return this.requestSessionService.postDeleteSession(sessionId);
   }
 
   deleteActivity(activityIndex: number){
@@ -206,7 +206,7 @@ export class SessionService {
   //Creates a new blank session
   createBlankSession() {
     this.newSession = true;
-    this.currentSession = new Session("", "workout " + this.getDayMonth());
+    this.currentSession = new Session("", "Workout " + this.getDayMonth());
     console.log("creating new", this.currentSession)
   }
 

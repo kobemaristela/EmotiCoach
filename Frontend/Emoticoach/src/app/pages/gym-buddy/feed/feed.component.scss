@@ -1,6 +1,6 @@
 $back-color: #323232;
-$my-msg-color: #ab6868;
-$other-msg-color: #464646;
+$my-msg-color: var(--ion-color-primary);
+$other-msg-color: var(--ion-color-medium);
 
 
 ion-grid {

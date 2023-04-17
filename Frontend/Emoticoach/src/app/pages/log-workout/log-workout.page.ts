@@ -6,7 +6,7 @@ import { Activity } from 'src/app/services/sessions/activity/Activity';
 import { MUSCLE_LIST } from 'src/environments/environment';
 import { Observable, Subject, Subscription, debounceTime, map, throttleTime } from 'rxjs';
 import { AlertController } from '@ionic/angular';
-import { muscleOptions } from '../widgets/muscle-groups/muscle-svg/IOpacity-muscle';
+import { muscleOpacity, muscleOptions } from '../widgets/muscle-groups/muscle-svg/IOpacity-muscle';
 
 @Component({
   selector: 'app-log-workout',
@@ -18,15 +18,32 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
   currentSession$: Subject<session>;
   muscleList = MUSCLE_LIST;
   subscriber: Subscription;
-  muscleGroups: muscleOptions[] = [];
+
+  opacity: muscleOpacity;
+
 
   constructor(private servSession: SessionService, private alertController: AlertController) {
     this.currentSession = new Session("");  
+
   }
 
   ngOnInit(): void {
+    this.opacity = {
+      chest: 0,
+      tricep: 0,
+      bicep: 0,
+      shoulder: 0,
+      upper_back: 0,
+      lower_back: 0,
+      quadricep: 0,
+      glute: 0,
+      calve: 0,
+      abdominal: 0,
+      hamstring: 0 
+    } 
     this.loadSession(); 
     this.servSession.clearDeletes();
+    
   }
 
   ngOnDestroy(): void {
@@ -47,19 +64,32 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
       console.log("loading session", data);
       this.currentSession = data;
       this.currentSession.duration = this.currentSession.duration == 0 ? undefined :  this.currentSession.duration;
+
+      console.log(this.currentSession)
       this.loadMuscleGroups();
     })
   }
 
   loadMuscleGroups(){
+    this.opacity = {
+      chest: 0,
+      tricep: 0,
+      bicep: 0,
+      shoulder: 0,
+      upper_back: 0,
+      lower_back: 0,
+      quadricep: 0,
+      glute: 0,
+      calve: 0,
+      abdominal: 0,
+      hamstring: 0 
+    }; 
+
     for(let i = 0; i < this.currentSession.activities.length; i++){
       this.currentSession.activities[i].muscleGroups.forEach(muscle => {
-        if (!this.muscleGroups.includes(muscle)) {
-          console.log("adding", muscle)
-          this.muscleGroups.push(muscle);
-        }
-      }); 
-    }
+       this.opacity[muscle] = 1;
+    })};
+   
   }
 
   saveSession(){
@@ -103,12 +133,14 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
       console.log("saving in logworkout", this.currentSession);
       this.servSession.saveSession(); 
       this.servSession.getSessions();
+      this.presentAlert("Save Succesfull","","");
       
     } else {
       this.presentAlert("Empty Field","","Please fill out all fields before saving.");
     }
 
   }
+  
 
   async presentAlert(header:string, subheader:string, message:string) {
     const alert = await this.alertController.create({
@@ -124,10 +156,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
   goBack(){
     
   }
-  muscleSelected(event: any) {
-    this.muscleGroups = event;
-    console.log("log workout",event)
-  }
+
   
   
   

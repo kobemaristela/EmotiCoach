@@ -1,22 +1,24 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button (click)="goBack()"></ion-back-button>
     </ion-buttons>
     <ion-title>Add Workout</ion-title>
-    <ion-button slot="end" class="save" fill="outline" (click)="saveSession()">Save</ion-button>
+    <ion-button color="success" slot="end" class="save" fill="outline" (click)="saveSession()" id="present-alert">Save</ion-button>
+   
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content>
-  <ion-list lines="none">
-    <ion-item-divider sticky>
-      <ion-input [clearOnEdit]="true" [(ngModel)]="currentSession.name">
+  
+  <ion-list  lines="none">
+    <ion-item-divider color="light" sticky>
+      <ion-input color="success" [clearOnEdit]="true" [(ngModel)]="currentSession.name">
       </ion-input>
-      <ion-icon slot="end" id="open-modal" name="calendar-outline">
+      <ion-icon color="success" slot="end" id="open-modal" name="calendar-outline">
       </ion-icon>
-      <ion-note slot="end">
+      <ion-note color="success" slot="end">
         {{currentSession.datetime | date:'short' }}
       </ion-note>
     </ion-item-divider>
@@ -33,13 +35,13 @@
           <ion-row>
             <ion-col size="6">
               <ion-row class="cardHeader">
-                <div class="cardHeader label">Duration</div>
+                <div class="cardHeader label" >Duration</div>
               </ion-row>
               <ion-row>
                 <ion-item>
-                  <ion-icon size="small" name="timer-outline"></ion-icon>
-                  <ion-input #duration [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number"
-                    placeholder="Mins"  inputmode="numeric"></ion-input>
+                  <ion-icon color="success" size="small" name="timer-outline"></ion-icon>
+                  <ion-input color="success" #duration [(ngModel)]="currentSession.duration" [clearOnEdit]="true" type="number"
+                    placeholder="Mins" inputmode="numeric"></ion-input>
                 </ion-item>
               </ion-row>
             </ion-col>
@@ -47,8 +49,10 @@
               <ion-row class="cardHeader">
                 <div class="cardHeader label">Muscle Groups</div>
               </ion-row>
-              <app-muscle-svg (muscleSelected)="muscleSelected($event)" [canSelect]="false" [muscles]="muscleGroups" ></app-muscle-svg>
-             
+
+              <app-muscle-svg [opacity]="opacity" [muscles]="currentSession.muscleGroups" [canSelect]="false"
+                [canOpen]="false"></app-muscle-svg>
+
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -61,12 +65,11 @@
 
   </ion-list>
 
-  <!-- using the svg angular combo here -->
-  <app-muscle-svg [canOpen]="false" [muscles]="['chest']" (newMuscleList)="muscleSelected($event)" ></app-muscle-svg>
+
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
+  <ion-button expand="block" color="primary" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
     Excercise
   </ion-button>
 </ion-footer>

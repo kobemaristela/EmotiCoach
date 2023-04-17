@@ -2,6 +2,8 @@ import { Component, EventEmitter, Input, NgModule, OnInit, Output } from '@angul
 import { muscleOpacity, muscleOptions } from './IOpacity-muscle';
 import { ModalController } from '@ionic/angular';
 import { ModalMuscleComponent } from '../modal-muscle/modal-muscle.component';
+import { ThemeService } from 'src/app/services/theme/theme.service';
+import { SessionService } from 'src/app/services/sessions/session/session.service';
 
 
 
@@ -18,7 +20,7 @@ export class MuscleSvgComponent implements OnInit {
   fillColor = '#AB6868'
 
 
-  opacity: muscleOpacity = {
+  @Input() opacity: muscleOpacity = {
     chest: 0,
     tricep: 0,
     bicep: 0,
@@ -32,15 +34,19 @@ export class MuscleSvgComponent implements OnInit {
     hamstring: 0
   }
 
-  constructor(private modalCtrl: ModalController) {
+  constructor(private modalCtrl: ModalController, private theme: ThemeService, private sessionService: SessionService) {
+
 
   }
 
   ngOnInit() {
+    
+    
     for (let i = 0; i < this.muscles.length; i++) {
       let muscleO = this.muscles[i];
       this.opacity[muscleO] = 1;
     }
+
   }
 
   async openModal() {
