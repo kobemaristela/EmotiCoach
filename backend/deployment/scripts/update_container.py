@@ -7,14 +7,10 @@ from flask import Flask, request, abort
 from dotenv import load_dotenv
 
 # Setup Paths
-env_path = sys.argv[1]
-docker_dev_path = sys.argv[2]
-
-# Development - loads environmental variables
-load_dotenv(env_path)
+docker_dev_path = sys.argv[1]
 
 # Set the webhook secret
-webhook_secret = os.getenv('SECRET_KEY')
+webhook_secret = os.getenv('WEBHOOK_SECRET')
 
 # Create Flask app
 app = Flask(__name__)
@@ -35,12 +31,14 @@ def update_container():
         abort(400)
 
     # Check event from main
-    if request.headers.get('X-GitHub-Event') == 'push' and request.json['ref'] == 'refs/heads/main':
+    if request.headers.get('X-GitHub-Event') == 'push' and \
+            request.json['ref'] == 'refs/heads/main':
+
         # Rebuild containers
         subprocess.run(['docker-compose', '-f', docker_dev_path, 'stop'],
                        check=True)
-        subprocess.run(['docker-compose', '--env-file', env_path, '-f',
-                        docker_dev_path, 'up', '--build', '-d'], check=True)
+        subprocess.run(['docker-compose', '-f', docker_dev_path, 'up',
+                       '--build', '-d'], check=True)
 
         return 'OK'
 
