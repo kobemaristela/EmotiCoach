@@ -1,26 +1,87 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Workouts Dashboard</ion-title>
+<ion-header color="primary">
+  <ion-toolbar color="primary">
+    <ion-title >Workouts Dashboard</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
 
-  <ion-list lines="none">
-    <ion-item-divider class="ion-text-center" sticky>
-      
-        <ion-title>Add Workout</ion-title>
- 
-     
+  <ion-list >
+    <ion-item-divider color="primary" class="top-header ion-text-center" sticky>
 
-        <ion-button fill="clear" slot="end" (click)="createNewSession()">
+      <ion-title>Add Workout</ion-title>
+      <ion-button fill="clear" slot="end" (click)="createNewSession()">
         <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
-        </ion-button>
+      </ion-button>
+      <ion-button fill="clear" slot="start" (click)="deletingSessions()">
+        <ion-icon slot="icon-only" name="remove-circle-outline"></ion-icon>
+      </ion-button>
 
     </ion-item-divider>
-    <ion-card *ngFor="let session of sessions; index as i;">
-      <ion-card-content>
+    <ion-item-divider color="dark" *ngIf="deleting">
+      <ion-grid>
+        <ion-row>
+          <ion-label color="success">
+            Select Cards to delete them
+          </ion-label>
+
+        </ion-row>
+        <ion-row>
+          <ion-button (click)="deletingSessions()">Cancel</ion-button>
+          <ion-button (click)="confirmDelete()">Confirm</ion-button>
+
+        </ion-row>
+      </ion-grid>
+    </ion-item-divider>
+
+    <ion-item-sliding *ngFor="let session of sessions; index as i;"  
+       id="hover-trigger"  
+      [ngClass]="{ 'selected-card': currentSelected[i]}"
+      color="secondary"
+      >
+      <ion-item  [ngClass]="{ 'selected-card': currentSelected[i]}" (click)="handleClick(i)" color="dark">
+        <ion-thumbnail slot="start">
+          <app-muscle-svg  [muscles]="sessions[i].muscleGroups" [canSelect]="false" [canOpen]="false"></app-muscle-svg>
+        </ion-thumbnail>
+        <ion-grid  [ngClass]="{ 'selected-card': currentSelected[i]}" >
+          <ion-row class="ion-align-items-center">
+            <ion-col>
+              <ion-row>
+                <ion-col size="auto">
+                  <ion-header class="name">{{session.name}}</ion-header>
+                </ion-col>
+              </ion-row>
+              <ion-row class="ion-align-items-center">
+                <ion-col size="auto">
+                  <ion-header class="description">{{session.datetime | date}}</ion-header>
+                </ion-col>
+                <ion-col size="auto">
+                  <ion-icon name="ellipse" class="description"></ion-icon>
+                </ion-col>
+                <ion-col size="auto">
+                  <ion-header class="description">
+                    {{session.duration}} mins
+                  </ion-header>
+
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <!-- <ion-col>
+                  <ion-header>
+                    {{session.muscleGroups.join(', ')}}
+                  </ion-header>
+                </ion-col> -->
+                <!-- <ion-button fill="clear" (click)="loadSession(i)">Edit</ion-button> -->
+                <!-- <ion-button fill="clear" (click)="deleteSession(session.id)">Delete</ion-button> -->
+
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+    <!-- <ion-card (click)="handleClick(i)" id="hover-trigger">
+      <ion-card-content [ngClass]="{ 'selected-card': currentSelected[i]}">
         <ion-grid>
           <ion-row class="ion-align-items-center">
             <ion-col>
@@ -44,46 +105,20 @@
                 </ion-col>
               </ion-row>
               <ion-row>
-                <!-- <ion-col>
-                  <ion-header>
-                    {{session.muscleGroups.join(', ')}}
-                  </ion-header>
-                </ion-col> -->
-                <ion-button fill="clear" (click)="loadSession(i)">Edit</ion-button>
-                <ion-button fill="clear" (click)="deleteSession(session.id)">Delete</ion-button>
-
+               
               </ion-row>
             </ion-col>
           </ion-row>
         </ion-grid>
 
       </ion-card-content>
-    </ion-card>
-
-    <!-- <ion-card *ngFor="let session of sessions; index as i;">
-      <ion-card-header>
-        <ion-card-title>{{session.name}} </ion-card-title>
-        <ion-card-subtitle>{{session.datetime | date}}</ion-card-subtitle>
-      </ion-card-header>
-
-      <ion-card-content>
-        <ion-row>
-          {{session.duration}} mins
-          {{session.muscleGroups}}
-        </ion-row>
-      </ion-card-content>
-      <ion-button fill="clear" (click)="loadSession(i)">Edit</ion-button>
-      <ion-button fill="clear" (click)="deleteSession(session.id)">Delete</ion-button>
     </ion-card> -->
-
-    <!-- <ion-row>
-      <ion-col></ion-col>
-      <ion-col size="auto">
-        <ion-button id="createNewButton" (click)="createNewSession()">Log A Workout </ion-button>
-      </ion-col>
-      <ion-col></ion-col>
-    </ion-row> -->
-
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option  (click)="deleteSession(session.id)">Delete</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+ 
   </ion-list>
 
 

@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { WorkoutsDashboardPageRoutingModule } from './workouts-dashboard-routing.module';
 
 import { WorkoutsDashboardPage } from './workouts-dashboard.page';
+import { ComponentsModule } from 'src/app/components.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    WorkoutsDashboardPageRoutingModule
+    WorkoutsDashboardPageRoutingModule,
+    ComponentsModule
   ],
   declarations: [WorkoutsDashboardPage]
 })

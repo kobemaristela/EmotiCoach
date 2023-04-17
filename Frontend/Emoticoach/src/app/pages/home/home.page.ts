@@ -1,6 +1,7 @@
 import { NavController } from '@ionic/angular';
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 // install Swiper modules
 SwiperCore.use([Pagination]);
 
@@ -19,7 +20,7 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   homepageCards: string[] = [
     // 'Rate of perceived effort', 
-    'Templates', 
+    'Templates',
     'Volume Data',
     'One Rep Max',
     'Muscle Group Data',
@@ -37,7 +38,7 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   upperText: string[] = [
     // 'Rate of perceived effort', 
-    'Templates', 
+    'Templates',
     'Volume Data',
     'One Rep Max',
     'Muscle Group Data',
@@ -62,15 +63,16 @@ export class HomePage implements OnInit, AfterContentChecked {
     '/tabs/graph-livedata'
   ];
 
-    constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController) {
   }
 
   ngOnInit() {
     this.workoutData = [
       { id: 1, workout_name: 'Bench', record: '185' },
       { id: 2, workout_name: 'Deadlift', record: '225' },
-      { id: 3, workout_name: 'Squat', record: '275' }
+      { id: 3, workout_name: 'Squat', record: '275' },
     ];
+
   }
 
   ngAfterContentChecked() {

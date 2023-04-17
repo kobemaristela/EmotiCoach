@@ -5,7 +5,7 @@ import { IonicModule } from '@ionic/angular';
 
 @NgModule({
  declarations:[MuscleSvgComponent],
- imports:[IonicModule],
+ imports:[IonicModule,],
  exports:[MuscleSvgComponent]
 })
 export class ComponentsModule{

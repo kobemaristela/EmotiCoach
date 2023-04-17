@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { MUSCLE_LIST } from 'src/environments/environment';
 import { muscleOptions } from '../muscle-svg/IOpacity-muscle';
 
 @Component({

@@ -5,7 +5,7 @@
   <ion-grid>
     <ion-row>
       <ion-col size="9">
-        <ion-input [clearOnEdit]="true" placeholder="Excercise" [(ngModel)]="activity.name" (ionChange)="updateName()">
+        <ion-input class="excercise-name" [clearOnEdit]="true" placeholder="Excercise" [(ngModel)]="activity.name" (ionChange)="updateName()">
         </ion-input>
       </ion-col>
       <ion-col size="2">
@@ -16,20 +16,19 @@
       </ion-col>
     </ion-row>
 
-    <ion-list>
-      <app-exercise-set *ngFor="let set of activity.sets; index as i;" [activityIndex]="activityIndex" [set]="set"
+
+    <app-exercise-set *ngFor="let set of activity.sets; index as i;" [activityIndex]="activityIndex" [set]="set"
       [setCount]="i+1">
     </app-exercise-set>
-    </ion-list>
 
 
-    <ion-row>
-      <ion-col>
-        <ion-button class="Add" (click)="addSet()" fill="clear">
-          <ion-icon slot="end" name="add-circle-outline"></ion-icon>
-          Add Set
-        </ion-button>
-      </ion-col>
-    </ion-row>
+    <ion-button class="Add" (click)="addSet()" fill="clear">
+      <ion-icon slot="end" name="add-circle-outline"></ion-icon>
+      Add Set
+    </ion-button>
+    <!-- <ion-button class="Add" (click)="addSet()" fill="clear">
+
+      Copy Set
+    </ion-button> -->
   </ion-grid>
 </div>
