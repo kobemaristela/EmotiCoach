@@ -49,5 +49,18 @@ ion-content{
         ion-button{
             margin-top: 25px;              
         }
+        .line-text{
+            padding: 0 30px;
+            position: relative;
+            height: 20px;
+            margin-top: 30px;
+
+            .text{
+                position: absolute;
+                top: -7px;
+                left: 35%;
+                transform: translateX(-15%);
+            }
+        }
     }
 }

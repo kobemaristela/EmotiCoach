@@ -74,6 +74,11 @@ const routes: Routes = [
     path: 'template-creator',
     loadChildren: () => import('./pages/template-creator/template-creator.module').then( m => m.TemplateCreatorPageModule)
   },
+  {
+    path: 'change-pass',
+    loadChildren: () => import('./pages/account/change-pass/change-pass.module').then( m => m.ChangePassPageModule)
+  },
+
 
 ];
 

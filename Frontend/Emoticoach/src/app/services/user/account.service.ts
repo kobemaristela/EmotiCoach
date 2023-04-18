@@ -26,37 +26,33 @@ export class AccountService {
     this.userInfo = new Account("");
     this.user$ = new Subject();
     //Remove this ;ater this defaults it to justins hard coded token for testing
-    AccountService.user_token = CHAD_TOKEN
+    // AccountService.user_token = CHAD_TOKEN
     }
 
   login(username:string , password: string): Observable<any>{
     this.requestAccountService.getUserToken(username, password).subscribe( d => {
       this.user$.next(d)
       AccountService.user_token = d.token;
+      console.log(AccountService.user_token)
       AccountService.user_email = d.email;
-
-      console.log(d.first_name)
-
       AccountService.user_firstname = d.first_name;
       AccountService.user_lastname = d.last_name;
     });
     return this.user$;
   }
 
-  editAccountInfo(first_name:string, last_name:string, email:string, password:string):Observable<any>{
-    const formData = new FormData();
-    formData.append("first_name", first_name);
-    formData.append("last_name", last_name);
-    formData.append("email", email);
-    formData.append("password", password);
-
-    let tableParam = {
-      headers: {
-        "Authorization": CHAD_TOKEN,
-      }
+  logout(): Observable<any>{
+    this.requestAccountService.logout().subscribe( d => {
+      this.user$.next(d)
+    });
+    return this.user$;
   }
-  let res = this.http.post<any>("https://emotidev.maristela.net/user/edit", formData,tableParam);
-    return res;
+
+  editAccountInfo(first_name:string, last_name:string, email:string, password:string):Observable<any>{
+    this.requestAccountService.editAccountInfo(first_name, last_name, email, password).subscribe( d => {
+      this.user$.next(d)
+    });
+    return this.user$;
   }
 
   returnUserToken(){
