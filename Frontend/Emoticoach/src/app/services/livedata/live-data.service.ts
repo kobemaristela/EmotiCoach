@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {  IMqttMessage, MqttService} from 'ngx-mqtt';
+import { Observable } from 'rxjs';
 import { MQTT_SERVICE_OPTIONS } from 'src/environments/tokens';
 
 
@@ -10,11 +11,12 @@ export class LiveDataService {
   
 
   constructor(private mqttService: MqttService) { 
-    
+    this.mqttService.connect(MQTT_SERVICE_OPTIONS);
   }
   
-  connectToBroker() {
-    this.mqttService.connect(MQTT_SERVICE_OPTIONS);
+  private connectToBroker() {
+
+    // this.mqttService.publish("client_id/user/", "test");
     // console.log("in connect to to brocker", this.mqttService);
     // Subscribe to the MQTT topic
     // this.mqttService.observe('emoticoach/eda/activity')
@@ -22,8 +24,11 @@ export class LiveDataService {
     //     console.log('Received message on topic my/topic: message.payload',message.payload.toString());
     //   });
     return this.mqttService;
-   
 
+  }
+
+  observeTopic(topic: string): Observable<IMqttMessage> {
+    return this.mqttService.observe(topic);
   }
 
   closeConnection(){

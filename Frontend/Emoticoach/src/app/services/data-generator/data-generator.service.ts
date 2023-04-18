@@ -6,6 +6,7 @@ import { activity } from '../sessions/activity/Iactivity';
 import { Activity } from '../sessions/activity/Activity';
 import { Set } from '../sessions/sets/Set';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -125,35 +126,63 @@ export class DataGeneratorService {
         ])
       ]
     ];
+
+
   constructor(private requestSessionService: RequestSessionService) { }
 
   createSession(session: session) {
-
-    this.requestSessionService.postCreateNewSessionObservable(session)
+    console.log(session);
+    this.requestSessionService.postCreateNewSessionObservable(session).subscribe(
+      data => console.log(data)
+    );
   }
 
   generateSessions() {
-    let newSession: session = new Session('0');
-    let activity: activity = new Activity('0');
-    let lastYear:Date = new Date();
-    lastYear.setFullYear(lastYear.getFullYear() - 2);
-    console.log(lastYear.toDateString())
 
-    newSession.datetime = lastYear.toUTCString();
-    newSession.name = this.days[0];
-    newSession.activities = this.activites[0];
-    newSession.duration = Math.floor((Math.random() * 20) + 50)
+    let lastYear: Date = new Date();
+    lastYear.setFullYear(lastYear.getFullYear() - 1);
 
-    console.log(newSession)
-    for (let d = 1; d <= 365; d++){
-      for (let i = 0; i < this.days.length; i++) {
-       
-        console.log( newSession.datetime);
+    for (let d = 0; d < 365; d++) {
+      let newSession: session = new Session('0');
+      let mod = d % 6;
+      if ((d % 21) == 0) {
+        for (let i = 0; i < this.activites.length; i++) {
+          for (let a = 0; a < this.activites[i].length; a++) {
+            for (let s = 0; s < this.activites[i][a].sets.length; s++) {
+              if (this.activites[i][a].sets[s].weight != 0) {
+                this.activites[i][a].sets[s].weight = this.activites[i][a].sets[s].weight + 5;
+
+              } else {
+                this.activites[i][a].sets[s].reps = this.activites[i][a].sets[s].reps + 1;
+
+              }
+
+            }
+
+          }
+        }
 
       }
+
+
+      newSession.name = this.days[mod];
+      newSession.activities = this.activites[mod];
+
+      var offset = lastYear.getTimezoneOffset() / 60;
+      var indexOfDot = lastYear.toISOString().split('.')[0]
+      lastYear.toISOString()
+      console.log(indexOfDot)
+
+      newSession.datetime = indexOfDot + "-0" + offset + ":00"
+
+      newSession.duration = Math.floor((Math.random() * 20) + 50);
+
+      setTimeout(() => { this.createSession(newSession) }, 10000)
+
+      "2023-04-13T21:36:00Z"
       lastYear.setDate(lastYear.getDate() + 1);
     }
- 
+
 
   }
   runScript() {

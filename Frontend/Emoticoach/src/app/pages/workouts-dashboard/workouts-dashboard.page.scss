@@ -15,6 +15,7 @@ ion-card {
     height: 70%;
     border: 2px solid #ffffff;
     border-radius: 10px !important;
+
     ion-card-content{
         padding: 0px !important;
         border-width: 0px;
@@ -28,7 +29,6 @@ ion-button {
 
 
 ion-title {
-   
     color: #ffffff;
 }
 
@@ -37,6 +37,7 @@ ion-title {
     font-weight: 500;
     color: var(--ion-color-success);
 }
+
 .description {
     font-weight: 20;
     color: #a5a5a5;

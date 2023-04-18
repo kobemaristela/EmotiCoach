@@ -23,7 +23,7 @@ ion-list {
 }
 
 ion-button.Add{
-    --color: #ffffff;
+    --color: var(--ion-color-success);
     margin-top: 2%;
 }
 
