@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { GraphService } from 'src/app/services/graph/graph.service';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
   selector: 'app-graph-onerm',
@@ -22,7 +23,7 @@ export class GraphOnermPage implements OnInit {
 
   rightsideWeekFormatted: string;
 
-  constructor(private graphService: GraphService) {
+  constructor(private graphService: GraphService, private themeService: ThemeService) {
     this.previousWeek = this.graphService.getPreviousWeek(this.graphService.getCurrentDate());
     this.rightsideWeek = this.graphService.getCurrentDate();
     this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
@@ -145,7 +146,7 @@ export class GraphOnermPage implements OnInit {
           {
             label: "One Rep Max",
             data: [], //volumeData here
-            backgroundColor: '#833535',
+            backgroundColor: this.themeService.getMuscleColor(),
             borderColor: '#6D6D6D'
           }
         ]
