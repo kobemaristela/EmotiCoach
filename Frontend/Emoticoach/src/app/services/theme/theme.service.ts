@@ -5,8 +5,8 @@ import { DOCUMENT } from '@angular/common';
 })
 export class ThemeService {
   public renderer: Renderer2;
-  // public currentTheme: string = "red";
-  public currentTheme: string = "blue";
+  public currentTheme: string = "red";
+  // public currentTheme: string = "blue";
 
 
   constructor(private rendererFactory: RendererFactory2, @Inject(DOCUMENT) private document: Document) {
@@ -33,5 +33,20 @@ export class ThemeService {
       return '#833535'
     }
 
+  }
+  getGraphColor(){
+    if( this.currentTheme == "blue"){
+      return '#4e73df'
+    } else {
+      return '#833535'
+    }
+
+  }
+  getSuccessColor() {
+    if( this.currentTheme == "blue"){
+      return '#000000'
+    } else {
+      return '#ffffff'
+    }
   }
 }
