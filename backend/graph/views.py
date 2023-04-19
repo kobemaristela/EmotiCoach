@@ -52,6 +52,8 @@ class GetVolumeData(APIView):
             volume = 0
             for set in sets:
                 volume += set["weight"] * set["reps"]
+            if volume == 0:
+                continue
             date_key = session["datetime"].strftime("%b %d")
 
             if date_key in volume_data:
@@ -136,7 +138,8 @@ class GetOneRMData(APIView):
 
                 if one_rm > current_one_rm:
                     current_one_rm = one_rm
-
+            if current_one_rm == 0:
+                continue
             date_key = session["datetime"].strftime("%b %d")
 
             one_rm_data[date_key] = current_one_rm
@@ -226,7 +229,7 @@ class GetActivityHeatmap(APIView):
             for set in sets:
                 volume += set["weight"] * set["reps"]
             month_number = session["datetime"].month - 1
-            week_day = session["datetime"].weekday()
+            week_day = session["datetime"].weekday() - 1
 
             if not response[week_day][month_number]:
                 response[week_day][month_number] = 0
