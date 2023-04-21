@@ -155,7 +155,7 @@ class GetAllSessionsRange(APIView):
         end_date = start_date + timedelta(days=length)
 
         sessions = Session.objects.filter(datetime__gte = start_date, auth_user_id=userId)
-        sessions = sessions.filter(datetime__lte = end_date).values("id", "datetime").order_by("datetime")
+        sessions = sessions.filter(datetime__lte = end_date).order_by("datetime")
 
         response = list()
 
