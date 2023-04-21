@@ -108,6 +108,14 @@ export class AccountPage implements OnInit {
       }
     })
   }
+  async deleteAccount(){
+    this.user$ = this.accountService.deleteAccount();
+    this.user$.subscribe((res)=> {
+      if(res){
+        this.navCtrl.navigateForward('/login')
+      }
+    })
+  }
 
   ngOnInit() {
     this.displayFirstName()

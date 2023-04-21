@@ -48,6 +48,13 @@ export class AccountService {
     return this.user$;
   }
 
+  deleteAccount(): Observable<any>{
+    this.requestAccountService.deleteAccount().subscribe( d => {
+      this.user$.next(d)
+    });
+    return this.user$;
+  }
+
   editAccountInfo(first_name:string, last_name:string, email:string, password:string):Observable<any>{
     this.requestAccountService.editAccountInfo(first_name, last_name, email, password).subscribe( d => {
       this.user$.next(d)

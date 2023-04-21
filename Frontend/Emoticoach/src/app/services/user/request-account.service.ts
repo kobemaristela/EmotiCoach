@@ -35,6 +35,17 @@ export class RequestAccountService {
     return res;
   }
 
+  deleteAccount(): Observable<any>{
+    let tableParam = {
+     headers: {
+       "Authorization": ("token " + AccountService.user_token),
+     }
+    }
+    let res = this.http.get<any>("https://emotidev.maristela.net/user/delete", tableParam);
+    console.log(res)
+    return res;
+  }
+
   editAccountInfo(first_name:string, last_name:string, email:string, password:string):Observable<any>{
     const formData = new FormData();
     formData.append("first_name", first_name);
