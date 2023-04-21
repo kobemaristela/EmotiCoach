@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,9 +15,20 @@ import { ModalAddFriendsComponent } from './pages/gym-buddy/modal-add-friends/mo
 import { FormsModule } from '@angular/forms';
 import { GoogleApiComponent } from './pages/widgets/google-api/google-api.component';
 import { ModalSendMsgComponent } from './pages/gym-buddy/modal-send-msg/modal-send-msg.component';
+import { ModalMuscleComponent } from './pages/widgets/muscle-groups/modal-muscle/modal-muscle.component';
+import { ComponentsModule } from './components.module';
+import { Keychain } from '@awesome-cordova-plugins/keychain/ngx';
+
 
 @NgModule({
-  declarations: [AppComponent, ModalAddFriendsComponent, ModalSendMsgComponent,GoogleApiComponent],
+  declarations: [
+    AppComponent, 
+    ModalAddFriendsComponent, 
+    ModalSendMsgComponent,
+    ModalMuscleComponent,
+    GoogleApiComponent,
+    
+  ],
 
   imports: [
       BrowserModule, 
@@ -28,12 +39,13 @@ import { ModalSendMsgComponent } from './pages/gym-buddy/modal-send-msg/modal-se
       GoogleMapsModule,
       FormsModule,
       
+      ComponentsModule,
       NgxEchartsModule.forRoot({
         echarts: () => import('echarts'),
       }),
       MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
     ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, Keychain],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

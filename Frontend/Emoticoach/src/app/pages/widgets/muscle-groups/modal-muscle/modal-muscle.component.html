@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Muscle Groups</ion-title>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" color="success">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    
+        <app-muscle-svg [muscles]="muscles" (muscleSelected)="updateMuscle($event)" [canOpen]="false"></app-muscle-svg>
+
+
+  </ion-grid>
+</ion-content>

@@ -1,33 +1,71 @@
-<ion-content>
+<ion-header>
   <ion-toolbar>
-    <ion-title>Live Data Graph</ion-title>
+    <ion-title>Emotibit</ion-title>
   </ion-toolbar>
+</ion-header>
+<ion-content>
 
-  <div class="chart-container">
-      <canvas id="LiveDataChart"> {{ chart }} </canvas>
+
+  <div class="eda-container">
+    <canvas id="edaChart"> {{ edaChart }} </canvas>
+
   </div>
+  <div class="ppg-container">
+    <canvas id="ppgChart"> {{ ppgChart }} </canvas>
 
+  </div>
   <ion-grid>
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="openConnection()">Start</ion-button>
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="auto" *ngIf="!connectionOpen">
+        <ion-button size="fill" (click)="openConnection()">Start Workout</ion-button>
+      </ion-col>
+      <ion-col size="auto" *ngIf="connectionOpen">
+        <ion-button size="fill" (click)="closeConnection()">Stop</ion-button>
       </ion-col>
 
-      <ion-col>
-        <ion-button (click)="closeConnection()">Stop</ion-button>
-      </ion-col>
-      
+      <!-- <ion-col>
+        <ion-button (click)="generateworkouts()">generate</ion-button>
+      </ion-col>  -->
+
     </ion-row>
-    <ion-row>
+    <ion-row class="ion-justify-content-left">
       <ion-col size="auto">
-        <ion-select interface="action-sheet" placeholder="Select Stream" [(ngModel)]="currentConnection">
-          <div *ngFor="let connection of connections;">
-            <ion-select-option  [value]="connection"> {{connection}}</ion-select-option>
-          </div>
-        </ion-select>
+        <ion-label>
+          Current HeartRate:
+        </ion-label>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-label>
+          {{ currentHeartrate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-left">
+      <ion-col size="auto">
+        <ion-label>
+          Ready To Lift:
+        </ion-label>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-label>
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-justify-content-left">
+      <ion-col size="auto">
+        <ion-label>
+          Position:
+        </ion-label>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-label>
+          {{position}}
+        </ion-label>
       </ion-col>
     </ion-row>
   </ion-grid>
-  
-</ion-content>
 
+</ion-content>

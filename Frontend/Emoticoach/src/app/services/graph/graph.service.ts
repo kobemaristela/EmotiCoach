@@ -63,11 +63,21 @@ export class GraphService {
   }
 
   getPreviousWeek(date: Date){
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 7);
+
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
   }
 
   getNextWeek(date: Date){
-    return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 6);
+  }
+
+  getRecentSunday(date: Date){
+    return new Date(date.setDate(date.getDate() - date.getDay()));
+  }
+
+  getNextSaturday(date: Date){
+    return new Date(date.setDate(date.getDate() + (6 + 7 - date.getDay()) % 7));
+
   }
 
   getActivityNames(): Observable<any>{

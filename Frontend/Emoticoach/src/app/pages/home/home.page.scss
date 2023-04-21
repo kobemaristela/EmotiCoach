@@ -3,7 +3,6 @@ ion-icon {
 }
 
 ion-content {
-    --background: #323232;
 
     ion-col {
         text-align: center;
@@ -12,7 +11,7 @@ ion-content {
         }
 
         ion-card {
-            background: #833535 !important;
+            background: var(--ion-color-primary);
             box-shadow: 0 !important;
             margin-bottom: 0px !important;
             border: 1px solid #ffffff !important;
@@ -25,7 +24,6 @@ ion-content {
         position: relative;
         padding: 10px;
         height: 100px;
-        background: #833535;
         border-radius: 2.5rem;
         margin: 6vh 1rem 0 1rem;
 
@@ -49,7 +47,6 @@ ion-content {
         left: 1px;
         right: 1px;
         bottom: 1px;
-        background: #833535;
         border-radius: 2.5rem;
         z-index: 0;
         border: 2px solid transparent;
@@ -58,36 +55,40 @@ ion-content {
 
 ion-label {
     text-align: center;
-    background-color: #833535 !important;
-}
+    background-color: var(--ion-color-primary);
+    --background: var(--ion-color-primary);   
 
-ion-list {
-
-    --background: #833535 !important;
 }
 
 ion-item {
-
-    --background: #833535 !important;
+    --background: var(--ion-color-primary);
+    --border-width: 0px !important;
 }
 
 ion-card-content {
-    --background: #833535 !important;
+    background-color: var(--ion-color-primary);
     border-width: 0px;
     padding: 0px !important;
     height: 50px !important;
 }
+
+ion-lost {
+    background-color: var(--ion-color-primary);
+
+    --background: var(--ion-color-primary);   
+}
+
 
 img {
     width: 100%;
     height: 100%;
 }
 
-.myCard {
+.prCard {
     position: relative;
-    background-color: #323232;
     box-shadow:none !important;
     width: 90%;
+    margin-bottom: 0;
 }
 
 .myOverlay {
@@ -102,9 +103,13 @@ img {
 
 .card-title{
     font-size: x-large;
-    color: #ffffff !important;
+    color: var(--ion-color-success);
+
 }
 
 .card-subtitle{
     font-size: large;
+    color: var(--ion-color-medium);
+
+
 }
