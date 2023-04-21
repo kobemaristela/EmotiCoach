@@ -12,36 +12,40 @@ ion-select::part(icon) {
 }
 
 ion-button.Delete{
-    --color: #833535;
+    --color: var(--ion-color-primary);
     // width: 50px;
 }
 ion-list {
-    --background: #606060 !important;
-    background: #606060 !important;
+    // --background: #606060 !important;
+    background-color: var( --ion-color-light);
+
+    // background: #606060 !important;
 }
 
 ion-button.Add{
-    --color: #ffffff;
+    --color: var(--ion-color-success);
+    margin-top: 2%;
 }
 
 ion-card {
     width:100%;
     margin: 0 ;
     margin-top: 2%;
-    background-color: #323232 !important;
+    background-color: var( --ion-color-light);
     --border-radius: 0px !important;
 
-}
-
-
-app-exercise-set {
-    display: inline-block;
-    height: 1px;
 }
 
 .background {
     width:100%;
     margin: 0 ;
     margin-top: 2%;
-    background-color: #606060 !important;
+    background-color: var( --ion-color-light);
+
+
+}
+
+.excercise-name{
+    font-size: x-large;
+    color: var( --ion-color-success);
 }

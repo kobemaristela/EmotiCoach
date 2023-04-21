@@ -139,6 +139,35 @@ class GetAllSessions(APIView):
             response.append(sessionDict)
 
         return JsonResponse(response, safe=False)
+
+class GetAllSessionsRange(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        userId = Token.objects.get(key=token).user_id
+
+        start_date = request.POST["start_date"]
+        start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
+
+        length = int(request.POST["length"])
+        end_date = start_date + timedelta(days=length)
+
+        sessions = Session.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        sessions = sessions.filter(datetime__lte = end_date).values("id", "datetime").order_by("datetime")
+
+        response = list()
+
+        for session in sessions:
+            sessionDict = {"id": session.id,
+                           "name": session.name,
+                           "duration": session.duration,
+                           "datetime": session.datetime,
+                           "muscleGroups": getMuscleGroups(session)}
+            response.append(sessionDict)
+
+        return JsonResponse(response, safe=False)
     
 class EditSession(APIView):
     authentication_classes = [TokenAuthentication]

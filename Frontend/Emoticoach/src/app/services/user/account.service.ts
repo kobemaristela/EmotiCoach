@@ -6,6 +6,7 @@ import { RequestAccountService } from './request-account.service';
 import { Observable, Subject } from 'rxjs';
 import { accountRequest } from './IaccountRequest';
 import { CHAD_TOKEN } from 'src/environments/tokens';
+import { Keychain } from '@awesome-cordova-plugins/keychain/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class AccountService {
   private user$: Subject<accountRequest[]>;
 
 
-  constructor(private requestAccountService: RequestAccountService, private http: HttpClient) {
+  constructor(private requestAccountService: RequestAccountService, private http: HttpClient, private keychain: Keychain) {
     this.userInfo = new Account("");
     this.user$ = new Subject();
     //Remove this ;ater this defaults it to justins hard coded token for testing
@@ -37,6 +38,7 @@ export class AccountService {
       AccountService.user_email = d.email;
       AccountService.user_firstname = d.first_name;
       AccountService.user_lastname = d.last_name;
+      this.saveToken();
     });
     return this.user$;
   }
@@ -87,6 +89,15 @@ export class AccountService {
 
   capitalizeFirstLetter(input:string){
     return input.charAt(0).toUpperCase() + input.slice(1);
+  }
+
+  saveToken(){
+    this.keychain.set('user_token', AccountService.user_token, false).then(() => {
+      this.keychain.get('user_token')
+        .then(value => console.log('Got value', value))
+        .catch(err => console.error('Error getting', err));
+    })
+    .catch(err => console.error('Error setting', err));
   }
 }
 

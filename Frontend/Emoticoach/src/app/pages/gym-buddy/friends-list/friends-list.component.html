@@ -1,5 +1,5 @@
 <ion-list>
-  <ion-searchbar [debounce]="500" (ionChange)="search($event)"></ion-searchbar>
+  <ion-searchbar color="dark" [debounce]="500" (ionChange)="search($event)"></ion-searchbar>
   <div class="loaded" *ngIf="loaded">
     <ion-item *ngFor="let f of searchList">
       <ion-thumbnail slot="start">

@@ -19,6 +19,7 @@ import { ComponentsModule } from 'src/app/components.module';
     IonicModule,
     LogWorkoutPageRoutingModule,
     ComponentsModule
+    
   ],
   declarations: [
       LogWorkoutPage,

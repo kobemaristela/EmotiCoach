@@ -14,7 +14,7 @@
 
   <ion-grid style="border-bottom: 2px solid grey">
     <ion-row>
-    <ion-buttons color="#1E1E1E" lines="none" class="date-selection">
+    <ion-buttons color="primary" lines="none" class="date-selection">
       <ion-col>
         <ion-button (click)="displayPreviousWeek()">
         <ion-icon slot="start" name="chevron-back-outline" size="large"></ion-icon>
@@ -22,7 +22,7 @@
       </ion-col>
 
       <ion-col>
-        <ion-text>{{previousWeekFormatted}} - {{rightsideWeekFormatted}}</ion-text>
+        <ion-text color="success">{{previousWeekFormatted}} - {{rightsideWeekFormatted}}</ion-text>
       </ion-col>
 
       <ion-col>
@@ -36,21 +36,18 @@
 
   <ion-grid>
     <ion-row>
-        <ion-item lines="none" color="#1E1E1E">
-          <ion-select 
+        <ion-item lines="none" color="dark">
+          <ion-select
           interface="popover" 
           placeholder="Select workout" 
           [(ngModel)]="selectedWorkout"
-          (ionChange)="updateChart()">
-            <div *ngFor="let workout of workouts; let i = index">
-              <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
-            </div>
+          (ionChange)="updateChart()"
+          >
+              <ion-select-option *ngFor="let workout of workouts; let i = index" [value]="workout">{{workouts[i]}}</ion-select-option> 
           </ion-select>
         </ion-item>
     </ion-row>
-  </ion-grid>
 
-  <ion-grid>
     <ion-row class="table-title-color">
         <ion-col class="left-table-text">
           <ion-text>This Week</ion-text>
@@ -63,15 +60,15 @@
   </ion-grid>
 
   <!-- add ngfor loop here to generate data -->
-  <ion-grid style="border-bottom: 2px solid grey">
+  <ion-grid style="border-bottom: 2px solid">
     <ion-row *ngFor="let row of workoutDates; let i = index">
       <ion-buttons>
         <ion-col class="left-table-text" size="auto">
-          <ion-text>{{workoutDates[i]}}</ion-text>
+          <ion-text color="success">{{workoutDates[i]}}</ion-text>
         </ion-col>
 
         <ion-col class="weight-text">
-          <ion-text>{{workoutData[i]}} lbs</ion-text>
+          <ion-text color="success">{{workoutData[i] | number: '1.0-1' }} lbs</ion-text>
         </ion-col>
 
         <ion-col class="right">

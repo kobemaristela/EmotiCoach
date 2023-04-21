@@ -9,4 +9,5 @@ urlpatterns = [
     path('account', Account.as_view(), name="account"),
     path('activity', Activity.as_view(), name="activity"),
     path('activity/chart', ActivityChart.as_view(), name="activitychart"),
+    path('weight', Weight.as_view(), name="weight"),
 ]

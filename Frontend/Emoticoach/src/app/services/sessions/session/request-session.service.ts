@@ -17,6 +17,7 @@ export class RequestSessionService {
   
   //creates a new session in the database
   postCreateNewSessionObservable(session: session):Observable<any> {
+    console.log(session.datetime)
     const formData = new FormData();
     formData.append("session", JSON.stringify(session));
     let tableParam = {
@@ -28,7 +29,7 @@ export class RequestSessionService {
     return res;
   }
 
-  postDeleteSessionObservable(sessionId: number):Observable<any> {
+  postDeleteSession(sessionId: number):Observable<any> {
     const formData = new FormData();
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {

@@ -5,10 +5,15 @@
       <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
     </ion-buttons>
     <ion-buttons slot="end">
-      <ion-button (click)="confirm()">Confirm</ion-button>
+      <ion-button (click)="confirm()" color="success">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <app-muscle-svg [muscles]="muscles" (muscleSelected)="updateMuscle($event)" [canOpen]="false"></app-muscle-svg>
+  <ion-grid>
+    
+        <app-muscle-svg [muscles]="muscles" (muscleSelected)="updateMuscle($event)" [canOpen]="false"></app-muscle-svg>
+
+
+  </ion-grid>
 </ion-content>
