@@ -40,14 +40,20 @@
                   <ion-input type="text" placeholder={{user_lastname}} [(ngModel)]="user_lastname"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-icon name="person-outline"></ion-icon>
+                  <ion-icon name="mail-outline"></ion-icon>
                   <ion-input type="text" placeholder={{user_email}} [(ngModel)]="user_email"></ion-input>
                 </ion-item>
                 <ion-item>
                   <ion-icon name="lock-closed"></ion-icon>
-                  <ion-input type="text" placeholder="********" [(ngModel)]="user_pass"></ion-input>
+                  <ion-input type="text" placeholder="*******" [(ngModel)]="user_pass"></ion-input>
                 </ion-item>
+                <div class="line-text">
+                  <span class="text">
+                    <a routerLink="/change-pass">Change Password</a>
+                  </span>
+              </div>
                 <ion-button expand="block" (click)="editInfo()">Save</ion-button>
+                <ion-button color="danger" expand="block" (click)="logout()">Log Out</ion-button>
 
               </ion-card-content>
             </ion-card>
@@ -79,6 +85,7 @@
                   <ion-icon name="lock-closed"></ion-icon>
                   <ion-text>*********</ion-text>
                 </ion-item>
+                <ion-button color="danger" expand="block" (click)="deleteAccount()">Delete Account</ion-button>
               </ion-card-content>
             </ion-card>
           </ion-col>
