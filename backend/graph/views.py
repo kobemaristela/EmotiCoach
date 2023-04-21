@@ -236,3 +236,5 @@ class GetActivityHeatmap(APIView):
             response[week_day][month_number] += volume
 
         return JsonResponse({"z":response})
+    
+# class GetWeightLineGraph(APIView):

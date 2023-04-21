@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import Login, Register, Logout, EditAccount, DeleteAccount, AuthenticateUser, show_database
+from .views import *
+from .apiview import *
 
 
 urlpatterns = [
@@ -9,5 +10,7 @@ urlpatterns = [
     path('delete', DeleteAccount.as_view(), name="delete"),
     path('edit', EditAccount.as_view(), name="edit"),
     path('authenticate', AuthenticateUser.as_view(), name="authenticate"),
+
+    path('setweight', SetWeight.as_view(), name="setweight"),
     path('showDb', show_database)
 ]
