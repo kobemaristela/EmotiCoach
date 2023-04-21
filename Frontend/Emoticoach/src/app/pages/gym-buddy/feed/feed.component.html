@@ -1,18 +1,16 @@
 <ion-content #scrollMe>
-  <ion-grid *ngIf="loaded">
-    <ion-row class="ion-align-items-end" *ngFor="let message of messageList$ | async">
-      <ion-col size="9" class="message" [offset]="message.myMsg ? 3 : 0"
-        [ngClass]=" {'my-message': message.myMsg, 'other-message': !message.myMsg}">
+  <ion-grid >
+    <ion-row *ngFor="let message of messageList$ | async">
+      <ion-col size="9" class="message" 
+        [offset]="message.userSent ? 3 : 0"
+        [ngClass]="{'my-message': message.userSent, 'other-message': !message.userSent}">
         <ion-icon name="person-circle-sharp"></ion-icon>
         <b> {{ message.user_id}}</b><br>
-        <span>I'm going to {{ message.gym}} and hitting {{ message.muscleGroups }}
+        <span>{{ message.myMsg}}
         </span>
         <div class="time ion-text-right"><br>{{message.time_sent | date:'short'}}</div>
       </ion-col>
     </ion-row>
-</ion-grid>
-
-<ion-grid *ngIf="!loaded">
 </ion-grid>
 
 </ion-content>

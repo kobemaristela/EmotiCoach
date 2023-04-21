@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { user } from './Iuser';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CHAD_TOKEN } from 'src/environments/environment';
 import { userInfo } from 'os';
 import { AccountService } from './account.service';
 
@@ -21,7 +20,7 @@ export class RequestAccountService {
 
     let tableParam = {
       headers: {
-        "Authorization": CHAD_TOKEN,
+        "Authorization": '',
       }
   }
   let res = this.http.post<any>("https://emotidev.maristela.net/user/login", formData,tableParam);
@@ -39,7 +38,7 @@ export class RequestAccountService {
 
     let tableParam = {
       headers: {
-        "Authorization": CHAD_TOKEN,
+        "Authorization": '',
       }
   }
   let res = this.http.post<any>("https://emotidev.maristela.net/user/edit", formData,tableParam);

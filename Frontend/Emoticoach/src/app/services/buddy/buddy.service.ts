@@ -12,10 +12,16 @@ export class BuddyService {
   chad: friend = {username:"Chad", gym:"UNR", profilePicture:"fish"};
   jaemin: friend = { username:"Jaemin47", gym:"American Iron", profilePicture:"fish"}
   friendList: friend[] = [this.chad, this.jaemin];
-  gyms = ["UNR", "American Iron", "Planet Fitness"];
+  gyms = ["UNR gym", "American Iron", "Planet Fitness"];
+  currentGym: string = "";
+
 
   constructor() { 
     this.friendsList$ = new BehaviorSubject<friend[]>(this.friendList);
+  }
+  
+  setCurrentGym(gym: string){
+    this.currentGym = gym;
   }
 
   getFriendList(): BehaviorSubject<friend[]> {

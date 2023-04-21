@@ -1,4 +1,4 @@
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
 import { ThemeService } from 'src/app/services/theme/theme.service';
@@ -63,7 +63,7 @@ export class HomePage implements OnInit, AfterContentChecked {
     '/tabs/graph-livedata'
   ];
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private alertController: AlertController) {
   }
 
   ngOnInit() {
@@ -73,6 +73,16 @@ export class HomePage implements OnInit, AfterContentChecked {
       { id: 3, workout_name: 'Squat', record: '275' },
     ];
 
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'New PR',
+      message: 'You hit 225 on Bench for the first time!',
+      buttons: ['Congrats!'],
+    });
+
+    await alert.present();
   }
 
   ngAfterContentChecked() {

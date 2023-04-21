@@ -14,7 +14,7 @@ export class LiveDataService {
     this.mqttService.connect(MQTT_SERVICE_OPTIONS);
   }
   
-  private connectToBroker() {
+  connectToBroker() {
 
     // this.mqttService.publish("client_id/user/", "test");
     // console.log("in connect to to brocker", this.mqttService);

@@ -15,10 +15,11 @@ export class WorkoutsDashboardPage implements OnInit {
   sessions$: Observable<sessionRequest[]>
   deleting: boolean;
   currentSelected: boolean[];
+  date: Date;
 
+  constructor(private servSession: SessionService, private theme: ThemeService, private navCtrl: NavController) {
+    this.date = new Date();
 
-  constructor(private servSession: SessionService, private theme: ThemeService,private navCtrl: NavController) { 
-    
   }
 
 
@@ -29,9 +30,10 @@ export class WorkoutsDashboardPage implements OnInit {
   }
 
   //calls the get session function from the service to do the api call and set the current session
-  loadSessions() {    
-    this.sessions$ = this.servSession.getSessions();
-    this.sessions$.subscribe((res)=> {
+  loadSessions() {
+    console.log(this.getDate())
+    this.sessions$ = this.servSession.getSessions(this.getDate(), 30);
+    this.sessions$.subscribe((res) => {
       this.sessions = res.slice().reverse();
       console.log("loading sessions", this.sessions)
       this.currentSelected = new Array(this.sessions.length);
@@ -51,40 +53,40 @@ export class WorkoutsDashboardPage implements OnInit {
     this.navCtrl.navigateForward('/log-workout');
   }
 
-  confirmDelete(){
+  confirmDelete() {
     this.deleting = !!!this.deleting
     let toDelete: number[] = [];
-    for (let i = 0; i < this.currentSelected.length; i++){
-      if(this.currentSelected[i]){
+    for (let i = 0; i < this.currentSelected.length; i++) {
+      if (this.currentSelected[i]) {
         toDelete.push(this.sessions[i].id);
       }
     }
-    for (let i = 0; i < toDelete.length; i++){
+    for (let i = 0; i < toDelete.length; i++) {
       this.deleteSession(toDelete[i]);
     }
 
     this.currentSelected = new Array(this.sessions.length);
   }
 
-  async deleteSession(sessionId:number) {
-    
-    this.servSession.deleteSession(sessionId).subscribe( data => {
+  async deleteSession(sessionId: number) {
+
+    this.servSession.deleteSession(sessionId).subscribe(data => {
       console.log(data);
-      if (data.status){
+      if (data.status) {
         this.loadSessions();
       }
     });
-    
+
 
   }
 
-  deletingSessions(){
+  deletingSessions() {
     this.deleting = !!!this.deleting
     this.currentSelected = new Array(this.sessions.length);
   }
 
-  handleClick(index:number) {
-    if(this.deleting){
+  handleClick(index: number) {
+    if (this.deleting) {
 
       this.currentSelected[index] = !!!this.currentSelected[index];
       console.log("dekting", this.currentSelected)
@@ -92,5 +94,11 @@ export class WorkoutsDashboardPage implements OnInit {
       this.loadSession(index)
     }
 
+  }
+
+  private getDate(): string {
+    
+    return this.date.toISOString().split('T')[0]
+     
   }
 }

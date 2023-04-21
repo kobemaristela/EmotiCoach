@@ -89,12 +89,12 @@ export class AccountService {
   }
 
   saveToken(){
-    this.keychain.set('user_token', AccountService.user_token, false).then(() => {
-      this.keychain.get('user_token')
-        .then(value => console.log('Got value', value))
-        .catch(err => console.error('Error getting', err));
-    })
-    .catch(err => console.error('Error setting', err));
+    // this.keychain.set('user_token', AccountService.user_token, false).then(() => {
+    //   this.keychain.get('user_token')
+    //     .then(value => console.log('Got value', value))
+    //     .catch(err => console.error('Error getting', err));
+    // })
+    // .catch(err => console.error('Error setting', err));
   }
 }
 

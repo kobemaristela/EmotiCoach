@@ -37,25 +37,17 @@
 
 <ion-footer *ngIf="currentPage == 'feed'">
   <ion-toolbar color="medium">
-    <ion-grid>
-      <ion-row class="ion-align-items-center">
-        <ion-col size="2">
-
-        </ion-col>
-        <ion-col size="8">
-          <ion-row>
-            <ion-label color="dark">Tell Others Your Working Out!</ion-label>
-          </ion-row>
-          <ion-row>
-          </ion-row>
-        </ion-col>
-        <ion-col size="2">
-          <ion-button (click)="modelSendMsg()" expand="block" fill="clear">
-            <ion-icon name="send" slot="icon-only"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="10">
+        <ion-textarea autoGrow="true" class="message-input" rows="1" maxLength="500" [(ngModel)]="msg">
+        </ion-textarea>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button (click)="sendMsg()" expand="block" fill="clear">
+          <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 
 

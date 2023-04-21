@@ -175,13 +175,19 @@ export class RequestSessionService {
     return res;
   }
 
-  getAllSessions():Observable<any> {
+  getAllSessions(start_date: string, length: number):Observable<any> {
+    console.log(start_date, length);
+    const formData = new FormData();
+    formData.append("start_date", start_date);
+    formData.append("length", String(length));
+
     let tableParam = {
             headers: {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
-    let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/getallsessionsrange", formData,tableParam);
+    // let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions",tableParam);
     
     return res;
   

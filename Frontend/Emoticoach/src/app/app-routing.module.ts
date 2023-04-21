@@ -15,10 +15,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
-  },
-  {
     path: 'log-workout',
     loadChildren: () => import('./pages/log-workout/log-workout.module').then( m => m.LogWorkoutPageModule)
   },
@@ -29,10 +25,6 @@ const routes: Routes = [
   {
     path: 'graph-hr',
     loadChildren: () => import('./pages/graph-hr/graph-hr.module').then( m => m.GraphHrPageModule)
-  },
-  {
-    path: 'workouts-dashboard',
-    loadChildren: () => import('./pages/workouts-dashboard/workouts-dashboard.module').then( m => m.WorkoutsDashboardPageModule)
   },
   {
     path: 'graph-onerm',
@@ -67,13 +59,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/graph-livedata/graph-livedata.module').then( m => m.GraphLivedataPageModule)
   },
   {
-    path: 'gym-buddy',
-    loadChildren: () => import('./pages/gym-buddy/gym-buddy.module').then( m => m.GymBuddyPageModule)
-  },
-  {
     path: 'template-creator',
     loadChildren: () => import('./pages/template-creator/template-creator.module').then( m => m.TemplateCreatorPageModule)
   },
+  { path: '**', redirectTo: '' },
 
 ];
 

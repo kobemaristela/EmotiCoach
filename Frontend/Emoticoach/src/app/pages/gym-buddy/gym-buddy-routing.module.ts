@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: '',
     component: GymBuddyPage
+  },
+  {
+    path: 'gym-selection',
+    loadChildren: () => import('./gym-selection/gym-selection.module').then( m => m.GymSelectionPageModule)
   }
 ];
 

@@ -19,6 +19,10 @@ const routes: Routes = [
         path: 'sync',
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
+      // {
+      //   path: 'social',
+      //   loadChildren: () => import('../pages/gym-buddy/gym-selection/gym-selection.module').then( m => m.GymSelectionPageModule)
+      // },
       {
         path: 'social',
         loadChildren: () => import('../pages/gym-buddy/gym-buddy.module').then( m => m.GymBuddyPageModule)
@@ -48,6 +52,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/templates/templates.module').then( m => m.TemplatesPageModule)
       },
       {
+        path: 'workout-tables',
+        loadChildren: () => import('../pages/workout-tables/workout-tables.module').then( m => m.WorkoutTablesPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
@@ -59,6 +67,7 @@ const routes: Routes = [
     redirectTo: '/tabs/home',
     pathMatch: 'full'
   }
+  
 ];
 
 @NgModule({
