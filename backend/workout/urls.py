@@ -5,7 +5,7 @@ urlpatterns = [
     path('getsession', GetSession.as_view(), name="getsession"),
     path('setsession', SetSession.as_view(), name="setsession"),
     path('getallsessions', GetAllSessions.as_view(), name="getallsessions"),
-    path('getallsessionsrange', GetAllSessionsRange.as_view, name="getallsessionsrange"),
+    path('getallsessionsrange', GetAllSessionsRange.as_view(), name="getallsessionsrange"),
     path('deletesession', DeleteSession.as_view(), name="deletesession"),
     path('editsession', EditSession.as_view(), name="editsession"),
 
