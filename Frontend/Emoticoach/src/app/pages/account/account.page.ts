@@ -32,7 +32,9 @@ export class AccountPage implements OnInit {
   user$: Observable<user>;
 
 
+
   constructor(private accountService: AccountService, private theme: ThemeService,  public navCtrl: NavController) {
+
     this.accountPage = true;
     this.emotibitPage = false;
     this.settingsPage = false;
@@ -94,11 +96,27 @@ export class AccountPage implements OnInit {
   }
 
 
-  editInfo(){
-    console.log(this.user_firstname)
-    console.log(this.user_lastname)
-    console.log(this.user_email)
-    this.accountService.editAccountInfo(this.user_firstname,this.user_lastname,this.user_email,this.user_pass)
+  async editInfo(){
+    this.user$ = this.accountService.editAccountInfo(this.user_firstname, this.user_lastname, this.user_email, this.user_pass);
+    this.user$.subscribe((res)=> {
+    })
+  }
+
+  async logout(){
+    this.user$ = this.accountService.logout();
+    this.user$.subscribe((res)=> {
+      if(res){
+        this.navCtrl.navigateForward('/login')
+      }
+    })
+  }
+  async deleteAccount(){
+    this.user$ = this.accountService.deleteAccount();
+    this.user$.subscribe((res)=> {
+      if(res){
+        this.navCtrl.navigateForward('/login')
+      }
+    })
   }
 
   ngOnInit() {

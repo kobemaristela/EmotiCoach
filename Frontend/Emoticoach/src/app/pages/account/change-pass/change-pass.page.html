@@ -1,0 +1,24 @@
+<ion-content>
+  <div id="header">
+    <div id="app-bar">
+      <ion-icon name = "arrow-back" routerLink="/tabs/account"></ion-icon>
+    </div>
+    <h1>Password Change</h1>
+  </div>
+  <div class="wrapper">
+    <ion-card class="form-wrapper">
+      <ion-card-content>
+        <ion-item>
+          <ion-icon name="lock-closed"></ion-icon>
+          <ion-input type="password" placeholder="New Password" [(ngModel)]="userData.new_pass"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-icon name="checkmark-circle-outline"></ion-icon>
+          <ion-input type="password" placeholder="Retype Password" [(ngModel)]="userData.confirm_pass"></ion-input>
+        </ion-item>
+        <span class="error-message" *ngIf="matching == false">Passwords do not match</span>
+        <ion-button expand="block" (click)="changePassword()">Change Password</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
