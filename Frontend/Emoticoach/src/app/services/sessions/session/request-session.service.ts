@@ -179,7 +179,7 @@ export class RequestSessionService {
     console.log(start_date, length);
     const formData = new FormData();
     formData.append("start_date", start_date);
-    formData.append("length", String(length));
+    formData.append("length", length.toString());
 
     let tableParam = {
             headers: {

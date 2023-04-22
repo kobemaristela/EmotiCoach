@@ -1,34 +1,34 @@
-<ion-item-sliding>
-  <ion-item class="slide">
+<ion-item-sliding no-lines>
+  <ion-item no-lines  class="slide">
     <ion-grid>
       <ion-row>
-        <ion-col size="%5">
-          <ion-item lines="none" >
+        <ion-col size="%1">
+          <ion-item no-lines>
             <div class="numberLabel">
               {{setCount}} 
             </div>
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item lines="none">
+          <ion-item no-lines>
             <ion-icon size="medium" name="repeat-outline"></ion-icon>
-            <ion-input color="medium" [clearOnEdit]="false" type="number" min="0" placeholder="Reps" [(ngModel)]="set.reps"
+            <ion-input color="success" [clearOnEdit]="false" type="number" min="0" placeholder="Reps" [(ngModel)]="set.reps"
               inputmode="numeric">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item lines="none">
+          <ion-item no-lines>
             <ion-icon size="medium" name="barbell-outline"></ion-icon>
-            <ion-input color="medium" [clearOnEdit]="false" type="number" min=0 placeholder="Lbs" [(ngModel)]="set.weight"
+            <ion-input color="success" [clearOnEdit]="false" type="number" min=0 placeholder="Lbs" [(ngModel)]="set.weight"
               inputmode="numeric">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
-          <ion-item lines="none">
+          <ion-item no-lines>
             <ion-icon size="medium" name="walk-outline"></ion-icon>
-            <ion-input color="medium" [clearOnEdit]="false" type="number" min=0 placeholder="RPE" [(ngModel)]="set.rpe"
+            <ion-input color="success" [clearOnEdit]="false" type="number" min=0 placeholder="RPE" [(ngModel)]="set.rpe"
               inputmode="numeric">
             </ion-input>
           </ion-item>
