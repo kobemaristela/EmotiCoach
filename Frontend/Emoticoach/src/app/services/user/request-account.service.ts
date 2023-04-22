@@ -17,18 +17,34 @@ export class RequestAccountService {
     const formData = new FormData();
     formData.append("username", username);
     formData.append("password", password);
-
-    let tableParam = {
-      headers: {
-        "Authorization": '',
-      }
-  }
-  let res = this.http.post<any>("https://emotidev.maristela.net/user/login", formData,tableParam);
+  let res = this.http.post<any>("https://emotidev.maristela.net/user/login", formData);
     res.subscribe(data => {
       console.log("login data",data)
     })
     return res;
   }
+
+  logout(): Observable<any>{
+    let tableParam = {
+     headers: {
+       "Authorization": ("token " + AccountService.user_token),
+     }
+    }
+    let res = this.http.get<any>("https://emotidev.maristela.net/user/logout", tableParam);
+    return res;
+  }
+
+  deleteAccount(): Observable<any>{
+    let tableParam = {
+     headers: {
+       "Authorization": ("token " + AccountService.user_token),
+     }
+    }
+    let res = this.http.get<any>("https://emotidev.maristela.net/user/delete", tableParam);
+    console.log(res)
+    return res;
+  }
+
   editAccountInfo(first_name:string, last_name:string, email:string, password:string):Observable<any>{
     const formData = new FormData();
     formData.append("first_name", first_name);
@@ -38,10 +54,13 @@ export class RequestAccountService {
 
     let tableParam = {
       headers: {
-        "Authorization": '',
+        "Authorization": ("token " + AccountService.user_token),
       }
   }
   let res = this.http.post<any>("https://emotidev.maristela.net/user/edit", formData,tableParam);
+  res.subscribe(data => {
+    console.log("edit respose",data)
+  })
     return res;
   }
 }
