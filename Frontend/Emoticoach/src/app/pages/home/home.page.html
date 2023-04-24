@@ -19,7 +19,7 @@
 
 <ion-content>
 
-  <ion-card class="myCard">
+  <ion-card class="prCard">
     <img src="../../../assets/winner_leafs.png" />
     <div class="myOverlay">
 
@@ -49,16 +49,15 @@
         <ion-card *ngFor="let card of homepageCards; let i = index" button="true" color="dark" routerLink={{routing[i]}}
           routerLinkActive="active" routerDirection="root">
           <ion-card-content>
-            <ion-list lines="none">
-              <ion-item>
+            
+              <ion-item lines="none">
                 <ion-icon slot="start" name={{icons[i]}}></ion-icon>
-                <ion-label color="light">
-                  <h2 style="font-size:18px" style="color: #fff">{{upperText[i]}}</h2>
-                  <!-- <h3 style="font-size:16px" style="color: #929292">{{lowerText[i]}}</h3> -->
+                <ion-label>
+                 {{upperText[i]}}
                 </ion-label>
               </ion-item>
 
-            </ion-list>
+
           </ion-card-content>
         </ion-card>
       </ion-col>

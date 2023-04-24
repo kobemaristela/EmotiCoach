@@ -1,11 +1,14 @@
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-button expand="block" routerLink="/tabs/home">
-      <ion-icon name="arrow-back"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  <ion-title>Profile</ion-title>
-</ion-toolbar>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/home">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+  </ion-toolbar>
+  
+</ion-header>
 
 <ion-content>
   <ion-grid>
@@ -85,7 +88,8 @@
               </ion-card-content>
             </ion-card>
           </ion-col>
-
+          <ion-button (click)="changeTheme()">change theme</ion-button>
+          <ion-button (click)="logout()">logut </ion-button>
     </ion-row>
   </ion-grid>
 </ion-content>

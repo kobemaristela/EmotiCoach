@@ -28,7 +28,7 @@ export class RequestSessionService {
     return res;
   }
 
-  postDeleteSessionObservable(sessionId: number):Observable<any> {
+  postDeleteSession(sessionId: number):Observable<any> {
     const formData = new FormData();
     formData.append("id", JSON.stringify(sessionId));
     let tableParam = {

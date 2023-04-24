@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 import { user } from 'src/app/services/user/Iuser';
-
 import { AccountService } from 'src/app/services/user/account.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class AccountPage implements OnInit {
   user$: Observable<user>;
 
 
-  constructor(private accountService: AccountService, public navCtrl: NavController) {
+  constructor(private accountService: AccountService, private theme: ThemeService,  public navCtrl: NavController) {
     this.accountPage = true;
     this.emotibitPage = false;
     this.settingsPage = false;
@@ -117,4 +117,10 @@ export class AccountPage implements OnInit {
     this.displayTimezone()
   }
 
+  changeTheme(){
+    this.theme.activeTheme();
+  }
+  logout() {
+    this.navCtrl.navigateRoot('/login')
+  }
 }

@@ -1,58 +1,42 @@
-
 <ion-item-sliding>
-<ion-item class="slide">
-<ion-grid>
-  <ion-row>
-    <ion-col size="%5">
-      <ion-item lines="none">
-      {{setCount}}
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item lines="none">
-        <ion-icon size="medium" name="repeat-outline"></ion-icon>
-        <ion-input 
-          [clearOnEdit]="false" 
-          type="number"
-          min = "0"
-          placeholder="Reps" 
-          [(ngModel)]="set.reps"
-          inputmode="numeric"
-        >
-        </ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item lines="none">
-        <ion-icon size="medium" name="barbell-outline"></ion-icon>
-        <ion-input 
-          [clearOnEdit]="false" 
-          type="number" 
-          min = 0
-          placeholder="Lbs" 
-          [(ngModel)]="set.weight"
-          inputmode="numeric">
-        </ion-input>
-      </ion-item>
-    </ion-col>
-    <ion-col>
-      <ion-item lines="none">
-        <ion-icon size="medium" name="walk-outline"></ion-icon>
-        <ion-input 
-          [clearOnEdit]="false" 
-          type="number"
-          min = 0
-          placeholder="RPE" 
-          [(ngModel)]="set.rpe"
-          inputmode="numeric"
-          >
-        </ion-input>
-      </ion-item>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-</ion-item>
-<ion-item-options>
-  <ion-item-option (click)="deleteSet()">Delete</ion-item-option>
-</ion-item-options>
+  <ion-item class="slide">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="%5">
+          <ion-item lines="none" >
+            <div class="numberLabel">
+              {{setCount}} 
+            </div>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-icon size="medium" name="repeat-outline"></ion-icon>
+            <ion-input color="medium" [clearOnEdit]="false" type="number" min="0" placeholder="Reps" [(ngModel)]="set.reps"
+              inputmode="numeric">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-icon size="medium" name="barbell-outline"></ion-icon>
+            <ion-input color="medium" [clearOnEdit]="false" type="number" min=0 placeholder="Lbs" [(ngModel)]="set.weight"
+              inputmode="numeric">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-icon size="medium" name="walk-outline"></ion-icon>
+            <ion-input color="medium" [clearOnEdit]="false" type="number" min=0 placeholder="RPE" [(ngModel)]="set.rpe"
+              inputmode="numeric">
+            </ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-item>
+  <ion-item-options>
+    <ion-item-option (click)="deleteSet()">Delete</ion-item-option>
+  </ion-item-options>
 </ion-item-sliding>
