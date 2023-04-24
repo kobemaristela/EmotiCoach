@@ -1,9 +1,8 @@
 ion-content{
-    --background: #323232;
-
+ 
     #header{
         height: 33%;
-        background: #833535;
+        background: var(--ion-color-primary);
         border-radius: 0 0 20px 20px;
         display: flex;
         flex-direction: column;
@@ -70,6 +69,7 @@ ion-content{
         }
 
         .line-text{
+            color: var(--ion-color-success);
             padding: 0 30px;
             position: relative;
             height: 20px;

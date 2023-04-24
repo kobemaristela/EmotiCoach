@@ -11,10 +11,11 @@ ion-item-divider.top-header {
 
 
 ion-card {
-    --background: #666666;
+    --background: var(--ion-color-light);
     height: 70%;
     border: 2px solid #ffffff;
     border-radius: 10px !important;
+
     ion-card-content{
         padding: 0px !important;
         border-width: 0px;
@@ -28,14 +29,15 @@ ion-button {
 
 
 ion-title {
-   
     color: #ffffff;
 }
 
 .name {
     font-size: 120%;
     font-weight: 500;
+    color: var(--ion-color-success);
 }
+
 .description {
     font-weight: 20;
     color: #a5a5a5;
@@ -47,10 +49,10 @@ ion-icon {
     size: large !important;
 }
 ion-item{
-    --background: #5a5a5a;
-
+    --background: var(--ion-color-dark);
 }
 
+
 .selected-card {
-    --background: rgba(81, 38, 38, 0.629);
+    --background: rgb(129, 58, 58, .5);
 }

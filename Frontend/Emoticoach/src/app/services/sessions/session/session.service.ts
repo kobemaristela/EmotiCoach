@@ -5,12 +5,12 @@ import { activity } from '../activity/Iactivity';
 import { set } from '../sets/Iset';
 import { RequestSessionService } from './request-session.service';
 
-import { Observable, Subject, Subscription, first } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { debounceTime, tap,throttleTime, } from 'rxjs/operators'
 import { Activity } from '../activity/Activity';
 import { Set } from '../sets/Set';
 import { sessionRequest } from './IsessionRequest';
-import { data } from 'cypress/types/jquery';
+
 
 
 @Injectable({

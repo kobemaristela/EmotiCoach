@@ -32,7 +32,9 @@ export class AccountPage implements OnInit {
   user$: Observable<user>;
 
 
+
   constructor(private accountService: AccountService, private theme: ThemeService,  public navCtrl: NavController) {
+
     this.accountPage = true;
     this.emotibitPage = false;
     this.settingsPage = false;
@@ -102,6 +104,14 @@ export class AccountPage implements OnInit {
 
   async logout(){
     this.user$ = this.accountService.logout();
+    this.user$.subscribe((res)=> {
+      if(res){
+        this.navCtrl.navigateForward('/login')
+      }
+    })
+  }
+  async deleteAccount(){
+    this.user$ = this.accountService.deleteAccount();
     this.user$.subscribe((res)=> {
       if(res){
         this.navCtrl.navigateForward('/login')

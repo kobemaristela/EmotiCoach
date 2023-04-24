@@ -19,7 +19,7 @@
       </ion-button>
 
     </ion-item-divider>
-    <ion-item-divider color="dark" *ngIf="deleting">
+    <ion-item-divider sticky color="dark" *ngIf="deleting">
       <ion-grid>
         <ion-row>
           <ion-label color="success">
@@ -40,7 +40,7 @@
       [ngClass]="{ 'selected-card': currentSelected[i]}"
       color="secondary"
       >
-      <ion-item  [ngClass]="{ 'selected-card': currentSelected[i]}" (click)="handleClick(i)" color="dark">
+      <ion-item  [ngClass]="{ 'selected-card': currentSelected[i]}" (click)="handleClick(i)" >
         <ion-thumbnail slot="start">
           <app-muscle-svg  [muscles]="sessions[i].muscleGroups" [canSelect]="false" [canOpen]="false"></app-muscle-svg>
         </ion-thumbnail>

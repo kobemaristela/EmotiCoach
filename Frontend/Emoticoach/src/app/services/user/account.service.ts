@@ -28,6 +28,7 @@ export class AccountService {
     this.user$ = new Subject();
     //Remove this ;ater this defaults it to justins hard coded token for testing
     // AccountService.user_token = CHAD_TOKEN
+    // AccountService.user_token = CHAD_TOKEN
     }
 
   login(username:string , password: string): Observable<any>{
@@ -45,6 +46,13 @@ export class AccountService {
 
   logout(): Observable<any>{
     this.requestAccountService.logout().subscribe( d => {
+      this.user$.next(d)
+    });
+    return this.user$;
+  }
+
+  deleteAccount(): Observable<any>{
+    this.requestAccountService.deleteAccount().subscribe( d => {
       this.user$.next(d)
     });
     return this.user$;
