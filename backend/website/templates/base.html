@@ -1,0 +1,85 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
+        <title>EmotiCoach</title>
+        <link href="{% static 'images/favicon.ico' %}" rel="icon">
+
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.css' %}">
+
+        {% block css %}<!-- Imported CSS -->{% endblock %}
+    </head>
+    
+    <body>
+        <!-- ***** Preloader Start ***** -->
+        <div id="js-preloader" class="js-preloader">
+        <div class="preloader-inner">
+            <span class="dot"></span>
+            <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+            </div>
+        </div>
+        </div>
+        <!-- ***** Preloader End ***** -->
+        
+        <!-- ***** Header Area Start ***** -->
+        <header class="header-area header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <!-- ***** Logo Start ***** -->
+                            <a href="{% url 'main' %}" class="logo">
+                                <img src="{% static 'images/logo.svg' %}" alt="EmotiCoach Logo" max-width="100%" height="78"> 
+                            </a>
+                            <!-- ***** Logo End ***** -->
+                            <!-- ***** Menu Start ***** -->
+                            <ul class="nav">
+                                <li class="nav-item"><a href="{% url 'main' %}">Home</a></li>
+                                <li class="nav-item"><a href="{% url 'about' %}">About</a></li>
+                                <li class="nav-item"><a href="{% url 'team' %}">Team</a></li>
+                                <li class="nav-item"><a href="{% url 'resources' %}">Resources</a></li>
+                                <li class="nav-item"><a href="{% url 'docs' %}">Docs</a></li>
+                                <li class="main-button"><a href="{% url 'home' %}">Login</a></li>
+                            </ul>        
+                            <a class='menu-trigger'>
+                                <span>Menu</span>
+                            </a>
+                            <!-- ***** Menu End ***** -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- ***** Header Area End ***** -->
+
+        {% block content %}<!-- Content Goes Here -->{% endblock %}
+        
+        <!-- jQuery -->
+        <script src="{% static 'js/jquery-2.1.0.min.js' %}"></script>
+
+        <!-- Bootstrap -->
+        <script src="{% static 'js/popper.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+        <!-- Plugins -->
+        <script src="{% static 'js/scrollreveal.min.js' %}"></script>
+        <script src="{% static 'js/waypoints.min.js' %}"></script>
+        <script src="{% static 'js/jquery.counterup.min.js' %}"></script>
+        <script src="{% static 'js/imgfix.min.js' %}"></script> 
+        <script src="{% static 'js/mixitup.js' %}"></script> 
+        <script src="{% static 'js/accordions.js' %}"></script>
+        
+        <!-- Global Init -->
+        <script src="{% static 'js/custom.js' %}"></script>
+    </body>
+</html>
