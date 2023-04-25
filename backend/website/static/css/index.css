@@ -163,6 +163,7 @@ body {
   font-weight: 400;
   text-transform: uppercase;
   transition: all .3s;
+  border-radius: 12px;
 }
 
 .main-button a:hover {
