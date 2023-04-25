@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/docs.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                    <h2>API <em>Documentation</em></h2>
+                    <img src="{% static 'images/line-dec.png' %}" alt="waves">
+                    <p>List of all available APIs</p>
+                </div>
+            </div>
+        </div>
+        <table class="table table-bordered">
+            <thead class="thead-light">
+                <tr>
+                  <th scope="col">Type</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Parameters</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in api %}
+                  <tr>
+                    <td>{{ i.type }}</td>
+                    <td>{{ i.address }}</td>
+                    <td>{{ i.parameters|linebreaks }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+        </table>
+    </div>
+{% endblock %}

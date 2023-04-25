@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/resources.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="section" id="our-features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading">
+                        <h2>Relevant <em>Resources</em></h2>
+                        <img src="{% static 'images/line-dec.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+            <div class="row" id="tabs">
+            <div class="col-lg-4">
+                <ul>
+                <li><a href='#tabs-1'><img src="{% static 'images/books.png' %}" alt="">Books</a></li>
+                <li><a href='#tabs-2'><img src="{% static 'images/web.png' %}" alt="">Websites</a></li>
+                <li><a href='#tabs-3'><img src="{% static 'images/articles.png' %}" alt="">Articles/Papers</a></li>
+                <li><a href='#tabs-4'><img src="{% static 'images/news.png' %}" alt="">News</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-8">
+                <section class='tabs-content'>
+                <!-- Books -->
+                <article id='tabs-1'>
+                    <!-- 1st Book -->
+                    <a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow-dp-1098125975/dp/1098125975"><img src="{% static 'images/HandsOnML.jpg' %}" alt="1st Book Resource"></a>
+                    <a href="https://www.amazon.com/Hands-Machine-Learning-Scikit-Learn-TensorFlow-dp-1098125975/dp/1098125975"><h4>Hands-On Machine Learning with Scikit-Learn, Keras, and TensorFlow: Concepts, Tools, and Techniques to Build Intelligent Systems</h4></a>
+                    <p>A book to help with our goal of having a good model built on good data.</p>
+
+                    <!-- 2nd Book -->
+                    <a href="https://www.amazon.com/C-Programming-Modern-Approach-2nd/dp/0393979504"><img src="{% static 'images/c_prog.jpg' %}" alt="2nd Book Resource"></a>
+                    <a href="https://www.amazon.com/C-Programming-Modern-Approach-2nd/dp/0393979504"><h4>C Programming: A Modern Approach</h4></a>
+                    <p>This book is to help with us pushing C to its limit on the Emotibit </p>  
+                </article>
+
+                <!-- Websites -->
+                <article id='tabs-2'>
+                    <a href="https://www.emotibit.com/"><img src="{% static 'images/emotibit.png' %}" alt="1st Book"></a>
+                    <a href="https://www.emotibit.com/"><h4>EmotiBit</h4></a>
+                    <p>Emotibit is the hardware we are working with.</p>
+                </article>
+
+                <!-- Articles/Papers -->
+                <article id='tabs-3'>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/31547220/"><img src="{% static 'images/pubmed.svg' %}" alt="1st Article" height="250"></a>
+                    <a href="https://pubmed.ncbi.nlm.nih.gov/31547220/"><h4>Wearable-Based Affect Recognition-A Review</h4></a>
+                    <p>This paper goes over affective computing with wearble sensors.</p>
+                </article>
+
+                <!-- News -->
+                <article id='tabs-4'>
+                    <a href="https://www.youtube.com/watch?v=nNhhVE4TjgM"><img src="{% static 'images/nasa.png' %}" alt="1st News"></a>
+                    <a href="https://www.youtube.com/watch?v=nNhhVE4TjgM"><h4>NASA using EmotiBit</h4></a>
+                    <p>In this video the emotibit is used to stream emotional data in pair with a VR headset at NASA.</p>
+                </article>
+                </section>
+            </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

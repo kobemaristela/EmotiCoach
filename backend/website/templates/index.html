@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="main-banner" id="top">
+        <video autoplay muted loop id="bg-video">
+            <source src="{% static 'images/intro.mp4' %}" type="video/mp4" />
+        </video>
+
+        <div class="video-overlay header-text">
+            <div class="caption">
+                <h6>work harder, get stronger</h6>
+                <h2>easy with our <em>app</em></h2>
+                <div class="main-button scroll-to-section">
+                    <a href="{% url 'register' %}">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
