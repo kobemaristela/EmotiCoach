@@ -12,7 +12,7 @@
       <canvas  id="MuscleGroupChart" >{{ chart }}</canvas>
   </div>
 
-  <ion-grid style="border-bottom: 2px solid grey">
+  <ion-grid style="border-bottom: 2px solid grey" class="date-selection">
     <ion-row>
     <ion-buttons color="#1E1E1E" lines="none">
       <ion-col>
@@ -36,7 +36,7 @@
 
   <ion-grid>
     <ion-row>
-        <ion-item lines="none" color="#1E1E1E">
+        <ion-item lines="none" color="dark">
           <ion-select 
           interface="popover" 
           placeholder="Select muscle group" 
@@ -48,7 +48,38 @@
           </ion-select>
         </ion-item>
     </ion-row>
-  </ion-grid>
+
+    <ion-row class="table-title-color">
+      <ion-col class="left-table-text">
+        <ion-text>This Week</ion-text>
+      </ion-col>
+
+      <ion-col class="right-table-text">
+        <ion-text>Total Reps</ion-text>
+      </ion-col>
+  </ion-row>
+</ion-grid>
+
+<!-- add ngfor loop here to generate data -->
+<ion-grid style="border-bottom: 2px solid">
+  <ion-row *ngFor="let row of musclegroups; let i = index">
+    <ion-buttons>
+      <ion-col class="left-table-text" size="auto">
+        <ion-text color="success">{{musclegroups[i]}}</ion-text>
+      </ion-col>
+
+      <ion-col class="weight-text">
+        <ion-text color="success">{{workoutData[i] | number: '1.0-1' }} reps</ion-text>
+      </ion-col>
+
+      <ion-col class="right">
+        <ion-button>
+          <ion-icon name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-buttons>
+  </ion-row>
+</ion-grid>
 
 </ion-content>
 
