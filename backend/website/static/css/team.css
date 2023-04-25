@@ -639,27 +639,27 @@ banner
 
 /* 
 ---------------------------------------------
-trainers
+Developers
 --------------------------------------------- 
 */
 
-#trainers .section-heading {
+#developers .section-heading {
   padding-top: 50px;
 }
 
-#trainers .trainer-item {
+#developers .trainer-item {
   background-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
   padding: 40px;
 }
 
-#trainers .trainer-item img {
+#developers .trainer-item img {
   width: 100%;
   border-radius: 5px;
 }
 
-#trainers .trainer-item span {
+#developers .trainer-item span {
   font-size: 13px;
   font-weight: 500;
   color: #4e73df;
@@ -668,7 +668,7 @@ trainers
   margin-bottom: 10px;
 }
 
-#trainers .trainer-item h4 {
+#developers .trainer-item h4 {
   font-size: 19px;
   font-weight: 600;
   color: #232d39;
@@ -676,32 +676,32 @@ trainers
   margin-bottom: 18px;
 }
 
-#trainers .trainer-item p {
+#developers .trainer-item p {
   margin-bottom: 20px;
 }
 
-#trainers .trainer-item ul.social-icons li {
+#developers .trainer-item ul.social-icons li {
   display: inline-block;
   margin-right: 12px;
 }
 
-#trainers .trainer-item ul.social-icons li:last-child {
+#developers .trainer-item ul.social-icons li:last-child {
   margin-right: 0px;
 }
 
-#trainers .trainer-item ul.social-icons li a {
+#developers .trainer-item ul.social-icons li a {
   color: #232d39;
   transition: all .3s;
 }
 
-#trainers .trainer-item ul.social-icons li a:hover {
+#developers .trainer-item ul.social-icons li a:hover {
   color: #4e73df;
 }
 
 
 /* 
 ---------------------------------------------
-trainers
+Instructors/Advisor
 --------------------------------------------- 
 */
 
