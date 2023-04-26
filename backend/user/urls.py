@@ -12,6 +12,7 @@ urlpatterns = [
     path('authenticate', AuthenticateUser.as_view(), name="authenticate"),
     
     path('createicon', CreateIcon.as_view(), name="createicon"),
+    path('getallicons', GetAllIcons.as_view(), name="getallicons"),
     path('setweight', SetWeight.as_view(), name="setweight"),
     path('showDb', show_database)
 ]

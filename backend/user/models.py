@@ -9,7 +9,7 @@ class Icon(models.Model):
 class UserProfile(models.Model):
     auth_user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     weight_goal = models.FloatField()
-    # profile_picture = models.ForeignKey(Icon, on_delete=models.CASCADE, default=1)
+    profile_picture = models.ForeignKey(Icon, on_delete=models.CASCADE, default=1)
 
 class Weight(models.Model):
     datetime = models.DateTimeField(default=timezone.now)
