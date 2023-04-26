@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 from .controller import *
-from user.models import Weight
+from user.models import Weight, Icon
 from datetime import datetime, timedelta
 from django.utils.timezone import now
 
@@ -189,6 +189,15 @@ class GetWeightTable(APIView):
                 change = 1
             # else:
 
+class CreateIcon(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        image = request.POST["image"]
+
+        Icon.objects.create(image=image)
+
+        return JsonResponse({"response": "success"})
 
 
 
