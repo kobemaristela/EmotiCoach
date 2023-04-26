@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from buddy.models import Friend
+from user.models import UserProfile, Icon
 from django.http import JsonResponse
 
 from rest_framework.views import APIView
@@ -43,8 +44,12 @@ class GetAllFriends(APIView):
         if not friends:
             return JsonResponse({"friends": []})
 
-        friends = list(User.objects.filter(id__in = friends).values("username"))
-        friends = [friend["username"] for friend in friends]
+        friends = User.objects.filter(id__in = friends).values("id", "username")
+        response = list()
+        for friend in friends:
+            icon = UserProfile.objects.get(auth_user_id=friend["id"])
+            icon = list(Icon.objects.filter(id=icon.profile_picture_id).values("image"))
+            icon = icon[0]["image"]
+            response.append({"icon": icon, "username":friend["username"], "id":friend["id"]})
 
-
-        return JsonResponse({"friends": friends})
+        return JsonResponse({"friends": response})
