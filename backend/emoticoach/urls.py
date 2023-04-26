@@ -27,4 +27,5 @@ urlpatterns = [
     path('demo/', include('demo.urls')),
     path('update', include('update.urls')),
     path('webapp/', include('webapp.urls')),
+    path('buddy/', include('buddy.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
