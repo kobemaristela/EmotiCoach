@@ -1,13 +1,39 @@
 ion-select{
     width: 400px;
     text-align-last: center;
+  
 }
 
-ion-text{
-    text-align: center;
+ion-icon{
+    color: #fff;
 }
 
-ion-buttons{
+.date-selection{
     width: 400px;
     text-align-last: center;
 }
+
+.left-table-text{
+    padding-left: 10px;
+    text-align: left;
+}
+
+.right-table-text{
+    padding-right: 10px;
+    text-align: right;
+}
+
+.weight-text{
+    text-align: center;
+}
+
+.table-title-color{
+    background-color: #833535;
+}
+
+.right{
+    width: 250px;
+    text-align-last: right;
+}
+
+
