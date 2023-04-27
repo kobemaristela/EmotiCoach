@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ModalAddFriendsComponent } from './modal-add-friends/modal-add-friends.component';
-import { ModalSendMsgComponent } from './modal-send-msg/modal-send-msg.component';
 import { ChatService } from 'src/app/services/chat/chat.service';
 import { Observable } from 'rxjs';
 import { chat } from 'src/app/services/chat/IChat';
+import { BuddyService } from 'src/app/services/buddy/buddy.service';
 
 declare var google: any;
 
@@ -15,13 +15,17 @@ declare var google: any;
 })
 export class GymBuddyPage implements OnInit {
   currentPage: string = "feed";
-  msg: string = "";
-  constructor( private modalCtrl: ModalController, private chatService: ChatService) { 
+  feedselected: boolean = false;
+
+
+  constructor(private modalCtrl: ModalController, private buddyService: BuddyService) {
   }
 
   ngOnInit() {
-   
+
   }
+
+  goBack() { }
 
   toFeed() {
     this.currentPage = "feed";
@@ -32,23 +36,23 @@ export class GymBuddyPage implements OnInit {
   }
 
   async openModal() {
-    if ( this.currentPage == "friends") {
+    if (this.currentPage == "friends") {
       const modal = await this.modalCtrl.create({
         component: ModalAddFriendsComponent,
       });
       modal.present();
+
+
+      const { data, role } = await modal.onWillDismiss()
+
+      if (role == "confirm") {
+        console.log("confirming", data)
+        this.buddyService.addFriend(data);
+
+      }
     }
-
   }
-  async sendMsg() {
-    this.chatService.addChatMsg(this.msg);
-      // const modal = await this.modalCtrl.create({
-      //   component: ModalSendMsgComponent,
-      // });
-      // modal.present();
 
-    // const { data, role } = await modal.onWillDismiss();
-  }
 
 
 }

@@ -11,7 +11,9 @@ import { FeedComponent } from './feed/feed.component';
 import { FriendsListComponent } from './friends-list/friends-list.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-GoogleMapsModule
+import { GymSelectComponent } from './gym-select/gym-select.component';
+
+
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -21,6 +23,6 @@ GoogleMapsModule
     GoogleMapsModule,
     GymBuddyPageRoutingModule
   ],
-  declarations: [GymBuddyPage, FeedComponent, FriendsListComponent]
+  declarations: [GymBuddyPage, FeedComponent, FriendsListComponent, GymSelectComponent]
 })
 export class GymBuddyPageModule {}

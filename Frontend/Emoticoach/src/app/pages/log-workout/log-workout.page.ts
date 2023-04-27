@@ -132,7 +132,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
     if (canSave) {
       console.log("saving in logworkout", this.currentSession);
       this.servSession.saveSession(); 
-      this.servSession.getSessions(new Date("YYYY-MM-DD").toString(), 100);
+      this.servSession.getSessions(new Date("YYYY-MM-DD").toString().split("T")[0], 100);
       this.presentAlert("Save Succesfull","","");
       
     } else {

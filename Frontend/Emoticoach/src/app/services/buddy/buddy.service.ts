@@ -1,41 +1,39 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { friend } from './Ifriend';
+import { RequestBuddyService } from './request-buddy.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class BuddyService {
-  friendsList$: BehaviorSubject<friend[]>;
-  userName: string = "User_"
-  chad: friend = {username:"Chad", gym:"UNR", profilePicture:"fish"};
-  jaemin: friend = { username:"Jaemin47", gym:"American Iron", profilePicture:"fish"}
-  friendList: friend[] = [this.chad, this.jaemin];
-  gyms = ["UNR gym", "American Iron", "Planet Fitness"];
-  currentGym: string = "";
+  protected friendsList$: BehaviorSubject<friend[]>;
+
+  protected friendList: friend[] = [];
 
 
-  constructor() { 
+  constructor(private requestBuddyService:RequestBuddyService) { 
     this.friendsList$ = new BehaviorSubject<friend[]>(this.friendList);
+    
   }
   
-  setCurrentGym(gym: string){
-    this.currentGym = gym;
-  }
 
   getFriendList(): BehaviorSubject<friend[]> {
-    // this.friendsList = http request
+    this.requestBuddyService.getAllFriends().subscribe(d => {
+      this.friendsList$.next(d.friends)
+    });
     return this.friendsList$
   }
 
-  AddFriends(): void {
-    this.friendList.push({username:"User" + Math.round(Math.random()*10), gym:this.gyms[Math.floor(Math.random()*3)], profilePicture:"fish"})
-    this.friendsList$.next(this.friendList)
-  }
-
-  addFriend(userName: string) {
-
+  addFriend(username: string):string {
+   for(let i = 0; i < this.friendList.length; i++){
+    if(username == this.friendList[i].username){
+      return "Already Friends"
+    }
+   }
+   this.requestBuddyService.addFriend(username);
+   return "";
   }
   
 }

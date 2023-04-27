@@ -1,12 +1,16 @@
-<ion-content>
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button expand="block" routerLink="/tabs/home">
-        <ion-icon name="arrow-back"></ion-icon>
+        <ion-icon color="success" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>One Rep Max Graph</ion-title>
   </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
 
   <div class="chart-container">
       <canvas  id="OneRMgraph" >{{ chart }}</canvas>

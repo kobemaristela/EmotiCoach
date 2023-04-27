@@ -56,3 +56,24 @@ ion-item{
 .selected-card {
     --background: rgb(129, 58, 58, .5);
 }
+
+@keyframes slidingAnimation {
+    0% {
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(-70px, 0, 0);
+      -webkit-transform: translate3d(-70px, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+      -webkit-transform: translate3d(0, 0, 0);
+    }
+  }
+  .itemSlidingAnimation {
+    --animation: slidingAnimation;
+    animation: slidingAnimation;
+    --animation-duration: 1000ms;
+    --animation-duraton: 1000ms;
+  }

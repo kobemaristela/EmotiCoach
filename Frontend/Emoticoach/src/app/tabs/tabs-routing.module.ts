@@ -19,10 +19,6 @@ const routes: Routes = [
         path: 'sync',
         loadChildren: () => import('../pages/home/home.module').then(m => m.HomePageModule)
       },
-      // {
-      //   path: 'social',
-      //   loadChildren: () => import('../pages/gym-buddy/gym-selection/gym-selection.module').then( m => m.GymSelectionPageModule)
-      // },
       {
         path: 'social',
         loadChildren: () => import('../pages/gym-buddy/gym-buddy.module').then( m => m.GymBuddyPageModule)
@@ -64,7 +60,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('../pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('../pages/home/home.module').then( m => m.HomePageModule)
   }
   
 ];

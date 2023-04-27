@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { sessionRequest } from 'src/app/services/sessions/session/IsessionRequest';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
 import { NavController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ThemeService } from 'src/app/services/theme/theme.service';
+import { AnimationController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-workouts-dashboard',
@@ -11,13 +13,17 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
   styleUrls: ['./workouts-dashboard.page.scss'],
 })
 export class WorkoutsDashboardPage implements OnInit {
+  
   sessions: sessionRequest[] = [];
   sessions$: Observable<sessionRequest[]>
   deleting: boolean;
   currentSelected: boolean[];
   date: Date;
 
-  constructor(private servSession: SessionService, private theme: ThemeService, private navCtrl: NavController) {
+  constructor(
+    private servSession: SessionService, 
+    private theme: ThemeService, 
+    private navCtrl: NavController) {
     this.date = new Date();
 
   }
@@ -37,6 +43,7 @@ export class WorkoutsDashboardPage implements OnInit {
       this.sessions = res.slice().reverse();
       console.log("loading sessions", this.sessions)
       this.currentSelected = new Array(this.sessions.length);
+
     });
 
   }

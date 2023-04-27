@@ -3,6 +3,7 @@ import { data } from 'cypress/types/jquery';
 import { Observable, Subscription } from 'rxjs';
 import { friend } from 'src/app/services/buddy/Ifriend';
 import { BuddyService } from 'src/app/services/buddy/buddy.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-friends-list',
@@ -13,16 +14,18 @@ export class FriendsListComponent implements OnInit, OnDestroy {
   loaded = false;
   friendList$?: Observable<friend[]|undefined>;
   subscriberFriend: Subscription;
-  friendList: friend[] = []
+  friendList: friend[] = [];
   searchList: friend[] = [];
-  constructor(private servBuddy: BuddyService) { 
+
+
+  constructor(private servBuddy: BuddyService, private _sanitizer: DomSanitizer) { 
     
   }
   
   ngOnInit() {
-    this.loaded = false;
+
     this.loadFriends();
-    setTimeout(() => this.servBuddy.AddFriends(), 1000)
+    // setTimeout(() => this.servBuddy.AddFriends(), 1000)
 
 
   }
@@ -36,10 +39,12 @@ export class FriendsListComponent implements OnInit, OnDestroy {
     this.friendList$ = this.servBuddy.getFriendList();
     this.subscriberFriend = this.friendList$?.subscribe( data => {
       if (data){
-        this.loaded=true;
+
         this.friendList = data
         this.searchList = data
+        this.loaded=true;
       }
+
     });
     
   }

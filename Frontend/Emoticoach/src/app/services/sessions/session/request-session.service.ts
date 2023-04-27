@@ -38,10 +38,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
-
-    // res.subscribe(data => {
-    //   console.log("delete responce",data)
-    // })
     return res;
   }
   
@@ -91,9 +87,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editset", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post save set",data)
-    })
     return res;
   }
 
@@ -111,9 +104,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setactivity", formData,tableParam)
-    res.subscribe( (d)=>{
-      console.log(d)
-    })
     return res;
   }
 
@@ -129,9 +119,6 @@ export class RequestSessionService {
     }
 
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteset", formData,tableParam)
-    res.subscribe( d => {
-      console.log("deleting set", d);
-    });
     return res;
   }
 
@@ -169,9 +156,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
-    res.subscribe( data => {
-      console.log("set set",data)
-    })
     return res;
   }
 

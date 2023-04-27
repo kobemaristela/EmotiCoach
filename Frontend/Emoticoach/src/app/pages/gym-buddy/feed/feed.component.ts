@@ -1,7 +1,8 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { InfiniteScrollCustomEvent, IonContent } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { chat } from 'src/app/services/chat/IChat';
+import { IGym } from 'src/app/services/chat/IGymList';
 import { ChatService } from 'src/app/services/chat/chat.service';
 import { AccountService } from 'src/app/services/user/account.service';
 import { MUSCLE_LIST } from 'src/environments/environment';
@@ -14,9 +15,9 @@ import { MUSCLE_LIST } from 'src/environments/environment';
 export class FeedComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollMe') private content: IonContent;
   loaded = true;
-
+  @Input() currentGym: IGym;
+  msg: string = "";
   messageList$: Observable<chat[]>;
-  musscle: string[] = MUSCLE_LIST;
   userToken: string = "";
 
 
@@ -26,7 +27,7 @@ export class FeedComponent implements OnInit, AfterViewChecked {
 
   ngOnInit() {
     this.userToken = this.account.returnUserToken();
-   
+    console.log("loaded")
     this.loadMsgs();
 
     // this.scrollToBottomOnInit();
@@ -41,13 +42,15 @@ export class FeedComponent implements OnInit, AfterViewChecked {
 
   loadMsgs() {
     this.messageList$ = this.chatService.getChats$();
-    this.messageList$
   }
 
   clicked() {
     console.log("click");
   }
 
+  async sendMsg() {
+    this.chatService.addChatMsg(this.msg);
+  }
 
 
 }

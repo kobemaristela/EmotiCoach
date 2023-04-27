@@ -130,7 +130,5 @@ export class AccountPage implements OnInit {
   changeTheme(){
     this.theme.activeTheme();
   }
-  logout() {
-    this.navCtrl.navigateRoot('/login')
-  }
+ 
 }
