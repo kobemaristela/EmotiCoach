@@ -1,11 +1,12 @@
 import re
 from django.contrib.auth.models import User
+from user.models import UserProfile
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 from .controller import *
-from user.models import Weight
+from user.models import Weight, Icon, UserProfile
 from datetime import datetime, timedelta
 from django.utils.timezone import now
 
@@ -68,15 +69,17 @@ class Register(APIView):
         if User.objects.filter(username=username).exists():
             return JsonResponse({"response": "Username already exists."})
 
-        User.objects.create_user(
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            email=email,
-            password=password
-        )
-
+        user = User.objects.create_user(
+                    first_name=first_name,
+                    last_name=last_name,
+                    username=username,
+                    email=email,
+                    password=password
+                )
+        UserProfile.objects.create(auth_user_id=user.id, weight_goal=0)
+        
         return JsonResponse({"response": "success"})
+
 
 class Logout(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
@@ -97,6 +100,13 @@ class EditAccount(APIView):
         last_name = checkIfParameter(request, "last_name")
         email = checkIfParameter(request, "email")
         password = checkIfParameter(request, "password")
+        weight_goal = checkIfParameter(request, "weight_goal")
+        profile_picture = checkIfParameter(request, "profile_picture")
+
+        # Temporary
+        user = UserProfile.objects.filter(auth_user_id=request.user.id)
+        if not user:
+            UserProfile.objects.create(auth_user_id=request.user.id, weight_goal=0, profile_picture_id=1)
 
         if first_name:
             request.user.first_name = first_name
@@ -114,6 +124,11 @@ class EditAccount(APIView):
             #     user.save()
             request.user.set_password(password)
             request.user.save()
+        if weight_goal:
+            UserProfile.objects.update(weight_goal=weight_goal)
+        if profile_picture:
+            UserProfile.objects.update(profile_picture_id=profile_picture)
+            
 
         return JsonResponse({"response": "success"})
     
@@ -134,6 +149,26 @@ class AuthenticateUser(APIView):
         else:
             return JsonResponse({"Status":"Not Authenticated"})
     
+class CreateIcon(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        image = request.POST["image"]
+
+        Icon.objects.create(image=image)
+
+        return JsonResponse({"response": "success"})
+    
+class GetAllIcons(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        response = list()
+        for icon in Icon.objects.all():
+            response.append({"id": icon.id, "icon":icon.image})
+
+        return JsonResponse({"icons": response})
+        
 
 def show_database(request):
     if request.method == "GET":
