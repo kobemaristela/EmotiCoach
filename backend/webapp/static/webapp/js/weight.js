@@ -8,6 +8,9 @@ let lineChart = document.getElementById("lineChart");
 let weightInput = document.getElementById("weightInput");
 let dateInput = document.getElementById("dateInput");
 let timeInput = document.getElementById("timeInput");
+let addWeightButton = document.getElementById("addWeightButton");
+let submit = document.getElementById("submit");
+
 let currentBold = weekButton;
 
 let currentInterval = 0;
@@ -32,8 +35,24 @@ const setWeightData = async(weight, datetime) => {
     let data = res.json();
     return data;
 }
+const fillWeightData = () => {
+    const date = new Date();
 
-setWeightData(135, "2022-02-11 13:30:22");
+    dateInput.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" +  date.getDate();
+    timeInput.value = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+}
+const submitWeightData = () => {
+    let dt = dateInput.value + "T" + timeInput.value + "Z";
+    let weight = weightInput.value
+
+    setWeightData(weight, dt);
+}
+const getWeightData = () => {
+    
+}
+
+addWeightButton.addEventListener("click", fillWeightData);
+submit.addEventListener("click", submitWeightData)
 
 var data = [{
     x: ["Apr 1", "Apr 2", "Apr 3", "Apr 4", "Apr 5", "Apr 6", "Apr 7", "Apr 8", "Apr 9", "Apr 10", "Apr 11", "Apr 12", "Apr 13", "Apr 14", "Apr 15", "Apr 16", "Apr 17", "Apr 18", "Apr 19", "Apr 20"],

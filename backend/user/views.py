@@ -148,62 +148,7 @@ class AuthenticateUser(APIView):
             return JsonResponse({"Status":"Authenticated"})
         else:
             return JsonResponse({"Status":"Not Authenticated"})
-        
-class SetWeight(APIView):
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        dt = request.POST.get("datetime")
-        weight = request.POST.get("weight")
-        user_id = request.user.id
-
-        weightObject = Weight.objects.create(datetime=dt,
-                              weight=weight,
-                              auth_user=user_id)
-        return JsonResponse({"id":weightObject.id})
     
-class GetWeightTable(APIView):
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        range = int(request.POST["range"])
-        interval = int(request.POST["interval"])
-        interval = interval * range
-
-        currentDatetime = now() - timedelta(days=interval)
-        currentDate = currentDatetime.date()
-
-        weights = Weight.objects.filter(auth_user_id=request.user.id).values("id", "datetime")
-
-        if range == 7:
-            dateRangeStr = currentDate.strftime("%b %d")
-            weights = weights.filter(datetime__date=currentDate)
-        elif range == 28:
-            dateRangeStr = (currentDate-timedelta(7)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
-            weights = weights.filter(datetime__date__gte=currentDate-timedelta(7))
-            weights = weights.filter(datetime__date__lte=currentDate)
-        elif range == 365:
-            dateRangeStr = (currentDate-timedelta(28)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
-            weights = weights.filter(datetime__date__gte=currentDate-timedelta(28))
-            weights = weights.filter(datetime__date__lte=currentDate)
-
-        response = list()
-
-        change = 0
-        for weight in weights:
-            row = dict()
-
-            row["date"] = weight["datetime"].strftime("%b %d")
-            row["time"] = weight["datetime"].strftime("%I:%M %p")
-            row["weight"] = weight["weight"]
-            row["change"] = change
-
-            if change == 0:
-                change = 1
-            # else:
-
 class CreateIcon(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
@@ -223,8 +168,7 @@ class GetAllIcons(APIView):
             response.append({"id": icon.id, "icon":icon.image})
 
         return JsonResponse({"icons": response})
-
-
+        
 
 def show_database(request):
     if request.method == "GET":

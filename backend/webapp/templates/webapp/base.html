@@ -59,19 +59,20 @@
                 Interface
             </div>
 
-            <!-- Nav Item - Activities -->
+            <!-- Nav Item - Charts Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'activity' %}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
+                    aria-expanded="true" aria-controls="collapseCharts">
                     <i class="fas fa-running"></i>
-                    <span>Activities</span></a>
-            </li>
-
-            <!-- Nav Item - Calories -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fire"></i>
-                    <span>Calories</span></a>
-            </li>
+                    <span>Activities</span>
+                </a>
+                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Activities</h6>
+                        <a class="collapse-item" href="{% url 'activitychart' %}">Table</a>
+                        <a class="collapse-item" href="{% url 'activity' %}">Chart</a>
+                    </div>
+                </div>
 
             <!-- Nav Item - Sleep -->
             <li class="nav-item">
@@ -99,31 +100,25 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
-                Visuals
+                Live Data
             </div>
 
-            <!-- Nav Item - Charts Collapse Menu -->
+            <!-- Nav Item - PPG -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCharts"
-                    aria-expanded="true" aria-controls="collapseCharts">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Charts</span>
-                </a>
-                <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Health Charts</h6>
-                        <a class="collapse-item" href="{% url 'activitychart' %}">Activities</a>
-                        <a class="collapse-item" href="register.html">Calories</a>
-                        <a class="collapse-item" href="forgot-password.html">Sleep</a>
-                        <a class="collapse-item" href="forgot-password.html">Weight</a>
-                        <a class="collapse-item" href="forgot-password.html">Water</a>
-                        <div class="collapse-divider"></div>
-                        <h6 class="collapse-header">Live Charts</h6>
-                        <a class="collapse-item" href="404.html">Heart Rate</a>
-                        <a class="collapse-item" href="blank.html">EDA</a>
-                    </div>
-                </div>
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-heartbeat"></i>
+                    <span>PPG</span></a>
             </li>
+
+            <!-- Nav Item - EDA -->
+            <li class="nav-item">
+                <a class="nav-link" href="charts.html">
+                    <i class="fas fa-smile-beam"></i>
+                    <span>EDA</span></a>
+            </li>
+
+            <!-- Nav Item - Charts Collapse Menu -->
+            
 
             <!-- <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTables"
