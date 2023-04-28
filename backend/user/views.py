@@ -144,6 +144,19 @@ class DeleteAccount(APIView):
     def post(self, request):
         request.user.delete()
         return JsonResponse({"response": "success"})
+
+class GetProfile(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        response = {
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "username": request.user.username,
+            "email": request.user.email
+        }
+        
+        return JsonResponse(response)
     
 class AuthenticateUser(APIView):
     def get(self, request):

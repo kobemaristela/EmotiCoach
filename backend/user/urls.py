@@ -10,6 +10,7 @@ urlpatterns = [
     path('delete', DeleteAccount.as_view(), name="delete"),
     path('edit', EditAccount.as_view(), name="edit"),
     path('authenticate', AuthenticateUser.as_view(), name="authenticate"),
+    path('getprofile', GetProfile.as_view(), name="getprofile"),
     
     path('createicon', CreateIcon.as_view(), name="createicon"),
     path('getallicons', GetAllIcons.as_view(), name="getallicons"),
