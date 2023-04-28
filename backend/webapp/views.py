@@ -3,6 +3,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
+from user.models import UserProfile
 
 class Home(LoginRequiredMixin, TemplateView):
     login_url = 'login'
@@ -43,9 +44,13 @@ class Profile(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        user = UserProfile.objects.get(auth_user_id=self.request.user.id)
+
         context['first_name'] = self.request.user.first_name
         context['last_name'] = self.request.user.last_name
         context['email'] = self.request.user.email
+        context['weight_goal'] = user.weight_goal
+        context['height'] = user.height
         return context
     
 class Account(LoginRequiredMixin, TemplateView):

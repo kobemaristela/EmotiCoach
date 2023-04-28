@@ -47,9 +47,55 @@ const submitWeightData = () => {
 
     setWeightData(weight, dt);
 }
-const getWeightData = () => {
-    
+const getWeightData = async(range, interval) => {
+    const addData = new FormData();
+
+    addData.append("range", range);
+    addData.append("interval", interval);
+
+    let tableParam = {
+        method: 'POST',
+        headers: {
+                  'X-CSRFToken': csrfToken,
+                 },
+        body: addData,
+    };
+
+    const res = await fetch(window.location.origin + '/user/getweighttable', tableParam);
+    let data = res.json();
+    return data;
 }
+const fillWeightTable = () => {
+    let tableBody = document.getElementById("tableBody");
+    let dateRangeDisplay = document.getElementById("dateRangeDisplay");
+    tableBody.innerHTML = "";
+    getWeightData(7, 0).then((data) => {
+        let tableData = data["tableData"];
+        for (let i = 0; i < tableData.length; i++){
+            tr = document.createElement('tr');
+
+            date = document.createElement('td');
+            date.innerHTML = tableData[i]["date"];
+            time = document.createElement('td');
+            time.innerHTML = tableData[i]["time"];
+            weight = document.createElement('td');
+            weight.innerHTML = tableData[i]["weight"];
+            change = document.createElement('td');
+            change.innerHTML = tableData[i]["change"]
+            bmi = document.createElement('td');
+            bmi.innerHTML = tableData[i]["bmi"];
+
+            tr.append(date);
+            tr.append(time);
+            tr.append(weight);
+            tr.append(change);
+            tr.append(bmi);
+            tableBody.append(tr);
+        }
+    })
+}
+
+fillWeightTable();
 
 addWeightButton.addEventListener("click", fillWeightData);
 submit.addEventListener("click", submitWeightData)
