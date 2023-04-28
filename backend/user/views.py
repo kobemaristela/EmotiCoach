@@ -102,6 +102,7 @@ class EditAccount(APIView):
         password = checkIfParameter(request, "password")
         weight_goal = checkIfParameter(request, "weight_goal")
         profile_picture = checkIfParameter(request, "profile_picture")
+        height = checkIfParameter(request, "height")
 
         # Temporary
         user = UserProfile.objects.filter(auth_user_id=request.user.id)
@@ -125,9 +126,11 @@ class EditAccount(APIView):
             request.user.set_password(password)
             request.user.save()
         if weight_goal:
-            UserProfile.objects.update(weight_goal=weight_goal)
+            user.update(weight_goal=weight_goal)
         if profile_picture:
-            UserProfile.objects.update(profile_picture_id=profile_picture)
+            user.update(profile_picture_id=profile_picture)
+        if height:
+            user.update(height=height)
             
 
         return JsonResponse({"response": "success"})

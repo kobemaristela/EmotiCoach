@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from user.models import Weight
+from user.models import Weight, UserProfile
 from datetime import timedelta
 from django.utils.timezone import now
 
@@ -36,18 +36,20 @@ class GetWeightTable(APIView):
         currentDatetime = now() - timedelta(days=interval)
         currentDate = currentDatetime.date()
 
-        weights = Weight.objects.filter(auth_user_id=request.user.id).values("id", "datetime")
+        weights = Weight.objects.filter(auth_user_id=request.user.id).values("id", "datetime", "weight")
+        user = UserProfile.objects.get(auth_user_id=request.user.id)
 
         if range == 7:
-            dateRangeStr = currentDate.strftime("%b %d")
-            weights = weights.filter(datetime__date=currentDate)
-        elif range == 28:
             dateRangeStr = (currentDate-timedelta(7)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
             weights = weights.filter(datetime__date__gte=currentDate-timedelta(7))
             weights = weights.filter(datetime__date__lte=currentDate)
-        elif range == 365:
+        elif range == 28:
             dateRangeStr = (currentDate-timedelta(28)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
             weights = weights.filter(datetime__date__gte=currentDate-timedelta(28))
+            weights = weights.filter(datetime__date__lte=currentDate)
+        elif range == 365:
+            dateRangeStr = (currentDate-timedelta(365)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
+            weights = weights.filter(datetime__date__gte=currentDate-timedelta(365))
             weights = weights.filter(datetime__date__lte=currentDate)
 
         response = list()
@@ -55,6 +57,7 @@ class GetWeightTable(APIView):
         change = None
         for weight in weights:
             row = dict()
+            print(weight)
 
             row["date"] = weight["datetime"].strftime("%b %d")
             row["time"] = weight["datetime"].strftime("%I:%M %p")
@@ -64,4 +67,9 @@ class GetWeightTable(APIView):
                 change = weight["weight"]
             else:
                 row["change"] = row["change"] - change
+            row["bmi"] = round(703 *  int(weight["weight"]) / (user.height ** 2), 2)
+
+            response.append(row)
+
+        return JsonResponse({"tableData":response})
                 
