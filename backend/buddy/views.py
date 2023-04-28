@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from buddy.models import Friend
+from buddy.models import Friend, Message
 from user.models import UserProfile, Icon
 from django.http import JsonResponse
+from django.utils.timezone import now
+from datetime import timedelta
 
 from rest_framework.views import APIView
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -53,3 +55,49 @@ class GetAllFriends(APIView):
             response.append({"icon": icon, "username":friend["username"], "id":friend["id"]})
 
         return JsonResponse({"friends": response})
+    
+class SetMessage(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        user_id = Token.objects.get(key=token).user_id
+        message = request.POST["message"]
+        topic = request.POST["topic"]
+
+        Message.objects.create(auth_user_id=user_id, message=message, topic=topic)
+
+        return JsonResponse({"response":"success"})
+
+class GetMessagesForDay(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        token = request.META['HTTP_AUTHORIZATION'].split()[1]
+        user_id = Token.objects.get(key=token).user_id
+        datetimeBeg = now() - timedelta(days=1)
+        topic = request.POST["topic"]
+
+        messages = Message.objects.filter(topic=topic).values("timestamp", "message", "auth_user_id")
+        messages = messages.filter(timestamp__gte=datetimeBeg)
+
+        response = list()
+        for message in messages:
+            data = dict()
+
+            username = User.objects.get(id=message["auth_user_id"]).username
+            print(username)
+
+            data["timestamp"] = message["timestamp"].isoformat()
+            data["message"] = message["message"]
+            data["username"] = username
+
+            if (message["auth_user_id"] == user_id):
+                data["isuser"] = 1
+            else:
+                data["isuser"] = 0
+            response.append(data)
+
+        return JsonResponse({"messages":response})
