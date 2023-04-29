@@ -3,10 +3,6 @@ $my-msg-color: var(--ion-color-primary);
 $other-msg-color: var(--ion-color-medium);
 
 
-ion-grid {
-    display:inline-block;
-}
-
 ion-item {
     --background: $back-color !important;
 }
@@ -25,7 +21,7 @@ ion-list {
     resize: none;
     margin-top: 0px;
     --padding-start: 8px;
-    
+
 }
 
 .message {
@@ -49,4 +45,19 @@ ion-list {
     color: #dfdfdf;
     float: right;
     font-size: small;
+}
+
+.support {
+    margin: auto;
+    position: absolute;
+    text-align: center;
+    bottom: 50px;
+    // width: 100%;
+}
+
+.pad-bottom {
+    padding-bottom: 100px;
+}
+.pad-footer {
+    margin-bottom: 100%;
 }

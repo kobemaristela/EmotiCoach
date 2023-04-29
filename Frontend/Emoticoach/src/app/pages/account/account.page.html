@@ -85,12 +85,13 @@
                   <ion-icon name="lock-closed"></ion-icon>
                   <ion-text>*********</ion-text>
                 </ion-item>
+                <ion-button (click)="changeTheme()" expand="block">Change Theme</ion-button>
                 <ion-button color="danger" expand="block" (click)="deleteAccount()">Delete Account</ion-button>
               </ion-card-content>
             </ion-card>
           </ion-col>
-          <ion-button (click)="changeTheme()">change theme</ion-button>
-          <ion-button (click)="logout()">logut </ion-button>
+
+         
     </ion-row>
   </ion-grid>
 </ion-content>

@@ -1,14 +1,14 @@
-<ion-list>
+<ion-list  *ngIf="loaded">
   <ion-searchbar color="dark" [debounce]="500" (ionChange)="search($event)"></ion-searchbar>
   <div class="loaded" *ngIf="loaded">
-    <ion-item *ngFor="let f of searchList">
+    <ion-item *ngFor="let f of searchList; let i = index">
       <ion-thumbnail slot="start">
-        <ion-img src="../../../../assets/user_icons/bear.png" alt="Bear cartoon profile img"></ion-img>
+        <ion-img src="{{'data:image/jpg;base64,'+f.icon}}" 
+        alt="user img"></ion-img>
         <!-- <ion-icon style="width: 100%; height: 100%" name="person-circle-sharp"></ion-icon> -->
       </ion-thumbnail>
       <ion-label>
         <h3>{{f.username}}</h3>
-        <p>{{ f.gym }}</p>
       </ion-label>
     </ion-item>
   </div>

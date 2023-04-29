@@ -35,8 +35,8 @@ export class SessionService {
   }
 
   //returns a list of all sessions and does an api call to get them
-  getSessions(): Observable<any> {
-    this.requestSessionService.getAllSessions().pipe(throttleTime(1000)).subscribe( v => {
+  getSessions(date_start: string, length: number): Observable<any> {
+    this.requestSessionService.getAllSessions(date_start, length).pipe(throttleTime(1000)).subscribe( v => {
       this.session$.next(v)
     });
     return this.session$;
@@ -107,7 +107,7 @@ export class SessionService {
     console.log("tosave", toSave);
     this.requestSessionService.postCreateNewSessionObservable(toSave)
     .subscribe(v => {
-      this.getSessions();
+      this.getSessions("",30);
       this.newSession = false;
     });
    

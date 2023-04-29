@@ -3,7 +3,7 @@ import { user } from './Iuser';
 import { HttpClient } from '@angular/common/http';
 import { Account } from './Account';
 import { RequestAccountService } from './request-account.service';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { accountRequest } from './IaccountRequest';
 import { CHAD_TOKEN } from 'src/environments/tokens';
 import { Keychain } from '@awesome-cordova-plugins/keychain/ngx';
@@ -20,14 +20,14 @@ export class AccountService {
   static user_lastname: string = "";
   user_first_last: string = "";
 
-  private user$: Subject<accountRequest[]>;
+  private user$: BehaviorSubject<accountRequest>;
 
 
   constructor(private requestAccountService: RequestAccountService, private http: HttpClient, private keychain: Keychain) {
     this.userInfo = new Account("");
-    this.user$ = new Subject();
+    this.user$ = new BehaviorSubject(this.userInfo);
     //Remove this ;ater this defaults it to justins hard coded token for testing
-    // AccountService.user_token = CHAD_TOKEN
+    AccountService.user_token = CHAD_TOKEN
     }
 
   login(username:string , password: string): Observable<any>{
@@ -92,12 +92,12 @@ export class AccountService {
   }
 
   saveToken(){
-    this.keychain.set('user_token', AccountService.user_token, false).then(() => {
-      this.keychain.get('user_token')
-        .then(value => console.log('Got value', value))
-        .catch(err => console.error('Error getting', err));
-    })
-    .catch(err => console.error('Error setting', err));
+    // this.keychain.set('user_token', AccountService.user_token, false).then(() => {
+    //   this.keychain.get('user_token')
+    //     .then(value => console.log('Got value', value))
+    //     .catch(err => console.error('Error getting', err));
+    // })
+    // .catch(err => console.error('Error setting', err));
   }
 }
 
