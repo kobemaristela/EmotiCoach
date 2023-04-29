@@ -35,5 +35,10 @@ export class LiveDataService {
     this.mqttService.disconnect();
   }
 
+  publishToTopic(topic: string ,msg: string) {
+    this.mqttService.publish(topic,msg).subscribe(() => {
+      
+    })
+  }
   
 }

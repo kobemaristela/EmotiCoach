@@ -16,9 +16,14 @@ declare var google: any;
 export class GymBuddyPage implements OnInit {
   currentPage: string = "feed";
   feedselected: boolean = false;
+  msg: string = "";
+  gymSelect: boolean = false;
 
 
-  constructor(private modalCtrl: ModalController, private buddyService: BuddyService) {
+  constructor(
+    private modalCtrl: ModalController, 
+    private buddyService: BuddyService,
+    private chatService: ChatService) {
   }
 
   ngOnInit() {
@@ -53,7 +58,13 @@ export class GymBuddyPage implements OnInit {
     }
   }
 
+  gymSelected($event: boolean) {
+    this.gymSelect = $event;
+  }
 
 
+  async sendMsg() {
+    this.chatService.addChatMsg(this.msg);
+  }
 }
 

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { chat } from './IChat';
+import { IchatRequest, chat } from './IChat';
 import { AccountService } from '../user/account.service';
 import { IGym } from './IGymList';
+import { LiveDataService } from '../livedata/live-data.service';
+import { IMqttMessage } from 'ngx-mqtt';
+import { RequestChatService } from './request-chat.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,39 +14,58 @@ export class ChatService {
   private gyms: IGym[] = [];
   private gymTopic: string = "";
   private chats$: BehaviorSubject<chat[]>; 
-  private chats: chat[] = [];
+  private mqttTopics: Observable<any>;
 
-  constructor(private accountService: AccountService) { 
-    this.chats$ = new BehaviorSubject<any>([{user_id: "ChadMcChad" , time_sent: new Date().toISOString(), myMsg: "Im going to hit bench today at 2pm", userSent: false}]); 
-    this.addChatMsg("Could you spot me? Im going to max out on bench today");
-    this.chats.push({user_id: "ChadMcChad" , time_sent: new Date().toISOString(), myMsg: "Yeah I can",userSent: false})
+  constructor(
+    private accountService: AccountService, 
+    private liveDataService: LiveDataService,
+    private requestChatService: RequestChatService
+    ) { 
+    this.chats$ = new BehaviorSubject<any>([]); 
+
     this.loadGyms();
   }
 
   private loadGyms() {
     this.gyms = [{
       icon: "unr-wolf.svg",
-      mqttTopic: "/gym/unr",
+      mqttTopic: "messages/gym/unr",
       name: "UNR Gym"
     },
     {
       icon: "pf-icon.svg",
-      mqttTopic: "/gym/planet_fitness",
+      mqttTopic: "messages/gym/planet_fitness",
       name: "Planet Fitness"
     },
     {
       icon: "ai-icon.svg",
-      mqttTopic: "/gym/american_iron",
+      mqttTopic: "messages/gym/american_iron",
       name: "American Iron"
     }];
   }
 
-  getGyms(): IGym[] {
-    return this.gyms;    
+  loadTopic() {
+    this.mqttTopics = this.liveDataService.observeTopic(this.gymTopic);
+    this.mqttTopics.subscribe( (message: IMqttMessage) => {
+      console.log(message.payload.toString())
+      if (message.payload.toString() == "new msg"){
+      
+        this.loadChats();
+      }
+    })
   }
 
-  getChats$(): Observable<chat[]>{
+  loadChats(): Observable<chat[]>{
+    this.requestChatService.getChats(this.gymTopic).subscribe( (v: IchatRequest) => {
+
+      this.chats$.next(v.messages)
+    }
+    );
     return this.chats$;
+  }
+
+  getGyms(): IGym[] {
+    return this.gyms;    
   }
 
   getGymTopic(): string {
@@ -51,20 +73,25 @@ export class ChatService {
   }
 
   setGymTopic(topic:string) {
+    console.log(topic)
     this.gymTopic = topic;
+    this.loadTopic()
   }
 
   addChatMsg(msg: string): any {
-    console.log(msg)
-    let newChat: chat = 
-    {
-      user_id: "Justin Fan" , 
-      time_sent: new Date().toISOString(), 
-      myMsg: msg,
-      userSent: true
-    }
-    this.chats.push(newChat);
-    this.chats$.next(this.chats)
+  // let newChat: chat = 
+  //   {
+  //     username:  this.accountService.returnFirstLastName() , 
+  //     timestamp: new Date().toISOString(), 
+  //     message: msg,
+  //     isuser: true
+  //   }
+    // console.log(msg)
+    this.requestChatService.setMessage(this.gymTopic, msg);
+    this.liveDataService.publishToTopic(this.gymTopic, "new msg")
+   
+    // this.chats.push(newChat);
+    // this.chats$.next(this.chats)
   }
 
   

@@ -25,12 +25,29 @@
 </ion-header>
 
 <ion-content>
+  <app-gym-select *ngIf="currentPage == 'feed'" (gymSelected$)="gymSelected($event)" ></app-gym-select>
 
-  <ion-label *ngIf="currentPage == 'feed'">
-    <app-gym-select></app-gym-select>
-  </ion-label>
-  <ion-label *ngIf="currentPage == 'friends'">
-    <app-friends-list></app-friends-list>
-  </ion-label>
+  <app-friends-list *ngIf="currentPage == 'friends'"></app-friends-list>
+
+
 </ion-content>
+<ion-footer >
+  <ion-toolbar *ngIf="gymSelect" class="support" color="medium">
+    <ion-row class="ion-align-items-center">
+      <ion-col size="10">
+        <ion-textarea autoGrow="true" color="dark" class="message-input" rows="1" maxLength="500" [(ngModel)]="msg"
+          placeholder="Tell Others Your Working Out!">
+        </ion-textarea>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button (click)="sendMsg()" expand="block" fill="clear">
+          <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+  
+  
+  </ion-footer>
+  
 

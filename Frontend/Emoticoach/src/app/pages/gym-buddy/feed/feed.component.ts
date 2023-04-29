@@ -14,9 +14,8 @@ import { MUSCLE_LIST } from 'src/environments/environment';
 })
 export class FeedComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollMe') private content: IonContent;
-  loaded = true;
   @Input() currentGym: IGym;
-  msg: string = "";
+  
   messageList$: Observable<chat[]>;
   userToken: string = "";
 
@@ -41,16 +40,13 @@ export class FeedComponent implements OnInit, AfterViewChecked {
   }
 
   loadMsgs() {
-    this.messageList$ = this.chatService.getChats$();
+    this.messageList$ = this.chatService.loadChats();
   }
 
   clicked() {
     console.log("click");
   }
 
-  async sendMsg() {
-    this.chatService.addChatMsg(this.msg);
-  }
 
 
 }
