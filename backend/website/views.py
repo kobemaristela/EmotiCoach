@@ -1,22 +1,23 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 from .models import Api
+from django.shortcuts import redirect
 
 # Create your views here.
 class Home(TemplateView):
-    template_name = "website/home.html"
+    template_name = "index.html"
 
 class Team(TemplateView):
-    template_name = "website/team.html"
+    template_name = "team.html"
 
-class Affiliations(TemplateView):
-    template_name = "website/affiliations.html"
+class About(TemplateView):
+    template_name = "about.html"
 
 class Resources(TemplateView):
-    template_name = "website/resources.html"
+    template_name = "resources.html"
 
 class Docs(TemplateView):
-    template_name = "website/docs.html"
+    template_name = "docs.html"
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

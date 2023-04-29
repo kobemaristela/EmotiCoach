@@ -8,6 +8,9 @@ let lineChart = document.getElementById("lineChart");
 let weightInput = document.getElementById("weightInput");
 let dateInput = document.getElementById("dateInput");
 let timeInput = document.getElementById("timeInput");
+let addWeightButton = document.getElementById("addWeightButton");
+let submit = document.getElementById("submit");
+
 let currentBold = weekButton;
 
 let currentInterval = 0;
@@ -32,8 +35,70 @@ const setWeightData = async(weight, datetime) => {
     let data = res.json();
     return data;
 }
+const fillWeightData = () => {
+    const date = new Date();
 
-setWeightData(135, "2022-02-11 13:30:22");
+    dateInput.value = date.getFullYear() + "-" + (date.getMonth()+1) + "-" +  date.getDate();
+    timeInput.value = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+}
+const submitWeightData = () => {
+    let dt = dateInput.value + "T" + timeInput.value + "Z";
+    let weight = weightInput.value
+
+    setWeightData(weight, dt);
+}
+const getWeightData = async(range, interval) => {
+    const addData = new FormData();
+
+    addData.append("range", range);
+    addData.append("interval", interval);
+
+    let tableParam = {
+        method: 'POST',
+        headers: {
+                  'X-CSRFToken': csrfToken,
+                 },
+        body: addData,
+    };
+
+    const res = await fetch(window.location.origin + '/user/getweighttable', tableParam);
+    let data = res.json();
+    return data;
+}
+const fillWeightTable = () => {
+    let tableBody = document.getElementById("tableBody");
+    let dateRangeDisplay = document.getElementById("dateRangeDisplay");
+    tableBody.innerHTML = "";
+    getWeightData(7, 0).then((data) => {
+        let tableData = data["tableData"];
+        for (let i = 0; i < tableData.length; i++){
+            tr = document.createElement('tr');
+
+            date = document.createElement('td');
+            date.innerHTML = tableData[i]["date"];
+            time = document.createElement('td');
+            time.innerHTML = tableData[i]["time"];
+            weight = document.createElement('td');
+            weight.innerHTML = tableData[i]["weight"];
+            change = document.createElement('td');
+            change.innerHTML = tableData[i]["change"]
+            bmi = document.createElement('td');
+            bmi.innerHTML = tableData[i]["bmi"];
+
+            tr.append(date);
+            tr.append(time);
+            tr.append(weight);
+            tr.append(change);
+            tr.append(bmi);
+            tableBody.append(tr);
+        }
+    })
+}
+
+fillWeightTable();
+
+addWeightButton.addEventListener("click", fillWeightData);
+submit.addEventListener("click", submitWeightData)
 
 var data = [{
     x: ["Apr 1", "Apr 2", "Apr 3", "Apr 4", "Apr 5", "Apr 6", "Apr 7", "Apr 8", "Apr 9", "Apr 10", "Apr 11", "Apr 12", "Apr 13", "Apr 14", "Apr 15", "Apr 16", "Apr 17", "Apr 18", "Apr 19", "Apr 20"],

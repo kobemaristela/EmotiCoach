@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block content %}
+    <!-- ***** Call to Action Start ***** -->
+    <section class="section" id="about-us">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="cta-content">
+                        <h2>Why <em>EmotiCoach</em>?</h2>
+                        <p> EmotiCoach is a cutting-edge health and fitness platform that offers a wealth of features to help users achieve their fitness goals. The platform combines both mobile and web applications, with a sleek and intuitive user interface that is designed to make it easy to track progress and understand performance. EmotiCoach uses advanced machine learning algorithms to analyze emotional, physiological, and movement data, providing users with personalized recommendations that are tailored to their specific needs. With its powerful data visualization tools, EmotiCoach makes it easy to monitor progress over time and track improvements in physical performance and overall well-being. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Call to Action End ***** -->
+
+    <!-- ***** Features Item Start ***** -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 offset-lg-3">
+                    <div class="section-heading">
+                        <h2>Our <em>Features</em></h2>
+                        <img src="{% static 'images/line-dec.png' %}" alt="waves">
+                        <p>CS 426 - Senior Project in Computer Science UNR, CSE Department Spring 2023</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="features-items">
+                        <li class="feature-item">
+                            <div class="left-icon">
+                                <img src="{% static 'images/stream.png' %}" alt="EmotiBit Live Data Stream">
+                            </div>
+                            <div class="right-content">
+                                <h4>EmotiBit Live Data Stream</h4>
+                                <p>Our application provides a live stream of your personal data brought by the EmotiBit device.</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="left-icon">
+                                <img src="{% static 'images/data.png' %}" alt="Data Visualization">
+                            </div>
+                            <div class="right-content">
+                                <h4>Data Visualization</h4>
+                                <p>Our application provides you with an easy to use interface that allows for an advanced view of your data.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="left-icon">
+                                <img src="{% static 'images/gym.png' %}" alt="Gym Buddy">
+                            </div>
+                            <div class="right-content">
+                                <h4>Gym Buddy Social</h4>
+                                <p>Our application allows you to easily network and message people within your gym!</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <ul class="features-items">
+                        <li class="feature-item">
+                            <div class="left-icon">
+                                <img src="{% static 'images/app.png' %}" alt="Web and Mobile Application">
+                            </div>
+                            <div class="right-content">
+                                <h4>Mobile and Web Platforms</h4>
+                                <p>Our application supports a mobile and web friendly version for your needs!</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="left-icon">
+                                <img src="{% static 'images/fitness.png' %}" alt="Workout Tracking">
+                            </div>
+                            <div class="right-content">
+                                <h4>Workout Tracking</h4>
+                                <p>Our application provides you with an easy to use UI for recording your workouts on the go!</p>
+                            </div>
+                        </li>
+                        <li class="feature-item">
+                            <div class="left-icon">
+                                <img src="{% static 'images/machine-learning.png' %}" alt="Personalized Recommendations">
+                            </div>
+                            <div class="right-content">
+                                <h4>Personalized Recommendations</h4>
+                                <p>Our application processes your workouts and routines to create a personalized model for JUST FOR YOU!</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

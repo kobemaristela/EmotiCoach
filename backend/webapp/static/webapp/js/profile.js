@@ -9,12 +9,15 @@ const editProfile = async() => {
     firstName = document.getElementById("firstName");
     lastName = document.getElementById("lastName");
     email = document.getElementById("email");
+    height = document.getElementById("height");
+    weight_goal = document.getElementById("weightGoal");
 
     const addData = new FormData();
-
     addData.append("first_name", firstName.value);
     addData.append("last_name", lastName.value);
     addData.append("email", email.value);
+    addData.append("height", height.value);
+    addData.append("weight_goal", weight_goal.value);
 
     let tableParam = {
         method: 'POST',

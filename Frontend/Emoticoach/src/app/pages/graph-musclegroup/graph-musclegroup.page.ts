@@ -59,6 +59,7 @@ export class GraphMusclegroupPage implements OnInit {
 
 
   updateChart(){
+    console.log(this.workoutData)
     this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( x_data => { 
 
       if(this.musclegroups.includes(this.selectedGroup)){

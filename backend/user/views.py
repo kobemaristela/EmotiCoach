@@ -1,11 +1,12 @@
 import re
 from django.contrib.auth.models import User
+from user.models import UserProfile
 from django.contrib.auth import get_user_model
 from django.http import JsonResponse
 from django.contrib.auth import authenticate
 from django.contrib.auth import logout
 from .controller import *
-from user.models import Weight
+from user.models import Weight, Icon, UserProfile
 from datetime import datetime, timedelta
 from django.utils.timezone import now
 
@@ -68,15 +69,17 @@ class Register(APIView):
         if User.objects.filter(username=username).exists():
             return JsonResponse({"response": "Username already exists."})
 
-        User.objects.create_user(
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            email=email,
-            password=password
-        )
-
+        user = User.objects.create_user(
+                    first_name=first_name,
+                    last_name=last_name,
+                    username=username,
+                    email=email,
+                    password=password
+                )
+        UserProfile.objects.create(auth_user_id=user.id, weight_goal=0)
+        
         return JsonResponse({"response": "success"})
+
 
 class Logout(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
@@ -97,6 +100,14 @@ class EditAccount(APIView):
         last_name = checkIfParameter(request, "last_name")
         email = checkIfParameter(request, "email")
         password = checkIfParameter(request, "password")
+        weight_goal = checkIfParameter(request, "weight_goal")
+        profile_picture = checkIfParameter(request, "profile_picture")
+        height = checkIfParameter(request, "height")
+
+        # Temporary
+        user = UserProfile.objects.filter(auth_user_id=request.user.id)
+        if not user:
+            UserProfile.objects.create(auth_user_id=request.user.id, weight_goal=0, profile_picture_id=1)
 
         if first_name:
             request.user.first_name = first_name
@@ -114,6 +125,13 @@ class EditAccount(APIView):
             #     user.save()
             request.user.set_password(password)
             request.user.save()
+        if weight_goal:
+            user.update(weight_goal=weight_goal)
+        if profile_picture:
+            user.update(profile_picture_id=profile_picture)
+        if height:
+            user.update(height=height)
+            
 
         return JsonResponse({"response": "success"})
     
@@ -126,6 +144,19 @@ class DeleteAccount(APIView):
     def post(self, request):
         request.user.delete()
         return JsonResponse({"response": "success"})
+
+class GetProfile(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        response = {
+            "first_name": request.user.first_name,
+            "last_name": request.user.last_name,
+            "username": request.user.username,
+            "email": request.user.email
+        }
+        
+        return JsonResponse(response)
     
 class AuthenticateUser(APIView):
     def get(self, request):
@@ -133,64 +164,27 @@ class AuthenticateUser(APIView):
             return JsonResponse({"Status":"Authenticated"})
         else:
             return JsonResponse({"Status":"Not Authenticated"})
-        
-class SetWeight(APIView):
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        dt = request.POST.get("datetime")
-        weight = request.POST.get("weight")
-        user_id = request.user.id
-
-        weightObject = Weight.objects.create(datetime=dt,
-                              weight=weight,
-                              auth_user=user_id)
-        return JsonResponse({"id":weightObject.id})
     
-class GetWeightTable(APIView):
+class CreateIcon(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
-
     def post(self, request):
-        range = int(request.POST["range"])
-        interval = int(request.POST["interval"])
-        interval = interval * range
+        image = request.POST["image"]
 
-        currentDatetime = now() - timedelta(days=interval)
-        currentDate = currentDatetime.date()
+        Icon.objects.create(image=image)
 
-        weights = Weight.objects.filter(auth_user_id=request.user.id).values("id", "datetime")
-
-        if range == 7:
-            dateRangeStr = currentDate.strftime("%b %d")
-            weights = weights.filter(datetime__date=currentDate)
-        elif range == 28:
-            dateRangeStr = (currentDate-timedelta(7)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
-            weights = weights.filter(datetime__date__gte=currentDate-timedelta(7))
-            weights = weights.filter(datetime__date__lte=currentDate)
-        elif range == 365:
-            dateRangeStr = (currentDate-timedelta(28)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
-            weights = weights.filter(datetime__date__gte=currentDate-timedelta(28))
-            weights = weights.filter(datetime__date__lte=currentDate)
-
+        return JsonResponse({"response": "success"})
+    
+class GetAllIcons(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
         response = list()
+        for icon in Icon.objects.all():
+            response.append({"id": icon.id, "icon":icon.image})
 
-        change = 0
-        for weight in weights:
-            row = dict()
-
-            row["date"] = weight["datetime"].strftime("%b %d")
-            row["time"] = weight["datetime"].strftime("%I:%M %p")
-            row["weight"] = weight["weight"]
-            row["change"] = change
-
-            if change == 0:
-                change = 1
-            # else:
-
-
-
+        return JsonResponse({"icons": response})
+        
 
 def show_database(request):
     if request.method == "GET":
