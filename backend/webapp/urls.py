@@ -11,4 +11,5 @@ urlpatterns = [
     path('activity/chart', ActivityChart.as_view(), name="activitychart"),
     path('weight', Weight.as_view(), name="weight"),
     path('water', Water.as_view(), name="water"),
+    path('sleep', Sleep.as_view(), name="sleep"),
 ]

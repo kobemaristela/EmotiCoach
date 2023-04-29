@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from user.models import Weight, UserProfile, Water
+from user.models import Weight, UserProfile, Water, Sleep
 from datetime import timedelta
 from django.utils.timezone import now
 
@@ -121,6 +121,60 @@ class GetWaterTable(APIView):
             row["date"] = water["datetime"].strftime("%b %d")
             row["time"] = water["datetime"].strftime("%I:%M %p")
             row["water"] = water["water"]
+
+            response.insert(0, row)
+
+        return JsonResponse({"tableData":response, "daterange": dateRangeStr})
+    
+class SetSleep(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        sleep = request.POST["sleep"]
+        dt = request.POST["datetime"]
+        user_id = request.user.id
+
+        sleepObject = Sleep.objects.create(datetime=dt,
+                              sleep=sleep,
+                              auth_user_id=user_id)
+        return JsonResponse({"id":sleepObject.id})
+
+class GetSleepTable(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        range = int(request.POST["range"])
+        interval = int(request.POST["interval"])
+        interval = interval * range
+
+        currentDatetime = now() - timedelta(days=interval)
+        currentDate = currentDatetime.date()
+
+        sleeps = Sleep.objects.filter(auth_user_id=request.user.id).values("id", "datetime", "sleep").order_by("datetime")
+        user = UserProfile.objects.get(auth_user_id=request.user.id)
+
+        if range == 365:
+            dateRangeStr = (currentDate-timedelta(1)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
+            sleeps = sleeps.filter(datetime__date__gte=currentDate-timedelta(365))
+            sleeps = sleeps.filter(datetime__date__lte=currentDate)
+        elif range == 7:
+            dateRangeStr = (currentDate-timedelta(7)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
+            sleeps = sleeps.filter(datetime__date__gte=currentDate-timedelta(7))
+            sleeps = sleeps.filter(datetime__date__lte=currentDate)
+        elif range == 28:
+            dateRangeStr = (currentDate-timedelta(28)).strftime("%b %d") + " - " + currentDate.strftime("%b %d")
+            sleeps = sleeps.filter(datetime__date__gte=currentDate-timedelta(28))
+            sleeps = sleeps.filter(datetime__date__lte=currentDate)
+
+        response = list()
+        for sleep in sleeps:
+            row = dict()
+
+            row["date"] = sleep["datetime"].strftime("%b %d")
+            row["time"] = sleep["datetime"].strftime("%I:%M %p")
+            row["sleep"] = sleep["sleep"]
 
             response.insert(0, row)
 
