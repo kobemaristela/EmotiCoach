@@ -55,9 +55,8 @@ class GetWeightTable(APIView):
         response = list()
 
         change = None
-        for weight in weights:
+        for weight in reversed(weights):
             row = dict()
-            print(weight)
 
             row["date"] = weight["datetime"].strftime("%b %d")
             row["time"] = weight["datetime"].strftime("%I:%M %p")
@@ -66,10 +65,11 @@ class GetWeightTable(APIView):
                 row["change"] = 0
                 change = weight["weight"]
             else:
-                row["change"] = row["change"] - change
+                row["change"] = weight["weight"] - change
+                change = weight["weight"]
             row["bmi"] = round(703 *  int(weight["weight"]) / (user.height ** 2), 2)
 
-            response.append(row)
+            response.insert(0, row)
 
-        return JsonResponse({"tableData":response})
+        return JsonResponse({"tableData":response, "daterange": dateRangeStr})
                 
