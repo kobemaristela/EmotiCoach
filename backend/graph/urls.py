@@ -10,4 +10,5 @@ urlpatterns = [
     path('getactivityheatmap', GetActivityHeatmap.as_view()),
     path('getweightlinegraph', GetWeightLineGraph.as_view()),
     path('getbmilinegraph', GetBmiLineGraph.as_view()),
+    path('getwaterlinegraph', GetWaterLineGraph.as_view()),
 ]

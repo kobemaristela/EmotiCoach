@@ -16,5 +16,7 @@ urlpatterns = [
     path('getallicons', GetAllIcons.as_view(), name="getallicons"),
     path('setweight', SetWeight.as_view(), name="setweight"),
     path('getweighttable', GetWeightTable.as_view(), name="getweighttable"),
+    path('setwater', SetWater.as_view(), name="setwater"),
+    path('getwatertable', GetWaterTable.as_view(), name="getwatertable"),
     path('showDb', show_database)
 ]

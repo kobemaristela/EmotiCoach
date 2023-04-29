@@ -10,4 +10,5 @@ urlpatterns = [
     path('activity', Activity.as_view(), name="activity"),
     path('activity/chart', ActivityChart.as_view(), name="activitychart"),
     path('weight', Weight.as_view(), name="weight"),
+    path('water', Water.as_view(), name="water"),
 ]
