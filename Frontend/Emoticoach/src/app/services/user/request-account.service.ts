@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { user } from './Iuser';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { CHAD_TOKEN } from 'src/environments/environment';
 import { userInfo } from 'os';
 import { AccountService } from './account.service';
 

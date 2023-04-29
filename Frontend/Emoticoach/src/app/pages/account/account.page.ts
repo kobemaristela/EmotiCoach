@@ -130,4 +130,5 @@ export class AccountPage implements OnInit {
   changeTheme(){
     this.theme.activeTheme();
   }
+
 }

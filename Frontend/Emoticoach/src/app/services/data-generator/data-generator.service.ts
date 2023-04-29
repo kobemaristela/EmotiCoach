@@ -140,20 +140,20 @@ export class DataGeneratorService {
   generateSessions() {
 
     let lastYear: Date = new Date();
-    lastYear.setFullYear(lastYear.getFullYear() - 1);
+    lastYear.setMonth(lastYear.getMonth());
 
-    for (let d = 0; d < 365; d++) {
+    for (let d = 0; d < 18; d++) {
       let newSession: session = new Session('0');
       let mod = d % 6;
-      if ((d % 21) == 0) {
+      if ((d % 7) == 0) {
         for (let i = 0; i < this.activites.length; i++) {
           for (let a = 0; a < this.activites[i].length; a++) {
             for (let s = 0; s < this.activites[i][a].sets.length; s++) {
               if (this.activites[i][a].sets[s].weight != 0) {
-                this.activites[i][a].sets[s].weight = this.activites[i][a].sets[s].weight + 5;
+                this.activites[i][a].sets[s].weight = this.activites[i][a].sets[s].weight + 25;
 
               } else {
-                this.activites[i][a].sets[s].reps = this.activites[i][a].sets[s].reps + 1;
+                this.activites[i][a].sets[s].reps = this.activites[i][a].sets[s].reps + 3;
 
               }
 

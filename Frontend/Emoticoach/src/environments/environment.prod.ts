@@ -20,7 +20,6 @@ export const MUSCLE_LIST: string[] = [
   "abdominal",
   "hamstring"
 ];
-export const CHAD_TOKEN: string = "";
 
 
 export const MQTT_SERVICE_OPTIONS:IMqttServiceOptions = {

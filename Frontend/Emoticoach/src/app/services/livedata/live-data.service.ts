@@ -14,7 +14,7 @@ export class LiveDataService {
     this.mqttService.connect(MQTT_SERVICE_OPTIONS);
   }
   
-  private connectToBroker() {
+  connectToBroker() {
 
     // this.mqttService.publish("client_id/user/", "test");
     // console.log("in connect to to brocker", this.mqttService);
@@ -35,5 +35,10 @@ export class LiveDataService {
     this.mqttService.disconnect();
   }
 
+  publishToTopic(topic: string ,msg: string) {
+    this.mqttService.publish(topic,msg).subscribe(() => {
+      
+    })
+  }
   
 }

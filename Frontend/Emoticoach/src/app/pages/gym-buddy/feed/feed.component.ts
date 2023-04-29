@@ -1,7 +1,10 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { InfiniteScrollCustomEvent, IonContent } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { chat } from 'src/app/services/chat/IChat';
+import { IGym } from 'src/app/services/chat/IGymList';
+import { ChatService } from 'src/app/services/chat/chat.service';
+import { AccountService } from 'src/app/services/user/account.service';
 import { MUSCLE_LIST } from 'src/environments/environment';
 
 @Component({
@@ -11,28 +14,24 @@ import { MUSCLE_LIST } from 'src/environments/environment';
 })
 export class FeedComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollMe') private content: IonContent;
-  loaded = true;
-  gyms = ["UNR", "American Iron", "Planet Fitness"];
+  @Input() currentGym: IGym;
+  
   messageList$: Observable<chat[]>;
-  musscle: string[] = MUSCLE_LIST;
-  chat: chat = {
-    user_id: "User",
-    muscleGroups: "s",
-    time_sent: "2023-04-01T00:00:00",
-    gym: "Planet Fitness",
-    myMsg: false
-  }
+  userToken: string = "";
 
-  constructor() {
-    this.messageList$ = new Observable<chat[]>(data => data.next(
-      [this.chat]
-    ));
+
+  constructor(private chatService: ChatService, private account: AccountService) {
+    
   }
 
   ngOnInit() {
+    this.userToken = this.account.returnUserToken();
+    console.log("loaded")
     this.loadMsgs();
+
     // this.scrollToBottomOnInit();
   }
+  
   ngAfterViewChecked() {        
     this.content.scrollToBottom(300);
   }  
@@ -41,26 +40,13 @@ export class FeedComponent implements OnInit, AfterViewChecked {
   }
 
   loadMsgs() {
-    let msgList: any = [];
-
-    for (let i = 0; i < 10; i++) {
-      this.chat = {
-        user_id: "User" + i,
-        muscleGroups: this.musscle[Math.floor(Math.random() * 7)] , 
-        time_sent: "2023-04-01T00:00:00",
-        gym: this.gyms[i%3],
-        myMsg: i % 4 == 0
-      }
-      msgList.push(this.chat);
-    }
-    this.messageList$ = new Observable<chat[]>(data => data.next(
-      msgList
-    ));
-
+    this.messageList$ = this.chatService.loadChats();
   }
+
   clicked() {
     console.log("click");
   }
+
 
 
 }

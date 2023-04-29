@@ -1,9 +1,40 @@
-  <ion-content>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-button expand="block" routerLink="/tabs/home">
-          <ion-icon name="arrow-back"></ion-icon>
-        </ion-button>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/home">
+        <ion-icon color="success" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Muscle Group Graph</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+
+  <div class="chart-container">
+      <canvas  id="MuscleGroupChart" >{{ chart }}</canvas>
+  </div>
+
+  <ion-grid style="border-bottom: 2px solid grey">
+    <ion-row>
+    <ion-buttons color="#1E1E1E" lines="none">
+      <ion-col>
+      <ion-button (click)="displayPreviousWeek()">
+        <ion-icon slot="start" name="chevron-back-outline" size="large"></ion-icon>
+      </ion-button>
+      </ion-col>
+
+      <ion-col>
+        <ion-text>{{previousWeekFormatted}} - {{rightsideWeekFormatted}}</ion-text>
+      </ion-col>
+
+      <ion-col>
+      <ion-button (click)="displayNextWeek()">
+        <ion-icon slot="end" name="chevron-forward-outline" size="large"></ion-icon>
+       </ion-button>
+      </ion-col>
+
       </ion-buttons>
       <ion-title>Muscle Group Graph</ion-title>
     </ion-toolbar>
