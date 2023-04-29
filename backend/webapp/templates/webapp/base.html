@@ -69,14 +69,14 @@
                 <div id="collapseCharts" class="collapse" aria-labelledby="headingCharts" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Activities</h6>
-                        <a class="collapse-item" href="{% url 'activitychart' %}">Table</a>
-                        <a class="collapse-item" href="{% url 'activity' %}">Chart</a>
+                        <a class="collapse-item" href="{% url 'activity' %}">Table</a>
+                        <a class="collapse-item" href="{% url 'activitychart' %}">Chart</a>
                     </div>
                 </div>
 
             <!-- Nav Item - Sleep -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{% url 'sleep' %}">
                     <i class="fas fa-bed"></i>
                     <span>Sleep</span></a>
             </li>
@@ -90,7 +90,7 @@
 
             <!-- Nav Item - Water -->
             <li class="nav-item">
-                <a class="nav-link" href="charts.html">
+                <a class="nav-link" href="{% url 'water' %}">
                     <i class="fas fa-tint"></i>
                     <span>Water</span></a>
             </li>

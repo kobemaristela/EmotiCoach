@@ -16,3 +16,13 @@ class Weight(models.Model):
     datetime = models.DateTimeField(default=timezone.now)
     weight = models.FloatField()
     auth_user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Water(models.Model):
+    datetime = models.DateTimeField(default=timezone.now)
+    water = models.IntegerField()
+    auth_user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+class Sleep(models.Model):
+    datetime = models.DateTimeField(default=timezone.now)
+    sleep = models.FloatField()
+    auth_user = models.ForeignKey(User, on_delete=models.CASCADE)
