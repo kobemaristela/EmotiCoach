@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { data } from 'cypress/types/jquery';
 import { Observable } from 'rxjs';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { user } from 'src/app/services/user/Iuser';
@@ -13,12 +14,11 @@ import { AccountService } from 'src/app/services/user/account.service';
 export class AccountPage implements OnInit {
 
   user_email: string;
-
   user_pass: string;
   user_firstname: string;
   user_lastname: string;
-
   user_firstlast: string;
+
   accountPage: boolean;
   emotibitPage: boolean;
   settingsPage: boolean;
@@ -26,7 +26,9 @@ export class AccountPage implements OnInit {
   emotibitButton: string;
   settingsButton: string;
   timezone: string;
+  selectedAvatar: string;
 
+  changingAvatar: boolean;
 
   user: Observable<any>;
   user$: Observable<user>;
@@ -46,6 +48,14 @@ export class AccountPage implements OnInit {
     this.user_lastname = "";
     this.user_email = "";
     this.user_pass = "";
+
+    this.selectedAvatar = "Emotibit"
+    this.changingAvatar = false;
+   }
+
+  sentFromChild($event: any): void{
+    this.changingAvatar = false;
+    this.selectedAvatar = $event;
    }
 
   displayFirstName(){
@@ -65,6 +75,7 @@ export class AccountPage implements OnInit {
   }
 
   displayAccountPage(){
+    console.log(this.selectedAvatar)
     this.accountButton = "solid"
     this.emotibitButton = "outline"
     this.settingsButton = "outline"
@@ -95,6 +106,9 @@ export class AccountPage implements OnInit {
     return this.timezone;
   }
 
+  changeAvatar(){
+    this.changingAvatar = true;
+  }
 
   async editInfo(){
     this.user$ = this.accountService.editAccountInfo(this.user_firstname, this.user_lastname, this.user_email, this.user_pass);
@@ -129,8 +143,5 @@ export class AccountPage implements OnInit {
 
   changeTheme(){
     this.theme.activeTheme();
-  }
-  logout() {
-    this.navCtrl.navigateRoot('/login')
   }
 }

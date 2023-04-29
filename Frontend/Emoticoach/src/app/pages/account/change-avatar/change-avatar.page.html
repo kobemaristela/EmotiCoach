@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button expand="block" routerLink="/tabs/account">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Change Profile Icon</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card color="#D0CDCD">
+    <ion-card-content>
+      <ion-text>Select new icon</ion-text>
+      <div *ngFor="let icon of icons; let i = index">
+        <!-- changeAvatar(icons[i]) -->
+        <ion-card (click)="passToAccount(icons[i])">
+          <ion-icon size="large" src="../../../../assets/{{icons[i]}}.svg"></ion-icon>
+        </ion-card>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

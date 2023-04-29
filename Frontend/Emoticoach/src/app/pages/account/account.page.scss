@@ -1,4 +1,7 @@
 ion-content{
+    .no-ripple{
+        --ripple-color: transparent;
+    }
     ion-col{
         text-align: center;
         ion-icon{
@@ -18,7 +21,8 @@ ion-content{
         box-shadow: none;
         border-radius: 20px;
         padding: 10px 5px;
-        background: #323232;
+        padding-top: 0px;
+        background: #6D6D6D;
         margin-bottom: 0px;
 
         ion-item{

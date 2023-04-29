@@ -5,8 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { AccountPageRoutingModule } from './account-routing.module';
-
 import { AccountPage } from './account.page';
+import { ChangeAvatarPage } from './change-avatar/change-avatar.page';
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { AccountPage } from './account.page';
     IonicModule,
     AccountPageRoutingModule
   ],
-  declarations: [AccountPage]
+  declarations: [AccountPage, ChangeAvatarPage]
 })
 export class AccountPageModule {}

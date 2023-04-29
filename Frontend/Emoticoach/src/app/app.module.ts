@@ -19,7 +19,6 @@ import { ModalMuscleComponent } from './pages/widgets/muscle-groups/modal-muscle
 import { ComponentsModule } from './components.module';
 import { Keychain } from '@awesome-cordova-plugins/keychain/ngx';
 
-
 @NgModule({
   declarations: [
     AppComponent, 
@@ -27,7 +26,6 @@ import { Keychain } from '@awesome-cordova-plugins/keychain/ngx';
     ModalSendMsgComponent,
     ModalMuscleComponent,
     GoogleApiComponent,
-    
   ],
 
   imports: [
