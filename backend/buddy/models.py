@@ -10,3 +10,9 @@ class Friend(models.Model):
 
     class Meta:
         unique_together = ('auth_user', 'friend')
+
+class Message(models.Model):
+    auth_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    message = models.TextField()
+    topic = models.CharField(max_length=42)

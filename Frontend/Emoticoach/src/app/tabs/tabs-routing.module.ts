@@ -48,6 +48,10 @@ const routes: Routes = [
         loadChildren: () => import('../pages/templates/templates.module').then( m => m.TemplatesPageModule)
       },
       {
+        path: 'workout-tables',
+        loadChildren: () => import('../pages/workout-tables/workout-tables.module').then( m => m.WorkoutTablesPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full'
@@ -56,8 +60,9 @@ const routes: Routes = [
   },
   {
     path: '',
-    loadChildren: () => import('../pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('../pages/home/home.module').then( m => m.HomePageModule)
   }
+  
 ];
 
 @NgModule({

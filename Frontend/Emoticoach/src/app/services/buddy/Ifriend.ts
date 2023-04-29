@@ -1,5 +1,7 @@
+import { SafeResourceUrl } from "@angular/platform-browser";
+
 export interface friend {
+    id: number
     username: string;
-    gym: string;
-    profilePicture: any;
+    icon: string | SafeResourceUrl;
 }

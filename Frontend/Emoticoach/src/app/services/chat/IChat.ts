@@ -1,7 +1,10 @@
 export interface chat {
-    user_id: string;
-    muscleGroups: string;
-    time_sent: string;
-    myMsg: boolean;
-    gym: string;
+    username: string;
+    timestamp: string;
+    message: string;
+    isuser: boolean;
+}
+
+export interface IchatRequest {
+    messages: chat[];
 }

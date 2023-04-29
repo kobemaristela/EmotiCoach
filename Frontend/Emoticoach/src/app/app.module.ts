@@ -14,7 +14,6 @@ import { GoogleMapsModule } from '@angular/google-maps';
 import { ModalAddFriendsComponent } from './pages/gym-buddy/modal-add-friends/modal-add-friends.component';
 import { FormsModule } from '@angular/forms';
 import { GoogleApiComponent } from './pages/widgets/google-api/google-api.component';
-import { ModalSendMsgComponent } from './pages/gym-buddy/modal-send-msg/modal-send-msg.component';
 import { ModalMuscleComponent } from './pages/widgets/muscle-groups/modal-muscle/modal-muscle.component';
 import { ComponentsModule } from './components.module';
 import { Keychain } from '@awesome-cordova-plugins/keychain/ngx';
@@ -22,8 +21,7 @@ import { Keychain } from '@awesome-cordova-plugins/keychain/ngx';
 @NgModule({
   declarations: [
     AppComponent, 
-    ModalAddFriendsComponent, 
-    ModalSendMsgComponent,
+    ModalAddFriendsComponent,
     ModalMuscleComponent,
     GoogleApiComponent,
   ],

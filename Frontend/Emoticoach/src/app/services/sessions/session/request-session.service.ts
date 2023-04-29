@@ -38,10 +38,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
-
-    // res.subscribe(data => {
-    //   console.log("delete responce",data)
-    // })
     return res;
   }
   
@@ -91,9 +87,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editset", formData,tableParam);
-    res.subscribe(data => {
-      console.log("post save set",data)
-    })
     return res;
   }
 
@@ -111,9 +104,6 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setactivity", formData,tableParam)
-    res.subscribe( (d)=>{
-      console.log(d)
-    })
     return res;
   }
 
@@ -129,9 +119,6 @@ export class RequestSessionService {
     }
 
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteset", formData,tableParam)
-    res.subscribe( d => {
-      console.log("deleting set", d);
-    });
     return res;
   }
 
@@ -169,19 +156,22 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
-    res.subscribe( data => {
-      console.log("set set",data)
-    })
     return res;
   }
 
-  getAllSessions():Observable<any> {
+  getAllSessions(start_date: string, length: number):Observable<any> {
+    console.log(start_date, length);
+    const formData = new FormData();
+    formData.append("start_date", start_date);
+    formData.append("length", length.toString());
+
     let tableParam = {
             headers: {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
-    let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions", tableParam);
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/getallsessionsrange", formData,tableParam);
+    // let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions",tableParam);
     
     return res;
   

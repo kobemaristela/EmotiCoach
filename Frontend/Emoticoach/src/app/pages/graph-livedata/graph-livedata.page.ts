@@ -23,7 +23,7 @@ export class GraphLivedataPage implements OnInit {
   currentHeartrate: number;
 
   constructor(private liveDataService: LiveDataService, private dataGenerator: DataGeneratorService, private themeService: ThemeService) {
-    this.readyTolift = false;
+    // this.readyTolift = true;
     this.currentHeartrate = 0;
   }
 
@@ -36,7 +36,7 @@ export class GraphLivedataPage implements OnInit {
         labels: [],
         datasets: [
           {
-            label: 'Heartrate',
+            label: 'Heartbeat',
             data: [],
             borderColor: this.themeService.getGraphColor(),
             backgroundColor: this.themeService.getGraphColor(),
@@ -52,6 +52,11 @@ export class GraphLivedataPage implements OnInit {
             left: 10
           }
         },
+        elements: {
+          point:{
+              radius: 0
+          }
+      },
         plugins: {
           legend: {
             labels: {
@@ -76,7 +81,7 @@ export class GraphLivedataPage implements OnInit {
             ticks: {
               color: this.themeService.getSuccessColor(),
               font: {
-                size: 14 // 'size' now within object 'font {}'
+                size: 10 // 'size' now within object 'font {}'
               },
 
             }
@@ -103,13 +108,18 @@ export class GraphLivedataPage implements OnInit {
         ]
       },
       options: {
-        aspectRatio: 2.5,
+        aspectRatio: 1,
         layout: {
           padding: {
             right: 20,
             left: 10
           }
         },
+        elements: {
+          point:{
+              radius: 0
+          }
+      },
         plugins: {
           legend: {
             labels: {
@@ -135,7 +145,7 @@ export class GraphLivedataPage implements OnInit {
             ticks: {
               color: this.themeService.getSuccessColor(),
               font: {
-                size: 2 // 'size' now within object 'font {}'
+                size: 10 // 'size' now within object 'font {}'
               },
 
 
@@ -153,9 +163,11 @@ export class GraphLivedataPage implements OnInit {
       return;
     }
     this.connectionOpen = true;
-    // this.loadChart(this.edaChart);
-    // this.loadChart(this.ppgChart);
+    this.loadChart(this.edaChart, this.connections[1]);
+    this.loadChart(this.ppgChart, this.connections[0]);
     // this.testObsere(this.edaChart);
+    // this.testObsere(this.ppgChart);
+
   }
 
   closeConnection() {
@@ -167,7 +179,7 @@ export class GraphLivedataPage implements OnInit {
     }
   }
 
-  loadChart(chart: Chart) {
+  loadChart(chart: Chart, connection: string) {
 
     console.log("Current connection", this.currentConnection);
 
@@ -175,11 +187,12 @@ export class GraphLivedataPage implements OnInit {
 
       console.log("creating livedata service");
 
-      this.liveDataService.observeTopic('').subscribe(
+      this.liveDataService.connectToBroker().observe(connection).subscribe(
         (message: IMqttMessage) => {
-          console.log('Received message on topic my/topic: message.payload', message.payload.toString());
+          
 
           this.count += 1
+          console.log(message.payload.toString());
           if (chart.data.labels) {
             chart.data.labels.push(this.count);
           }
@@ -188,7 +201,7 @@ export class GraphLivedataPage implements OnInit {
             dataset.data.push(+message.payload.toString());
           });
 
-          if (chart.data.labels && chart.data.labels.length > 100) {
+          if (chart.data.labels && chart.data.labels.length > 150) {
             chart.data.labels.shift();
             chart.data.datasets.forEach((dataset) => {
               dataset.data.shift();
@@ -204,7 +217,7 @@ export class GraphLivedataPage implements OnInit {
   async testObsere(chart: Chart) {
    
     for (let i = 1000; i < 2000; i += 1) {
-      setTimeout(()=>{
+   
         this.count += 1
         if (chart.data.labels) {
           chart.data.labels.push(this.count);
@@ -222,11 +235,11 @@ export class GraphLivedataPage implements OnInit {
           });
         }
         chart.update('none');
-      }, 100)
+      }
       
 
     }
-  }
+  
 
 
   closeChart(chart: Chart) {

@@ -198,12 +198,22 @@
 
     //medium is medium greay
     --ion-color-medium: #929292;
+    --ion-color-medium-contrast: #282828;
+    --ion-color-medium-shade: #929292;
+    --ion-color-medium-tint: #929292;
+
     //light is the lightezt grey
     --ion-color-light: #606060;
 
     //success is white
     --ion-color-success: #ffffff;
 
+
+    --ion-color-danger: #ffbaba;
+    --ion-color-danger-contrast: #000000;
+
+    --ion-color-danger-shade: #ffbaba;
+    --ion-color-danger-tint: #ffbaba;
 
 
   }
@@ -216,6 +226,11 @@
     --ion-color-secondary: #ffffff;
     --ion-color-secondary-contrast: #4e73df;
 
+    --ion-color-danger: #a8beff;
+    --ion-color-danger-contrast: #ffffff;
+
+    --ion-color-danger-shade: #a8beff;
+    --ion-color-danger-tint: #a8beff;
 
 
     --ion-color-dark: #ffffff;

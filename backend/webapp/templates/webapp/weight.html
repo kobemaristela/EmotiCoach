@@ -18,6 +18,11 @@ button.btn.date:hover {
 i.fas:hover {
     cursor: pointer;
 }
+input[type="text"]
+{
+    width: 70px;
+    font-size:10px;
+}
 </style>
 
 <link href="{% static 'webapp/css/dataTables.bootstrap4.min.css' %}" rel="stylesheet">
@@ -61,14 +66,14 @@ i.fas:hover {
             </div>
             
             <div class="text-center">
-                <button id="todayButton" type="button" class="btn btn-secondary btn-sm">Weight</button>
-                <button id="todayButton" type="button" class="btn btn-outline-secondary btn-sm">BMI</button>
+                <button id="weightButton" type="button" class="btn btn-secondary btn-sm">Weight</button>
+                <button id="bmiButton" type="button" class="btn btn-outline-secondary btn-sm">BMI</button>
             </div>
 
             <h4 class="pt-5">Weigh-Ins</h4>
             <div class="row">
                 <div class="col-6 pb-1">
-                    <button id="todayButton" type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modalCenter">Add Weight</button>
+                    <button id="addWeightButton" type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modalCenter">Add Weight</button>
                 </div> 
                 <div class="modal fade" id="modalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -92,13 +97,13 @@ i.fas:hover {
                                 </div>
                                 <div class="col-2">
                                     <label for="timeInput" style="font-size:10px;">Time</label>
-                                    <input type="text" size="5">
+                                    <input id="timeInput" type="text" size="6">
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-primary">Save</button>
+                          <button id="submit" type="button" class="btn btn-primary", data-dismiss="modal">Save</button>
                         </div>
                       </div>
                     </div>
@@ -115,70 +120,7 @@ i.fas:hover {
                     <th scope="col">BMI</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">Apr 1</th>
-                    <td>12:36PM</td>
-                    <td>151</td>
-                    <td>0</td>
-                    <td>22.3</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 2</th>
-                    <td>11:30AM</td>
-                    <td>150</td>
-                    <td>-1</td>
-                    <td>22.1</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 3</th>
-                    <td>12:45PM</td>
-                    <td>148</td>
-                    <td>-2</td>
-                    <td>22</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 4</th>
-                    <td>1:28PM</td>
-                    <td>154</td>
-                    <td>6</td>
-                    <td>22.8</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 5</th>
-                    <td>12:30PM</td>
-                    <td>122</td>
-                    <td>-13</td>
-                    <td>22.3</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 6</th>
-                    <td>12:30PM</td>
-                    <td>122</td>
-                    <td>-13</td>
-                    <td>22.3</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 7</th>
-                    <td>12:30PM</td>
-                    <td>122</td>
-                    <td>-13</td>
-                    <td>22.3</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 8</th>
-                    <td>12:30PM</td>
-                    <td>122</td>
-                    <td>-13</td>
-                    <td>22.3</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Apr 9</th>
-                    <td>12:30PM</td>
-                    <td>122</td>
-                    <td>-13</td>
-                    <td>22.3</td>
-                  </tr>
+                <tbody id="tableBody">
                 </tbody>
             </table>
         </div>

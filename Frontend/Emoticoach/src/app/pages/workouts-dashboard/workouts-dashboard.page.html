@@ -115,7 +115,9 @@
     </ion-card> -->
       </ion-item>
       <ion-item-options>
-        <ion-item-option  (click)="deleteSession(session.id)">Delete</ion-item-option>
+        <ion-item-option  (click)="deleteSession(session.id)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
  

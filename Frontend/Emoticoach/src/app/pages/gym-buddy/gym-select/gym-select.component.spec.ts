@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { FeedComponent } from './feed.component';
+import { GymSelectComponent } from './gym-select.component';
 
-describe('FeedComponent', () => {
-  let component: FeedComponent;
-  let fixture: ComponentFixture<FeedComponent>;
+describe('GymSelectComponent', () => {
+  let component: GymSelectComponent;
+  let fixture: ComponentFixture<GymSelectComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ FeedComponent ],
+      declarations: [ GymSelectComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FeedComponent);
+    fixture = TestBed.createComponent(GymSelectComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

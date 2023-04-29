@@ -104,7 +104,7 @@ export class TemplateCreatorPage implements OnInit, OnDestroy {
     if (canSave) {
       console.log("saving in logworkout", this.currentSession);
       this.servSession.saveSession(); 
-      this.servSession.getSessions();
+      // this.servSession.getSessions();
       
     } else {
       this.presentAlert("Empty Field","","Please fill out all fields before saving.");

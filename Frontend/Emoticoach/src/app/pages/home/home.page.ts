@@ -1,4 +1,4 @@
-import { NavController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
 import { ThemeService } from 'src/app/services/theme/theme.service';
@@ -24,16 +24,14 @@ export class HomePage implements OnInit, AfterContentChecked {
     'Volume Data',
     'One Rep Max',
     'Muscle Group Data',
-    'Live Data Graph'
   ];
 
   icons: string[] = [
     // 'walk-outline',
     'folder-open-outline',
-    'folder-outline',
     'analytics-outline',
     'analytics-outline',
-    'analytics-outline'
+    'analytics-outline',
   ];
 
   upperText: string[] = [
@@ -42,7 +40,6 @@ export class HomePage implements OnInit, AfterContentChecked {
     'Volume Data',
     'One Rep Max',
     'Muscle Group Data',
-    'Live Data Graph'
   ];
 
   lowerText: string[] = [
@@ -51,7 +48,6 @@ export class HomePage implements OnInit, AfterContentChecked {
     'View volume data from your workouts',
     'View your one rep max data from your workouts',
     'View your muscle group data from workouts',
-    'View live data from your Emotibit'
   ];
 
   routing: string[] = [
@@ -60,10 +56,9 @@ export class HomePage implements OnInit, AfterContentChecked {
     '/tabs/graph-volume',
     '/tabs/graph-onerm',
     '/tabs/graph-musclegroup',
-    '/tabs/graph-livedata'
   ];
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController, private alertController: AlertController) {
   }
 
   ngOnInit() {
@@ -73,6 +68,16 @@ export class HomePage implements OnInit, AfterContentChecked {
       { id: 3, workout_name: 'Squat', record: '275' },
     ];
 
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'New PR',
+      message: 'You hit 225 on Bench for the first time!',
+      buttons: ['Congrats!'],
+    });
+
+    await alert.present();
   }
 
   ngAfterContentChecked() {

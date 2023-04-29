@@ -10,7 +10,15 @@ urlpatterns = [
     path('delete', DeleteAccount.as_view(), name="delete"),
     path('edit', EditAccount.as_view(), name="edit"),
     path('authenticate', AuthenticateUser.as_view(), name="authenticate"),
-
+    path('getprofile', GetProfile.as_view(), name="getprofile"),
+    
+    path('createicon', CreateIcon.as_view(), name="createicon"),
+    path('getallicons', GetAllIcons.as_view(), name="getallicons"),
     path('setweight', SetWeight.as_view(), name="setweight"),
+    path('getweighttable', GetWeightTable.as_view(), name="getweighttable"),
+    path('setwater', SetWater.as_view(), name="setwater"),
+    path('getwatertable', GetWaterTable.as_view(), name="getwatertable"),
+    path('setsleep', SetSleep.as_view(), name="setsleep"),
+    path('getsleeptable', GetSleepTable.as_view(), name="getsleeptable"),
     path('showDb', show_database)
 ]

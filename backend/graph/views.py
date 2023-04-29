@@ -11,6 +11,7 @@ from .mqtt import ppg_infrared, ppg_green, ppg_red
 from django.http import JsonResponse
 from datetime import datetime, timedelta
 from workout.models import Session, Activity, Set, MuscleGroup
+from user.models import Weight, UserProfile, Water, Sleep
 from workout.controller import filterMuscleGroups
 
 # Create your views here.
@@ -237,4 +238,119 @@ class GetActivityHeatmap(APIView):
 
         return JsonResponse({"z":response})
     
-# class GetWeightLineGraph(APIView):
+class GetWeightLineGraph(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
+
+        start_date = request.POST["start_date"]
+        start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
+
+        length = int(request.POST["length"])
+        end_date = start_date + timedelta(days=length + 1)
+
+        weights = Weight.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        weights = weights.filter(datetime__lte = end_date).values("datetime", "weight").order_by("datetime")
+
+        weight_data = dict()
+        for weight in weights:
+            date_key = weight["datetime"].strftime("%b %d")
+            weight_data[date_key] = weight["weight"]
+
+        return JsonResponse({"X":list(weight_data.keys()),
+                             "y":list(weight_data.values())})
+    
+class GetBmiLineGraph(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
+
+        start_date = request.POST["start_date"]
+        start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
+
+        length = int(request.POST["length"])
+        end_date = start_date + timedelta(days=length + 1)
+
+        weights = Weight.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        weights = weights.filter(datetime__lte = end_date).values("datetime", "weight").order_by("datetime")
+        height = UserProfile.objects.get(auth_user_id=userId).height
+
+        bmi_data = dict()
+        for weight in weights:
+            date_key = weight["datetime"].strftime("%b %d")
+            bmi_data[date_key] = round((703 * weight["weight"]) / (height ** 2), 2)
+
+        return JsonResponse({"X":list(bmi_data.keys()),
+                             "y":list(bmi_data.values())})
+    
+class GetWaterLineGraph(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
+
+        start_date = request.POST["start_date"]
+        start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
+
+        length = int(request.POST["length"])
+        end_date = start_date + timedelta(days=length + 1)
+
+        waters = Water.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        waters = waters.filter(datetime__lte = end_date).values("datetime", "water").order_by("datetime")
+
+        water_data = dict()
+        for water in waters:
+            date_key = water["datetime"].strftime("%b %d")
+            if date_key in water_data:
+                water_data[date_key] += water["water"]
+            else:
+                water_data[date_key] = water["water"]
+        return JsonResponse({"X":list(water_data.keys()),
+                             "y":list(water_data.values())})
+
+class GetSleepLineGraph(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            token = request.META['HTTP_AUTHORIZATION'].split()[1]
+            userId = Token.objects.get(key=token).user_id
+        except:
+            userId = request.user.id
+
+        start_date = request.POST["start_date"]
+        start_date = make_aware(datetime.strptime(start_date, "%Y-%m-%d"))
+
+        length = int(request.POST["length"])
+        end_date = start_date + timedelta(days=length + 1)
+
+        sleeps = Sleep.objects.filter(datetime__gte = start_date, auth_user_id=userId)
+        sleeps = sleeps.filter(datetime__lte = end_date).values("datetime", "sleep").order_by("datetime")
+
+        sleep_data = dict()
+        for sleep in sleeps:
+            date_key = sleep["datetime"].strftime("%b %d")
+            if date_key in sleep_data:
+                sleep_data[date_key] += sleep["sleep"]
+            else:
+                sleep_data[date_key] = sleep["sleep"]
+        return JsonResponse({"X":list(sleep_data.keys()),
+                             "y":list(sleep_data.values())})
