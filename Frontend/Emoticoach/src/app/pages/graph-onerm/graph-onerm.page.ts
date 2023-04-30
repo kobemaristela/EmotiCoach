@@ -14,7 +14,7 @@ export class GraphOnermPage implements OnInit {
   workouts: any[] = [];
   workoutDates: string[] = [];
   selectedWorkout = "";
-
+  timeView: string = "7";
   previousWeek: Date;
   xAxisDates: string[] = [];
   yAxisData: number[] = [];
@@ -28,6 +28,10 @@ export class GraphOnermPage implements OnInit {
     this.rightsideWeek = this.graphService.getCurrentDate();
     this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
     this.rightsideWeekFormatted = this.graphService.formatDate(this.graphService.getCurrentDate())
+   }
+
+   changeDuration(){
+    this.updateChart();
    }
 
    returnPast7Days(date: Date) {
@@ -115,14 +119,14 @@ export class GraphOnermPage implements OnInit {
   }
 
   updateChart(){
-    this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( x_data => {
+    this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.timeView, this.selectedWorkout).subscribe( x_data => {
 
 
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.xAxisDates;
       this.chart.update();
     });
-    this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe( y_data => {
+    this.graphService.getOneRMXandY(this.graphService.formatDateforAPI(this.previousWeek), this.timeView, this.selectedWorkout).subscribe( y_data => {
 
       this.workoutData = y_data.y;
       this.chart.data.datasets[0].data = this.populateYAxis(this.workoutData)
@@ -161,10 +165,16 @@ export class GraphOnermPage implements OnInit {
         scales: {
           x: {
             ticks: {
+              color: 'white',
               display: true,
               autoSkip: false,
             },
           },
+          y: {
+            ticks: {
+              color: 'white'
+            }
+          }
         },
       },
     });

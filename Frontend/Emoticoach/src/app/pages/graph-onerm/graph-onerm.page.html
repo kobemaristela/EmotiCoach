@@ -1,16 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button expand="block" routerLink="/tabs/home">
-        <ion-icon color="success" name="arrow-back"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>One Rep Max Graph</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-toolbar>
+  <ion-button color="#833535" slot="start" routerLink="/tabs/home">
+    <ion-icon name="arrow-back"></ion-icon>
+  </ion-button>
+<ion-title>One Rep Max Graph</ion-title>
+<ion-icon id="open-modal" slot="end" size="large" name="information-circle-outline"></ion-icon>
+</ion-toolbar>
 
 <ion-content>
-  
+  <ion-item>
+    <ion-select 
+    interface="popover" 
+    class="date-selection"
+    [(ngModel)]="timeView"
+    (ionChange)="changeDuration()">
+    <ion-select-option value="7">Week View</ion-select-option> 
+    <ion-select-option value="30">Month View</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-modal
+  trigger="open-modal"
+  [initialBreakpoint]="0.25"
+  [breakpoints]="[0, 0.25, 0.5, 0.75]"
+  handleBehavior="cycle"
+>
+  <ng-template>
+    <ion-content class="ion-padding">
+      <div class="ion-margin-top">
+        <ion-label>This graph shows you your theoretical one rep max for a specific workout.</ion-label>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
 
   <div class="chart-container">
       <canvas  id="OneRMgraph" >{{ chart }}</canvas>
