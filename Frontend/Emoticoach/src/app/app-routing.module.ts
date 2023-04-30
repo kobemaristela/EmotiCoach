@@ -67,7 +67,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/account/change-pass/change-pass.module').then( m => m.ChangePassPageModule)
   },
   { path: '**', redirectTo: '' },
-  
 ];
 
 @NgModule({
