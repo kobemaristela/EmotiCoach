@@ -22,15 +22,15 @@ export class GraphService {
     this.currentDate = new Date();
    }
 
-  getVolumeXandY(start_date: string, activity: string): Observable<any>{
-    this.requestGraphService.getVolumeData(start_date, activity).subscribe( d => {
+  getVolumeXandY(start_date: string, length: string, activity: string): Observable<any>{
+    this.requestGraphService.getVolumeData(start_date, length, activity).subscribe( d => {
       this.graph$.next(d)
     });
     return this.graph$;
   }
 
-  getOneRMXandY(start_date: string, activity: string): Observable<any>{
-    this.requestGraphService.getOneRMData(start_date, activity).subscribe( d => {
+  getOneRMXandY(start_date: string, length: string, activity: string): Observable<any>{
+    this.requestGraphService.getOneRMData(start_date, length, activity).subscribe( d => {
       this.graph$.next(d)
     });
     return this.graph$;

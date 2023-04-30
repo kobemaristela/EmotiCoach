@@ -14,6 +14,7 @@ export class GraphVolumePage implements OnInit {
   workouts: any[] = [];
   workoutDates: string[] = [];
   selectedWorkout = "";
+  timeView: string = "7";
   previousWeek: Date;
   xAxisDates: string[] = [];
 
@@ -58,10 +59,16 @@ export class GraphVolumePage implements OnInit {
         scales: {
           x: {
             ticks: {
+              color: 'white',
               display: true,
               autoSkip: false,
             },
           },
+          y: {
+            ticks: {
+              color: 'white'
+            }
+          }
         },
       },
     });
@@ -70,7 +77,9 @@ export class GraphVolumePage implements OnInit {
     this.getWorkoutNames();
   }
 
-
+  changeDuration(){
+    this.updateChart();
+  }
 
   returnPast7Days(date: Date) { //this always starts on sunday
 
@@ -157,12 +166,12 @@ export class GraphVolumePage implements OnInit {
   }
 
   updateChart() {
-    this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe(x_data => {
+    this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.timeView, this.selectedWorkout).subscribe(x_data => {
       this.workoutDates = x_data.X;
       this.chart.data.labels = this.xAxisDates;
       this.chart.update();
     });
-    this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.selectedWorkout).subscribe(y_data => {
+    this.graphService.getVolumeXandY(this.graphService.formatDateforAPI(this.previousWeek), this.timeView, this.selectedWorkout).subscribe(y_data => {
       this.workoutData = y_data.y;
       this.chart.data.datasets[0].data = this.populateYAxis(this.workoutData)
       this.chart.update();

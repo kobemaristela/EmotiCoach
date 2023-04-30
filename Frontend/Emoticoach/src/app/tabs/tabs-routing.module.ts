@@ -51,16 +51,16 @@ const routes: Routes = [
         path: 'workout-tables',
         loadChildren: () => import('../pages/workout-tables/workout-tables.module').then( m => m.WorkoutTablesPageModule)
       },
-      {
-        path: '',
-        redirectTo: '/tabs/home',
-        pathMatch: 'full'
-      }
+      // {
+      //   path: '',
+      //   redirectTo: '/tabs/home',
+      //   pathMatch: 'full'
+      // }
     ]
   },
   {
     path: '',
-    loadChildren: () => import('../pages/home/home.module').then( m => m.HomePageModule)
+    loadChildren: () => import('../pages/login/login.module').then( m => m.LoginPageModule)
   }
   
 ];

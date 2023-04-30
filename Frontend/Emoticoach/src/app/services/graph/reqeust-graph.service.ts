@@ -12,10 +12,10 @@ export class RequestGraphService {
 
   constructor(private http: HttpClient, private accountService: AccountService) { }
 
-getVolumeData(start_date: string, activity: string){
+getVolumeData(start_date: string, length: string, activity: string){
     const formData = new FormData();
     formData.append("start_date", start_date); //format 2023-03-07
-    formData.append("length", "7");
+    formData.append("length", length);
     formData.append("activity", activity);
 
     let tableParam = {
@@ -28,10 +28,10 @@ getVolumeData(start_date: string, activity: string){
     return result;
   }
 
-  getOneRMData(start_date: string, activity: string){
+  getOneRMData(start_date: string, length: string, activity: string){
     const formData = new FormData();
     formData.append("start_date", start_date); //format 2023-03-07
-    formData.append("length", "7");
+    formData.append("length", length);
     formData.append("activity", activity);
 
     let tableParam = {

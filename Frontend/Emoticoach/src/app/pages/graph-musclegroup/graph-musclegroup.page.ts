@@ -121,10 +121,16 @@ export class GraphMusclegroupPage implements OnInit {
         scales: {
           x: {
             ticks: {
+              color: 'white',
               display: true,
               autoSkip: false,
             },
           },
+          y: {
+            ticks: {
+              color: 'white'
+            }
+          }
         },
       },
     });
