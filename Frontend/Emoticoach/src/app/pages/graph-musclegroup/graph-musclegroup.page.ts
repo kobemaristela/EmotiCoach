@@ -13,7 +13,7 @@ export class GraphMusclegroupPage implements OnInit {
   workoutData: number[] = [];
   musclegrouplist: any[] = [];
   musclegroups: string[] = [];
-  selectedGroup = "";
+  selectedGroup: string[] = [];
   muscleList = MUSCLE_LIST;
   previousWeek: Date;
   previousWeekFormatted: string;
@@ -53,24 +53,32 @@ export class GraphMusclegroupPage implements OnInit {
     this.updateChart();
   }
 
-  indexSelect(selectedGroup: string){
-    return this.selectedGroup = selectedGroup;
+  compareArrays(): boolean{
+    if(this.musclegroups.sort().join(',') === this.selectedGroup.sort().join(',')){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
-
 
   updateChart(){
     console.log(this.workoutData)
     this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( x_data => { 
 
-      if(this.musclegroups.includes(this.selectedGroup)){
+      if(this.compareArrays()){
         let x_axis = new Array<string>(0);
-        x_axis.push(this.selectedGroup)
+        for(let i=0; i<this.selectedGroup.length; i++){
+          x_axis.push(this.selectedGroup[i]);
+        }
         this.chart.data.labels = x_axis
         this.chart.update();
       }
       else{
         let x_axis = new Array<string>(0);
-        x_axis.push(this.selectedGroup)
+        for(let i=0; i<this.selectedGroup.length; i++){
+          x_axis.push(this.selectedGroup[i]);
+        }
         this.chart.data.labels = x_axis
         this.chart.update();
       }
@@ -78,12 +86,16 @@ export class GraphMusclegroupPage implements OnInit {
     this.graphService.getMuscleXandY(this.weekNumber.toString()).subscribe( y_data => {
       this.musclegroups = y_data.X;
       this.workoutData = y_data.y;
-      let index = this.musclegroups.indexOf(this.selectedGroup) //gets index of selected group
+      let index = new Array<number>(0);
+      for(let i=0; i<this.selectedGroup.length; i++){
+        index.push(this.musclegroups.indexOf(this.selectedGroup[i]));
+      }
 
-
-      if(index != -1){
+      if(!index.includes(-1)){
         let y_axis = new Array<number>(0);
-        y_axis.push(this.workoutData[index])
+        for(let i=0; i<this.selectedGroup.length; i++){
+          y_axis.push(this.workoutData[index[i]]);
+        }
         this.chart.data.datasets[0].data = y_axis;
         this.chart.update();
       }

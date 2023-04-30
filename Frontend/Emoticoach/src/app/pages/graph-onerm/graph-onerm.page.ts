@@ -9,7 +9,7 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
   styleUrls: ['./graph-onerm.page.scss'],
 })
 export class GraphOnermPage implements OnInit {
-  public chart: any; 
+  public chart: any;
   workoutData: number[] = [];
   workouts: any[] = [];
   workoutDates: string[] = [];
@@ -17,10 +17,10 @@ export class GraphOnermPage implements OnInit {
   timeView: string = "7";
   previousWeek: Date;
   xAxisDates: string[] = [];
+
   yAxisData: number[] = [];
   rightsideWeek: Date;
   previousWeekFormatted: string;
-
   rightsideWeekFormatted: string;
 
   constructor(private graphService: GraphService, private themeService: ThemeService) {
@@ -30,9 +30,25 @@ export class GraphOnermPage implements OnInit {
     this.rightsideWeekFormatted = this.graphService.formatDate(this.graphService.getCurrentDate())
    }
 
-   changeDuration(){
+   changeDuration(duration: string){
+    if(duration == "7"){
+      this.chart.options.scales.x.ticks.display = true;
+      let xAxisInit = this.last7Days(this.rightsideWeek);
+      this.xAxisDates.length = 0
+      for (let i = 0; i < xAxisInit.length; i++) {
+        this.xAxisDates.push(this.graphService.formatDate(xAxisInit[i]));
+      }
+    }
+    if(duration == "30"){
+      this.chart.options.scales.x.ticks.display = false;
+      let xAxisInit = this.last30Days(this.rightsideWeek);
+      this.xAxisDates.length = 0
+      for (let i = 0; i < xAxisInit.length; i++) {
+        this.xAxisDates.push(this.graphService.formatDate(xAxisInit[i]));
+      }
+    }
     this.updateChart();
-   }
+  }
 
    returnPast7Days(date: Date) {
     return Array(7).fill(new Date(date)).map((el, idx) =>
@@ -43,6 +59,16 @@ export class GraphOnermPage implements OnInit {
   last7Days(d: Date){
     let result = [];
     for(let i=0; i<7; i++){
+      let x = new Date(d)
+      x.setDate(x.getDate() - i)
+      result.push(x)
+    }
+    return result.reverse();
+  }
+
+  last30Days(d: Date) {
+    let result = [];
+    for (let i = 0; i < 30; i++) {
       let x = new Date(d)
       x.setDate(x.getDate() - i)
       result.push(x)
@@ -96,25 +122,43 @@ export class GraphOnermPage implements OnInit {
     })
   }
 
-  displayPreviousWeek(){
-
-    this.formatXaxis(this.last7Days(this.previousWeek))
-
-    this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
-    this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
-    this.previousWeekFormatted = this.xAxisDates[0];
-    this.rightsideWeekFormatted = this.xAxisDates[6];
+  displayPreviousWeek() {
+    if(this.timeView == "7"){
+      this.chart.options.scales.x.ticks.display = true;
+      this.formatXaxis(this.last7Days(this.previousWeek))
+      this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
+      this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
+      this.previousWeekFormatted = this.xAxisDates[0];
+      this.rightsideWeekFormatted = this.xAxisDates[6];
+    }
+    if(this.timeView == "30"){
+      this.chart.options.scales.x.ticks.display = false;
+      this.formatXaxis(this.last30Days(this.previousWeek))
+      this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
+      this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
+      this.previousWeekFormatted = this.xAxisDates[0];
+      this.rightsideWeekFormatted = this.xAxisDates[29];
+    }
     this.updateChart();
   }
 
-  displayNextWeek(){
-
-    this.formatXaxis(this.last7Days(this.graphService.getNextWeek(this.rightsideWeek)))
-
-    this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
-    this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
-    this.previousWeekFormatted = this.xAxisDates[0];
-    this.rightsideWeekFormatted = this.xAxisDates[6];
+  displayNextWeek() {
+    if(this.timeView == "7"){
+      this.chart.options.scales.x.ticks.display = true;
+      this.formatXaxis(this.last7Days(this.graphService.getNextWeek(this.rightsideWeek)))
+      this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
+      this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
+      this.previousWeekFormatted = this.xAxisDates[0];
+      this.rightsideWeekFormatted = this.xAxisDates[6];
+    }
+    if(this.timeView == "30"){
+      this.chart.options.scales.x.ticks.display = false;
+      this.formatXaxis(this.last30Days(this.graphService.getNextWeek(this.rightsideWeek)))
+      this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
+      this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
+      this.previousWeekFormatted = this.xAxisDates[0];
+      this.rightsideWeekFormatted = this.xAxisDates[29];
+    }
     this.updateChart();
   }
 
