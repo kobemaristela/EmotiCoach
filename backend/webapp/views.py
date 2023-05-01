@@ -116,3 +116,23 @@ class Sleep(LoginRequiredMixin, TemplateView):
         context['first_name'] = self.request.user.first_name
         context['last_name'] = self.request.user.last_name
         return context
+    
+class PPG(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    template_name = "webapp/ppg.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['first_name'] = self.request.user.first_name
+        context['last_name'] = self.request.user.last_name
+        return context
+
+class EDA(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
+    redirect_field_name = 'redirect_to'
+    template_name = "webapp/eda.html"
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['first_name'] = self.request.user.first_name
+        context['last_name'] = self.request.user.last_name
+        return context
