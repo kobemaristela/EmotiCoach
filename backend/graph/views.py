@@ -7,7 +7,6 @@ from django.utils.timezone import make_aware
 from django.utils import timezone
 from django.db.models import Sum
 
-from .mqtt import ppg_infrared, ppg_green, ppg_red
 from django.http import JsonResponse
 from datetime import datetime, timedelta
 from workout.models import Session, Activity, Set, MuscleGroup

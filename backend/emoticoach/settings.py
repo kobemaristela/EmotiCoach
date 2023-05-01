@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     "update",
     "webapp",
     "buddy",
+    "ml",
+    "mqtt",
 ]
 
 CSRF_TRUSTED_ORIGINS = ["https://emotidev.maristela.net"]
