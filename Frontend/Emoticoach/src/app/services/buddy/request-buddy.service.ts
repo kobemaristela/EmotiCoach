@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AccountService } from '../user/account.service';
-import { Observable } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { friendRequest } from './IfriendsRequest';
 
 @Injectable({
@@ -22,9 +22,9 @@ export class RequestBuddyService {
     }
 
     let res = this.http.post<any>("https://emotidev.maristela.net/buddy/addfriend", formData, tableParam);
-    res.subscribe(data=> {
-      console.log(data)
-    })
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -36,9 +36,9 @@ export class RequestBuddyService {
     }
 
     let res = this.http.get<any>("https://emotidev.maristela.net/buddy/getallfriends", tableParam);
-    res.subscribe(data=> {
-      console.log("friends",data)
-    })
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 }

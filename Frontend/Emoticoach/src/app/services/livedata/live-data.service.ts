@@ -28,6 +28,7 @@ export class LiveDataService {
   }
 
   observeTopic(topic: string): Observable<IMqttMessage> {
+    console.log("observing", topic)
     return this.mqttService.observe(topic);
   }
 
@@ -36,9 +37,10 @@ export class LiveDataService {
   }
 
   publishToTopic(topic: string ,msg: string) {
-    this.mqttService.publish(topic,msg).subscribe(() => {
-      
-    })
+    this.mqttService.unsafePublish(topic,msg, { qos: 1, retain: true });
+    // .subscribe((d) => {
+    //   console.log("published to" ,topic, d)
+    // })
   }
   
 }

@@ -27,7 +27,7 @@ export class AccountService {
     this.userInfo = new Account("");
     this.user$ = new BehaviorSubject(this.userInfo);
     //Remove this ;ater this defaults it to justins hard coded token for testing
-    AccountService.user_token = CHAD_TOKEN
+    AccountService.user_token = CHAD_TOKEN;
     }
 
   login(username:string , password: string): Observable<any>{
@@ -39,7 +39,9 @@ export class AccountService {
       AccountService.user_firstname = d.first_name;
       AccountService.user_lastname = d.last_name;
       this.saveToken();
+      
     });
+
     return this.user$;
   }
 
@@ -65,6 +67,7 @@ export class AccountService {
   }
 
   returnUserToken(){
+    console.log(AccountService.user_token)
     return AccountService.user_token;
   }
 

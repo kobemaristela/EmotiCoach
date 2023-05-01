@@ -132,7 +132,7 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
     if (canSave) {
       console.log("saving in logworkout", this.currentSession);
       this.servSession.saveSession(); 
-      this.servSession.getSessions(new Date("YYYY-MM-DD").toString().split("T")[0], 100);
+      this.servSession.getSessions(new Date().toISOString().split('T')[0], 100);
       this.presentAlert("Save Succesfull","","");
       
     } else {
@@ -157,7 +157,22 @@ export class LogWorkoutPage implements OnInit, OnDestroy {
     
   }
 
+  updateMuscleChart($event: any){
+    this.loadMuscleGroups();
+  }
   
-  
-  
+  updateName(){
+    const name: string = this.currentSession.name;
+    const words: string[] = name.split(" ");
+    
+    for (let i = 0; i < words.length; i++) {
+      if (words[i]){
+        words[i] = words[i][0].toUpperCase() + words[i].substring(1);
+
+      }
+    }
+    
+    this.currentSession.name = words.join(" ");
+
+  }
 }

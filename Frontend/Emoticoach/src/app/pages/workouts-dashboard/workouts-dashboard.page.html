@@ -23,13 +23,13 @@
       <ion-grid>
         <ion-row>
           <ion-label color="success">
-            Select Cards to delete them
+            Select cards to delete them
           </ion-label>
 
         </ion-row>
         <ion-row>
-          <ion-button (click)="deletingSessions()">Cancel</ion-button>
-          <ion-button (click)="confirmDelete()">Confirm</ion-button>
+          <ion-button color="primary" (click)="deletingSessions()" class="onClick">Cancel</ion-button>
+          <ion-button  color="primary" (click)="confirmDelete()"  class="onClick">Confirm</ion-button>
 
         </ion-row>
       </ion-grid>
@@ -122,6 +122,8 @@
     </ion-item-sliding>
  
   </ion-list>
-
+  <ion-infinite-scroll (ionInfinite)="loadMoreSessions($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

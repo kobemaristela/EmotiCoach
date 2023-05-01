@@ -37,5 +37,6 @@ export class ExerciseSetComponent implements OnInit {
 
   deleteSet(){
     this.service.deleteSet(this.activityIndex, this.setCount - 1);
+    this.setCount -= 1;
   }
 }

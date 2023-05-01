@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { sessionRequest } from 'src/app/services/sessions/session/IsessionRequest';
 import { SessionService } from 'src/app/services/sessions/session/session.service';
-import { NavController } from '@ionic/angular';
+import { InfiniteScrollCustomEvent, NavController } from '@ionic/angular';
 import { Observable, Subscription } from 'rxjs';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { AnimationController } from '@ionic/angular';
@@ -13,7 +13,7 @@ import { AnimationController } from '@ionic/angular';
   styleUrls: ['./workouts-dashboard.page.scss'],
 })
 export class WorkoutsDashboardPage implements OnInit {
-  
+  months: number = 0;
   sessions: sessionRequest[] = [];
   sessions$: Observable<sessionRequest[]>
   deleting: boolean;
@@ -37,13 +37,12 @@ export class WorkoutsDashboardPage implements OnInit {
 
   //calls the get session function from the service to do the api call and set the current session
   loadSessions() {
-    console.log(this.getDate())
+
     this.sessions$ = this.servSession.getSessions(this.getDate(), 30);
     this.sessions$.subscribe((res) => {
-      this.sessions = res.slice().reverse();
+      this.sessions = [...res.slice().reverse()];
       console.log("loading sessions", this.sessions)
       this.currentSelected = new Array(this.sessions.length);
-
     });
 
   }
@@ -80,6 +79,7 @@ export class WorkoutsDashboardPage implements OnInit {
     this.servSession.deleteSession(sessionId).subscribe(data => {
       console.log(data);
       if (data.status) {
+        
         this.loadSessions();
       }
     });
@@ -108,4 +108,19 @@ export class WorkoutsDashboardPage implements OnInit {
     return this.date.toISOString().split('T')[0]
      
   }
+
+  loadMoreSessions(event: any){
+    this.months += 1;
+    this.date.setMonth(this.date.getMonth() - this.months)
+    this.sessions$ = this.servSession.getSessions(this.getDate(), 30);
+    this.sessions$.subscribe((res) => {
+      this.sessions = this.sessions.concat(...res.slice().reverse());
+      console.log("loading sessions", this.sessions)
+      this.currentSelected = new Array(this.sessions.length);
+    });
+    setTimeout(() => {
+      (event as InfiniteScrollCustomEvent).target.complete();
+    }, 500);
+  }
+  
 }

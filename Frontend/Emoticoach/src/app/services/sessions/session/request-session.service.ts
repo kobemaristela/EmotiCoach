@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { session } from './Isession';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { AccountService } from '../../user/account.service';
 import { set } from '../sets/Iset';
 
@@ -26,6 +26,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsession", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -38,6 +41,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
   
@@ -56,6 +62,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editsession", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -71,6 +80,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editactivity", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -87,6 +99,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editset", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -104,6 +119,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setactivity", formData,tableParam)
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -118,7 +136,10 @@ export class RequestSessionService {
             }
     }
 
-    let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteset", formData,tableParam)
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteset", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -134,8 +155,8 @@ export class RequestSessionService {
       }
 
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteactivity", formData,tableParam)
-    res.subscribe( d => {
-      console.log("deleting activity",d);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
     });
     return res;
   }
@@ -156,6 +177,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -172,7 +196,9 @@ export class RequestSessionService {
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/getallsessionsrange", formData,tableParam);
     // let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions",tableParam);
-    
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   
   }
@@ -187,6 +213,9 @@ export class RequestSessionService {
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsession", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
 
   }
