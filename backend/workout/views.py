@@ -231,11 +231,12 @@ class SetActivity(APIView):
                                                session_id=sessionId)
 
         muscleGroup = request.POST["muscleGroups"]
-        setsObject = request.POST["sets"]
+        setsObject = json.loads(request.POST["sets"])
 
         muscle = MuscleGroup.objects.create(activity_id=activity.id)
         muscle = MuscleGroup.objects.filter(id=muscle.id)
         if muscleGroup:
+            muscleGroup = json.loads(muscleGroup)
             for muscles in muscleGroup:
                 if muscles == "chest":
                     muscle.update(chest=True)
@@ -262,10 +263,11 @@ class SetActivity(APIView):
                 
 
             for sets in setsObject:
-                activitySetNum = checkIfInt(sets["set_num"])
-                activityWeight = checkIfInt(sets["weight"])
-                activityReps = checkIfInt(sets["reps"])
-                activityRpe = checkIfInt(sets["rpe"])
+                
+                activitySetNum = sets["set_num"]
+                activityWeight = sets["weight"]
+                activityReps = sets["reps"]
+                activityRpe = sets["rpe"]
                 activityId = activity.id
 
                 set = Set.objects.create(set_num=activitySetNum,
@@ -282,6 +284,36 @@ class EditActivity(APIView):
     def post(self, request):
         id = checkIfParameter(request, "id")
         name = checkIfParameter(request, "name")
+        muscleGroup = checkIfParameter(request, "muscleGroups")
+        muscle = MuscleGroup.objects.filter(activity_id=id)
+
+        if muscleGroup:
+            muscleGroup = json.loads(muscleGroup)
+            muscle.update(chest=False, tricep=False, bicep=False, shoulder=False, upper_back=False, lower_back=False,
+                          quadricep=False, glute=False, calve=False, abdominal=False, hamstring=False)
+            for muscles in muscleGroup:
+                if muscles == "chest":
+                    muscle.update(chest=True)
+                if muscles == "tricep":
+                    muscle.update(tricep=True)
+                if muscles == "bicep":
+                    muscle.update(bicep=True)
+                if muscles == "shoulder":
+                    muscle.update(shoulder=True)
+                if muscles == "upper_back":
+                    muscle.update(upper_back=True)
+                if muscles == "lower_back":
+                    muscle.update(lower_back=True)
+                if muscles == "quadricep":
+                    muscle.update(quadricep=True)
+                if muscles == "glute":
+                    muscle.update(glute=True)
+                if muscles == "calve":
+                    muscle.update(calve=True)
+                if muscles == "abdominal":
+                    muscle.update(abdominal=True)
+                if muscles == "hamstring":
+                    muscle.update(hamstring=True)
 
         activity = Activity.objects.filter(id=id)
 
@@ -354,7 +386,6 @@ class DeleteSet(APIView):
 
     def post(self, request):
         id = request.POST["id"]
-
         if Set.objects.filter(id=id):
             Set.objects.filter(id=id).delete()
             return JsonResponse({"status": "success"})
