@@ -1,9 +1,116 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>workout-tables</ion-title>
+    <ion-title>Activity Table</ion-title>
+    <!-- <ion-button slot="end"><ion-icon slot="icon-only" name="download-outline" color="success"></ion-icon></ion-button> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-row class="header-row">
+
+    <ion-col size="4" tappable (click)="sortBy('workout')">
+      Workout
+      <ion-icon name="arrow-down" *ngIf="sortDirectionWork == 1"></ion-icon>
+      <ion-icon name="arrow-up" *ngIf="sortDirectionWork== 2"></ion-icon>
+    </ion-col>
+    <ion-col size="3" tappable (click)="sortBy('date')">
+      Date
+      <ion-icon name="arrow-down" *ngIf="sortDirectionDate == 1"></ion-icon>
+      <ion-icon name="arrow-up" *ngIf="sortDirectionDate == 2"></ion-icon>
+    </ion-col>
+    <ion-col size="2">
+      Sets
+    </ion-col>
+
+    <ion-col size="3">
+      Volume
+    </ion-col>
+
+
+  </ion-row>
+  <ion-row class="data-row" *ngFor="let row of activities; let i = index;">
+    <ion-col size="4" >
+      <ion-label class="data">
+        {{row.activity}}
+      </ion-label>
+
+    </ion-col>
+    <ion-col size="3" >
+      <ion-label class="data">
+        {{row.date}}
+
+      </ion-label>
+    </ion-col>
+    <ion-col size="2">
+      <ion-label class="data">
+        {{row.total_sets}} reps
+
+      </ion-label>
+    </ion-col>
+
+    <ion-col size="3">
+      <ion-label class="data">
+        {{row.total_volume}} lbs
+
+      </ion-label>
+
+    </ion-col>
+
+  </ion-row>
 
 </ion-content>
+<ion-footer>
+
+    <ion-row class="date-range ion-text-center" size="8" >
+      <ion-col>
+       <ion-label class="controller-header">
+          {{daterange}}
+       </ion-label>
+
+      </ion-col> 
+
+    </ion-row>
+    <ion-row class="controller ion-align-items-center">
+
+      <ion-col size="2">
+        <ion-button fill="clear" (click)="goBackAMonth()">
+          <ion-icon name="play-back" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button fill="clear" (click)="prevPage()">
+          <ion-icon name="chevron-back" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+  
+  
+      <ion-col size="4" class="ion-text-center">
+       <ion-select interface="popover" [(ngModel)]="range" (ionChange)="loadData()">
+        <ion-select-option [value]="1">1 Day</ion-select-option>
+        <ion-select-option [value]="7">7 Days</ion-select-option>
+        <ion-select-option [value]="28">4 Weeks</ion-select-option>
+       </ion-select>
+      </ion-col>
+  
+      <ion-col size="2">
+        <ion-button fill="clear" (click)="nextPage()">
+          <ion-icon name="chevron-forward" slot="icon-only"></ion-icon>
+  
+        </ion-button>
+      </ion-col>
+      <ion-col size="2">
+        <ion-button fill="clear" (click)="goFirst()">
+          <ion-icon name="play-forward" slot="icon-only"></ion-icon>
+  
+        </ion-button>
+      </ion-col>
+  
+  
+  
+    </ion-row>
+
+
+
+   
+  
+</ion-footer>

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, first } from 'rxjs';
 import { IchatRequest, chat } from './IChat';
 import { HttpClient } from '@angular/common/http';
 import { AccountService } from '../user/account.service';
@@ -23,9 +23,9 @@ export class RequestChatService {
       }
     }
     let res = this.http.post<any>("https://emotidev.maristela.net/buddy/getmessagesforday", formData, tableParam);
-    res.subscribe(data => {
-      console.log("getChats", data)
-    })
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
     return res;
   }
 
@@ -41,9 +41,6 @@ export class RequestChatService {
       }
     }
     let res = this.http.post<any>("https://emotidev.maristela.net/buddy/setmessage", formData, tableParam);
-    res.subscribe(data => {
-      console.log("setChats", data)
-    })
     return res;
   }
 

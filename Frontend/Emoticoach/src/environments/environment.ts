@@ -22,14 +22,14 @@ export const MUSCLE_LIST: string[] = [
 ];
 
 
-export const MQTT_SERVICE_OPTIONS:IMqttServiceOptions = {
-  hostname: 'emotimqtt.maristela.net',
-  port: 8083,
-  protocol: 'wss',
-  username: 'emoticoach',
-  password: '7bf#oV&dq2HTLjG6',
-  connectOnCreate: false,
-  clean: true,
-  clientId: 'emoticoach-app-1',
-  ca:[]
-};
+// export const MQTT_SERVICE_OPTIONS:IMqttServiceOptions = {
+//   hostname: 'emotimqtt.maristela.net',
+//   port: 8083,
+//   protocol: 'wss',
+//   username: 'emoticoach',
+//   password: '7bf#oV&dq2HTLjG6',
+//   connectOnCreate: false,
+//   clean: true,
+//   clientId: 'emoticoach-app-1',
+//   ca:[]
+// };

@@ -1,11 +1,14 @@
-
+<ion-header>
   <ion-toolbar>
-      <ion-button color="#833535" slot="start" routerLink="/tabs/home">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
+    <ion-button color="#833535" slot="start" routerLink="/tabs/home">
+      <ion-icon name="arrow-back"></ion-icon>
+    </ion-button>
     <ion-title>Volume Graph</ion-title>
     <ion-icon id="open-modal" slot="end" size="large" name="information-circle-outline"></ion-icon>
   </ion-toolbar>
+</ion-header>
+
+
 
   <ion-content>
     <ion-item>
@@ -16,15 +19,11 @@
       (ionChange)="changeDuration(timeView)">
       <ion-select-option value="7">Week View</ion-select-option> 
       <ion-select-option value="30">Month View</ion-select-option>
-      </ion-select>
-    </ion-item>
+    </ion-select>
+  </ion-item>
 
-    <ion-modal
-    trigger="open-modal"
-    [initialBreakpoint]="0.25"
-    [breakpoints]="[0, 0.25, 0.5, 0.75]"
-    handleBehavior="cycle"
-  >
+  <ion-modal trigger="open-modal" [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    handleBehavior="cycle">
     <ng-template>
       <ion-content class="ion-padding">
         <div class="ion-margin-top">
@@ -35,59 +34,55 @@
   </ion-modal>
 
   <div class="chart-container">
-      <canvas id="MyChart" >{{ chart }}</canvas>
+    <canvas id="MyChart">{{ chart }}</canvas>
   </div>
 
   <ion-grid style="border-bottom: 2px solid grey">
     <ion-row>
-    <ion-buttons color="#1E1E1E" lines="none" class="date-selection">
-      <ion-col>
-        <ion-button (click)="displayPreviousWeek()">
-        <ion-icon slot="start" name="chevron-back-outline" size="large"></ion-icon>
-      </ion-button>
-      </ion-col>
+      <ion-buttons color="#1E1E1E" lines="none" class="date-selection">
+        <ion-col>
+          <ion-button (click)="displayPreviousWeek()">
+            <ion-icon slot="start" name="chevron-back-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-col>
 
-      <ion-col>
+        <ion-col>
 
-        <ion-text text-align="center">{{previousWeekFormatted}} - {{rightsideWeekFormatted}}</ion-text>
+          <ion-text text-align="center">{{previousWeekFormatted}} - {{rightsideWeekFormatted}}</ion-text>
 
-      </ion-col>
+        </ion-col>
 
-      <ion-col>
-        <ion-button (click)="displayNextWeek()">
-        <ion-icon slot="end" name="chevron-forward-outline" size="large"></ion-icon>
-       </ion-button>
-      </ion-col>
+        <ion-col>
+          <ion-button (click)="displayNextWeek()">
+            <ion-icon slot="end" name="chevron-forward-outline" size="large"></ion-icon>
+          </ion-button>
+        </ion-col>
       </ion-buttons>
     </ion-row>
   </ion-grid>
 
   <ion-grid>
     <ion-row>
-        <ion-item lines="none" color="#1E1E1E">
-          <ion-select 
-          interface="popover" 
-          placeholder="Select workout" 
-          [(ngModel)]="selectedWorkout"
-          class="date-selection"
-          (ionChange)="updateChart()">
-            <div *ngFor="let workout of workouts; let i = index">
-              <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option> 
-            </div>
-          </ion-select>
-        </ion-item>
+      <ion-item lines="none" color="#1E1E1E">
+        <ion-select interface="popover" placeholder="Select workout" [(ngModel)]="selectedWorkout"
+          class="date-selection" (ionChange)="updateChart()">
+          <div *ngFor="let workout of workouts; let i = index">
+            <ion-select-option [value]="workout">{{workouts[i]}}</ion-select-option>
+          </div>
+        </ion-select>
+      </ion-item>
     </ion-row>
   </ion-grid>
 
   <ion-grid>
     <ion-row class="table-title-color">
-        <ion-col class="left-table-text">
-          <ion-text>This Week</ion-text>
-        </ion-col>
+      <ion-col class="left-table-text">
+        <ion-text>This Week</ion-text>
+      </ion-col>
 
-        <ion-col class="right-table-text">
-          <ion-text>Total Weight</ion-text>
-        </ion-col>
+      <ion-col class="right-table-text">
+        <ion-text>Total Weight</ion-text>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -113,4 +108,3 @@
   </ion-grid>
 
 </ion-content>
-

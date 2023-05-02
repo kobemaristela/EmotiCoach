@@ -32,6 +32,10 @@ ion-title {
     color: #ffffff;
 }
 
+.onClick {
+    --background-activated: var(--ion-color-primary)
+}
+
 .name {
     font-size: 120%;
     font-weight: 500;
@@ -40,7 +44,7 @@ ion-title {
 
 .description {
     font-weight: 20;
-    color: #a5a5a5;
+    color: #868686;
 }
 
 ion-icon {
@@ -54,26 +58,5 @@ ion-item{
 
 
 .selected-card {
-    --background: rgb(129, 58, 58, .5);
+    --background: rgba(183, 90, 90, 0.5);
 }
-
-@keyframes slidingAnimation {
-    0% {
-      transform: translate3d(0, 0, 0);
-      -webkit-transform: translate3d(0, 0, 0);
-    }
-    50% {
-      transform: translate3d(-70px, 0, 0);
-      -webkit-transform: translate3d(-70px, 0, 0);
-    }
-    100% {
-      transform: translate3d(0, 0, 0);
-      -webkit-transform: translate3d(0, 0, 0);
-    }
-  }
-  .itemSlidingAnimation {
-    --animation: slidingAnimation;
-    animation: slidingAnimation;
-    --animation-duration: 1000ms;
-    --animation-duraton: 1000ms;
-  }

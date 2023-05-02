@@ -5,8 +5,8 @@ import { DOCUMENT } from '@angular/common';
 })
 export class ThemeService {
   public renderer: Renderer2;
-  public currentTheme: string = "red";
-  // public currentTheme: string = "blue";
+  // public currentTheme: string = "red";
+  public currentTheme: string = "blue";
 
 
   constructor(private rendererFactory: RendererFactory2, @Inject(DOCUMENT) private document: Document) {
@@ -25,6 +25,7 @@ export class ThemeService {
 
     this.renderer.addClass(this.document.body, this.currentTheme);
     console.log(this.currentTheme)
+    // window.location.reload();
   }
   getMuscleColor(){
     if( this.currentTheme == "blue"){

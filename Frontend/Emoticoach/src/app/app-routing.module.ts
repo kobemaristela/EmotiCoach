@@ -23,10 +23,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/account/account.module').then( m => m.AccountPageModule)
   },
   {
-    path: 'graph-hr',
-    loadChildren: () => import('./pages/graph-hr/graph-hr.module').then( m => m.GraphHrPageModule)
-  },
-  {
     path: 'graph-onerm',
     loadChildren: () => import('./pages/graph-onerm/graph-onerm.module').then( m => m.GraphOnermPageModule)
   },

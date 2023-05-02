@@ -107,7 +107,11 @@ export class SessionService {
     console.log("tosave", toSave);
     this.requestSessionService.postCreateNewSessionObservable(toSave)
     .subscribe(v => {
-      this.getSessions("",30);
+      console.log(v)
+
+
+      //fix thisZ
+      this.getSessions(new Date().toISOString().split('T')[0],30);
       this.newSession = false;
     });
    
