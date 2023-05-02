@@ -209,14 +209,14 @@ export class GraphOnermPage implements OnInit {
         scales: {
           x: {
             ticks: {
-              color: 'white',
+              color: this.themeService.getSuccessColor(),
               display: true,
               autoSkip: false,
             },
           },
           y: {
             ticks: {
-              color: 'white'
+              color: this.themeService.getSuccessColor()
             }
           }
         },
