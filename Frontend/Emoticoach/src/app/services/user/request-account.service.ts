@@ -56,7 +56,7 @@ export class RequestAccountService {
 
     let tableParam = {
       headers: {
-        // "Authorization": ("token " + AccountService.user_token),
+        "Authorization": ("token " + AccountService.user_token),
       }
   }
   let res = this.http.post<any>("https://emotidev.maristela.net/user/edit", formData,tableParam);
