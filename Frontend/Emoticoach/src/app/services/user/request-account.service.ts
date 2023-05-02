@@ -45,12 +45,13 @@ export class RequestAccountService {
     return res;
   }
 
-  editAccountInfo(first_name:string, last_name:string, email:string, password:string):Observable<any>{
+  editAccountInfo(first_name:string, last_name:string, email:string, password:string, profile_picture:string):Observable<any>{
     const formData = new FormData();
     formData.append("first_name", first_name);
     formData.append("last_name", last_name);
     formData.append("email", email);
     formData.append("password", password);
+    formData.append("profile_picture", profile_picture);
 
     let tableParam = {
       headers: {
@@ -61,6 +62,16 @@ export class RequestAccountService {
   res.subscribe(data => {
     console.log("edit respose",data)
   })
+    return res;
+  }
+
+  getUserIcons(): Observable<any>{
+    let tableParam = {
+     headers: {
+       "Authorization": ("token " + AccountService.user_token),
+     }
+    }
+    let res = this.http.get<any>("https://emotidev.maristela.net/user/getallicons", tableParam);
     return res;
   }
 }
