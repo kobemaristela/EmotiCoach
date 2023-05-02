@@ -28,6 +28,7 @@ def on_message(mqtt_client, userdata, msg):
         ppg_infrared.append((datetime.fromtimestamp(currentTime).strftime('%Y-%m-%d %H:%M:%S.%f'), message))
         if len(ppg_infrared) >= 30000:
             ppg_infrared.pop(0)
+        
     if msg.topic == "emoticoach/eda/activity":
         eda.append((datetime.fromtimestamp(currentTime).strftime('%Y-%m-%d %H:%M:%S.%f'), message))
         if len(eda) >= 30000:
