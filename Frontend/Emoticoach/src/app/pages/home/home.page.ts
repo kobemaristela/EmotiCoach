@@ -2,6 +2,7 @@ import { AlertController, NavController } from '@ionic/angular';
 import { AfterContentChecked, Component, OnInit } from '@angular/core';
 import SwiperCore, { SwiperOptions, Pagination } from 'swiper';
 import { ThemeService } from 'src/app/services/theme/theme.service';
+import { RequestSessionService } from 'src/app/services/sessions/session/request-session.service';
 // install Swiper modules
 SwiperCore.use([Pagination]);
 
@@ -11,6 +12,8 @@ SwiperCore.use([Pagination]);
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit, AfterContentChecked {
+  prVolume: string = "Log a Workout";
+  prVolumeNum: number|string = "";
 
   headers: any;
   workoutData: any[] = [];
@@ -58,16 +61,17 @@ export class HomePage implements OnInit, AfterContentChecked {
     '/tabs/graph-musclegroup',
   ];
 
-  constructor(public navCtrl: NavController, private alertController: AlertController) {
+  constructor(
+    public navCtrl: NavController, 
+    private alertController: AlertController,
+    private requestSessions: RequestSessionService) {
   }
 
   ngOnInit() {
-    this.workoutData = [
-      { id: 1, workout_name: 'Bench', record: '185' },
-      { id: 2, workout_name: 'Deadlift', record: '225' },
-      { id: 3, workout_name: 'Squat', record: '275' },
-    ];
-
+    setTimeout(() => {
+      this.loadPr();
+    }, 2000);
+   
   }
 
   async presentAlert() {
@@ -78,6 +82,24 @@ export class HomePage implements OnInit, AfterContentChecked {
     });
 
     await alert.present();
+  }
+
+  loadPr() {
+    this.requestSessions.postGetActivityTable(1, 7).subscribe(data => {
+      console.log(data)
+      if (data.table.length > 0) {
+
+      
+      const max = data.table.reduce(function(prev, current) {
+        return (prev.heaviest_weight > current.heaviest_weight) ? prev : current
+      })
+      this.prVolume = max.activity + " Heaviest Weight";
+      this.prVolumeNum = max.heaviest_weight + " lbs";
+    } else {
+      this.prVolume = "Log a Workout";
+      this.prVolumeNum = "";
+    }
+    })
   }
 
   ngAfterContentChecked() {
