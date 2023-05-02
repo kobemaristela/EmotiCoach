@@ -153,13 +153,17 @@ class DeleteAccount(APIView):
 class GetProfile(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
-    
+
+   
     def get(self, request):
+        userProfile = UserProfile.objects.get(auth_user_id=request.user.id)
+        icon = Icon.objects.get(id=userProfile.profile_picture_id)
         response = {
             "first_name": request.user.first_name,
             "last_name": request.user.last_name,
             "username": request.user.username,
-            "email": request.user.email
+            "email": request.user.email,
+            "icon": icon.image
         }
         
         return JsonResponse(response)

@@ -75,4 +75,15 @@ export class RequestAccountService {
     let res = this.http.get<any>("https://emotidev.maristela.net/user/getallicons", tableParam);
     return res;
   }
+
+
+  getProfile(): Observable<any>{
+    let tableParam = {
+     headers: {
+       "Authorization": ("token " + AccountService.user_token),
+     }
+    }
+    let res = this.http.get<any>("https://emotidev.maristela.net/user/getprofile", tableParam);
+    return res;
+  }
 }
