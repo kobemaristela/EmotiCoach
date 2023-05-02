@@ -29,7 +29,7 @@ export class ChangePassPage implements OnInit {
   async changePassword(){
     if(this.userData.new_pass == this.userData.confirm_pass){
       this.matching = true;
-      this.user$ = this.accountService.editAccountInfo("", "", "", this.userData.new_pass);
+      this.user$ = this.accountService.editAccountInfo("", "", "", this.userData.new_pass, "");
       this.user$.subscribe((res)=> {
         if(res){
           this.navCtrl.navigateForward('/tabs/account')

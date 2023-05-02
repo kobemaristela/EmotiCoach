@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ThemeService } from 'src/app/services/theme/theme.service';
 import { user } from 'src/app/services/user/Iuser';
 import { AccountService } from 'src/app/services/user/account.service';
+import { IconRequest } from './change-avatar/IIconRequest';
 
 @Component({
   selector: 'app-account',
@@ -26,7 +27,7 @@ export class AccountPage implements OnInit {
   emotibitButton: string;
   settingsButton: string;
   timezone: string;
-  selectedAvatar: string;
+  selectedAvatar: IconRequest;
 
   changingAvatar: boolean;
 
@@ -49,7 +50,10 @@ export class AccountPage implements OnInit {
     this.user_email = "";
     this.user_pass = "";
 
-    this.selectedAvatar = "Emotibit"
+    this.selectedAvatar = {
+      id: "",
+      icon: ""
+    }
     this.changingAvatar = false;
    }
 
@@ -58,20 +62,12 @@ export class AccountPage implements OnInit {
     this.selectedAvatar = $event;
    }
 
-  displayFirstName(){
+  displayUserInfo(){
     this.user_firstname = this.accountService.returnUserFirstName();
-  }
-
-  displayLastName(){
     this.user_lastname = this.accountService.returnUserLastName();
-  }
-
-
-  displayEmail(){
     this.user_email = this.accountService.returnUserEmail();
-  }
-  displayName(){
     this.user_firstlast = this.accountService.returnFirstLastName();
+    this.selectedAvatar.icon = this.accountService.returnUserIcon();
   }
 
   displayAccountPage(){
@@ -111,7 +107,7 @@ export class AccountPage implements OnInit {
   }
 
   async editInfo(){
-    this.user$ = this.accountService.editAccountInfo(this.user_firstname, this.user_lastname, this.user_email, this.user_pass);
+    this.user$ = this.accountService.editAccountInfo(this.user_firstname, this.user_lastname, this.user_email, this.user_pass, this.selectedAvatar.id);
     this.user$.subscribe((res)=> {
     })
   }
@@ -134,11 +130,8 @@ export class AccountPage implements OnInit {
   }
 
   ngOnInit() {
-    this.displayFirstName()
-    this.displayLastName()
-    this.displayEmail()
-    this.displayName()
-    this.displayTimezone()
+    this.displayUserInfo();
+    this.displayTimezone();
   }
 
   changeTheme(){
