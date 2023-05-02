@@ -85,7 +85,7 @@ export class HomePage implements OnInit, AfterContentChecked {
   }
 
   loadPr() {
-    this.requestSessions.postGetActivityTable(1, 7).subscribe(data => {
+    this.requestSessions.postGetActivityTable(7, 0).subscribe(data => {
       console.log(data)
       if (data.table.length > 0) {
 
@@ -93,7 +93,7 @@ export class HomePage implements OnInit, AfterContentChecked {
       const max = data.table.reduce(function(prev, current) {
         return (prev.heaviest_weight > current.heaviest_weight) ? prev : current
       })
-      this.prVolume = max.activity + " Heaviest Weight";
+      this.prVolume = "Heaviest " + max.activity;
       this.prVolumeNum = max.heaviest_weight + " lbs";
     } else {
       this.prVolume = "Log a Workout";
