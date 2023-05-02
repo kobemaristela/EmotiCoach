@@ -1,9 +1,23 @@
+ion-select{
+    width: 400px;
+    text-align-last: center;
+  
+}
+
+ion-modal{
+    --border-color: #000;
+}
+
+ion-label{
+    color: var(--ion-color-success);
+}
+
 ion-icon{
-    color: #fff;
+    color: var(--ion-color-primary);;
 }
 
 .time-selection{
-    padding-left: 275px;
+    padding-left: 175px;
     color: #929292;
 }
 
@@ -27,11 +41,7 @@ ion-icon{
 }
 
 .table-title-color{
-    background-color: #833535;
-}
-
-.table-row-color{
-    background-color: #929292;
+    background-color: var(--ion-color-primary);;
 }
 
 .right{

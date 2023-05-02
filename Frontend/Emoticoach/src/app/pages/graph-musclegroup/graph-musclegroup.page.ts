@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto'
 import { GraphService } from 'src/app/services/graph/graph.service';
 import { MUSCLE_LIST } from 'src/environments/environment';
+import { ThemeService } from 'src/app/services/theme/theme.service';
 
 @Component({
   selector: 'app-graph-musclegroup',
@@ -21,7 +22,7 @@ export class GraphMusclegroupPage implements OnInit {
   rightsideWeekFormatted: string;
   weekNumber: number;
 
-  constructor(private graphService: GraphService) {
+  constructor(private graphService: GraphService, private themeService: ThemeService) {
     this.previousWeek = this.graphService.getPreviousWeek(this.graphService.getCurrentDate());
     this.rightsideWeek = this.graphService.getCurrentDate();
     this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
@@ -133,14 +134,14 @@ export class GraphMusclegroupPage implements OnInit {
         scales: {
           x: {
             ticks: {
-              color: 'white',
+              color: this.themeService.getSuccessColor(),
               display: true,
               autoSkip: false,
             },
           },
           y: {
             ticks: {
-              color: 'white'
+              color: this.themeService.getSuccessColor()
             }
           }
         },
