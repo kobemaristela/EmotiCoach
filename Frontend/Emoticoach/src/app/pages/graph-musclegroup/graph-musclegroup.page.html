@@ -31,7 +31,8 @@ handleBehavior="cycle"
   </div>
 
   <ion-grid style="border-bottom: 2px solid grey">
-    <ion-row>
+    <ion-row class="ion-justify-content-center">
+
       <ion-buttons color="primary" lines="none" class="date-selection">
         <ion-col>
           <ion-button (click)="displayPreviousWeek()">
@@ -50,10 +51,9 @@ handleBehavior="cycle"
         </ion-col>
       </ion-buttons>
     </ion-row>
-  </ion-grid>
 
-  <ion-grid>
-    <ion-row>
+    <ion-row class="ion-justify-content-center">
+
       <ion-item lines="none" color="dark">
         <ion-select 
         interface="popover" 

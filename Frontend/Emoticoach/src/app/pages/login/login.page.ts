@@ -26,9 +26,15 @@ export class LoginPage implements OnInit {
   constructor(private accountService: AccountService, public navCtrl: NavController) { }
 
   ngOnInit(){
-    if(this.accountService.isLoggedIn){
-      this.isLoggedIn = true;
-    }
+    this.accountService.checkKeyChain().then(value => {
+      console.log('Got value', value)
+      if(JSON.parse(value)) {
+        this.accountService.loadProfile();
+        this.navCtrl.navigateRoot('/tabs/home');
+      }
+    })
+    .catch(err => console.error('Error getting', err));
+  
   }
 
   async toHomepage(){
