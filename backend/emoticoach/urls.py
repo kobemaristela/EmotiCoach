@@ -28,4 +28,5 @@ urlpatterns = [
     path('update', include('update.urls')),
     path('webapp/', include('webapp.urls')),
     path('buddy/', include('buddy.urls')),
+    path('ml/', include('ml.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

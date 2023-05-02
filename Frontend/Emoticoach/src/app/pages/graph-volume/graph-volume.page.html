@@ -9,10 +9,15 @@
 </ion-header>
 
 
-<ion-content>
-  <ion-item>
-    <ion-select interface="popover" class="date-selection" [(ngModel)]="timeView" (ionChange)="changeDuration()">
-      <ion-select-option value="7">Week View</ion-select-option>
+
+  <ion-content>
+    <ion-item>
+      <ion-select 
+      interface="popover" 
+      class="date-selection"
+      [(ngModel)]="timeView"
+      (ionChange)="changeDuration(timeView)">
+      <ion-select-option value="7">Week View</ion-select-option> 
       <ion-select-option value="30">Month View</ion-select-option>
     </ion-select>
   </ion-item>

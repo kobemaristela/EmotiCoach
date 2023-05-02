@@ -11,19 +11,19 @@
 
 
 <ion-content>
-  <ion-modal
-  trigger="open-modal"
-  [initialBreakpoint]="0.25"
-  [breakpoints]="[0, 0.25, 0.5, 0.75]"
-  handleBehavior="cycle"
+<ion-modal
+trigger="open-modal"
+[initialBreakpoint]="0.25"
+[breakpoints]="[0, 0.25, 0.5, 0.75]"
+handleBehavior="cycle"
 >
-  <ng-template>
-    <ion-content class="ion-padding">
-      <div class="ion-margin-top">
-        <ion-label>This graph shows you how many reps you've completed for a specific muscle group.</ion-label>
-      </div>
-    </ion-content>
-  </ng-template>
+<ng-template>
+  <ion-content class="ion-padding">
+    <div class="ion-margin-top">
+      <ion-label>This graph shows you how many reps you've completed for a specific muscle group.</ion-label>
+    </div>
+  </ion-content>
+</ng-template>
 </ion-modal>
 
   <div class="chart-container">
@@ -55,8 +55,12 @@
   <ion-grid>
     <ion-row>
       <ion-item lines="none" color="dark">
-        <ion-select interface="popover" placeholder="Select muscle group" [(ngModel)]="selectedGroup"
-          (ionChange)="updateChart()">
+        <ion-select 
+        interface="popover" 
+        placeholder="Select muscle group" 
+        [(ngModel)]="selectedGroup"
+        (ionChange)="updateChart()"
+        [multiple]="true">
           <ion-select-option *ngFor="let muscle of musclegrouplist; let i = index"
             [value]="muscle">{{musclegrouplist[i]}}</ion-select-option>
         </ion-select>
