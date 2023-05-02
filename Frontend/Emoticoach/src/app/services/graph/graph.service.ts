@@ -67,6 +67,14 @@ export class GraphService {
     return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 6);
   }
 
+  getPreviousMonth(date: Date){
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() - 30);
+  }
+
+  getNextMonth(date: Date){
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 30);
+  }
+
   getNextWeek(date: Date){
     return new Date(date.getFullYear(), date.getMonth(), date.getDate() + 6);
   }
