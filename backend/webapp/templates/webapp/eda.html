@@ -12,10 +12,22 @@ EDA
 {% block head %}
 <!-- Head of HTML File -->
 <script src="{% static 'webapp/js/plotly-2.20.0.min.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.js" type="text/javascript"></script>
 {% endblock %}
 
 {% block content %}
 <!-- Body of HTML File -->
+<div class="col-xl-12 col-lg-12 col-md-12">
+  <div class="card shadow mb-4">
+      <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">EDA Live Chart</h6>
+      </div>
+      <!-- Title Row -->
+      <div class="card-body">
+          <div id="lineChart" class="chart-area"></div>
+      </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

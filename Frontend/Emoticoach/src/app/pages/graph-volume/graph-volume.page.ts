@@ -179,8 +179,8 @@ export class GraphVolumePage implements OnInit {
     if(this.timeView == "30"){
       this.chart.options.scales.x.ticks.display = false;
       this.formatXaxis(this.last30Days(this.previousWeek))
-      this.previousWeek = this.graphService.getPreviousWeek(this.previousWeek);
-      this.rightsideWeek = this.graphService.getPreviousWeek(this.rightsideWeek);
+      this.previousWeek = this.graphService.getPreviousMonth(this.previousWeek);
+      this.rightsideWeek = this.graphService.getPreviousMonth(this.rightsideWeek);
       this.previousWeekFormatted = this.xAxisDates[0];
       this.rightsideWeekFormatted = this.xAxisDates[29];
     }
@@ -198,9 +198,9 @@ export class GraphVolumePage implements OnInit {
     }
     if(this.timeView == "30"){
       this.chart.options.scales.x.ticks.display = false;
-      this.formatXaxis(this.last30Days(this.graphService.getNextWeek(this.rightsideWeek)))
-      this.previousWeek = this.graphService.getNextWeek(this.previousWeek);
-      this.rightsideWeek = this.graphService.getNextWeek(this.rightsideWeek);
+      this.formatXaxis(this.last30Days(this.graphService.getNextMonth(this.rightsideWeek)))
+      this.previousWeek = this.graphService.getNextMonth(this.previousWeek);
+      this.rightsideWeek = this.graphService.getNextMonth(this.rightsideWeek);
       this.previousWeekFormatted = this.xAxisDates[0];
       this.rightsideWeekFormatted = this.xAxisDates[29];
     }
