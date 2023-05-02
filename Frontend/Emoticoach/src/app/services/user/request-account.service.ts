@@ -17,6 +17,7 @@ export class RequestAccountService {
     const formData = new FormData();
     formData.append("username", username);
     formData.append("password", password);
+
   let res = this.http.post<any>("https://emotidev.maristela.net/user/login", formData);
     res.subscribe(data => {
       console.log("login data",data)
@@ -27,7 +28,7 @@ export class RequestAccountService {
   logout(): Observable<any>{
     let tableParam = {
      headers: {
-       "Authorization": ("token " + AccountService.user_token),
+      //  "Authorization": ("token " + AccountService.user_token),
      }
     }
     let res = this.http.get<any>("https://emotidev.maristela.net/user/logout", tableParam);
@@ -37,7 +38,7 @@ export class RequestAccountService {
   deleteAccount(): Observable<any>{
     let tableParam = {
      headers: {
-       "Authorization": ("token " + AccountService.user_token),
+      //  "Authorization": ("token " + AccountService.user_token),
      }
     }
     let res = this.http.get<any>("https://emotidev.maristela.net/user/delete", tableParam);
@@ -55,13 +56,13 @@ export class RequestAccountService {
 
     let tableParam = {
       headers: {
-        "Authorization": ("token " + AccountService.user_token),
+        // "Authorization": ("token " + AccountService.user_token),
       }
   }
   let res = this.http.post<any>("https://emotidev.maristela.net/user/edit", formData,tableParam);
-  res.subscribe(data => {
-    console.log("edit respose",data)
-  })
+  // res.subscribe(data => {
+  //   console.log("edit respose",data)
+  // })
     return res;
   }
 

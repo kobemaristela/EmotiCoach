@@ -14,18 +14,18 @@
   
   <ion-list  lines="none">
     <ion-item-divider color="light" sticky>
-      <ion-input color="success" [clearOnEdit]="true" [(ngModel)]="currentSession.name">
+      <ion-input color="success" [clearOnEdit]="true" [(ngModel)]="currentSession.name" (ionChange)="updateName()">
       </ion-input>
       <ion-icon color="success" slot="end" id="open-modal" name="calendar-outline">
       </ion-icon>
       <ion-note color="success" slot="end">
-        {{currentSession.datetime | date:'short' }}
+        {{currentSession.datetime | date:'short':'+0000' }}
       </ion-note>
     </ion-item-divider>
 
     <ion-modal trigger="open-modal" [cssClass]="'center'">
       <ng-template>
-        <ion-datetime [(ngModel)]="currentSession.datetime" size="cover"></ion-datetime>
+        <ion-datetime color="medium" [(ngModel)]="currentSession.datetime" size="cover"></ion-datetime>
       </ng-template>
     </ion-modal>
 
@@ -60,7 +60,8 @@
     </ion-card>
 
     <app-exercise *ngFor="let activity of currentSession.activities; let i = index" [activity]="activity"
-      [activityIndex]="i">
+      [activityIndex]="i"
+      (muscleSelected)="updateMuscleChart($event)">
     </app-exercise>
 
   </ion-list>
@@ -69,7 +70,7 @@
 </ion-content>
 
 <ion-footer>
-  <ion-button expand="block" color="primary" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
+  <ion-button expand="block" color="success" class="addExcercise" fill="outline" (click)="addNewComponent()">Add
     Excercise
   </ion-button>
 </ion-footer>

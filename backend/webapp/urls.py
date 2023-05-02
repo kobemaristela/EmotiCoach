@@ -12,4 +12,6 @@ urlpatterns = [
     path('weight', Weight.as_view(), name="weight"),
     path('water', Water.as_view(), name="water"),
     path('sleep', Sleep.as_view(), name="sleep"),
+    path('ppg', PPG.as_view(), name="ppg"),
+    path('eda', EDA.as_view(), name="eda"),
 ]

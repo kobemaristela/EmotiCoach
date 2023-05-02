@@ -47,9 +47,8 @@ export class ChatService {
   loadTopic() {
     this.mqttTopics = this.liveDataService.observeTopic(this.gymTopic);
     this.mqttTopics.subscribe( (message: IMqttMessage) => {
-      console.log(message.payload.toString())
+      console.log("Payload Recived", message.payload.toString())
       if (message.payload.toString() == "new msg"){
-      
         this.loadChats();
       }
     })
@@ -73,25 +72,16 @@ export class ChatService {
   }
 
   setGymTopic(topic:string) {
-    console.log(topic)
+    console.log(topic);
     this.gymTopic = topic;
-    this.loadTopic()
+    this.loadTopic();
   }
 
   addChatMsg(msg: string): any {
-  // let newChat: chat = 
-  //   {
-  //     username:  this.accountService.returnFirstLastName() , 
-  //     timestamp: new Date().toISOString(), 
-  //     message: msg,
-  //     isuser: true
-  //   }
-    // console.log(msg)
-    this.requestChatService.setMessage(this.gymTopic, msg);
-    this.liveDataService.publishToTopic(this.gymTopic, "new msg")
+    this.requestChatService.setMessage(this.gymTopic, msg).subscribe( () => {
+      this.liveDataService.publishToTopic(this.gymTopic, "new msg")
+    });
    
-    // this.chats.push(newChat);
-    // this.chats$.next(this.chats)
   }
 
   

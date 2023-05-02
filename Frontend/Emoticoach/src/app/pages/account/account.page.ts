@@ -62,20 +62,12 @@ export class AccountPage implements OnInit {
     this.selectedAvatar = $event;
    }
 
-  displayFirstName(){
+  displayUserInfo(){
     this.user_firstname = this.accountService.returnUserFirstName();
-  }
-
-  displayLastName(){
     this.user_lastname = this.accountService.returnUserLastName();
-  }
-
-
-  displayEmail(){
     this.user_email = this.accountService.returnUserEmail();
-  }
-  displayName(){
     this.user_firstlast = this.accountService.returnFirstLastName();
+    this.selectedAvatar.icon = this.accountService.returnUserIcon();
   }
 
   displayAccountPage(){
@@ -138,11 +130,8 @@ export class AccountPage implements OnInit {
   }
 
   ngOnInit() {
-    this.displayFirstName()
-    this.displayLastName()
-    this.displayEmail()
-    this.displayName()
-    this.displayTimezone()
+    this.displayUserInfo();
+    this.displayTimezone();
   }
 
   changeTheme(){

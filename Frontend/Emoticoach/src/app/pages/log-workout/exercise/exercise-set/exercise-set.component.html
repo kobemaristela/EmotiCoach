@@ -11,24 +11,24 @@
         </ion-col>
         <ion-col>
           <ion-item no-lines>
-            <ion-icon size="medium" name="repeat-outline"></ion-icon>
-            <ion-input color="success" [clearOnEdit]="false" type="number" min="0" placeholder="Reps" [(ngModel)]="set.reps"
+            <ion-icon size="small" name="repeat-outline"></ion-icon>
+            <ion-input size="grow" maxlength="3" color="success" [clearOnEdit]="false" type="number" placeholder="Reps" [(ngModel)]="set.reps"
               inputmode="numeric">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item no-lines>
-            <ion-icon size="medium" name="barbell-outline"></ion-icon>
-            <ion-input color="success" [clearOnEdit]="false" type="number" min=0 placeholder="Lbs" [(ngModel)]="set.weight"
+            <ion-icon size="small" name="barbell-outline"></ion-icon>
+            <ion-input maxlength="3" color="success" [clearOnEdit]="false" type="number"  placeholder="Lbs" [(ngModel)]="set.weight"
               inputmode="numeric">
             </ion-input>
           </ion-item>
         </ion-col>
         <ion-col>
           <ion-item no-lines>
-            <ion-icon size="medium" name="walk-outline"></ion-icon>
-            <ion-input color="success" [clearOnEdit]="false" type="number" min=0 placeholder="RPE" [(ngModel)]="set.rpe"
+            <ion-icon size="small" name="walk-outline"></ion-icon>
+            <ion-input [attr.maxlength]="3" color="success" [clearOnEdit]="false" type="number"  placeholder="RPE" [(ngModel)]="set.rpe"
               inputmode="numeric">
             </ion-input>
           </ion-item>

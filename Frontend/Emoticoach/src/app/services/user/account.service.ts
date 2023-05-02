@@ -18,6 +18,7 @@ export class AccountService {
   static user_email: string = "";
   static user_firstname: string = "";
   static user_lastname: string = "";
+  static user_icon: string = "";
   user_first_last: string = "";
 
   private user$: BehaviorSubject<accountRequest>;
@@ -34,12 +35,14 @@ export class AccountService {
     this.requestAccountService.getUserToken(username, password).subscribe( d => {
       this.user$.next(d)
       AccountService.user_token = d.token;
-      console.log(AccountService.user_token)
       AccountService.user_email = d.email;
       AccountService.user_firstname = d.first_name;
       AccountService.user_lastname = d.last_name;
+      AccountService.user_icon = d.icon;
       this.saveToken();
+      
     });
+
     return this.user$;
   }
 
@@ -67,6 +70,10 @@ export class AccountService {
 
   returnUserEmail(){
     return AccountService.user_email;
+  }
+
+  returnUserIcon(){
+    return AccountService.user_icon;
   }
 
 

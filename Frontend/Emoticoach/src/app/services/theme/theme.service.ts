@@ -25,6 +25,7 @@ export class ThemeService {
 
     this.renderer.addClass(this.document.body, this.currentTheme);
     console.log(this.currentTheme)
+    // window.location.reload();
   }
   getMuscleColor(){
     if( this.currentTheme == "blue"){

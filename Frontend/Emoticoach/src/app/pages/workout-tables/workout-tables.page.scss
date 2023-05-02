@@ -1,0 +1,28 @@
+.header-row {
+    font-weight: 500;
+    border-bottom: 2px solid #000;
+    background-color: var(--ion-color-medium);
+}
+
+.data-row {
+    border-bottom: 1px solid #000;
+    background-color: var(--ion-color-dark);
+
+}
+
+.date-range {
+    background-color: var(--ion-color-medium);
+}
+
+.controller{
+    background-color: var(--ion-color-medium);
+
+}
+
+.ontroller-header{
+    font-size: larger;
+}
+
+.data {
+    color: var(--ion-color-success);
+}

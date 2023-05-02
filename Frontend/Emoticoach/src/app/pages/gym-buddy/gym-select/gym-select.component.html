@@ -1,14 +1,14 @@
 <ion-content>
   <ion-list *ngIf="!gymSelected" lines="inset">
-    <ion-list-header>Select a Gym</ion-list-header>
+    <ion-list-header color="dark">Select a Gym</ion-list-header>
 
     <ion-item *ngFor="let gym of gymList" button detail="true" (click)="goToTopic(gym)">
 
       <ion-thumbnail slot="start">
         <ion-img src="../../../../assets/gym-icons/{{gym.icon}}" alt="{{gym.name}} icon"></ion-img>
       </ion-thumbnail>
-      <ion-label>
-        <h3>{{ gym.name}}</h3>
+      <ion-label class="gym-name">
+        <h3 class="gym-name">{{ gym.name}}</h3>
       </ion-label>
     </ion-item>
 
@@ -21,13 +21,13 @@
         <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
       </ion-item-option>
     </ion-item-options>
-    <ion-item color="medium" *ngIf="gymSelected">
+    <ion-item color="dark" *ngIf="gymSelected">
 
 
       <ion-thumbnail slot="start">
         <ion-img src="../../../../assets/gym-icons/{{currentGym.icon}}" alt="{{currentGym.name}} icon"></ion-img>
       </ion-thumbnail>
-      <ion-label>{{currentGym.name}}</ion-label>
+      <ion-label  color="success">{{currentGym.name}}</ion-label>
     </ion-item>
   </ion-item-sliding>
 
