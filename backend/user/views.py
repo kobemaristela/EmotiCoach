@@ -26,12 +26,17 @@ class Login(ObtainAuthToken):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
+
+        userProfile = UserProfile.objects.get(auth_user_id=request.user.id)
+
+        icon = Icon.objects.get(id=userProfile.profile_picture_id)
         return Response({
             'first_name': user.first_name,
             'last_name': user.last_name,
             'email': user.email,
             'username': user.username,
             'user_id': user.pk,
+            'icon': icon.image,
             'token': token.key,
         })
 
@@ -148,6 +153,7 @@ class DeleteAccount(APIView):
 class GetProfile(APIView):
     authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         response = {
             "first_name": request.user.first_name,
