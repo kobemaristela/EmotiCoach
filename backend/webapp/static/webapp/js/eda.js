@@ -1,12 +1,6 @@
-var mqtt;
-var host="emotimqtt.maristela.net";
-var port=8083;
-const lineChart = document.getElementById("lineChart");
-var count = 0;
-
-var layout = {
-    margin: {l: 30, r: 30, b: 20, t: 10,pad: 0}, 
-    }
+// MQTT Setup
+const host="emotimqtt.maristela.net";
+const port=8083;
 
 // Generate a random client ID
 clientID = "EmotiCoachWeb-" + parseInt(Math.random() * 100);
@@ -16,7 +10,7 @@ console.log(clientID + " connecting to " + host + ":" + port);
 
 // Initialize connection
 mqtt = new Paho.MQTT.Client("emotimqtt.maristela.net", 8083, clientID);
-mqtt.onMessageArrived = onMessageArrived;
+mqtt.onMessageArrived = onMessageArrived;   // Link message arrive
 
 // Connect the client, if successful, call onConnect function
 mqtt.connect({ 
@@ -26,21 +20,20 @@ mqtt.connect({
     onSuccess: onConnect,
 });
 
-//Setup Plot
-Plotly.newPlot(lineChart, [{
-    x: [],
-    y: [],
-}], layout);
 
+// Plot Setup
+const lineChart = document.getElementById("lineChart");
+const layout = {margin: {l: 30, r: 30, b: 20, t: 10, pad: 0}};
+var count = 0;
+Plotly.newPlot(lineChart, [{x: [], y: []}], layout);
 
-// Called when the client connects
+// MQTT Helper Functions
 function onConnect() {
     console.log("Connected to MQTT!");
     // Subscribe to the requested topic
     mqtt.subscribe("emoticoach/eda/activity");
 }
 
-// Called when a message arrives
 function onMessageArrived(message) {
     console.log("onMessageArrived: " + message.payloadString);
    
@@ -50,11 +43,6 @@ function onMessageArrived(message) {
         y: [[parseFloat(message.payloadString)]]
     };
 
-    const layout = {
-    margin: {l: 30, r: 30, b: 20, t: 10, pad: 0}, 
-    };
-    
-    console.log("before");
     Plotly.extendTraces(lineChart, {
         x: [[time]],
         y: [[message.payloadString]]
@@ -63,12 +51,8 @@ function onMessageArrived(message) {
     count++;
 
     if (count > 200) {
-        Plotly.newPlot(lineChart, [{
-            x: [],
-            y: [],
-        }], layout);
+        Plotly.newPlot(lineChart, [{x: [], y: []}], layout);
         count = 0;
     }
-    console.log(count);
 }
 
