@@ -22,49 +22,57 @@
       <ion-col size="auto" *ngIf="connectionOpen">
         <ion-button size="fill" (click)="closeConnection()">Stop</ion-button>
       </ion-col>
-<!-- 
+      <!-- 
       <ion-col>
         <ion-button (click)="generateworkouts()">generate</ion-button>
       </ion-col>  -->
 
     </ion-row>
-    <ion-row class="ion-justify-content-left">
-      <ion-col size="auto">
-        <ion-label>
-          Current HeartRate:
-        </ion-label>
-      </ion-col>
-      <ion-col size="auto">
-        <ion-label>
-            121
-        </ion-label>
-      </ion-col>
-    </ion-row>
 
-    <ion-row class="ion-justify-content-left">
+    <ion-row class="ion-justify-content-center">
       <ion-col size="auto">
-        <ion-label>
-          Ready To Lift:
-        </ion-label>
+        <ion-button *ngIf="!calibrating" (click)="calibrate()">
+          Calibrate
+        </ion-button>
+
       </ion-col>
-      <ion-col size="auto">
+      <!-- <ion-col size="auto">
         <ion-label [ngClass]="{'blink': readyTolift}">
           <ion-icon name="checkmark-outline"></ion-icon>
         </ion-label>
+      </ion-col> -->
+
+    </ion-row>
+    <ion-row class="ion-justify-content-center" *ngIf="calibrating">
+      <ion-col size="auto">
+        <ion-button (click)="cancel()">
+          Cancel
+        </ion-button>
       </ion-col>
     </ion-row>
+      <ion-row *ngIf="!training && calibrating && !arousalDetection"  class="ion-justify-content-center">
+        <ion-label >
+          Please Put on Finger
+          {{timer}}
+        </ion-label>
+      </ion-row>
+      <ion-row *ngIf="training"  class="ion-justify-content-center">
+        <ion-label >
+          Please Stay Still for: {{timer}} seconds
+        </ion-label>
+      </ion-row>
 
-    <ion-row class="ion-justify-content-left">
-      <!-- <ion-col size="auto">
+    <ion-row class="ion-justify-content-center" *ngIf="arousalDetection && calibrating" >
+      <ion-col size="auto">
         <ion-label>
-          Position:
+          Arousal:
         </ion-label>
-      </ion-col> -->
-      <!-- <ion-col size="auto">
+      </ion-col> 
+      <ion-col size="auto">
         <ion-label>
-          {{position}}
+          {{arousalStatus}}
         </ion-label>
-      </ion-col> -->
+      </ion-col>
     </ion-row>
   </ion-grid>
 

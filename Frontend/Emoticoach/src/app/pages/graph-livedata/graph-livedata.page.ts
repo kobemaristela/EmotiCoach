@@ -4,6 +4,8 @@ import Chart from 'chart.js/auto'
 import { IMqttMessage } from 'ngx-mqtt';
 import { DataGeneratorService } from 'src/app/services/data-generator/data-generator.service';
 import { ThemeService } from 'src/app/services/theme/theme.service';
+import { MachineLearningService } from 'src/app/services/livedata/machine-learning.service';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-graph-livedata',
@@ -18,11 +20,23 @@ export class GraphLivedataPage implements OnInit {
   connections = ['emoticoach/ppg/infrared', 'emoticoach/eda/activity']
   currentConnection = 'emoticoach/eda/activity'
 
-  position: "Sitting" | "Standing" | "" = "";
   readyTolift: Boolean;
   currentHeartrate: number;
 
-  constructor(private liveDataService: LiveDataService, private dataGenerator: DataGeneratorService, private themeService: ThemeService) {
+  calibrating: boolean = false;
+  intervalId: any;
+  timer: number = 30;
+
+  training: boolean = false;
+  arousalDetection: boolean = false;
+  arousalStatus: string = "";
+
+
+
+  constructor(private liveDataService: LiveDataService,
+    private dataGenerator: DataGeneratorService,
+    private themeService: ThemeService,
+    private machineLearning: MachineLearningService) {
     // this.readyTolift = true;
     this.currentHeartrate = 0;
   }
@@ -53,10 +67,10 @@ export class GraphLivedataPage implements OnInit {
           }
         },
         elements: {
-          point:{
-              radius: 0
+          point: {
+            radius: 0
           }
-      },
+        },
         plugins: {
           legend: {
             labels: {
@@ -116,10 +130,10 @@ export class GraphLivedataPage implements OnInit {
           }
         },
         elements: {
-          point:{
-              radius: 0
+          point: {
+            radius: 0
           }
-      },
+        },
         plugins: {
           legend: {
             labels: {
@@ -189,7 +203,7 @@ export class GraphLivedataPage implements OnInit {
 
       this.liveDataService.connectToBroker().observe(connection).subscribe(
         (message: IMqttMessage) => {
-          
+
 
           this.count += 1
           console.log(message.payload.toString());
@@ -215,31 +229,30 @@ export class GraphLivedataPage implements OnInit {
   }
 
   async testObsere(chart: Chart) {
-   
+
     for (let i = 1000; i < 2000; i += 1) {
-   
-        this.count += 1
-        if (chart.data.labels) {
-          chart.data.labels.push(this.count);
-        }
-  
-        chart.data.datasets.forEach((dataset) => {
 
-          dataset.data.push(i + (Math.random() * 100) );
-        });
-  
-        if (chart.data.labels && chart.data.labels.length > 100) {
-          chart.data.labels.shift();
-          chart.data.datasets.forEach((dataset) => {
-            dataset.data.shift();
-          });
-        }
-        chart.update('none');
+      this.count += 1
+      if (chart.data.labels) {
+        chart.data.labels.push(this.count);
       }
-      
 
+      chart.data.datasets.forEach((dataset) => {
+
+        dataset.data.push(i + (Math.random() * 100));
+      });
+
+      if (chart.data.labels && chart.data.labels.length > 100) {
+        chart.data.labels.shift();
+        chart.data.datasets.forEach((dataset) => {
+          dataset.data.shift();
+        });
+      }
+      chart.update('none');
     }
-  
+
+
+  }
 
 
   closeChart(chart: Chart) {
@@ -250,6 +263,64 @@ export class GraphLivedataPage implements OnInit {
 
   generateworkouts() {
     this.dataGenerator.runScript()
+  }
+
+  calibrate() {
+    this.calibrating = true;
+    // {
+    //   this.machineLearning.getOnFinger()
+    //     .subscribe(data => {
+    //       if (data.responce == "On") {
+    //         this.calibrating = false
+    //         this.parse();
+    //       }
+    //     })
+    // }
+
+    this.parse();
+
+  }
+
+  parse() {
+    //wait 30 seconds
+    this.training = true;
+    this.machineLearning.getTrain()
+    .subscribe(d => {
+        console.log(d)
+        this.training = false;
+        this.arousal();
+      });
+
+    // const interval = window.setInterval(() => {
+    //   this.timer -= 1;
+    //   if(this.timer <= 0){
+    //     clearInterval(interval);
+    //     this.training = false;
+    //     // this.arousal();
+    //   }
+    // }, 1000);
+    //this takes 30 seconds to respond
+
+
+
+  }
+
+  arousal() {
+    this.arousalDetection = true
+    this.intervalId = window.setInterval(() => {
+      this.machineLearning.getArousal().subscribe(d => {
+        console.log(d)
+      }
+      )
+
+    }, 5000);
+
+
+  }
+
+  cancel() {
+    this.calibrating = false;
+    clearInterval(this.intervalId)
   }
 
 }

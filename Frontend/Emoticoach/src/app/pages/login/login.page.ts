@@ -40,7 +40,7 @@ export class LoginPage implements OnInit {
   async toHomepage(){
     this.user$ = this.accountService.login(this.userData.username, this.userData.password);
     this.user$.subscribe((res)=> {
-      if(res){
+      if(res.first_name){
         this.navCtrl.navigateRoot('/tabs/home')
       }
     })
