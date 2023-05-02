@@ -59,7 +59,6 @@ export class AccountService {
 
   editAccountInfo(first_name:string, last_name:string, email:string, password:string, profile_picture:string):Observable<any>{
     this.requestAccountService.editAccountInfo(first_name, last_name, email, password, profile_picture).subscribe( d => {
-      this.user$.next(d)
     });
     return this.user$;
   }

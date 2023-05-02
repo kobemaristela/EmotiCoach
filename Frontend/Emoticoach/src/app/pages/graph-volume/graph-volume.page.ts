@@ -23,7 +23,7 @@ export class GraphVolumePage implements OnInit {
   previousWeekFormatted: string;
   rightsideWeekFormatted: string;
 
-  constructor(private graphService: GraphService) {
+  constructor(private graphService: GraphService, private themeService: ThemeService) {
     this.previousWeek = this.graphService.getPreviousWeek(this.graphService.getCurrentDate());
     this.rightsideWeek = this.graphService.getCurrentDate();
     this.previousWeekFormatted = this.graphService.formatDate(this.graphService.getPreviousWeek(this.graphService.currentDate))
@@ -59,14 +59,14 @@ export class GraphVolumePage implements OnInit {
         scales: {
           x: {
             ticks: {
-              color: 'white',
+              color: this.themeService.getSuccessColor(),
               display: true,
               autoSkip: false,
             },
           },
           y: {
             ticks: {
-              color: 'white'
+              color: this.themeService.getSuccessColor(),
             }
           }
         },
