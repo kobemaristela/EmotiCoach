@@ -27,7 +27,7 @@ class Login(ObtainAuthToken):
         user = serializer.validated_data['user']
         token, created = Token.objects.get_or_create(user=user)
 
-        userProfile = UserProfile.objects.get(auth_user_id=request.user.id)
+        userProfile = UserProfile.objects.get(auth_user_id=user.id)
 
         icon = Icon.objects.get(id=userProfile.profile_picture_id)
         return Response({
