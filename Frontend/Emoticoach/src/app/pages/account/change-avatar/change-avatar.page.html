@@ -10,7 +10,7 @@
       <ion-text>Select new icon</ion-text>
       <div *ngFor="let icon of icons; let i = index">
         <!-- changeAvatar(icons[i]) -->
-        <ion-card (click)="passToAccount(icon)">
+        <ion-card (click)="passToAccount(icon)" class="icon-card">
           <ion-img src="{{'data:image/jpg;base64,'+icon.icon}}" 
           alt="user img"></ion-img>
         </ion-card>
