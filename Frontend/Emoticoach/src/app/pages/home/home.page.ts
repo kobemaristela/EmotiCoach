@@ -20,7 +20,7 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   homepageCards: string[] = [
     // 'Rate of perceived effort', 
-    'Templates',
+    // 'Templates',
     'Volume Data',
     'One Rep Max',
     'Muscle Group Data',
@@ -28,7 +28,7 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   icons: string[] = [
     // 'walk-outline',
-    'folder-open-outline',
+    // 'folder-open-outline',
     'analytics-outline',
     'analytics-outline',
     'analytics-outline',
@@ -36,7 +36,7 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   upperText: string[] = [
     // 'Rate of perceived effort', 
-    'Templates',
+    // 'Templates',
     'Volume Data',
     'One Rep Max',
     'Muscle Group Data',
@@ -44,7 +44,7 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   lowerText: string[] = [
     // 'View your progress',
-    'Create a workout template',
+    // 'Create a workout template',
     'View volume data from your workouts',
     'View your one rep max data from your workouts',
     'View your muscle group data from workouts',
@@ -52,7 +52,7 @@ export class HomePage implements OnInit, AfterContentChecked {
 
   routing: string[] = [
     // '/graph-rpe',
-    '/tabs/templates',
+    // '/tabs/templates',
     '/tabs/graph-volume',
     '/tabs/graph-onerm',
     '/tabs/graph-musclegroup',

@@ -41,9 +41,6 @@ export class RequestChatService {
       }
     }
     let res = this.http.post<any>("https://emotidev.maristela.net/buddy/setmessage", formData, tableParam);
-    res.pipe(first()).subscribe(d=>{
-      console.log(d)
-    });
     return res;
   }
 

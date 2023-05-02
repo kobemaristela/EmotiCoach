@@ -55,11 +55,11 @@ export class ChatService {
   }
 
   loadChats(): Observable<chat[]>{
-    // this.requestChatService.getChats(this.gymTopic).subscribe( (v: IchatRequest) => {
+    this.requestChatService.getChats(this.gymTopic).subscribe( (v: IchatRequest) => {
 
-    //   this.chats$.next(v.messages)
-    // }
-    // );
+      this.chats$.next(v.messages)
+    }
+    );
     return this.chats$;
   }
 

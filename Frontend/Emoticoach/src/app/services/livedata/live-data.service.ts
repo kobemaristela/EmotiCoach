@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {  IMqttMessage, MqttService} from 'ngx-mqtt';
 import { Observable } from 'rxjs';
 import { MQTT_SERVICE_OPTIONS } from 'src/environments/tokens';
+import { AccountService } from '../user/account.service';
 
 
 @Injectable({
@@ -10,7 +11,10 @@ import { MQTT_SERVICE_OPTIONS } from 'src/environments/tokens';
 export class LiveDataService {
   
 
-  constructor(private mqttService: MqttService) { 
+  constructor(private mqttService: MqttService, private accountService: AccountService) { 
+
+    MQTT_SERVICE_OPTIONS.clientId += '-' + this.accountService.returnUserToken();
+    console.log(MQTT_SERVICE_OPTIONS)
     this.mqttService.connect(MQTT_SERVICE_OPTIONS);
   }
   

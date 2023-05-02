@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, first } from 'rxjs';
 import { AccountService } from '../../user/account.service';
 import { set } from '../sets/Iset';
-
+import { IactivityTable } from 'src/app/pages/workout-tables/IactivityTable';
 //API calls for workout are stored in this file
 @Injectable({
   providedIn: 'root'
@@ -25,25 +25,26 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setsession", formData,tableParam);
-    res.pipe(first()).subscribe(d=>{
-      console.log(d)
-    });
+    // res.pipe(first()).subscribe(d=>{
+    //   console.log(d)
+    // });
     return res;
   }
 
   postDeleteSession(sessionId: number):Observable<any> {
     const formData = new FormData();
-    formData.append("id", JSON.stringify(sessionId));
+    formData.append("id", sessionId.toString());
     let tableParam = {
             headers: {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deletesession", formData,tableParam);
-    res.pipe(first()).subscribe(d=>{
-      console.log(d)
-    });
+    // res.pipe(first()).subscribe(d=>{
+    //   console.log(d)
+    // });
     return res;
   }
   
@@ -73,12 +74,15 @@ export class RequestSessionService {
     formData.append("id", id);
     formData.append("name", name);
     formData.append("muscleGroups", JSON.stringify(muscleGroups));
+
     console.log("saving activity", muscleGroups)
     let tableParam = {
             headers: {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+
+    
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editactivity", formData,tableParam);
     res.pipe(first()).subscribe(d=>{
       console.log(d)
@@ -98,6 +102,7 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+      
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/editset", formData,tableParam);
     res.pipe(first()).subscribe(d=>{
       console.log(d)
@@ -118,6 +123,7 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+   
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setactivity", formData,tableParam)
     res.pipe(first()).subscribe(d=>{
       console.log(d)
@@ -135,7 +141,7 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
     }
-
+   
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteset", formData,tableParam);
     res.pipe(first()).subscribe(d=>{
       console.log(d)
@@ -153,6 +159,7 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+    
 
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/deleteactivity", formData,tableParam)
     res.pipe(first()).subscribe(d=>{
@@ -176,6 +183,7 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/setset", formData,tableParam);
     res.pipe(first()).subscribe(d=>{
       console.log(d)
@@ -194,11 +202,14 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+
+  
+
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/getallsessionsrange", formData,tableParam);
     // let res = this.http.get<any>("https://emotidev.maristela.net/workout/getallsessions",tableParam);
-    res.pipe(first()).subscribe(d=>{
-      console.log(d)
-    });
+    // res.pipe(first()).subscribe(d=>{
+    //   console.log(d)
+    // });
     return res;
   
   }
@@ -212,6 +223,8 @@ export class RequestSessionService {
               "Authorization": "token " + this.accountService.returnUserToken(),
             }
       }
+
+      
     let res = this.http.post<any>("https://emotidev.maristela.net/workout/getsession", formData,tableParam);
     res.pipe(first()).subscribe(d=>{
       console.log(d)
@@ -220,4 +233,24 @@ export class RequestSessionService {
 
   }
 
+  postGetActivityTable(range: number, interval: number):Observable<IactivityTable> {
+    const formData = new FormData();
+
+    formData.append("range", range.toString());
+    formData.append("interval", interval.toString());
+
+    let tableParam = {
+            headers: {
+              "Authorization": "token " + this.accountService.returnUserToken(),
+            }
+      }
+    let res = this.http.post<any>("https://emotidev.maristela.net/workout/getactivitytable", formData,tableParam);
+    res.pipe(first()).subscribe(d=>{
+      console.log(d)
+    });
+    return res;
+
+  }
+
+  
 }
