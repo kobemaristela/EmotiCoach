@@ -1,0 +1,24 @@
+{% extends "webapp/base.html" %}
+{% load static %}
+
+{% block title %}
+  EDA Live Data
+{% endblock %}
+
+{% block pageTitle %}
+EDA
+{% endblock %}
+
+{% block head %}
+<!-- Head of HTML File -->
+<script src="{% static 'webapp/js/plotly-2.20.0.min.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<!-- Body of HTML File -->
+{% endblock %}
+
+{% block scripts %}
+<!-- End of body HTML File -->
+<script src="{% static 'webapp/js/eda.js' %}"></script>
+{% endblock %}
