@@ -30,8 +30,8 @@ class Login(TemplateView):
             login(request, user)
             return JsonResponse({"Status":"Success"})
         else:
-            return JsonResponse({"Status":"Incorrect username or password."}) 
-        
+            return JsonResponse({"Status":"Incorrect username or password."})
+
 class Register(TemplateView):
     template_name = "webapp/register.html"
     next_page = "webapp/login"
@@ -52,7 +52,7 @@ class Profile(LoginRequiredMixin, TemplateView):
         context['weight_goal'] = user.weight_goal
         context['height'] = user.height
         return context
-    
+
 class Account(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
@@ -75,12 +75,12 @@ class Activity(LoginRequiredMixin, TemplateView):
         context['first_name'] = self.request.user.first_name
         context['last_name'] = self.request.user.last_name
         return context
-    
+
 class ActivityChart(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
     template_name = "webapp/activitychart.html"
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['first_name'] = self.request.user.first_name
@@ -106,7 +106,7 @@ class Water(LoginRequiredMixin, TemplateView):
         context['first_name'] = self.request.user.first_name
         context['last_name'] = self.request.user.last_name
         return context
-    
+
 class Sleep(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
@@ -116,7 +116,7 @@ class Sleep(LoginRequiredMixin, TemplateView):
         context['first_name'] = self.request.user.first_name
         context['last_name'] = self.request.user.last_name
         return context
-    
+
 class PPG(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     redirect_field_name = 'redirect_to'
