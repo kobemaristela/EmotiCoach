@@ -51,7 +51,7 @@ function onMessageArrived(message) {
     count++;
 
     if (count > 200) {
-        Plotly.newPlot(lineChart, [{x: [], y: []}], layout);
+        Plotly.newPlot(lineChart, [{x: time, y: message.payloadString}], layout);
         count = 0;
     }
 }
